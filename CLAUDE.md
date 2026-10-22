@@ -40,7 +40,7 @@ Paths below are relative to the knowledge base root. In a cloud session, commit 
 You must:
 - Read `index.md` before architectural work, then the relevant pages
 - Read `projects\GastroSuit\` for project-scoped ADRs once it exists
-- Append candidate entries to `log.md` (Section 7)
+- Append candidate entries to `log.md` once the user confirms them (Section 7)
 
 You must not create, modify or reorganize wiki pages — only the curator agent does that.
 
@@ -92,7 +92,7 @@ explicitly; `recommended` — usually followed, may be adapted with reason; `fle
 of several valid options.
 
 **6 — Journal decisions in the moment.** Detect decision events during the conversation and
-log candidates immediately (Section 7).
+propose candidates immediately; append them only after the user confirms (Section 7).
 
 ---
 
@@ -139,7 +139,8 @@ to it; no match → log as new.
 
 ### 7.4 Log entry
 
-Append to the end of `log.md` in the knowledge base (Section 2):
+After the user confirms the candidate (7.5), append to the end of `log.md` in the knowledge
+base (Section 2):
 
 ```
 ## [YYYY-MM-DD] candidate | GastroSuit | <topic>
@@ -154,7 +155,8 @@ Suggested action: <create new page | update [[page]] | merge with [[page]]>
 
 ### 7.5 In the conversation
 
-Mention a logged candidate in one line (in Russian). No candidate — say nothing.
+Propose a candidate in one line (in Russian) and ask whether to log it. Write the entry only
+after the user confirms; a declined candidate is not logged. No candidate — say nothing.
 
 ---
 
