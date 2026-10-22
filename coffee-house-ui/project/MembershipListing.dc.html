@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <style>
+    body { margin: 0; min-height: 100vh; box-sizing: border-box; padding: var(--space-lg) 0; background: var(--gray-100); font-family: "Plus Jakarta Sans", system-ui, sans-serif; display: flex; align-items: center; justify-content: center; }
+    a { color: var(--color-text-primary); } a:hover { color: var(--color-text-secondary); }
+  </style>
+</helmet>
+<div data-screen-label="Membership" style="width: 360px; height: 800px; background: var(--color-bg-surface); overflow: hidden; display: flex; flex-direction: column; flex: 0 0 auto; position: relative;">
+  <x-import component-from-global-scope="GastroDesignSystem_472aed.ScreenHeader" title="Membership" on-back="{{ goBack }}" hint-size="100%,56px"></x-import>
+  <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 0 var(--space-base) var(--space-base); display: flex; flex-direction: column; gap: var(--space-sm);">
+    <sc-for list="{{ tiers }}" as="t" hint-placeholder-count="3">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.MembershipCard" variant="{{ t.variant }}" name="{{ t.name }}" benefits="{{ t.benefits }}" image="{{ t.image }}" action-label="{{ t.actionLabel }}" on-action="{{ t.upgrade }}" hint-size="100%,160px"></x-import>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:800}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      goBack: () => { window.location.href = 'Profile.dc.html'; },
+      tiers: [
+        { variant: 'current', name: 'Bronze', image: 'uploads/membership_bronze.png', actionLabel: '', benefits: ['5% cashback in loyalty points', 'Birthday drink', 'Member-only offers', 'Order ahead', 'Digital receipts'] },
+        { variant: 'available', name: 'Silver', image: 'uploads/membership_silver.png', actionLabel: 'Upgrade for ֏2,000 / month', benefits: ['10% cashback in loyalty points', 'Birthday drink', 'Free size upgrade', 'Member-only offers', 'Priority pickup'] },
+        { variant: 'available', name: 'Gold', image: 'uploads/membership_gold.png', actionLabel: 'Upgrade for ֏5,000 / month', benefits: ['15% cashback in loyalty points', 'Birthday drink', 'Free size upgrade', 'Free drink every month', 'Priority pickup'] },
+      ].map(t => ({ ...t, upgrade: () => { window.location.href = 'MembershipUpgrade.dc.html?tier=' + t.name.toLowerCase(); } })),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+{
+  "kind": "component",
+  "name": "TabBar",
+  "version": "2026-09-12",
+  "description": "Horizontal tab switch; \"big\" is a full-width sliding-indicator pill, \"small\"/\"xs\" are individually outlined chips.",
+  "size": {
+    "width": "fill",
+    "height": 40,
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "row",
+    "spacing": [],
+    "padding": {
+      "all": "--space-xs"
+    },
+    "align": "center",
+    "justify": "start",
+    "scroll": "none",
+    "size": {
+      "width": "fill"
+    },
+    "children": [
+      {
+        "slot": "tab",
+        "type": "row",
+        "spacing": [
+          "--space-xs"
+        ],
+        "padding": null,
+        "align": "center",
+        "justify": "center",
+        "scroll": "none",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "tab.icon",
+            "type": "icon",
+            "name": "{icon}",
+            "weight": "regular",
+            "size": "--icon-xs",
+            "color": "--color-text-tertiary"
+          },
+          {
+            "slot": "tab.label",
+            "type": "text",
+            "content": "{label}",
+            "style": "--text-body",
+            "color": "--color-text-tertiary",
+            "lines": 1,
+            "overflow": "clip",
+            "align": "center",
+            "transform": "none",
+            "size": {
+              "width": "fill"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "variants": {
+    "active": {
+      "prop": "interaction",
+      "cases": {
+        "true": {
+          "tab.icon": {
+            "color": "--color-text-primary"
+          },
+          "tab.label": {
+            "color": "--color-text-primary"
+          }
+        }
+      }
+    },
+    "size": {
+      "prop": "size",
+      "cases": {
+        "small": {
+          "root": {
+            "background": "transparent"
+          },
+          "tab": {
+            "background": "--gray-100"
+          }
+        },
+        "xs": {
+          "root": {
+            "background": "transparent"
+          },
+          "tab": {
+            "background": "--gray-100"
+          },
+          "tab.icon": {
+            "visible": false
+          },
+          "tab.label": {
+            "style": "--text-body-sm"
+          }
+        }
+      }
+    }
+  },
+  "uses": [],
+  "notes": "Root repeats one \"tab\" per option; \"big\" size additionally shows a sliding indicator behind the active tab (surface --color-bg-main, --elevation-card), omitted here as a state-derived transform rather than a per-tab field."
+}

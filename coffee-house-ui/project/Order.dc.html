@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <style>
+    body { margin: 0; min-height: 100vh; box-sizing: border-box; padding: var(--space-lg) 0; background: var(--gray-100); font-family: "Plus Jakarta Sans", system-ui, sans-serif; display: flex; align-items: center; justify-content: center; }
+    *::-webkit-scrollbar { display: none; }
+    * { scrollbar-width: none; }
+  </style>
+</helmet>
+<div style="width: 360px; background: var(--color-bg-surface); overflow: hidden; height: 800px; display: flex; flex-direction: column; flex: 0 0 auto; position: relative;">
+
+  <!-- Screen header -->
+  <x-import component-from-global-scope="GastroDesignSystem_472aed.ScreenHeader" title="Order" hint-size="100%,56px"></x-import>
+
+  <!-- Tab bar (big) -->
+  <div style="padding: 0 var(--space-base) var(--space-base);">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.TabBar" size="big" options="{{ tabOptions }}" value="{{ tabValue }}" on-change="{{ setTab }}" hint-size="100%,40px"></x-import>
+  </div>
+
+  <!-- Scrollable content -->
+  <div ref="{{ scrollContainerRef }}" onScroll="{{ handleScroll }}" style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none;">
+    <sc-if value="{{ showProducts }}" hint-placeholder-val="{{ true }}">
+      <div style="padding: 0 var(--space-base) var(--space-base);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Featured products" hint-size="100%,28px"></x-import>
+      </div>
+      <div style="display: flex; gap: var(--space-sm); overflow-x: auto; padding: 0 var(--space-base) var(--space-lg); scrollbar-width: none;">
+        <div style="flex:0 0 128px; position: relative;"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="Iced Fantasy Coffee" price="֏1,450" image-url="uploads/ch_fav_iced_fantasy_coffee.png" on-click="{{ openIcedFantasy }}" hint-size="128px,180px"></x-import><div style="position:absolute; top: calc(128px - var(--button-height-sm) - var(--space-xs)); right: var(--space-xs); z-index:1;"><x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="{{ rail0.icon }}" variant="{{ rail0.variant }}" size="sm" dc-props="{{ addToCartProps }}" on-click="{{ rail0.toggle }}" hint-size="40px,40px"></x-import></div></div>
+        <div style="flex:0 0 128px; position: relative;"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="Iced Cream Cheese Latte Aroma" price="֏1,850" image-url="uploads/ch_fav_iced_cream_cheese_latte_aroma.png" on-click="{{ openIcedCreamCheese }}" hint-size="128px,180px"></x-import><div style="position:absolute; top: calc(128px - var(--button-height-sm) - var(--space-xs)); right: var(--space-xs); z-index:1;"><x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="{{ rail1.icon }}" variant="{{ rail1.variant }}" size="sm" dc-props="{{ addToCartProps }}" on-click="{{ rail1.toggle }}" hint-size="40px,40px"></x-import></div></div>
+        <div style="flex:0 0 128px; position: relative;"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="Hot Raf Strawberry" price="֏1,650" image-url="uploads/ch_fav_hot_raf_strawberry.png" on-click="{{ openHotRaf }}" hint-size="128px,180px"></x-import><div style="position:absolute; top: calc(128px - var(--button-height-sm) - var(--space-xs)); right: var(--space-xs); z-index:1;"><x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="{{ rail2.icon }}" variant="{{ rail2.variant }}" size="sm" dc-props="{{ addToCartProps }}" on-click="{{ rail2.toggle }}" hint-size="40px,40px"></x-import></div></div>
+        <div style="flex:0 0 128px; position: relative;"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="Hot Salted Caramel Matcha Latte" price="֏1,950" image-url="uploads/ch_prod_hot_salted_caramel_matcha_latte.png" on-click="{{ openHotSalted }}" hint-size="128px,180px"></x-import><div style="position:absolute; top: calc(128px - var(--button-height-sm) - var(--space-xs)); right: var(--space-xs); z-index:1;"><x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="{{ rail3.icon }}" variant="{{ rail3.variant }}" size="sm" dc-props="{{ addToCartProps }}" on-click="{{ rail3.toggle }}" hint-size="40px,40px"></x-import></div></div>
+        <div style="flex:0 0 128px; position: relative;"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="Dubai Cheesecake" price="֏2,250" image-url="uploads/ch_prod_dubai_cheesecake.png" on-click="{{ openDubai }}" hint-size="128px,180px"></x-import><div style="position:absolute; top: calc(128px - var(--button-height-sm) - var(--space-xs)); right: var(--space-xs); z-index:1;"><x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="{{ rail4.icon }}" variant="{{ rail4.variant }}" size="sm" dc-props="{{ addToCartProps }}" on-click="{{ rail4.toggle }}" hint-size="40px,40px"></x-import></div></div>
+      </div>
+      <div style="padding: 0 var(--space-base) var(--space-sm);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Menu" hint-size="100%,28px"></x-import>
+      </div>
+      <div style="padding: 0 0 var(--space-sm) var(--space-sm);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.MenuTabsVertical" categories="{{ menuCategories }}" value="{{ menuCat }}" on-change="{{ setMenuCat }}" hint-size="100%,84px"></x-import>
+      </div>
+      <sc-if value="{{ showComboSubTabs }}" hint-placeholder-val="{{ true }}">
+        <div style="position: sticky; top: 0; z-index: 2; isolation: isolate; background: var(--color-bg-surface); overflow-x: auto; scrollbar-width: none; padding: var(--space-sm) var(--space-base) var(--space-base);">
+          <x-import component-from-global-scope="GastroDesignSystem_472aed.TabBar" size="xs" full-width="{{ false }}" options="{{ comboSubTabOptions }}" value="{{ comboSubTab }}" on-change="{{ setComboSubTab }}" hint-size="auto,28px"></x-import>
+        </div>
+      </sc-if>
+      <sc-if value="{{ showComboSections }}" hint-placeholder-val="{{ true }}">
+        <sc-for list="{{ comboSections }}" as="section" hint-placeholder-count="4">
+          <div ref="{{ section.ref }}">
+            <div style="padding: 0 var(--space-base) var(--space-sm);">
+              <span style="font: var(--text-body-semibold); color: var(--color-text-primary);">{{ section.title }}</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 160px 160px; gap: var(--space-sm); justify-content: center; padding: 0 var(--space-base) var(--space-base);">
+              <sc-for list="{{ section.products }}" as="p" hint-placeholder-count="2">
+                <div style="position: relative;"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductMenuCard" name="{{ p.name }}" price="{{ p.price }}" image-url="{{ p.image }}" width="{{ 160 }}" on-click="{{ p.open }}" hint-size="160px,220px"></x-import><div style="position:absolute; right: var(--space-sm); bottom: var(--space-sm); z-index:1;"><x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="{{ p.icon }}" variant="{{ p.variant }}" size="xs" dc-props="{{ addToCartProps }}" on-click="{{ p.toggle }}" hint-size="36px,36px"></x-import></div></div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </sc-if>
+      <sc-if value="{{ showProductGrid }}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 0 var(--space-base) var(--space-sm);">
+          <span style="font: var(--text-body-semibold); color: var(--color-text-primary);">{{ productRowTitle }}</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 160px 160px; gap: var(--space-sm); justify-content: center; padding: 0 var(--space-base) var(--space-base);">
+          <sc-for list="{{ categoryProducts }}" as="p" hint-placeholder-count="8">
+            <div style="position: relative;"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductMenuCard" name="{{ p.name }}" price="{{ p.price }}" image-url="{{ p.image }}" width="{{ 160 }}" on-click="{{ p.open }}" hint-size="160px,220px"></x-import><div style="position:absolute; right: var(--space-sm); bottom: var(--space-sm); z-index:1;"><x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="{{ p.icon }}" variant="{{ p.variant }}" size="xs" dc-props="{{ addToCartProps }}" on-click="{{ p.toggle }}" hint-size="36px,36px"></x-import></div></div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </sc-if>
+    <sc-if value="{{ showBranches }}" hint-placeholder-val="{{ false }}">
+      <div style="padding: 0 var(--space-base) var(--space-base);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Dropdown" value="{{ city }}" options="{{ cityOptions }}" on-change="{{ setCity }}" hint-size="100%,40px"></x-import>
+      </div>
+      <div style="overflow-x: auto; scrollbar-width: none; padding: 0 var(--space-base) var(--space-lg);">
+        <div style="width: max-content;">
+          <x-import component-from-global-scope="GastroDesignSystem_472aed.TabBar" options="{{ districtOptions }}" value="{{ district }}" on-change="{{ setDistrict }}" size="xs" hint-size="auto,32px"></x-import>
+        </div>
+      </div>
+      <div style="padding: 0 var(--space-base) var(--space-base);">
+        <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+          <sc-for list="{{ branchList }}" as="branch" hint-placeholder-count="5">
+            <x-import component-from-global-scope="GastroDesignSystem_472aed.BranchCard" name="{{ branch.name }}" address="{{ branch.address }}" hours="{{ branch.hours }}" distance="{{ branch.distance }}" is-open-now="{{ branch.isOpenNow }}" on-click="{{ branch.onOpen }}" image="{{ branch.image }}" hint-size="100%,72px"></x-import>
+            <sc-if value="{{ branch.showDivider }}" hint-placeholder-val="{{ true }}">
+              <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" hint-size="100%,1px"></x-import>
+            </sc-if>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+    <!-- Cart bar -->
+    <sc-if value="{{ showProducts }}" hint-placeholder-val="{{ true }}">
+      <div style="position: sticky; bottom: 0; z-index: 3; background: transparent; padding: 0 var(--space-base) var(--space-base);">
+        <div style="display: flex; align-items: flex-end; gap: var(--space-sm); width: 100%; padding: var(--space-sm); border-radius: var(--radius-md); box-sizing: border-box; background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur));">
+          <div style="flex: 1; min-width: 0; position: relative;">
+            <x-import component-from-global-scope="GastroDesignSystem_472aed.Dropdown" label="Nearest location" value="loc-1" options="{{ cartLocationOptions }}" on-change="{{ noop }}" hint-size="100%,56px"></x-import>
+            <div style="position: absolute; inset: 0; cursor: pointer;" onClick="{{ openCartLocationSheet }}"></div>
+          </div>
+          <x-import component-from-global-scope="GastroDesignSystem_472aed.Badge" count="{{ cartCount }}" variant="{{ cartBadgeVariant }}" style="{{ badgeOffsetStyle }}" hint-size="40px,40px">
+            <x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="shopping-cart-simple" variant="{{ cartIconVariant }}" size="sm" radius="input" on-click="{{ openBasket }}" hint-size="40px,40px"></x-import>
+          </x-import>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+
+  <dc-import name="ProductOverlay" visible="{{ overlayVisible }}" image-url="{{ overlayImage }}" product-name="{{ overlayName }}" price="{{ overlayPrice }}" on-close="{{ closeOverlay }}" on-add-to-cart="{{ addOverlayToCart }}" hint-size="360px,800px"></dc-import>
+
+  <dc-import name="BasketOverlay" visible="{{ basketVisible }}" on-close="{{ closeBasket }}" hint-size="360px,800px"></dc-import>
+  <dc-import name="LocationBottomSheet" open="{{ cartLocationSheetOpen }}" on-close="{{ closeCartLocationSheet }}" on-select="{{ selectCartLocation }}" hint-size="360px,800px"></dc-import>
+  <dc-import name="BranchSingleView" visible="{{ branchViewVisible }}" branch="{{ branchViewData }}" on-close="{{ closeBranchView }}" hint-size="360px,800px"></dc-import>
+
+  <!-- Bottom navigation -->
+  <div style="padding: var(--space-sm) var(--space-base) calc(var(--space-sm) + env(safe-area-inset-bottom, 0px)); background: var(--color-bg-surface); border-top: 1px solid var(--color-border-muted);">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.BottomNavigation" items="{{ navItems }}" active-key="{{ navActive }}" on-change="{{ setNav }}" hint-size="100%,56px"></x-import>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tab: 'products', nav: 'order', menuCat: 'combo', comboSubTab: 'iced-matcha', addedIds: {}, overlay: null, extraCartCount: 0, basketOpen: false, cartLocationSheetOpen: false, branchView: null };
+  branchData = [
+    { name: 'Northern Avenue', lat: 40.183, lng: 44.515, address: '12 Northern Ave, Yerevan', hours: '08:00 – 23:00', distance: '0.4 km', isOpenNow: true, image: 'uploads/branch_1.png', description: 'Flagship store on the promenade', rating: 4.8, reviewCount: 326 },
+    { name: 'Cascade', lat: 40.1897, lng: 44.5157, address: '3 Tamanyan St, Yerevan', hours: '09:00 – 22:00', distance: '1.1 km', isOpenNow: true, image: 'uploads/branch_2.png', description: 'Garden terrace by the Cascade', rating: 4.7, reviewCount: 214 },
+    { name: 'Republic Square', lat: 40.1776, lng: 44.5126, address: '5 Abovyan St, Yerevan', hours: '08:00 – 00:00', distance: '1.8 km', isOpenNow: false, image: 'uploads/branch_3.png', description: 'Late-night spot downtown', rating: 4.6, reviewCount: 189 },
+    { name: 'Komitas', lat: 40.2045, lng: 44.51, address: '28 Komitas Ave, Yerevan', hours: '08:00 – 22:00', distance: '2.3 km', isOpenNow: true, image: 'uploads/branch_1.png', description: 'Cosy neighbourhood café', rating: 4.5, reviewCount: 142 },
+    { name: 'Saryan Street', lat: 40.185, lng: 44.506, address: '14 Saryan St, Yerevan', hours: '09:00 – 23:00', distance: '2.9 km', isOpenNow: true, image: 'uploads/branch_2.png', description: 'Wine district roastery', rating: 4.9, reviewCount: 271 },
+  ];
+  openOverlay = (name, image, price) => this.setState({ overlay: { name, image, price } });
+  closeOverlay = () => this.setState({ overlay: null });
+  addOverlayToCart = () => this.setState((s) => ({ overlay: null, extraCartCount: s.extraCartCount + 1 }));
+  toggleId = (id) => this.setState((s) => ({ addedIds: { ...s.addedIds, [id]: !s.addedIds[id] } }));
+  truncateForIcon(name) {
+    const max = 14;
+    return name.length > max ? name.slice(0, max).trimEnd() + '… ' : name;
+  }
+  makeItemToggle(p) {
+    const id = 'item-' + p.name;
+    const added = !!this.state.addedIds[id];
+    return { added, icon: added ? 'x' : 'plus', variant: added ? 'tonal' : 'filled', toggle: () => this.toggleId(id), name: this.truncateForIcon(p.name), open: () => this.openOverlay(p.name, p.image, p.price) };
+  }
+  railIds = ['rail-iced-fantasy', 'rail-iced-cream-cheese', 'rail-hot-raf-strawberry', 'rail-hot-salted-caramel', 'rail-dubai-cheesecake'];
+  makeRail(id) {
+    const added = !!this.state.addedIds[id];
+    return { added, icon: added ? 'x' : 'plus', variant: added ? 'tonal' : 'filled', toggle: () => this.toggleId(id) };
+  }
+  baseProducts = [
+    { name: 'Iced Fantasy Coffee', price: '֏1,450', image: 'uploads/iced%20fantasy%20coffee-752e25b4.png' },
+    { name: 'Iced Americano', price: '֏1,350', image: 'uploads/ice%20americano-52926f9b.png' },
+    { name: 'Hot Salted Caramel Matcha Latte', price: '֏1,950', image: 'uploads/hot%20salted%20caramel%20matcha-b6e27e77.png' },
+    { name: 'Iced Cream Cheese Latte Aroma', price: '֏1,850', image: 'uploads/ice%20creamed%20cheese-170171d4.png' },
+    { name: 'Hot Raf Strawberry', price: '֏1,650', image: 'uploads/raf%20strawberry-e6ea36ce.png' },
+    { name: 'Bumble Cherry', price: '֏1,750', image: 'uploads/bumble%20cherry-ab6a4199.png' },
+    { name: 'Dubai Cheesecake', price: '֏2,250', image: 'uploads/dubai%20cheesecake-83568b34.png' },
+    { name: 'Chocolate Muffin', price: '֏1,250', image: 'uploads/chocolate%20muffin-8e511c76.png' },
+  ];
+  menuCategoryLabels = {
+    'combo': 'Combo deals', 'iced-coffee': 'Iced Coffee', 'iced-drinks': 'Iced Drinks',
+    'matcha-tea': 'Matcha and Tea', 'hot-coffee': 'Hot Coffee', 'sweets': 'Sweets', 'other': 'Other',
+  };
+  comboSubTabKeys = ['iced-matcha', 'iced-tea', 'hot-matcha', 'hot-tea'];
+  scrollContainerRef = React.createRef();
+  sectionEls = [null, null, null, null];
+  makeSectionRef(i) {
+    return (el) => { this.sectionEls[i] = el; };
+  }
+  handleScroll = () => {
+    if (this.state.menuCat !== 'combo') return;
+    const container = this.scrollContainerRef.current;
+    if (!container) return;
+    const cTop = container.getBoundingClientRect().top;
+    let active = this.comboSubTabKeys[0];
+    for (let i = 0; i < this.comboSubTabKeys.length; i++) {
+      const el = this.sectionEls[i];
+      if (!el) continue;
+      if (el.getBoundingClientRect().top - cTop <= 60) active = this.comboSubTabKeys[i];
+    }
+    if (active !== this.state.comboSubTab) this.setState({ comboSubTab: active });
+  };
+  scrollToComboSubTab = (v) => {
+    this.setState({ comboSubTab: v });
+    const idx = this.comboSubTabKeys.indexOf(v);
+    const el = this.sectionEls[idx];
+    const container = this.scrollContainerRef.current;
+    if (el && container) {
+      const cTop = container.getBoundingClientRect().top;
+      const eTop = el.getBoundingClientRect().top;
+      container.scrollTop += (eTop - cTop - 52);
+    }
+  };
+  shuffleCache = {};
+  seededShuffle(arr, seed) {
+    const a = arr.slice();
+    let s = seed;
+    const rand = () => { s = (s * 9301 + 49297) % 233280; return s / 233280; };
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(rand() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  getCategoryProducts(cat) {
+    if (!this.shuffleCache[cat]) {
+      const seed = cat.split('').reduce((s, c) => s + c.charCodeAt(0), 0) || 1;
+      this.shuffleCache[cat] = this.seededShuffle(this.baseProducts, seed);
+    }
+    return this.shuffleCache[cat];
+  }
+  renderVals() {
+    return {
+      menuCategories: [
+        { label: 'Combo deals', value: 'combo', image: 'uploads/combo-bfe65b0a.png' },
+        { label: 'Iced Coffee', value: 'iced-coffee', image: 'uploads/ice%20cofee-969c877c.png' },
+        { label: 'Iced\nDrinks', value: 'iced-drinks', image: 'uploads/ice%20drinks-ecbe2e89.png' },
+        { label: 'Matcha and Tea', value: 'matcha-tea', image: 'uploads/matcha-f3ccab58.png' },
+        { label: 'Hot\nCoffee', value: 'hot-coffee', image: 'uploads/hot%20coffee-09109355.png' },
+        { label: 'Sweets', value: 'sweets', image: 'uploads/sweets-e21f67f2.png' },
+        { label: 'Other', value: 'other', image: 'uploads/other-411186da.png' },
+      ],
+      menuCat: this.state.menuCat,
+      showComboSubTabs: this.state.menuCat === 'combo',
+      comboSubTabOptions: [
+        { label: 'Iced Matcha Based', value: 'iced-matcha' },
+        { label: 'Iced Tea', value: 'iced-tea' },
+        { label: 'Hot Matcha Based', value: 'hot-matcha' },
+        { label: 'Hot Tea', value: 'hot-tea' },
+      ],
+      comboSubTab: this.state.comboSubTab,
+      setComboSubTab: this.scrollToComboSubTab,
+      scrollContainerRef: this.scrollContainerRef,
+      handleScroll: this.handleScroll,
+      showComboSections: this.state.menuCat === 'combo',
+      comboSections: this.state.menuCat === 'combo' ? [
+        { title: 'Iced Matcha Based', products: this.getCategoryProducts('iced-matcha').slice(0, 2).map((p) => ({ ...p, ...this.makeItemToggle(p) })), ref: this.makeSectionRef(0) },
+        { title: 'Iced Tea', products: this.getCategoryProducts('iced-tea').slice(0, 2).map((p) => ({ ...p, ...this.makeItemToggle(p) })), ref: this.makeSectionRef(1) },
+        { title: 'Hot Matcha Based', products: this.getCategoryProducts('hot-matcha').slice(0, 2).map((p) => ({ ...p, ...this.makeItemToggle(p) })), ref: this.makeSectionRef(2) },
+        { title: 'Hot Tea', products: this.getCategoryProducts('hot-tea').slice(0, 2).map((p) => ({ ...p, ...this.makeItemToggle(p) })), ref: this.makeSectionRef(3) },
+      ] : [],
+      productRowTitle: this.menuCategoryLabels[this.state.menuCat] || '',
+      showProductGrid: this.state.menuCat !== 'combo',
+      categoryProducts: this.getCategoryProducts(this.state.menuCat).map((p) => ({ ...p, ...this.makeItemToggle(p) })),
+      setMenuCat: (v) => this.setState({ menuCat: v }),
+      tabOptions: [
+        { label: 'Products', value: 'products', icon: 'coffee' },
+        { label: 'Branches', value: 'branches', icon: 'storefront' },
+      ],
+      tabValue: this.state.tab,
+      showProducts: this.state.tab === 'products',
+      showBranches: this.state.tab === 'branches',
+      city: this.state.city || 'yerevan',
+      cityOptions: [{ label: 'Yerevan', value: 'yerevan' }, { label: 'Gyumri', value: 'gyumri' }, { label: 'Vanadzor', value: 'vanadzor' }, { label: 'Dilijan', value: 'dilijan' }],
+      setCity: (v) => this.setState({ city: v }),
+      districtOptions: ['Kentron', 'Arabkir', 'Ajapnyak', 'Masiv', 'Erebuni'].map((d) => ({ label: d, value: d.toLowerCase() })),
+      district: this.state.district || 'kentron',
+      setDistrict: (v) => this.setState({ district: v }),
+      branchList: this.branchData.map((b, i) => ({ ...b, showDivider: i < this.branchData.length - 1, onOpen: () => this.setState({ branchView: b }) })),
+      branchViewVisible: !!this.state.branchView,
+      branchViewData: this.state.branchView,
+      closeBranchView: () => this.setState({ branchView: null }),
+      noop: () => {},
+      addToCartProps: { ariaLabel: 'Add to cart' },
+      overlayVisible: !!this.state.overlay,
+      overlayImage: this.state.overlay ? this.state.overlay.image : '',
+      overlayName: this.state.overlay ? this.state.overlay.name : '',
+      overlayPrice: this.state.overlay ? this.state.overlay.price : '',
+      closeOverlay: this.closeOverlay,
+      openIcedFantasy: () => this.openOverlay('Iced Fantasy Coffee', 'uploads/iced%20fantasy%20coffee-752e25b4.png', '֏1,450'),
+      openIcedCreamCheese: () => this.openOverlay('Iced Cream Cheese Latte Aroma', 'uploads/ice%20creamed%20cheese-170171d4.png', '֏1,850'),
+      openHotRaf: () => this.openOverlay('Hot Raf Strawberry', 'uploads/raf%20strawberry-e6ea36ce.png', '֏1,650'),
+      openHotSalted: () => this.openOverlay('Hot Salted Caramel Matcha Latte', 'uploads/hot%20salted%20caramel%20matcha-b6e27e77.png', '֏1,950'),
+      openDubai: () => this.openOverlay('Dubai Cheesecake', 'uploads/dubai%20cheesecake-83568b34.png', '֏2,250'),
+      rail0: this.makeRail(this.railIds[0]),
+      rail1: this.makeRail(this.railIds[1]),
+      rail2: this.makeRail(this.railIds[2]),
+      rail3: this.makeRail(this.railIds[3]),
+      rail4: this.makeRail(this.railIds[4]),
+      addOverlayToCart: this.addOverlayToCart,
+      basketVisible: this.state.basketOpen,
+      openBasket: () => this.setState({ basketOpen: true }),
+      closeBasket: () => this.setState({ basketOpen: false }),
+      cartCount: Object.values(this.state.addedIds).filter(Boolean).length + this.state.extraCartCount,
+      cartIconVariant: (Object.values(this.state.addedIds).filter(Boolean).length + this.state.extraCartCount) > 0 ? 'filled' : 'tonal',
+      cartBadgeVariant: (Object.values(this.state.addedIds).filter(Boolean).length + this.state.extraCartCount) > 0 ? 'empty' : 'default',
+      cartLocationOptions: [{ label: 'Tigran Petrosyan 31/5 (near Davtashen Yerevan City)', value: 'loc-1' }],
+      cartLocationSheetOpen: this.state.cartLocationSheetOpen,
+      openCartLocationSheet: () => this.setState({ cartLocationSheetOpen: true }),
+      closeCartLocationSheet: () => this.setState({ cartLocationSheetOpen: false }),
+      selectCartLocation: (branch) => this.setState({ cartLocationSheetOpen: false }),
+      badgeOffsetStyle: { right: 0 },
+      setTab: (v) => this.setState({ tab: v }),
+      navItems: [
+        { key: 'home', icon: 'house', label: 'Home' },
+        { key: 'order', icon: 'coffee', label: 'Order' },
+        { key: 'gifts', icon: 'gift', label: 'Gifts' },
+        { key: 'profile', icon: 'user', label: 'Profile' },
+      ],
+      navActive: this.state.nav,
+      setNav: (k) => {
+        const routes = { home: 'Home.dc.html', order: 'Order.dc.html', gifts: 'Gifts.dc.html', profile: 'Profile.dc.html' };
+        if (routes[k] && k !== this.state.nav) { window.location.href = routes[k]; return; }
+        this.setState({ nav: k });
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

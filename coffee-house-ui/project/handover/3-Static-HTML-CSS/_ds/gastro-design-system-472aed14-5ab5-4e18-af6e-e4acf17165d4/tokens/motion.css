@@ -1,0 +1,38 @@
+/* ============================================================
+   MOTION TOKENS
+   ------------------------------------------------------------
+   Feedback must be immediate — press states resolve under
+   100ms (spec). Motion is subtle and functional, never
+   decorative. Durations + easing are swappable per brand.
+   ============================================================ */
+
+:root {
+
+  /* ---- Durations ---- */
+  --duration-instant: 100ms;  /* @kind other */ /* press / tap feedback (<100ms) */
+  --duration-fast:    150ms;  /* @kind other */ /* toggles, checkboxes         */
+  --duration-base:    200ms;  /* @kind other */ /* default transitions         */
+  --duration-slow:    300ms;  /* @kind other */ /* sheets, dialogs             */
+  --duration-slower:  400ms;  /* @kind other */ /* full-screen transitions     */
+
+  /* ---- Easing ---- */
+  /* Standard: enters and settles — the default for most UI. */
+  --ease-standard:   cubic-bezier(0.2, 0, 0, 1); /* @kind other */
+  /* Decelerate: elements entering the screen (sheets sliding up). */
+  --ease-decelerate: cubic-bezier(0, 0, 0, 1); /* @kind other */
+  /* Accelerate: elements leaving the screen (dismiss / exit). */
+  --ease-accelerate: cubic-bezier(0.3, 0, 1, 1); /* @kind other */
+  /* Emphasized: gentle overshoot for selection/confirmation. */
+  --ease-emphasized: cubic-bezier(0.2, 0.8, 0.2, 1.05); /* @kind other */
+
+  /* ---- Composite transition tokens ---- */
+  --transition-press:  transform var(--duration-instant) var(--ease-standard),
+                       background-color var(--duration-instant) var(--ease-standard);
+  --transition-colors: color var(--duration-base) var(--ease-standard),
+                       background-color var(--duration-base) var(--ease-standard),
+                       border-color var(--duration-base) var(--ease-standard);
+  --transition-sheet:  transform var(--duration-slow) var(--ease-decelerate);
+
+  /* Press scale — subtle shrink on active (selection controls / cards). */
+  --press-scale: 0.97; /* @kind other */
+}

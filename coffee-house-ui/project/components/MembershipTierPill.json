@@ -1,0 +1,79 @@
+{
+  "kind": "component",
+  "name": "MembershipTierPill",
+  "version": "2026-09-12",
+  "description": "Translucent pill on dark surfaces showing loyalty tier with a crown icon and optional discount suffix.",
+  "size": {
+    "width": "hug",
+    "height": "hug",
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "row",
+    "spacing": [],
+    "padding": {
+      "x": 12,
+      "y": 4
+    },
+    "align": "center",
+    "justify": "start",
+    "scroll": "none",
+    "size": {
+      "width": "hug"
+    },
+    "children": [
+      {
+        "slot": "root.icon",
+        "type": "icon",
+        "name": "crown",
+        "weight": "fill",
+        "size": 13,
+        "color": "--gray-0"
+      },
+      {
+        "slot": "root.label",
+        "type": "text",
+        "content": "{membership}",
+        "style": "--text-body-xs",
+        "color": "--gray-0",
+        "lines": 1,
+        "overflow": "clip",
+        "align": "start",
+        "transform": "none",
+        "size": {
+          "width": "hug"
+        }
+      },
+      {
+        "slot": "root.discount",
+        "type": "text",
+        "content": "{discountLabel} off",
+        "style": "--text-body-xs",
+        "color": "--gray-0",
+        "lines": 1,
+        "overflow": "clip",
+        "align": "start",
+        "transform": "none",
+        "size": {
+          "width": "hug"
+        }
+      }
+    ]
+  },
+  "variants": {
+    "discountLabel": {
+      "prop": "discountLabel",
+      "cases": {
+        "null": {
+          "root.discount": {
+            "visible": false
+          }
+        }
+      }
+    }
+  },
+  "uses": [],
+  "notes": ""
+}

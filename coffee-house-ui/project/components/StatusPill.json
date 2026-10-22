@@ -1,0 +1,74 @@
+{
+  "kind": "component",
+  "name": "StatusPill",
+  "version": "2026-09-12",
+  "description": "Small tonal capsule for a state label (Open/Closed, Active/Inactive).",
+  "size": {
+    "width": "hug",
+    "height": "hug",
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "box",
+    "size": {
+      "width": "hug",
+      "height": "hug"
+    },
+    "background": "--color-bg-success",
+    "radius": "--radius-full",
+    "border": null,
+    "padding": {
+      "x": "--space-sm",
+      "y": "--space-xxs"
+    },
+    "child": {
+      "slot": "root.label",
+      "type": "text",
+      "content": "{children}",
+      "style": "--text-body-xs",
+      "color": "--color-text-success",
+      "lines": 1,
+      "overflow": "clip",
+      "align": "start",
+      "transform": "none",
+      "size": {
+        "width": "hug"
+      }
+    }
+  },
+  "variants": {
+    "tone": {
+      "prop": "tone",
+      "cases": {
+        "error": {
+          "root": {
+            "background": "--color-bg-error"
+          },
+          "root.label": {
+            "color": "--color-text-error"
+          }
+        },
+        "warning": {
+          "root": {
+            "background": "--color-bg-warning"
+          },
+          "root.label": {
+            "color": "--color-text-warning"
+          }
+        },
+        "neutral": {
+          "root": {
+            "background": "--gray-100"
+          },
+          "root.label": {
+            "color": "--color-text-secondary"
+          }
+        }
+      }
+    }
+  },
+  "uses": [],
+  "notes": ""
+}

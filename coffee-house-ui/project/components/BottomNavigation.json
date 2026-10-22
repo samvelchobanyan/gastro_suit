@@ -1,0 +1,83 @@
+{
+  "kind": "component",
+  "name": "BottomNavigation",
+  "version": "2026-09-12",
+  "description": "Persistent bottom nav bar; active item shows filled icon in accent color.",
+  "size": {
+    "width": "fill",
+    "height": 56,
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "row",
+    "spacing": [],
+    "padding": null,
+    "align": "stretch",
+    "justify": "start",
+    "scroll": "none",
+    "size": {
+      "width": "fill",
+      "height": 56
+    },
+    "children": [
+      {
+        "slot": "item",
+        "type": "column",
+        "spacing": [
+          "--space-xxs"
+        ],
+        "padding": null,
+        "align": "center",
+        "justify": "center",
+        "scroll": "none",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "item.icon",
+            "type": "icon",
+            "name": "{icon}",
+            "weight": "regular",
+            "size": "--icon-md",
+            "color": "--bottomnav-icon"
+          },
+          {
+            "slot": "item.label",
+            "type": "text",
+            "content": "{label}",
+            "style": "--text-body-xs",
+            "color": "--bottomnav-icon",
+            "lines": 1,
+            "overflow": "clip",
+            "align": "center",
+            "transform": "none",
+            "size": {
+              "width": "fill"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "variants": {
+    "active": {
+      "prop": "interaction",
+      "cases": {
+        "true": {
+          "item.icon": {
+            "weight": "fill",
+            "color": "--bottomnav-icon-active"
+          },
+          "item.label": {
+            "color": "--bottomnav-icon-active"
+          }
+        }
+      }
+    }
+  },
+  "uses": [],
+  "notes": "Root repeats one \"item\" per entry in items[]; badge overlay omitted (not used by either screen)."
+}

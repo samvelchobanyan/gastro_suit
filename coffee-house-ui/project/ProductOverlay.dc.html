@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+</helmet>
+<sc-if value="{{ visible }}" hint-placeholder-val="{{ false }}">
+  <div style="position: absolute; inset: 0; z-index: 49; background: var(--alpha-black-40);" onClick="{{ onClose }}"></div>
+  <div style="position: absolute; top: var(--space-xl); left: 0; right: 0; bottom: 0; z-index: 50; background: var(--color-bg-surface); display: flex; flex-direction: column; overflow: hidden; border-radius: var(--radius-lg) var(--radius-lg) 0 0;">
+  <div style="flex: 1; min-height: 0; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: none;">
+    <div style="position: relative; width: 100%; aspect-ratio: 1 / 1; flex: 0 0 auto; background: var(--gray-900);">
+      <img src="{{ imageUrl }}" alt="{{ productName }}" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+      <div style="position: absolute; top: var(--space-sm); left: 50%; transform: translateX(-50%); width: 36px; height: 4px; border-radius: var(--radius-full); background: var(--alpha-white-40, rgba(255,255,255,0.4)); z-index: 1;"></div>
+      <div style="position: absolute; bottom: var(--space-base); left: var(--space-base); z-index: 1;">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="info" variant="tonal" size="xs" on-click="{{ openNutrition }}" hint-size="36px,36px"></x-import>
+      </div>
+      <div style="position: absolute; bottom: var(--space-base); right: var(--space-base); z-index: 1;">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="heart" variant="{{ heartVariant }}" size="xs" active="{{ favorited }}" on-click="{{ toggleFavorite }}" hint-size="36px,36px"></x-import>
+      </div>
+    </div>
+    <div style="flex: 1; min-height: 0; padding: var(--space-base);">
+      <span style="font: var(--text-h2); color: var(--color-text-primary); display: block; text-wrap: pretty;">{{ productName }}</span>
+      <div style="display: flex; align-items: center; gap: var(--space-xs); margin-top: var(--space-xs);">
+        <span style="font: var(--text-h3); color: var(--color-text-primary);">{{ price }}</span>
+        <span style="font: var(--text-h3); color: var(--color-text-secondary);">·</span>
+        <span style="font: var(--text-body-sm); color: var(--gray-600);">300ml</span>
+      </div>
+      <div style="margin: var(--space-base) 0;">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" hint-size="100%,1px"></x-import>
+      </div>
+      <p style="font: var(--text-body); color: var(--gray-600); margin: 0;">High-quality 100% Arabica with distinct flavor notes revealed through processing</p>
+      <div style="display: flex; gap: var(--space-sm); margin-top: var(--space-base);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SizeSelector" name="Small" selected="{{ sizeSmall }}" on-click="{{ setSizeSmall }}" style="{{ sizeSelectorStyle }}" hint-size="100%,40px"></x-import>
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SizeSelector" name="Regular" selected="{{ sizeRegular }}" on-click="{{ setSizeRegular }}" style="{{ sizeSelectorStyle }}" hint-size="100%,40px"></x-import>
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SizeSelector" name="Large" selected="{{ sizeLarge }}" on-click="{{ setSizeLarge }}" style="{{ sizeSelectorStyle }}" hint-size="100%,40px"></x-import>
+      </div>
+      <div style="margin-top: var(--space-lg);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Topping options 1" hint-size="100%,28px"></x-import>
+        <div style="display: flex; flex-direction: column; gap: var(--space-sm); margin-top: var(--space-md);">
+          <sc-for list="{{ toppings1 }}" as="t" hint-placeholder-count="3">
+            <x-import component-from-global-scope="GastroDesignSystem_472aed.CheckboxAddOn" label="{{ t.label }}" price="{{ t.price }}" checked="{{ t.checked }}" qty="{{ t.qty }}" on-change="{{ t.toggle }}" on-qty-change="{{ t.setQty }}" hint-size="100%,48px"></x-import>
+          </sc-for>
+        </div>
+      </div>
+      <div style="margin-top: var(--space-lg);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Topping options 2" hint-size="100%,28px"></x-import>
+        <div style="display: flex; flex-direction: column; gap: var(--space-sm); margin-top: var(--space-md);">
+          <sc-for list="{{ toppings2 }}" as="t" hint-placeholder-count="3">
+            <x-import component-from-global-scope="GastroDesignSystem_472aed.RadioAddOn" label="{{ t.label }}" price="{{ t.price }}" checked="{{ t.checked }}" qty="{{ t.qty }}" on-change="{{ t.select }}" on-qty-change="{{ t.setQty }}" hint-size="100%,48px"></x-import>
+          </sc-for>
+        </div>
+      </div>
+      <div style="margin-top: var(--space-lg);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Topping options 3" hint-size="100%,28px"></x-import>
+        <div style="display: flex; flex-direction: column; gap: var(--space-sm); margin-top: var(--space-md);">
+          <sc-for list="{{ toppings3 }}" as="t" hint-placeholder-count="3">
+            <x-import component-from-global-scope="GastroDesignSystem_472aed.CheckboxAddOnSimple" label="{{ t.label }}" checked="{{ t.checked }}" on-change="{{ t.toggle }}" hint-size="100%,40px"></x-import>
+          </sc-for>
+        </div>
+      </div>
+      <div style="margin-top: var(--space-lg);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Topping options 4" hint-size="100%,28px"></x-import>
+        <div style="display: flex; flex-direction: column; gap: var(--space-sm); margin-top: var(--space-md);">
+          <sc-for list="{{ toppings4 }}" as="t" hint-placeholder-count="3">
+            <x-import component-from-global-scope="GastroDesignSystem_472aed.RadioAddOnSimple" label="{{ t.label }}" checked="{{ t.checked }}" on-change="{{ t.select }}" hint-size="100%,40px"></x-import>
+          </sc-for>
+        </div>
+      </div>
+      <div style="margin-top: var(--space-lg); margin-bottom: var(--space-xl);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Anything else?" hint-size="100%,28px"></x-import>
+        <div style="display: flex; gap: var(--space-sm); overflow-x: auto; scrollbar-width: none; margin: var(--space-md) calc(-1 * var(--space-base)) 0; padding: 0 var(--space-base) var(--space-xs);">
+          <sc-for list="{{ elseItems }}" as="p" hint-placeholder-count="5">
+            <div style="flex:0 0 128px; position: relative;">
+              <x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="{{ p.name }}" price="{{ p.price }}" image-url="{{ p.image }}" hint-size="128px,180px"></x-import>
+              <div style="position:absolute; top: calc(128px - var(--button-height-sm) - var(--space-xs)); right: var(--space-xs); z-index:1;">
+                <sc-if value="{{ p.added }}" hint-placeholder-val="{{ false }}">
+                  <x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="x" variant="tonal" size="sm" dc-props="{{ removeFromCartProps }}" on-click="{{ p.toggle }}" hint-size="40px,40px"></x-import>
+                </sc-if>
+                <sc-if value="{{ p.notAdded }}" hint-placeholder-val="{{ true }}">
+                  <x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="plus" variant="filled" size="sm" dc-props="{{ addToCartProps }}" on-click="{{ p.toggle }}" hint-size="40px,40px"></x-import>
+                </sc-if>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div style="flex: 0 0 auto; z-index: 2; display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-base); background: var(--color-bg-surface); border-top: 1px solid var(--color-border-muted);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Stepper" value="{{ qty }}" on-change="{{ setQty }}" size="md" hint-size="120px,40px"></x-import>
+      <div style="flex: 1; min-width: 0;">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Button" variant="primary" size="sm" full-width="{{ true }}" icon-left="shopping-cart-simple" on-click="{{ handleAdd }}" hint-size="100%,40px">{{ addLabel }}</x-import>
+      </div>
+    </div>
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.BottomSheet" open="{{ nutritionOpen }}" on-close="{{ closeNutrition }}" title="Nutrition facts" style="{{ sheetStyle }}" hint-size="100%,320px">
+      <div style="display: flex; flex-direction: column;">
+        <sc-for list="{{ nutritionRows }}" as="row" hint-placeholder-count="4">
+          <div style="display: flex; justify-content: space-between; padding: var(--space-sm) 0;">
+            <span style="font: var(--text-body); color: var(--color-text-primary);">{{ row.label }}</span>
+            <span style="font: var(--text-body-semibold); color: var(--color-text-primary);">{{ row.value }}</span>
+          </div>
+          <sc-if value="{{ row.showDivider }}" hint-placeholder-val="{{ true }}">
+            <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" hint-size="100%,1px"></x-import>
+          </sc-if>
+        </sc-for>
+      </div>
+    </x-import>
+  </div>
+</sc-if>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:800},&quot;visible&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;imageUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;productName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Product name&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;price&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;},&quot;onAddToCart&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { qty: 1, size: 'Regular', checkboxChecked: false, checkboxQty: 1, radioChecked: false, radioQty: 1, t1: {}, t1Qty: {}, t2Selected: null, t2Qty: 1, t3: {}, t4Selected: null, favorited: false, nutritionOpen: false, elseAdded: {} };
+  nutritionRows = [
+    { label: 'Calories', value: '180 kcal' },
+    { label: 'Proteins', value: '6 g' },
+    { label: 'Fats', value: '7 g' },
+    { label: 'Carbohydrates', value: '24 g' },
+  ];
+  t1Labels = [
+    { label: 'Extra shot', price: '+֏250' },
+    { label: 'Vanilla syrup', price: '+֏150' },
+    { label: 'Caramel syrup', price: '+֏150' },
+  ];
+  t2Labels = [
+    { label: 'Whole milk', price: '+֏0' },
+    { label: 'Oat milk', price: '+֏250' },
+    { label: 'Almond milk', price: '+֏250' },
+  ];
+  t3Labels = ['Cinnamon', 'Cocoa powder', 'Nutmeg'];
+  t4Labels = ['Hot', 'Iced', 'Blended'];
+  elseLabels = [
+    { name: 'Iced Fantasy Coffee', price: '֏1,450', image: 'uploads/ch_fav_iced_fantasy_coffee.png' },
+    { name: 'Iced Cream Cheese Latte Aroma', price: '֏1,850', image: 'uploads/ch_fav_iced_cream_cheese_latte_aroma.png' },
+    { name: 'Hot Raf Strawberry', price: '֏1,650', image: 'uploads/ch_fav_hot_raf_strawberry.png' },
+    { name: 'Hot Salted Caramel Matcha Latte', price: '֏1,950', image: 'uploads/ch_prod_hot_salted_caramel_matcha_latte.png' },
+    { name: 'Dubai Cheesecake', price: '֏2,250', image: 'uploads/ch_prod_dubai_cheesecake.png' },
+  ];
+  renderVals() {
+    return {
+      toppings1: this.t1Labels.map((t) => ({
+        ...t,
+        checked: !!this.state.t1[t.label],
+        qty: this.state.t1Qty[t.label] || 1,
+        toggle: (v) => this.setState((s) => ({ t1: { ...s.t1, [t.label]: v }, t1Qty: { ...s.t1Qty, [t.label]: 1 } })),
+        setQty: (v) => this.setState((s) => ({ t1Qty: { ...s.t1Qty, [t.label]: v } })),
+      })),
+      toppings2: this.t2Labels.map((t) => ({
+        ...t,
+        checked: this.state.t2Selected === t.label,
+        qty: this.state.t2Selected === t.label ? this.state.t2Qty : 1,
+        select: () => this.setState({ t2Selected: t.label, t2Qty: 1 }),
+        setQty: (v) => this.setState({ t2Qty: v }),
+      })),
+      toppings3: this.t3Labels.map((label) => ({
+        label,
+        checked: !!this.state.t3[label],
+        toggle: (v) => this.setState((s) => ({ t3: { ...s.t3, [label]: v } })),
+      })),
+      toppings4: this.t4Labels.map((label) => ({
+        label,
+        checked: this.state.t4Selected === label,
+        select: () => this.setState({ t4Selected: label }),
+      })),
+      checkboxChecked: this.state.checkboxChecked,
+      checkboxQty: this.state.checkboxQty,
+      toggleCheckbox: (v) => this.setState({ checkboxChecked: v, checkboxQty: 1 }),
+      setCheckboxQty: (v) => this.setState({ checkboxQty: v }),
+      radioChecked: this.state.radioChecked,
+      radioQty: this.state.radioQty,
+      toggleRadio: (v) => this.setState({ radioChecked: v, radioQty: 1 }),
+      setRadioQty: (v) => this.setState({ radioQty: v }),
+      visible: this.props.visible ?? false,
+      sizeSmall: this.state.size === 'Small',
+      sizeRegular: this.state.size === 'Regular',
+      sizeLarge: this.state.size === 'Large',
+      setSizeSmall: () => this.setState({ size: 'Small' }),
+      setSizeRegular: () => this.setState({ size: 'Regular' }),
+      setSizeLarge: () => this.setState({ size: 'Large' }),
+      sizeSelectorStyle: { flex: 1, minWidth: 0 },
+      imageUrl: this.props.imageUrl ?? '',
+      productName: this.props.productName ?? 'Product name',
+      price: this.props.price ?? '',
+      onClose: this.props.onClose ?? (() => {}),
+      qty: this.state.qty,
+      setQty: (v) => this.setState({ qty: v }),
+      noop: () => {},
+      handleAdd: () => {
+        this.props.onAddToCart?.();
+        this.props.onClose?.();
+      },
+      addLabel: `Add · ${this.props.price ?? ''}`,
+      favorited: this.state.favorited,
+      heartVariant: this.state.favorited ? 'filled' : 'tonal',
+      toggleFavorite: () => this.setState((s) => ({ favorited: !s.favorited })),
+      nutritionOpen: this.state.nutritionOpen,
+      openNutrition: () => this.setState({ nutritionOpen: true }),
+      closeNutrition: () => this.setState({ nutritionOpen: false }),
+      nutritionRows: this.nutritionRows.map((r, i) => ({ ...r, showDivider: i < this.nutritionRows.length - 1 })),
+      addToCartProps: { ariaLabel: 'Add to cart' },
+      removeFromCartProps: { ariaLabel: 'Remove from cart' },
+      elseItems: this.elseLabels.map((p) => {
+        const added = !!this.state.elseAdded[p.name];
+        return { ...p, added, notAdded: !added, toggle: () => this.setState((s) => ({ elseAdded: { ...s.elseAdded, [p.name]: !s.elseAdded[p.name] } })) };
+      }),
+      sheetStyle: { zIndex: 60 },
+    };
+  }
+}
+
+</script>
+</body>
+</html>

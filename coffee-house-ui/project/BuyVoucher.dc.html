@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <style>
+    body { margin: 0; min-height: 100vh; box-sizing: border-box; padding: var(--space-lg) 0; background: var(--gray-100); font-family: "Plus Jakarta Sans", system-ui, sans-serif; display: flex; align-items: center; justify-content: center; }
+    a { color: var(--color-text-primary); } a:hover { color: var(--color-text-secondary); }
+  </style>
+</helmet>
+<div data-screen-label="Buy voucher" style="width: 360px; height: 800px; background: var(--color-bg-surface); overflow: hidden; display: flex; flex-direction: column; flex: 0 0 auto; position: relative;">
+  <x-import component-from-global-scope="GastroDesignSystem_472aed.ScreenHeader" title="Buy a voucher" on-back="{{ goBack }}" hint-size="100%,76px"></x-import>
+  <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 0 var(--space-base) var(--space-base);">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.VoucherPurchase" name="{{ voucher.name }}" price="{{ voucher.price }}" image="{{ voucher.image }}" quantity="{{ qty }}" min="{{ 1 }}" max="{{ 10 }}" on-change="{{ setQty }}" hint-size="100%,80px"></x-import>
+    <div style="display: flex; flex-direction: column; gap: var(--space-sm); padding: var(--space-base); margin-top: var(--space-base); border-radius: var(--radius-md); background: var(--gray-900); font-family: var(--font-family-base);">
+      <div style="display: flex; align-items: flex-start; gap: var(--space-md); margin-bottom: var(--space-xs);">
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-sm);">
+          <span style="font: var(--text-body-lg-semibold); color: var(--gray-0);">Recipient</span>
+          <span style="font-size: var(--font-size-body); line-height: var(--line-height-body); font-weight: var(--font-weight-regular); color: var(--gray-500); text-wrap: pretty;">Enter your friend's mobile phone number to send the voucher.</span>
+        </div>
+        <img src="uploads/ch_wallet.png" alt="" style="width: 48px; height: 48px; object-fit: contain; flex: 0 0 auto; display: block;">
+      </div>
+      <div style="position: relative;">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Input" type="tel" value="{{ phone }}" on-change="{{ setPhone }}" placeholder="+374" leading-icon="phone" hint-size="100%,40px"></x-import>
+        <sc-if value="{{ showUser }}" hint-placeholder-val="{{ false }}">
+          <button type="button" aria-label="Clear phone number" onClick="{{ clearPhone }}" style="position: absolute; top: 50%; right: var(--space-xs); transform: translateY(-50%); width: 32px; height: 32px; padding: 0; border: none; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--color-text-tertiary);"><i class="ph ph-x" style="font-size: var(--icon-sm);"></i></button>
+        </sc-if>
+      </div>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Button" variant="primary" size="sm" full-width="{{ true }}" disabled="{{ searchDisabled }}" on-click="{{ search }}" hint-size="100%,40px">Search</x-import>
+    </div>
+    <sc-if value="{{ showUser }}" hint-placeholder-val="{{ false }}">
+      <div style="padding-top: var(--space-md);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.UserCard" name="Anna" surname="Petrosyan" phone="{{ foundPhone }}" hint-size="100%,56px"></x-import>
+      </div>
+      <div style="padding: var(--space-base) 0 var(--space-sm);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Pay from" hint-size="100%,28px"></x-import>
+      </div>
+      <div style="position: relative;">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.PaymentMethods" icon="credit-card" name="Visa •••• 4242" balance="$24.50" chevron="{{ true }}" hint-size="100%,48px"></x-import>
+        <div style="position: absolute; inset: 0; cursor: pointer;" onClick="{{ openPaymentSheet }}"></div>
+      </div>
+      <div style="padding-top: var(--space-lg);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Button" variant="primary" size="sm" full-width="{{ true }}" on-click="{{ buy }}" hint-size="100%,40px">{{ buyLabel }}</x-import>
+      </div>
+    </sc-if>
+  </div>
+  <dc-import name="VoucherSuccess" visible="{{ bought }}" qty="{{ qty }}" voucher-name="{{ voucher.name }}" name="Anna" surname="Petrosyan" phone="{{ foundPhone }}" hint-size="360px,800px"></dc-import>
+  <dc-import name="PaymentBottomSheet" open="{{ paymentSheetOpen }}" on-close="{{ closePaymentSheet }}" on-select="{{ closePaymentSheet }}" hint-size="100%,100%"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:800}}">
+class Component extends DCLogic {
+  state = { qty: 1, phone: '', searched: null };
+  renderVals() {
+    const vouchers = [
+      { name: 'Iced Americano', price: '$3.50', image: 'uploads/ice%20americano-52926f9b.png' },
+      { name: 'Dubai Cheesecake', price: '$6.90', image: 'uploads/dubai%20cheesecake-83568b34.png' },
+      { name: 'Bumble Cherry', price: '$4.50', image: 'uploads/bumble%20cherry-ab6a4199.png' },
+      { name: 'Hot Raf Strawberry', price: '$4.90', image: 'uploads/raf%20strawberry-e6ea36ce.png' },
+    ];
+    const i = parseInt(new URLSearchParams(window.location.search).get('v'), 10);
+    const v = vouchers[i] || vouchers[0];
+    const total = (parseFloat(v.price.slice(1)) * this.state.qty).toFixed(2);
+    return {
+      voucher: v,
+      buyLabel: 'Buy voucher for $' + total,
+      bought: !!this.state.bought,
+      buy: () => this.setState({ bought: true }),
+      qty: this.state.qty,
+      setQty: (q) => this.setState({ qty: q }),
+      paymentSheetOpen: !!this.state.paymentSheetOpen,
+      openPaymentSheet: () => this.setState({ paymentSheetOpen: true }),
+      closePaymentSheet: () => this.setState({ paymentSheetOpen: false }),
+      phone: this.state.phone ? '+374 ' + this.state.phone : '',
+      setPhone: (v) => {
+        let s = String(v);
+        s = s.startsWith('+374') ? s.slice(4) : s;
+        this.setState({ phone: s.replace(/\D/g, '').slice(0, 8) });
+      },
+      searchDisabled: this.state.phone.length < 8 || (!!this.state.searched && this.state.searched === this.state.phone),
+      search: () => this.setState({ searched: this.state.phone }),
+      clearPhone: () => this.setState({ phone: '', searched: null }),
+      showUser: !!this.state.searched && this.state.searched === this.state.phone,
+      foundPhone: '+374 ' + (this.state.searched || ''),
+      goBack: () => { window.location.href = 'Gifts.dc.html?tab=vouchers'; },
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <style>
+    body { margin: 0; background: #e9e7e2; font-family: "Plus Jakarta Sans", system-ui, sans-serif; padding: 32px; }
+  </style>
+</helmet>
+<div style="width: 360px; margin: 0 auto; background: #fff; box-shadow: 0 8px 32px rgba(0,0,0,.14); border-radius: 20px; overflow: hidden; height: 800px; display: flex; flex-direction: column;">
+
+  <!-- Status bar -->
+  <div style="height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; font-size: 13px; font-weight: 600; color: var(--color-text-primary, #16161a);">
+    <span>9:41</span>
+    <span style="display: flex; gap: 6px; align-items: center;"><i class="ph ph-cell-signal-full"></i><i class="ph ph-wifi-high"></i><i class="ph ph-battery-full"></i></span>
+  </div>
+
+  <!-- Scrollable content -->
+  <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none;">
+
+  <!-- Greeting header -->
+  <x-import component-from-global-scope="GastroDesignSystem_472aed.Greeting" variant="profile" name="Aram" greeting="Let's enjoy some coffee" logo-url="uploads/ch_logo_alt-c235d879.svg" avatar-url="uploads/ch_user_profile-dcfed656.png" has-notifications="{{ true }}" has-avatar-notification="{{ true }}" hint-size="100%,76px"></x-import>
+
+  <!-- Stories row -->
+  <div style="display: flex; gap: var(--space-sm); overflow-x: auto; padding: var(--space-sm) var(--space-base) var(--space-base); scrollbar-width: none;">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Stories" image-url="https://images.unsplash.com/photo-1536914561643-9e3a7a8d063d?w=200&h=200&fit=crop&crop=faces&q=80" label="Iced Americano" seen="{{ false }}" style="flex:0 0 auto" hint-size="72px,92px"></x-import>
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Stories" image-url="https://images.unsplash.com/photo-1642432297131-d1d80ae6f3f8?w=200&h=200&fit=crop&crop=faces&q=80" label="Cold brew" seen="{{ false }}" style="flex:0 0 auto" hint-size="72px,92px"></x-import>
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Stories" image-url="https://images.unsplash.com/photo-1512441944949-3d243fe34329?w=200&h=200&fit=crop&crop=faces&q=80" label="Espresso" seen="{{ false }}" style="flex:0 0 auto" hint-size="72px,92px"></x-import>
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Stories" image-url="https://images.unsplash.com/photo-1475552113915-6fcb52652ba2?w=200&h=200&fit=crop&crop=faces&q=80" label="Flat white" seen="{{ true }}" style="flex:0 0 auto" hint-size="72px,92px"></x-import>
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Stories" image-url="https://images.unsplash.com/photo-1536914464651-b89b0d212872?w=200&h=200&fit=crop&crop=faces&q=80" label="Latte art" seen="{{ true }}" style="flex:0 0 auto" hint-size="72px,92px"></x-import>
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Stories" image-url="https://images.unsplash.com/photo-1542033474370-d28774f3338d?w=200&h=200&fit=crop&crop=faces&q=80" label="Mocha" seen="{{ true }}" style="flex:0 0 auto" hint-size="72px,92px"></x-import>
+  </div>
+
+  <!-- Loyalty points + Wallet square blocks (off-DS test) -->
+  <div style="display: flex; gap: var(--space-sm); padding: 0 var(--space-base) var(--space-base);">
+    <div style="flex: 1 1 0; min-width: 0; height: 160px; box-sizing: border-box; position: relative; overflow: hidden; border-radius: var(--space-base); background: var(--gray-900); padding: var(--space-base); display: flex; flex-direction: column; justify-content: flex-start;">
+      <img src="uploads/ch_loyalty_bg-76e4ffa1.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none;">
+      <div style="position: relative; display: flex; flex-direction: column; gap: var(--space-xs); align-items: flex-start;">
+        <span style="font-size: var(--font-size-body-sm); line-height: var(--line-height-body-sm); font-weight: var(--font-weight-regular); color: var(--gray-500);">Loyalty</span>
+        <span style="font-size: var(--font-size-h1); line-height: var(--line-height-h1); font-weight: var(--font-weight-bold); color: var(--gray-0);">1,240</span>
+      </div>
+      <span style="position: absolute; top: var(--space-base); right: var(--space-base); display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: var(--radius-full); background: rgba(255,255,255,0.10); color: var(--gray-0); font-size: var(--font-size-overline); line-height: var(--line-height-overline); font-weight: var(--font-weight-regular); white-space: nowrap;"><i class="ph-fill ph-crown" aria-hidden="true" style="font-size: 11px;"></i>10%</span>
+      <div style="position: absolute; bottom: var(--space-base); right: var(--space-base);"><img src="uploads/qr_alt.svg" alt="Show QR code" style="width: 36px; height: 36px; display: block;"></div>
+    </div>
+    <div style="flex: 1 1 0; min-width: 0; height: 160px; box-sizing: border-box; position: relative; overflow: hidden; border-radius: var(--space-base); background: var(--gray-900); padding: var(--space-base); display: flex; flex-direction: column; justify-content: flex-start;">
+      <img src="uploads/ch_walle_bg.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none;">
+      <div style="position: relative; display: flex; flex-direction: column;">
+          <span style="font-size: var(--font-size-body-sm); line-height: var(--line-height-body-sm); font-weight: var(--font-weight-regular); color: var(--gray-500);">Wallet</span>
+          <span style="font-size: var(--font-size-h1); line-height: var(--line-height-h1); font-weight: var(--font-weight-bold); color: var(--gray-0);">֏5,680</span>
+      </div>
+      <div style="position: absolute; bottom: var(--space-base); right: var(--space-base);"><x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="plus" variant="filled" size="sm" aria-label="Top up" hint-size="40px,40px"></x-import></div>
+    </div>
+  </div>
+
+  <!-- Vouchers -->
+  <div style="padding: 0 0 var(--space-lg);">
+    <div style="padding: 0 var(--space-base); margin-bottom: var(--space-md);"><x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Vouchers" hint-size="100%,28px"></x-import></div>
+    <div style="display: flex; gap: var(--space-sm); overflow-x: auto; padding: 0 var(--space-base); scrollbar-width: none;">
+      <div style="flex:0 0 auto;"><x-import component-from-global-scope="GastroDesignSystem_472aed.Voucher" name="Bumble Cherry" remaining="{{ 2 }}" image="uploads/ch_voucher_bumble_cherry.png" hint-size="auto,72px"></x-import></div>
+      <div style="flex:0 0 auto;"><x-import component-from-global-scope="GastroDesignSystem_472aed.Voucher" name="Iced Americano Specialty Arabica" remaining="{{ 1 }}" image="uploads/ch_voucher_iced_americano_specialty_arabica.png" hint-size="auto,72px"></x-import></div>
+    </div>
+  </div>
+
+  <!-- Tabs (small) -->
+  <div style="padding: 0 var(--space-base) var(--space-base);">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.SegmentedControl" size="small" full-width="{{ false }}" options="{{ tabOptions }}" value="{{ tabValue }}" on-change="{{ setTab }}" hint-size="auto,32px"></x-import>
+  </div>
+
+  <!-- Buy again rail -->
+  <sc-if value="{{ showBuyAgain }}" hint-placeholder-val="{{ true }}">
+  <div style="display: flex; gap: var(--space-sm); overflow-x: auto; padding: 0 var(--space-base) var(--space-lg); scrollbar-width: none;">
+    <div style="flex:0 0 128px"><x-import component-from-global-scope="GastroDesignSystem_472aed.BuyAgainCard" name="Hot Salted Caramel Matcha Latte" location="Northern Ave" image-url="uploads/ch_prod_hot_salted_caramel_matcha_latte.png" style="flex:0 0 128px" hint-size="128px,180px"></x-import></div>
+    <div style="flex:0 0 128px"><x-import component-from-global-scope="GastroDesignSystem_472aed.BuyAgainCard" name="Dubai Cheesecake" location="Cascade" image-url="uploads/ch_prod_dubai_cheesecake.png" style="flex:0 0 128px" hint-size="128px,180px"></x-import></div>
+    <div style="flex:0 0 128px"><x-import component-from-global-scope="GastroDesignSystem_472aed.BuyAgainCard" name="Muffin Chocolate" location="Republic Sq" image-url="uploads/ch_prod_muffin_chocolate.png" style="flex:0 0 128px" hint-size="128px,180px"></x-import></div>
+  </div>
+  </sc-if>
+
+  <!-- Favourites rail -->
+  <sc-if value="{{ showFavourites }}" hint-placeholder-val="{{ true }}">
+  <div style="display: flex; gap: var(--space-sm); overflow-x: auto; padding: 0 var(--space-base) var(--space-lg); scrollbar-width: none;">
+    <div style="flex:0 0 128px"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="Iced Fantasy Coffee" price="֏1,450" image-url="uploads/ch_fav_iced_fantasy_coffee.png" hint-size="128px,180px"></x-import></div>
+    <div style="flex:0 0 128px"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="Iced Cream Cheese Latte Aroma" price="֏1,850" image-url="uploads/ch_fav_iced_cream_cheese_latte_aroma.png" hint-size="128px,180px"></x-import></div>
+    <div style="flex:0 0 128px"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="Hot Raf Strawberry" price="֏1,650" image-url="uploads/ch_fav_hot_raf_strawberry.png" hint-size="128px,180px"></x-import></div>
+  </div>
+  </sc-if>
+
+  <!-- Promo ads -->
+  <div style="display: flex; gap: var(--space-sm); overflow-x: auto; padding: 0 var(--space-base) var(--space-lg); scrollbar-width: none;">
+    <a href="#" style="flex:0 0 280px; display:block; border-radius: var(--radius-md, 16px); overflow: hidden; box-shadow: var(--elevation-card);"><img src="uploads/promo_1png.png" alt="Horizon · Stephan Bodzin" style="width:100%; aspect-ratio: 512/264; object-fit: cover; display:block;"></a>
+    <a href="#" style="flex:0 0 280px; display:block; border-radius: var(--radius-md, 16px); overflow: hidden; box-shadow: var(--elevation-card);"><img src="uploads/promo_2.png" alt="App exclusive combos" style="width:100%; aspect-ratio: 512/264; object-fit: cover; display:block;"></a>
+    <a href="#" style="flex:0 0 280px; display:block; border-radius: var(--radius-md, 16px); overflow: hidden; box-shadow: var(--elevation-card);"><img src="uploads/promo_3.png" alt="Iconic Armo Y2K Diva's playlist" style="width:100%; aspect-ratio: 512/264; object-fit: cover; display:block;"></a>
+  </div>
+
+  <!-- Nearest branches -->
+  <div style="padding: 0 var(--space-base) var(--space-base);">
+    <div style="margin-bottom: var(--space-md);"><x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Nearest branches" hint-size="100%,28px"></x-import></div>
+    <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.BranchCard" name="Northern Avenue" address="12 Northern Ave, Yerevan" hours="08:00 – 23:00" distance="0.4 km" is-open-now="{{ true }}" on-click="{{ noop }}" image="uploads/branch_1.png" hint-size="100%,72px"></x-import>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" hint-size="100%,1px"></x-import>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.BranchCard" name="Cascade" address="3 Tamanyan St, Yerevan" hours="09:00 – 22:00" distance="1.1 km" is-open-now="{{ true }}" on-click="{{ noop }}" image="uploads/branch_2.png" hint-size="100%,72px"></x-import>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" hint-size="100%,1px"></x-import>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.BranchCard" name="Republic Square" address="5 Abovyan St, Yerevan" hours="08:00 – 00:00" distance="1.8 km" is-open-now="{{ false }}" on-click="{{ noop }}" image="uploads/branch_3.png" hint-size="100%,72px"></x-import>
+    </div>
+  </div>
+
+  </div><!-- /scrollable content -->
+
+  <!-- Bottom navigation -->
+  <div style="padding: var(--space-sm) var(--space-base) calc(var(--space-sm) + env(safe-area-inset-bottom, 0px)); background: #fff; border-top: 1px solid var(--color-border-muted);">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.BottomTabBar" items="{{ navItems }}" active-key="{{ navActive }}" on-change="{{ setNav }}" hint-size="100%,56px"></x-import>
+  </div>
+
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tab: 'buy-again', nav: 'home' };
+  renderVals() {
+    return {
+      tabOptions: [
+        { label: 'Buy again', value: 'buy-again', icon: 'arrow-counter-clockwise' },
+        { label: 'Favourites', value: 'favourites', icon: 'heart' },
+      ],
+      noop: () => {},
+      navItems: [
+        { key: 'home', icon: 'house', label: 'Home' },
+        { key: 'order', icon: 'coffee', label: 'Order' },
+        { key: 'gifts', icon: 'gift', label: 'Gifts' },
+        { key: 'profile', icon: 'user', label: 'Profile' },
+      ],
+      navActive: this.state.nav,
+      setNav: (k) => this.setState({ nav: k }),
+      tabValue: this.state.tab,
+      showBuyAgain: this.state.tab === 'buy-again',
+      showFavourites: this.state.tab === 'favourites',
+      setTab: (v) => this.setState({ tab: v }),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <style>
+    body { margin: 0; min-height: 100vh; box-sizing: border-box; padding: var(--space-lg) 0; background: var(--gray-100); font-family: "Plus Jakarta Sans", system-ui, sans-serif; display: flex; align-items: center; justify-content: center; }
+  </style>
+</helmet>
+<div style="width: 360px; background: var(--color-bg-surface); overflow: hidden; height: 800px; display: flex; flex-direction: column; flex: 0 0 auto; position: relative;">
+
+
+
+  <!-- Scrollable content -->
+  <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none;">
+
+  <!-- Greeting header -->
+  <x-import component-from-global-scope="GastroDesignSystem_472aed.Greeting" name="Aram" greeting="Let's enjoy some coffee" logo-url="uploads/ch_logo-69a8ddeb.svg" has-notifications="{{ true }}" hint-size="100%,76px"></x-import>
+
+  <!-- Stories row -->
+  <div style="display: flex; gap: var(--space-sm); overflow-x: auto; padding: var(--space-sm) var(--space-base) var(--space-base); scrollbar-width: none;">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Stories" image-url="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=200&h=200&fit=crop&q=80" label="A very very long story title" seen="{{ false }}" style="flex:0 0 auto" hint-size="72px,92px"></x-import>
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Stories" image-url="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=200&h=200&fit=crop&q=80" label="Cold brew" seen="{{ false }}" style="flex:0 0 auto" hint-size="72px,92px"></x-import>
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Stories" image-url="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=200&h=200&fit=crop&q=80" label="Espresso" seen="{{ false }}" style="flex:0 0 auto" hint-size="72px,92px"></x-import>
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Stories" image-url="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=200&h=200&fit=crop&q=80" label="Pastries" seen="{{ true }}" style="flex:0 0 auto" hint-size="72px,92px"></x-import>
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Stories" image-url="https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=200&h=200&fit=crop&q=80" label="Beans" seen="{{ true }}" style="flex:0 0 auto" hint-size="72px,92px"></x-import>
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Stories" image-url="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=200&h=200&fit=crop&q=80" label="Mocha" seen="{{ true }}" style="flex:0 0 auto" hint-size="72px,92px"></x-import>
+  </div>
+
+  <!-- Loyalty points card -->
+  <div style="padding: 0 var(--space-base) var(--space-base);">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.LoyaltyPointsCard" points="{{ 1240 }}" membership="Master" discount-label="10%" qr-value="CH-ARAM-1240" background-image="uploads/ch_loyalty_bg-19967daa.png" hint-size="328px,116px"></x-import>
+  </div>
+
+  <!-- Wallet -->
+  <div style="padding: 0 var(--space-base) var(--space-base);">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Wallet" balance="֏5,680" icon="uploads/ch_wallet.png" on-top-up="{{ openTopup }}" hint-size="328px,80px"></x-import>
+  </div>
+
+  <!-- Vouchers -->
+  <div style="padding: 0 0 var(--space-lg);">
+    <div style="padding: 0 var(--space-base); margin-bottom: var(--space-md);"><x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Vouchers" hint-size="100%,28px"></x-import></div>
+    <div style="display: flex; gap: var(--space-sm); overflow-x: auto; padding: 0 var(--space-base); scrollbar-width: none;">
+      <div style="flex:0 0 auto;"><x-import component-from-global-scope="GastroDesignSystem_472aed.Voucher" name="Bumble Cherry" remaining="{{ 2 }}" image="uploads/bumble%20cherry-ab6a4199.png" hint-size="auto,72px"></x-import></div>
+      <div style="flex:0 0 auto;"><x-import component-from-global-scope="GastroDesignSystem_472aed.Voucher" name="Iced Americano Specialty Arabica" remaining="{{ 1 }}" image="uploads/ice%20americano-52926f9b.png" hint-size="auto,72px"></x-import></div>
+    </div>
+  </div>
+
+  <!-- Tabs (small) -->
+  <div style="padding: 0 var(--space-base) var(--space-base);">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.TabBar" size="small" full-width="{{ false }}" options="{{ tabOptions }}" value="{{ tabValue }}" on-change="{{ setTab }}" hint-size="auto,32px"></x-import>
+  </div>
+
+  <!-- Buy again rail -->
+  <sc-if value="{{ showBuyAgain }}" hint-placeholder-val="{{ true }}">
+  <div style="display: flex; gap: var(--space-sm); overflow-x: auto; padding: 0 var(--space-base) var(--space-lg); scrollbar-width: none;">
+    <div style="flex:0 0 128px; cursor: pointer;" onClick="{{ openBuyMatcha }}"><x-import component-from-global-scope="GastroDesignSystem_472aed.BuyAgainCard" name="Hot Salted Caramel Matcha Latte" location="Northern Ave" image-url="uploads/ch_prod_hot_salted_caramel_matcha_latte.png" style="flex:0 0 128px" hint-size="128px,180px"></x-import></div>
+    <div style="flex:0 0 128px; cursor: pointer;" onClick="{{ openBuyCheesecake }}"><x-import component-from-global-scope="GastroDesignSystem_472aed.BuyAgainCard" name="Dubai Cheesecake" location="Cascade" image-url="uploads/ch_prod_dubai_cheesecake.png" style="flex:0 0 128px" hint-size="128px,180px"></x-import></div>
+    <div style="flex:0 0 128px; cursor: pointer;" onClick="{{ openBuyMuffin }}"><x-import component-from-global-scope="GastroDesignSystem_472aed.BuyAgainCard" name="Muffin Chocolate" location="Republic Sq" image-url="uploads/ch_prod_muffin_chocolate.png" style="flex:0 0 128px" hint-size="128px,180px"></x-import></div>
+  </div>
+  </sc-if>
+
+  <!-- Favourites rail -->
+  <sc-if value="{{ showFavourites }}" hint-placeholder-val="{{ true }}">
+  <div style="display: flex; gap: var(--space-sm); overflow-x: auto; padding: 0 var(--space-base) var(--space-lg); scrollbar-width: none;">
+    <div style="flex:0 0 128px"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="Iced Fantasy Coffee" price="֏1,450" image-url="uploads/ch_fav_iced_fantasy_coffee.png" hint-size="128px,180px"></x-import></div>
+    <div style="flex:0 0 128px"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="Iced Cream Cheese Latte Aroma" price="֏1,850" image-url="uploads/ch_fav_iced_cream_cheese_latte_aroma.png" hint-size="128px,180px"></x-import></div>
+    <div style="flex:0 0 128px"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="Hot Raf Strawberry" price="֏1,650" image-url="uploads/ch_fav_hot_raf_strawberry.png" hint-size="128px,180px"></x-import></div>
+  </div>
+  </sc-if>
+
+  <!-- Promo ads -->
+  <div style="display: flex; gap: var(--space-sm); overflow-x: auto; padding: 0 var(--space-base) var(--space-lg); scrollbar-width: none;">
+    <a href="#" style="flex:0 0 280px; display:block; border-radius: var(--radius-md, 16px); overflow: hidden; box-shadow: var(--elevation-card);"><img src="uploads/promo_1png.png" alt="Horizon · Stephan Bodzin" style="width:100%; aspect-ratio: 512/264; object-fit: cover; display:block;"></a>
+    <a href="#" style="flex:0 0 280px; display:block; border-radius: var(--radius-md, 16px); overflow: hidden; box-shadow: var(--elevation-card);"><img src="uploads/promo_2.png" alt="App exclusive combos" style="width:100%; aspect-ratio: 512/264; object-fit: cover; display:block;"></a>
+    <a href="#" style="flex:0 0 280px; display:block; border-radius: var(--radius-md, 16px); overflow: hidden; box-shadow: var(--elevation-card);"><img src="uploads/promo_3.png" alt="Iconic Armo Y2K Diva's playlist" style="width:100%; aspect-ratio: 512/264; object-fit: cover; display:block;"></a>
+  </div>
+
+  <!-- Nearest branches -->
+  <div style="padding: 0 var(--space-base) var(--space-base);">
+    <div style="margin-bottom: var(--space-md);"><x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Nearest branches" hint-size="100%,28px"></x-import></div>
+    <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.BranchCard" name="Northern Avenue" address="12 Northern Ave, Yerevan" hours="08:00 – 23:00" distance="0.4 km" is-open-now="{{ true }}" on-click="{{ noop }}" image="uploads/branch_1.png" hint-size="100%,72px"></x-import>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" hint-size="100%,1px"></x-import>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.BranchCard" name="Cascade" address="3 Tamanyan St, Yerevan" hours="09:00 – 22:00" distance="1.1 km" is-open-now="{{ true }}" on-click="{{ noop }}" image="uploads/branch_2.png" hint-size="100%,72px"></x-import>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" hint-size="100%,1px"></x-import>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.BranchCard" name="Republic Square" address="5 Abovyan St, Yerevan" hours="08:00 – 00:00" distance="1.8 km" is-open-now="{{ false }}" on-click="{{ noop }}" image="uploads/branch_3.png" hint-size="100%,72px"></x-import>
+    </div>
+  </div>
+
+  </div><!-- /scrollable content -->
+
+  <!-- Bottom navigation -->
+  <div style="padding: var(--space-sm) var(--space-base) calc(var(--space-sm) + env(safe-area-inset-bottom, 0px)); background: var(--color-bg-surface); border-top: 1px solid var(--color-border-muted);">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.BottomNavigation" items="{{ navItems }}" active-key="{{ navActive }}" on-change="{{ setNav }}" hint-size="100%,56px"></x-import>
+  </div>
+  <dc-import name="WalletTopupBottomSheet" open="{{ topupOpen }}" on-close="{{ closeTopup }}" on-top-up="{{ doTopup }}" on-open-payment="{{ openPaymentSheet }}" hint-size="100%,100%"></dc-import>
+  <dc-import name="PaymentBottomSheet" open="{{ paymentSheetOpen }}" on-close="{{ closePaymentSheet }}" on-select="{{ closePaymentSheet }}" hint-size="100%,100%"></dc-import>
+  <dc-import name="WalletTopupSuccess" visible="{{ topupDone }}" amount="{{ topupAmount }}" on-continue="{{ finishTopup }}" hint-size="360px,800px"></dc-import>
+  <dc-import name="BasketOverlay" visible="{{ basketVisible }}" items="{{ basketItems }}" on-close="{{ closeBasket }}" hint-size="360px,800px"></dc-import>
+
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tab: 'buy-again', nav: 'home', basketItem: null };
+  buyAgain = {
+    matcha: { name: 'Hot Salted Caramel Matcha Latte', info: 'Regular · 300ml', price: '֏1,950', image: 'uploads/ch_prod_hot_salted_caramel_matcha_latte.png', qty: 1 },
+    cheesecake: { name: 'Dubai Cheesecake', info: '1 slice', price: '֏2,200', image: 'uploads/ch_prod_dubai_cheesecake.png', qty: 1 },
+    muffin: { name: 'Muffin Chocolate', info: '1 pc', price: '֏900', image: 'uploads/ch_prod_muffin_chocolate.png', qty: 1 },
+  };
+  renderVals() {
+    return {
+      topupOpen: !!this.state.topupOpen && !this.state.paymentSheetOpen,
+      paymentSheetOpen: !!this.state.paymentSheetOpen,
+      openPaymentSheet: () => this.setState({ paymentSheetOpen: true }),
+      closePaymentSheet: () => this.setState({ paymentSheetOpen: false }),
+      openTopup: () => this.setState({ topupOpen: true }),
+      closeTopup: () => this.setState({ topupOpen: false }),
+      doTopup: (a) => this.setState({ topupOpen: false, topupDone: true, topupAmount: a }),
+      topupDone: !!this.state.topupDone,
+      topupAmount: this.state.topupAmount || '',
+      finishTopup: () => this.setState({ topupDone: false }),
+      tabOptions: [
+        { label: 'Buy again', value: 'buy-again', icon: 'arrow-counter-clockwise' },
+        { label: 'Favourites', value: 'favourites', icon: 'heart' },
+      ],
+      noop: () => {},
+      navItems: [
+        { key: 'home', icon: 'house', label: 'Home' },
+        { key: 'order', icon: 'coffee', label: 'Order' },
+        { key: 'gifts', icon: 'gift', label: 'Gifts' },
+        { key: 'profile', icon: 'user', label: 'Profile' },
+      ],
+      navActive: this.state.nav,
+      setNav: (k) => {
+        const routes = { home: 'Home.dc.html', order: 'Order.dc.html', gifts: 'Gifts.dc.html', profile: 'Profile.dc.html' };
+        if (routes[k] && k !== this.state.nav) { window.location.href = routes[k]; return; }
+        this.setState({ nav: k });
+      },
+      tabValue: this.state.tab,
+      openBuyMatcha: () => this.setState({ basketItem: this.buyAgain.matcha }),
+      openBuyCheesecake: () => this.setState({ basketItem: this.buyAgain.cheesecake }),
+      openBuyMuffin: () => this.setState({ basketItem: this.buyAgain.muffin }),
+      basketVisible: !!this.state.basketItem,
+      basketItems: this.state.basketItem ? [this.state.basketItem] : null,
+      closeBasket: () => this.setState({ basketItem: null }),
+      showBuyAgain: this.state.tab === 'buy-again',
+      showFavourites: this.state.tab === 'favourites',
+      setTab: (v) => this.setState({ tab: v }),
+    };
+  }
+}
+</script>
+</body>
+</html>

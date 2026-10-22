@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+</helmet>
+<sc-if value="{{ visible }}" hint-placeholder-val="{{ false }}">
+  <div style="position: absolute; inset: 0; z-index: 49; background: var(--alpha-black-40);" onClick="{{ onClose }}"></div>
+  <div style="position: absolute; top: var(--space-xl); left: 0; right: 0; bottom: 0; z-index: 50; background: var(--color-bg-surface); display: flex; flex-direction: column; overflow: hidden; border-radius: var(--radius-lg) var(--radius-lg) 0 0;">
+    <div style="display: flex; justify-content: center; padding-top: var(--space-sm);">
+      <div style="width: 36px; height: 4px; border-radius: var(--radius-full); background: var(--color-border-strong);"></div>
+    </div>
+    <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none;">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.ScreenHeader" title="Basket" action="{{ basketAction }}" hint-size="100%,56px"></x-import>
+      <div style="padding: 0 var(--space-base) var(--space-sm); display: flex; align-items: center; gap: var(--space-sm);">
+        <span style="width: 32px; height: 32px; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); background: var(--gray-50);"><i class="ph ph-map-pin" style="font-size: var(--icon-sm);"></i></span>
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="LOCATION" hint-size="100%,28px"></x-import>
+      </div>
+      <sc-if value="{{ hasBranch }}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 0 var(--space-base) var(--space-lg);">
+          <span style="font-size: var(--font-size-body); line-height: var(--line-height-body); font-weight: var(--font-weight-regular); font-family: var(--font-family-base); color: var(--color-text-primary);">{{ branchName }}</span>
+        </div>
+      </sc-if>
+      <sc-if value="{{ noBranch }}" hint-placeholder-val="{{ true }}">
+        <div style="padding: 0 var(--space-base) var(--space-lg); position: relative;">
+          <x-import component-from-global-scope="GastroDesignSystem_472aed.Dropdown" value="loc-1" options="{{ locationOptions }}" on-change="{{ noop }}" hint-size="100%,56px"></x-import>
+          <div style="position: absolute; inset: 0; cursor: pointer;" onClick="{{ openLocationSheet }}"></div>
+        </div>
+      </sc-if>
+      <div style="padding: 0 var(--space-base) var(--space-sm); display: flex; align-items: center; gap: var(--space-sm);">
+        <span style="width: 32px; height: 32px; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); background: var(--gray-50);"><i class="ph ph-clock" style="font-size: var(--icon-sm);"></i></span>
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="TIME" hint-size="100%,28px"></x-import>
+      </div>
+      <div style="overflow-x: auto; scrollbar-width: none; padding: 0 var(--space-base) var(--space-lg);">
+        <div style="width: max-content;">
+          <x-import component-from-global-scope="GastroDesignSystem_472aed.TimePicker" slots="{{ timeSlots }}" value="{{ timeValue }}" on-change="{{ setTimeValue }}" label="{{ noLabel }}" hint-size="auto,40px"></x-import>
+        </div>
+      </div>
+      <div style="padding: 0 var(--space-base) var(--space-sm); display: flex; align-items: center; gap: var(--space-sm);">
+        <span style="width: 32px; height: 32px; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); background: var(--gray-50);"><i class="ph ph-bag" style="font-size: var(--icon-sm);"></i></span>
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="{{ orderTitle }}" hint-size="100%,28px"></x-import>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: var(--space-sm); padding: 0 var(--space-base) var(--space-lg);">
+        <sc-for list="{{ basketItems }}" as="item" hint-placeholder-count="3">
+          <x-import component-from-global-scope="GastroDesignSystem_472aed.ProductBasket" name="{{ item.name }}" info="{{ item.info }}" price="{{ item.price }}" image-url="{{ item.image }}" qty="{{ item.qty }}" on-qty-change="{{ item.setQty }}" on-edit="{{ noop }}" on-delete="{{ item.remove }}" hint-size="100%,80px"></x-import>
+        </sc-for>
+        <div style="display: flex; justify-content: center;">
+          <a href="#" onClick="{{ addProducts }}" style="display: flex; align-items: center; gap: var(--space-xs); min-height: 40px; font-family: var(--font-family-base); font-size: var(--font-size-body); line-height: var(--line-height-body); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); text-decoration: none;">Add products</a>
+        </div>
+      </div>
+      <div style="padding: 0 var(--space-base) var(--space-sm); display: flex; align-items: center; gap: var(--space-sm);">
+        <span style="width: 32px; height: 32px; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); background: var(--gray-50);"><i class="ph ph-hand-coins" style="font-size: var(--icon-sm);"></i></span>
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="TIP" hint-size="100%,28px"></x-import>
+      </div>
+      <div style="overflow-x: auto; scrollbar-width: none; padding: 0 var(--space-base) var(--space-lg);">
+        <div style="display: flex; gap: var(--space-sm); width: max-content;">
+          <sc-for list="{{ tipOptions }}" as="tip" hint-placeholder-count="5">
+            <div style="flex: 0 0 auto; min-width: 80px; display: flex;">
+              <x-import component-from-global-scope="GastroDesignSystem_472aed.TipSelector" amount="{{ tip.label }}" selected="{{ tip.selected }}" on-click="{{ tip.select }}" hint-size="80px,52px"></x-import>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <sc-if value="{{ showTipInput }}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 0 var(--space-base) var(--space-lg); margin-top: calc(-1 * var(--space-md));">
+          <div style="position: relative;">
+            <x-import component-from-global-scope="GastroDesignSystem_472aed.Input" type="text" value="{{ customTip }}" on-change="{{ setCustomTip }}" placeholder="Enter tip amount" hint-size="100%,40px"></x-import>
+            <span style="position: absolute; top: 50%; right: var(--space-base); transform: translateY(-50%); pointer-events: none; font-size: var(--font-size-body-sm); line-height: var(--line-height-body-sm); font-weight: var(--font-weight-regular); font-family: var(--font-family-base); color: var(--color-text-tertiary);">֏</span>
+          </div>
+        </div>
+      </sc-if>
+      <div style="padding: 0 var(--space-base) var(--space-sm); display: flex; align-items: center; gap: var(--space-sm);">
+        <span style="width: 32px; height: 32px; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); background: var(--gray-50);"><i class="ph ph-credit-card" style="font-size: var(--icon-sm);"></i></span>
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="PAYMENT METHOD" hint-size="100%,28px"></x-import>
+      </div>
+      <div style="padding: 0 var(--space-base) var(--space-base); position: relative;">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.PaymentMethods" icon="credit-card" name="Visa •••• 4242" balance="$24.50" chevron="{{ true }}" hint-size="100%,48px"></x-import>
+        <div style="position: absolute; inset: 0 var(--space-base) var(--space-base) var(--space-base); cursor: pointer;" onClick="{{ openPaymentSheet }}"></div>
+      </div>
+    </div>
+    <div style="flex: 0 0 auto; padding: var(--space-base); background: var(--color-bg-surface); border-top: var(--border-width-default) solid var(--color-border-muted);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Button" variant="primary" size="sm" full-width="{{ true }}" on-click="{{ placeOrder }}" hint-size="100%,40px">{{ orderLabel }}</x-import>
+    </div>
+    <dc-import name="PurchaseSuccess" visible="{{ successOpen }}" location="{{ successLocation }}" time="{{ timeValue }}" on-track="{{ trackOrder }}" hint-size="360px,800px"></dc-import>
+  </div>
+</sc-if>
+<dc-import name="LocationBottomSheet" open="{{ locationSheetOpen }}" on-close="{{ closeLocationSheet }}" on-select="{{ selectLocation }}" hint-size="100%,100%"></dc-import>
+<dc-import name="PaymentBottomSheet" open="{{ paymentSheetOpen }}" on-close="{{ closePaymentSheet }}" on-select="{{ selectPayment }}" hint-size="100%,100%"></dc-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:800},&quot;branchName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;items&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;},&quot;visible&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = {
+    timeValue: 'ASAP',
+    locationSheetOpen: false,
+    paymentSheetOpen: false,
+    paymentId: '1',
+    tip: 'none',
+    customTip: '',
+    basketItems: [
+      { name: 'Iced Fantasy Coffee', info: 'Regular · 300ml', price: '֏1,450', image: 'uploads/ch_fav_iced_fantasy_coffee.png', qty: 1 },
+      { name: 'Hot Salted Caramel Matcha Latte', info: 'Regular · 300ml', price: '֏1,950', image: 'uploads/ch_prod_hot_salted_caramel_matcha_latte.png', qty: 2 },
+      { name: 'Dubai Cheesecake', info: 'Regular · 300ml', price: '֏2,250', image: 'uploads/ch_prod_dubai_cheesecake.png', qty: 1 },
+    ],
+  };
+  componentDidMount() { if (this.props.items) this.setState({ basketItems: this.props.items }); }
+  componentDidUpdate(prev) { if (this.props.items && this.props.items !== prev.items) this.setState({ basketItems: this.props.items }); }
+  setItemQty(i, qty) {
+    this.setState((s) => {
+      const basketItems = s.basketItems.slice();
+      basketItems[i] = { ...basketItems[i], qty };
+      return { basketItems };
+    });
+  }
+  removeItem(i) {
+    this.setState((s) => ({ basketItems: s.basketItems.filter((_, idx) => idx !== i) }));
+  }
+  totalPrice() {
+    const total = this.state.basketItems.reduce((sum, item) => {
+      const n = parseInt(item.price.replace(/[^\d]/g, ''), 10) || 0;
+      return sum + n * item.qty;
+    }, 0);
+    return `֏${total.toLocaleString()}`;
+  }
+  renderVals() {
+    const onClose = this.props.onClose ?? (() => {});
+    return {
+      addProducts: (e) => { e && e.preventDefault && e.preventDefault(); },
+      timeSlots: ['ASAP', '13:50', '14:00', '14:15', '14:30', '15:00', '15:30'],
+      timeValue: this.state.timeValue,
+      setTimeValue: (v) => this.setState({ timeValue: v }),
+      noLabel: '',
+      orderTitle: 'YOUR ORDER (' + this.state.basketItems.reduce((n, it) => n + (it.qty || 1), 0) + ')',
+      basketItems: this.state.basketItems.map((item, i) => ({
+        ...item,
+        setQty: (v) => this.setItemQty(i, v),
+        remove: () => this.removeItem(i),
+      })),
+      visible: this.props.visible ?? false,
+      branchName: this.props.branchName ?? '',
+      hasBranch: !!this.props.branchName,
+      noBranch: !this.props.branchName,
+      onClose,
+      closeAction: (window.GastroDesignSystem_472aed && window.GastroDesignSystem_472aed.IconButton) ? React.createElement(window.GastroDesignSystem_472aed.IconButton, { icon: 'x', variant: 'tonal', size: 'xs', onClick: onClose, ariaLabel: 'Close' }) : null,
+      basketAction: React.createElement('i', { className: 'ph ph-shopping-cart-simple', style: { fontSize: 'var(--icon-md)', color: 'var(--color-text-primary)' }, 'aria-label': 'Basket' }),
+      noop: () => {},
+      locationOptions: [{ label: 'Tigran Petrosyan 31/5 (near Davtashen Yerevan City)', value: 'loc-1' }],
+      orderLabel: `Order · ${this.totalPrice()}`,
+      locationSheetOpen: this.state.locationSheetOpen,
+      openLocationSheet: () => this.setState({ locationSheetOpen: true }),
+      closeLocationSheet: () => this.setState({ locationSheetOpen: false }),
+      selectLocation: (branch) => this.setState({ locationSheetOpen: false, selectedLocation: branch && branch.name }),
+      showTipInput: this.state.tip === 'other',
+      customTip: this.state.customTip,
+      setCustomTip: (v) => this.setState({ customTip: v }),
+      tipOptions: [['none', 'No tip'], ['100', '100֏'], ['200', '200֏'], ['300', '300֏'], ['other', 'Other']].map(([v, label]) => ({ label, selected: this.state.tip === v, select: () => this.setState({ tip: v }) })),
+      successOpen: !!this.state.successOpen,
+      successLocation: this.props.branchName || this.state.selectedLocation || 'Tigran Petrosyan 31/5 (near Davtashen Yerevan City)',
+      placeOrder: () => this.setState({ successOpen: true }),
+      trackOrder: () => { this.setState({ successOpen: false }); (this.props.onClose || (() => {}))(); },
+      paymentMethods: [
+        { id: '1', name: 'Visa •••• 4242', icon: 'credit-card', balance: '$24.50', chevron: true },
+      ],
+      setPaymentId: (id) => this.setState({ paymentId: id }),
+      paymentSheetOpen: this.state.paymentSheetOpen,
+      openPaymentSheet: () => this.setState({ paymentSheetOpen: true }),
+      closePaymentSheet: () => this.setState({ paymentSheetOpen: false }),
+      selectPayment: (method) => this.setState({ paymentSheetOpen: false }),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

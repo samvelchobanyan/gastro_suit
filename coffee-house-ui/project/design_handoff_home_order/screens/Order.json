@@ -1,0 +1,156 @@
+{
+  "screen": "Order",
+  "width": 360,
+  "height": 800,
+  "designSystem": "GastroDesignSystem_472aed",
+  "background": "var(--color-bg-surface)",
+  "sideMargin": "var(--space-base)",
+  "spacingLegend": { "--space-xs": "4px", "--space-sm": "8px", "--space-md": "12px", "--space-base": "16px", "--space-lg": "24px" },
+  "sections": [
+    { "component": "ScreenHeader", "props": { "title": "Order" }, "spacingAfter": "0" },
+    {
+      "component": "TabBar",
+      "size": "big",
+      "options": [
+        { "label": "Products", "value": "products", "icon": "coffee" },
+        { "label": "Branches", "value": "branches", "icon": "storefront" }
+      ],
+      "defaultValue": "products",
+      "spacingAfter": "var(--space-base)"
+    },
+    {
+      "tab": "products",
+      "content": [
+        { "component": "SectionHeader", "title": "Featured products", "spacingAfter": "var(--space-base)" },
+        {
+          "component": "ProductVerticalCard",
+          "layout": "horizontal-scroll",
+          "gap": "var(--space-sm)",
+          "spacingAfter": "var(--space-lg)",
+          "overlay": {
+            "component": "IconButton",
+            "position": "bottom-right",
+            "inset": "var(--space-xs)",
+            "icon": { "default": "plus", "added": "x" },
+            "variant": { "default": "filled", "added": "tonal" }
+          },
+          "items": [
+            { "name": "Iced Fantasy Coffee", "price": "֏1,450", "imageUrl": "assets/ch_fav_iced_fantasy_coffee.png" },
+            { "name": "Iced Cream Cheese Latte Aroma", "price": "֏1,850", "imageUrl": "assets/ch_fav_iced_cream_cheese_latte_aroma.png" },
+            { "name": "Hot Raf Strawberry", "price": "֏1,650", "imageUrl": "assets/ch_fav_hot_raf_strawberry.png" },
+            { "name": "Hot Salted Caramel Matcha Latte", "price": "֏1,950", "imageUrl": "assets/ch_prod_hot_salted_caramel_matcha_latte.png" },
+            { "name": "Dubai Cheesecake", "price": "֏2,250", "imageUrl": "assets/ch_prod_dubai_cheesecake.png" }
+          ]
+        },
+        { "component": "SectionHeader", "title": "Menu", "spacingAfter": "var(--space-sm)" },
+        {
+          "component": "MenuTabsVertical",
+          "spacingAfter": "var(--space-sm)",
+          "categories": [
+            { "label": "Combo deals", "value": "combo", "image": "assets/combo-bfe65b0a.png" },
+            { "label": "Iced Coffee", "value": "iced-coffee", "image": "assets/ice_cofee-969c877c.png" },
+            { "label": "Iced Drinks", "value": "iced-drinks", "image": "assets/ice_drinks-ecbe2e89.png" },
+            { "label": "Matcha and Tea", "value": "matcha-tea", "image": "assets/matcha-f3ccab58.png" },
+            { "label": "Hot Coffee", "value": "hot-coffee", "image": "assets/hot_coffee-09109355.png" },
+            { "label": "Sweets", "value": "sweets", "image": "assets/sweets-e21f67f2.png" },
+            { "label": "Other", "value": "other", "image": "assets/other-411186da.png" }
+          ],
+          "defaultValue": "combo"
+        },
+        {
+          "condition": "menuCategory === 'combo'",
+          "component": "TabBar",
+          "size": "xs",
+          "pinned": "top",
+          "surface": { "background": "var(--color-bg-surface)" },
+          "padding": "var(--space-sm) 0 var(--space-base)",
+          "note": "Scroll-spy sub-filter; highlights the section currently in view, click scrolls to it",
+          "options": [
+            { "label": "Iced Matcha Based", "value": "iced-matcha" },
+            { "label": "Iced Tea", "value": "iced-tea" },
+            { "label": "Hot Matcha Based", "value": "hot-matcha" },
+            { "label": "Hot Tea", "value": "hot-tea" }
+          ]
+        },
+        {
+          "condition": "menuCategory === 'combo'",
+          "layout": "stacked-sections",
+          "note": "4 titled sections (Body Semibold), 2-product grid each, single continuous scroll",
+          "titleGap": "var(--space-sm)",
+          "spacingAfter": "var(--space-base)",
+          "gap": "var(--space-sm)",
+          "sections": [
+            { "title": "Iced Matcha Based", "productCount": 2 },
+            { "title": "Iced Tea", "productCount": 2 },
+            { "title": "Hot Matcha Based", "productCount": 2 },
+            { "title": "Hot Tea", "productCount": 2 }
+          ]
+        },
+        {
+          "condition": "menuCategory !== 'combo'",
+          "titleFromCategoryLabel": true,
+          "titleGap": "var(--space-sm)",
+          "component": "ProductMenuCard",
+          "layout": "grid-2col",
+          "gap": "var(--space-sm)",
+          "spacingAfter": "var(--space-base)",
+          "overlay": {
+            "component": "IconButton",
+            "position": "bottom-right",
+            "inset": "var(--space-sm)",
+            "icon": { "default": "plus", "added": "x" },
+            "variant": { "default": "filled", "added": "tonal" }
+          },
+          "productCount": 8,
+          "note": "Products randomized per category via seeded shuffle"
+        }
+      ]
+    },
+    {
+      "tab": "branches",
+      "gap": "var(--space-md)",
+      "content": [
+        { "component": "BranchCard", "props": { "name": "Northern Avenue", "address": "12 Northern Ave, Yerevan", "hours": "08:00 – 23:00", "distance": "0.4 km", "isOpenNow": true, "image": "assets/branch_1.png" } },
+        { "component": "Divider" },
+        { "component": "BranchCard", "props": { "name": "Cascade", "address": "3 Tamanyan St, Yerevan", "hours": "09:00 – 22:00", "distance": "1.1 km", "isOpenNow": true, "image": "assets/branch_2.png" } },
+        { "component": "Divider" },
+        { "component": "BranchCard", "props": { "name": "Republic Square", "address": "5 Abovyan St, Yerevan", "hours": "08:00 – 00:00", "distance": "1.8 km", "isOpenNow": false, "image": "assets/branch_3.png" } },
+        { "component": "Divider" },
+        { "component": "BranchCard", "props": { "name": "Komitas", "address": "28 Komitas Ave, Yerevan", "hours": "08:00 – 22:00", "distance": "2.3 km", "isOpenNow": true, "image": "assets/branch_1.png" } },
+        { "component": "Divider" },
+        { "component": "BranchCard", "props": { "name": "Saryan Street", "address": "14 Saryan St, Yerevan", "hours": "09:00 – 23:00", "distance": "2.9 km", "isOpenNow": true, "image": "assets/branch_2.png" } }
+      ]
+    },
+    {
+      "component": "cart-bar",
+      "pinned": "bottom",
+      "padding": "var(--space-base)",
+      "surface": { "background": "var(--glass-bg)", "border": "1px solid var(--glass-border)", "backdropFilter": "blur(var(--glass-blur))" },
+      "gap": "var(--space-sm)",
+      "children": [
+        { "component": "Dropdown", "props": { "label": "Nearest location", "value": "loc-1", "options": [{ "label": "Tigran Petrosyan 31/5 (near Davtashen Yerevan City)", "value": "loc-1" }] } },
+        {
+          "component": "Badge",
+          "props": { "count": "cartCount" },
+          "variant": { "empty": "default", "hasItems": "empty" },
+          "children": [
+            { "component": "IconButton", "props": { "icon": "shopping-cart-simple" }, "variant": { "empty": "tonal", "hasItems": "filled" } }
+          ]
+        }
+      ]
+    },
+    {
+      "component": "BottomNavigation",
+      "activeKey": "order",
+      "pinned": "bottom",
+      "surface": { "background": "var(--color-bg-surface)", "borderTop": "1px solid var(--color-border-muted)" },
+      "padding": "var(--space-sm) var(--space-base)",
+      "items": [
+        { "key": "home", "icon": "house", "label": "Home" },
+        { "key": "order", "icon": "coffee", "label": "Order" },
+        { "key": "gifts", "icon": "gift", "label": "Gifts" },
+        { "key": "profile", "icon": "user", "label": "Profile" }
+      ]
+    }
+  ]
+}

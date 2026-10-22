@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <style>
+    body { margin: 0; min-height: 100vh; box-sizing: border-box; padding: var(--space-lg) 0; background: var(--gray-100); font-family: "Plus Jakarta Sans", system-ui, sans-serif; display: flex; align-items: center; justify-content: center; }
+    a { color: var(--color-text-primary); } a:hover { color: var(--color-text-secondary); }
+  </style>
+</helmet>
+<div data-screen-label="Edit profile" style="width: 360px; height: 800px; background: var(--color-bg-surface); overflow: hidden; display: flex; flex-direction: column; flex: 0 0 auto; position: relative; font-family: var(--font-family-base);">
+  <x-import component-from-global-scope="GastroDesignSystem_472aed.ScreenHeader" title="Edit profile" on-back="{{ goBack }}" hint-size="100%,56px"></x-import>
+  <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 0 var(--space-base) var(--space-base); display: flex; flex-direction: column; gap: var(--space-base);">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-sm); padding: var(--space-lg) var(--space-base); border-radius: var(--radius-md); background: var(--gray-50);">
+      <div style="position: relative; display: flex;">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Avatar" src="uploads/OGLfuz%20400x400.jpg" name="Aram Shahinyan" size="xl" hint-size="72px,72px"></x-import>
+        <div style="position: absolute; right: calc(-1 * var(--space-sm)); bottom: calc(-1 * var(--space-sm)); display: flex;">
+          <x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="pencil-simple" variant="filled" size="xxs" aria-label="Change photo" hint-size="32px,32px"></x-import>
+        </div>
+      </div>
+      <span style="font-size: var(--font-size-body-sm); line-height: var(--line-height-body-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-primary);">Change photo</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="First name" hint-size="100%,28px"></x-import>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Input" value="{{ firstName }}" on-change="{{ setFirstName }}" hint-size="100%,40px"></x-import>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Last name" hint-size="100%,28px"></x-import>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Input" value="{{ lastName }}" on-change="{{ setLastName }}" hint-size="100%,40px"></x-import>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Birthday" hint-size="100%,28px"></x-import>
+      <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr) minmax(0, 1.2fr); gap: var(--space-sm);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Dropdown" value="{{ day }}" options="{{ days }}" placeholder="Day" on-change="{{ setDay }}" hint-size="100%,40px"></x-import>
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Dropdown" value="{{ month }}" options="{{ months }}" placeholder="Month" on-change="{{ setMonth }}" hint-size="100%,40px"></x-import>
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Dropdown" value="{{ year }}" options="{{ years }}" placeholder="Year" on-change="{{ setYear }}" hint-size="100%,40px"></x-import>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="City" hint-size="100%,28px"></x-import>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Dropdown" value="{{ city }}" options="{{ cities }}" on-change="{{ setCity }}" hint-size="100%,40px"></x-import>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Gender" hint-size="100%,28px"></x-import>
+      <div style="display: flex; gap: var(--space-lg);">
+        <sc-for list="{{ genders }}" as="g" hint-placeholder-count="2">
+          <x-import component-from-global-scope="GastroDesignSystem_472aed.RadioButton" label="{{ g.label }}" checked="{{ g.checked }}" on-change="{{ g.select }}" hint-size="auto,24px"></x-import>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  <div style="padding: var(--space-base); border-top: 1px solid var(--color-border-muted); background: var(--color-bg-surface);">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Button" variant="primary" size="sm" full-width="{{ true }}" on-click="{{ goBack }}" hint-size="100%,40px">Save</x-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:800}}">
+class Component extends DCLogic {
+  state = { firstName: 'Aram', lastName: 'Shahinyan', day: '12', month: '3', year: '1995', city: 'yerevan', gender: 'male' };
+  renderVals() {
+    const s = this.state;
+    const val = (e) => (e && e.target ? e.target.value : e);
+    return {
+      goBack: () => { window.location.href = 'Profile.dc.html'; },
+      firstName: s.firstName, setFirstName: (e) => this.setState({ firstName: val(e) }),
+      lastName: s.lastName, setLastName: (e) => this.setState({ lastName: val(e) }),
+      day: s.day, setDay: (v) => this.setState({ day: val(v) }),
+      month: s.month, setMonth: (v) => this.setState({ month: val(v) }),
+      year: s.year, setYear: (v) => this.setState({ year: val(v) }),
+      days: Array.from({ length: 31 }, (_, i) => ({ value: String(i + 1), label: String(i + 1) })),
+      months: ['January','February','March','April','May','June','July','August','September','October','November','December'].map((m, i) => ({ value: String(i + 1), label: m })),
+      years: Array.from({ length: 100 }, (_, i) => { const y = String(new Date().getFullYear() - i); return { value: y, label: y }; }),
+      city: s.city, setCity: (v) => this.setState({ city: val(v) }),
+      cities: [
+        { value: 'yerevan', label: 'Yerevan' },
+        { value: 'gyumri', label: 'Gyumri' },
+        { value: 'vanadzor', label: 'Vanadzor' },
+      ],
+      genders: [
+        { key: 'male', label: 'Male' },
+        { key: 'female', label: 'Female' },
+      ].map(g => ({ ...g, checked: g.key === s.gender, select: () => this.setState({ gender: g.key }) })),
+    };
+  }
+}
+</script>
+</body>
+</html>

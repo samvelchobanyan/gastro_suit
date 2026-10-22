@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+</helmet>
+<sc-if value="{{ visible }}" hint-placeholder-val="{{ false }}">
+  <div style="position: absolute; inset: 0; z-index: 60; background: var(--color-bg-surface); display: flex; flex-direction: column;">
+    <div ref="{{ scrollContainerRef }}" onScroll="{{ handleScroll }}" style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none;">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.RestaurantHeader" cover-image="uploads/ch_br.png" name="{{ branch.name }}" description="{{ branch.description }}" rating="{{ branch.rating }}" review-count="{{ branch.reviewCount }}" is-open="{{ branch.isOpenNow }}" on-back="{{ onClose }}" on-favorite="{{ openFeedback }}" on-location="{{ openMap }}" hint-size="100%,260px"></x-import>
+      <div style="padding: var(--space-base); display: flex; flex-direction: column; gap: var(--space-xs);">
+        <div style="display: flex; align-items: center; gap: var(--space-xs); font-size: var(--font-size-body-sm); line-height: var(--line-height-body-sm); color: var(--color-text-secondary); font-family: var(--font-family-base);">
+          <i class="ph ph-map-pin" aria-hidden="true" style="font-size: var(--icon-xs); flex: 0 0 auto; color: var(--color-text-tertiary);"></i>
+          <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ branch.address }}</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-xs); font-family: var(--font-family-base);">
+          <i class="ph ph-clock" aria-hidden="true" style="font-size: var(--icon-xs); flex: 0 0 auto; color: var(--color-text-tertiary);"></i>
+          <span style="font-size: var(--font-size-body-xs); line-height: var(--line-height-body-xs); color: var(--color-text-tertiary);">{{ branch.hours }}</span>
+          <span style="margin-left: var(--space-xs);">
+            <x-import component-from-global-scope="GastroDesignSystem_472aed.StatusPill" tone="{{ branch.statusTone }}" hint-size="auto,20px">{{ branch.statusLabel }}</x-import>
+          </span>
+        </div>
+      </div>
+      <div style="padding: 0 var(--space-base) var(--space-sm);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Menu" hint-size="100%,28px"></x-import>
+      </div>
+      <div style="padding: 0 0 var(--space-sm) var(--space-sm);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.MenuTabsVertical" categories="{{ menuCategories }}" value="{{ menuCat }}" on-change="{{ setMenuCat }}" hint-size="100%,84px"></x-import>
+      </div>
+      <sc-if value="{{ showComboSubTabs }}" hint-placeholder-val="{{ true }}">
+        <div style="position: sticky; top: 0; z-index: 2; isolation: isolate; background: var(--color-bg-surface); overflow-x: auto; scrollbar-width: none; padding: var(--space-sm) var(--space-base) var(--space-base);">
+          <x-import component-from-global-scope="GastroDesignSystem_472aed.TabBar" size="xs" full-width="{{ false }}" options="{{ comboSubTabOptions }}" value="{{ comboSubTab }}" on-change="{{ setComboSubTab }}" hint-size="auto,28px"></x-import>
+        </div>
+      </sc-if>
+      <sc-if value="{{ showComboSections }}" hint-placeholder-val="{{ true }}">
+        <sc-for list="{{ comboSections }}" as="section" hint-placeholder-count="4">
+          <div ref="{{ section.ref }}">
+            <div style="padding: 0 var(--space-base) var(--space-sm);">
+              <span style="font: var(--text-body-semibold); color: var(--color-text-primary);">{{ section.title }}</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 160px 160px; gap: var(--space-sm); justify-content: center; padding: 0 var(--space-base) var(--space-base);">
+              <sc-for list="{{ section.products }}" as="p" hint-placeholder-count="2">
+                <div style="position: relative;"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductMenuCard" name="{{ p.name }}" price="{{ p.price }}" image-url="{{ p.image }}" width="{{ 160 }}" on-click="{{ p.open }}" hint-size="160px,220px"></x-import><div style="position:absolute; right: var(--space-sm); bottom: var(--space-sm); z-index:1;"><x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="{{ p.icon }}" variant="{{ p.variant }}" size="xs" dc-props="{{ addToCartProps }}" on-click="{{ p.toggle }}" hint-size="36px,36px"></x-import></div></div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </sc-if>
+      <sc-if value="{{ showProductGrid }}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 0 var(--space-base) var(--space-sm);">
+          <span style="font: var(--text-body-semibold); color: var(--color-text-primary);">{{ productRowTitle }}</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 160px 160px; gap: var(--space-sm); justify-content: center; padding: 0 var(--space-base) var(--space-base);">
+          <sc-for list="{{ categoryProducts }}" as="p" hint-placeholder-count="8">
+            <div style="position: relative;"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductMenuCard" name="{{ p.name }}" price="{{ p.price }}" image-url="{{ p.image }}" width="{{ 160 }}" on-click="{{ p.open }}" hint-size="160px,220px"></x-import><div style="position:absolute; right: var(--space-sm); bottom: var(--space-sm); z-index:1;"><x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="{{ p.icon }}" variant="{{ p.variant }}" size="xs" dc-props="{{ addToCartProps }}" on-click="{{ p.toggle }}" hint-size="36px,36px"></x-import></div></div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+    <div style="flex: 0 0 auto; z-index: 2; display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-base); background: var(--color-bg-surface); border-top: 1px solid var(--color-border-muted);">
+      <div style="flex: 1; min-width: 0; position: relative;">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Button" variant="{{ checkoutVariant }}" size="sm" full-width="{{ true }}" icon-left="shopping-cart-simple" on-click="{{ openBasket }}" hint-size="100%,40px">{{ checkoutLabel }}</x-import>
+        <div style="position: absolute; top: 50%; right: var(--space-base); transform: translateY(-50%); display: flex; pointer-events: none;">
+          <x-import component-from-global-scope="GastroDesignSystem_472aed.Badge" count="{{ cartCount }}" variant="{{ cartBadgeVariant }}" hint-size="18px,18px"></x-import>
+        </div>
+      </div>
+    </div>
+    <dc-import name="MapBottomSheet" open="{{ mapOpen }}" title="{{ branch.name }}" lat="{{ branch.lat }}" lng="{{ branch.lng }}" on-close="{{ closeMap }}" hint-size="360px,800px"></dc-import>
+    <dc-import name="FeedbackBottomSheet" open="{{ feedbackOpen }}" on-close="{{ closeFeedback }}" hint-size="360px,800px"></dc-import>
+    <dc-import name="BasketOverlay" visible="{{ basketVisible }}" branch-name="{{ branch.name }}" on-close="{{ closeBasket }}" hint-size="360px,800px"></dc-import>
+    <dc-import name="ProductOverlay" visible="{{ overlayVisible }}" image-url="{{ overlayImage }}" product-name="{{ overlayName }}" price="{{ overlayPrice }}" on-close="{{ closeOverlay }}" on-add-to-cart="{{ addOverlayToCart }}" hint-size="360px,800px"></dc-import>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;visible&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;branch&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any&quot;},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { menuCat: 'combo', comboSubTab: 'iced-matcha', addedIds: {}, overlay: null };
+  openOverlay = (name, image, price) => this.setState({ overlay: { name, image, price } });
+  closeOverlay = () => this.setState({ overlay: null });
+  addOverlayToCart = () => this.setState((s) => ({ overlay: null, overlayAdds: (s.overlayAdds || 0) + 1, overlayTotal: (s.overlayTotal || 0) + this.parsePrice(s.overlay && s.overlay.price) }));
+  parsePrice = (p) => Number(String(p || '').replace(/[^0-9]/g, '')) || 0;
+  cartTotal() {
+    const added = this.baseProducts.filter((p) => this.state.addedIds['item-' + p.name]).reduce((sum, p) => sum + this.parsePrice(p.price), 0);
+    return added + (this.state.overlayTotal || 0);
+  }
+  toggleId = (id) => this.setState((s) => ({ addedIds: { ...s.addedIds, [id]: !s.addedIds[id] } }));
+  truncateForIcon(name) {
+    const max = 14;
+    return name.length > max ? name.slice(0, max).trimEnd() + '… ' : name;
+  }
+  makeItemToggle(p) {
+    const id = 'item-' + p.name;
+    const added = !!this.state.addedIds[id];
+    return { added, icon: added ? 'x' : 'plus', variant: added ? 'tonal' : 'filled', toggle: () => this.toggleId(id), name: this.truncateForIcon(p.name), open: () => this.openOverlay(p.name, p.image, p.price) };
+  }
+  baseProducts = [
+    { name: 'Iced Fantasy Coffee', price: '֏1,450', image: 'uploads/iced%20fantasy%20coffee-752e25b4.png' },
+    { name: 'Iced Americano', price: '֏1,350', image: 'uploads/ice%20americano-52926f9b.png' },
+    { name: 'Hot Salted Caramel Matcha Latte', price: '֏1,950', image: 'uploads/hot%20salted%20caramel%20matcha-b6e27e77.png' },
+    { name: 'Iced Cream Cheese Latte Aroma', price: '֏1,850', image: 'uploads/ice%20creamed%20cheese-170171d4.png' },
+    { name: 'Hot Raf Strawberry', price: '֏1,650', image: 'uploads/raf%20strawberry-e6ea36ce.png' },
+    { name: 'Bumble Cherry', price: '֏1,750', image: 'uploads/bumble%20cherry-ab6a4199.png' },
+    { name: 'Dubai Cheesecake', price: '֏2,250', image: 'uploads/dubai%20cheesecake-83568b34.png' },
+    { name: 'Chocolate Muffin', price: '֏1,250', image: 'uploads/chocolate%20muffin-8e511c76.png' },
+  ];
+  menuCategoryLabels = {
+    'combo': 'Combo deals', 'iced-coffee': 'Iced Coffee', 'iced-drinks': 'Iced Drinks',
+    'matcha-tea': 'Matcha and Tea', 'hot-coffee': 'Hot Coffee', 'sweets': 'Sweets', 'other': 'Other',
+  };
+  comboSubTabKeys = ['iced-matcha', 'iced-tea', 'hot-matcha', 'hot-tea'];
+  scrollContainerRef = React.createRef();
+  sectionEls = [null, null, null, null];
+  makeSectionRef(i) {
+    return (el) => { this.sectionEls[i] = el; };
+  }
+  handleScroll = () => {
+    if (this.state.menuCat !== 'combo') return;
+    const container = this.scrollContainerRef.current;
+    if (!container) return;
+    const cTop = container.getBoundingClientRect().top;
+    let active = this.comboSubTabKeys[0];
+    for (let i = 0; i < this.comboSubTabKeys.length; i++) {
+      const el = this.sectionEls[i];
+      if (!el) continue;
+      if (el.getBoundingClientRect().top - cTop <= 60) active = this.comboSubTabKeys[i];
+    }
+    if (active !== this.state.comboSubTab) this.setState({ comboSubTab: active });
+  };
+  scrollToComboSubTab = (v) => {
+    this.setState({ comboSubTab: v });
+    const idx = this.comboSubTabKeys.indexOf(v);
+    const el = this.sectionEls[idx];
+    const container = this.scrollContainerRef.current;
+    if (el && container) {
+      const cTop = container.getBoundingClientRect().top;
+      const eTop = el.getBoundingClientRect().top;
+      container.scrollTop += (eTop - cTop - 52);
+    }
+  };
+  shuffleCache = {};
+  seededShuffle(arr, seed) {
+    const a = arr.slice();
+    let s = seed;
+    const rand = () => { s = (s * 9301 + 49297) % 233280; return s / 233280; };
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(rand() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  getCategoryProducts(cat) {
+    if (!this.shuffleCache[cat]) {
+      const seed = cat.split('').reduce((s, c) => s + c.charCodeAt(0), 0) || 1;
+      this.shuffleCache[cat] = this.seededShuffle(this.baseProducts, seed);
+    }
+    return this.shuffleCache[cat];
+  }
+  renderVals() {
+    const b = this.props.branch || {};
+    const isOpen = b.isOpenNow ?? true;
+    return {
+      visible: this.props.visible ?? false,
+      overlayVisible: !!this.state.overlay,
+      overlayImage: this.state.overlay ? this.state.overlay.image : '',
+      overlayName: this.state.overlay ? this.state.overlay.name : '',
+      overlayPrice: this.state.overlay ? this.state.overlay.price : '',
+      closeOverlay: this.closeOverlay,
+      addOverlayToCart: this.addOverlayToCart,
+      checkoutLabel: 'Checkout · ֏' + this.cartTotal().toLocaleString('en-US'),
+      cartCount: Object.values(this.state.addedIds).filter(Boolean).length + (this.state.overlayAdds || 0),
+      checkoutVariant: (Object.values(this.state.addedIds).some(Boolean) || (this.state.overlayAdds || 0) > 0) ? 'primary' : 'secondary',
+      cartBadgeVariant: 'empty',
+      noop: () => {},
+      mapOpen: !!this.state.mapOpen,
+      openMap: () => this.setState({ mapOpen: true }),
+      closeMap: () => this.setState({ mapOpen: false }),
+      feedbackOpen: !!this.state.feedbackOpen,
+      openFeedback: () => this.setState({ feedbackOpen: true }),
+      closeFeedback: () => this.setState({ feedbackOpen: false }),
+      basketVisible: !!this.state.basketOpen,
+      openBasket: () => this.setState({ basketOpen: true }),
+      closeBasket: () => this.setState({ basketOpen: false }),
+      menuCategories: [
+        { label: 'Combo deals', value: 'combo', image: 'uploads/combo-bfe65b0a.png' },
+        { label: 'Iced Coffee', value: 'iced-coffee', image: 'uploads/ice%20cofee-969c877c.png' },
+        { label: 'Iced\nDrinks', value: 'iced-drinks', image: 'uploads/ice%20drinks-ecbe2e89.png' },
+        { label: 'Matcha and Tea', value: 'matcha-tea', image: 'uploads/matcha-f3ccab58.png' },
+        { label: 'Hot\nCoffee', value: 'hot-coffee', image: 'uploads/hot%20coffee-09109355.png' },
+        { label: 'Sweets', value: 'sweets', image: 'uploads/sweets-e21f67f2.png' },
+        { label: 'Other', value: 'other', image: 'uploads/other-411186da.png' },
+            ],
+      menuCat: this.state.menuCat,
+      showComboSubTabs: this.state.menuCat === 'combo',
+      comboSubTabOptions: [
+        { label: 'Iced Matcha Based', value: 'iced-matcha' },
+        { label: 'Iced Tea', value: 'iced-tea' },
+        { label: 'Hot Matcha Based', value: 'hot-matcha' },
+        { label: 'Hot Tea', value: 'hot-tea' },
+      ],
+      comboSubTab: this.state.comboSubTab,
+      setComboSubTab: this.scrollToComboSubTab,
+      scrollContainerRef: this.scrollContainerRef,
+      handleScroll: this.handleScroll,
+      showComboSections: this.state.menuCat === 'combo',
+      comboSections: this.state.menuCat === 'combo' ? [
+        { title: 'Iced Matcha Based', products: this.getCategoryProducts('iced-matcha').slice(0, 2).map((p) => ({ ...p, ...this.makeItemToggle(p) })), ref: this.makeSectionRef(0) },
+        { title: 'Iced Tea', products: this.getCategoryProducts('iced-tea').slice(0, 2).map((p) => ({ ...p, ...this.makeItemToggle(p) })), ref: this.makeSectionRef(1) },
+        { title: 'Hot Matcha Based', products: this.getCategoryProducts('hot-matcha').slice(0, 2).map((p) => ({ ...p, ...this.makeItemToggle(p) })), ref: this.makeSectionRef(2) },
+        { title: 'Hot Tea', products: this.getCategoryProducts('hot-tea').slice(0, 2).map((p) => ({ ...p, ...this.makeItemToggle(p) })), ref: this.makeSectionRef(3) },
+      ] : [],
+      productRowTitle: this.menuCategoryLabels[this.state.menuCat] || '',
+      showProductGrid: this.state.menuCat !== 'combo',
+      categoryProducts: this.getCategoryProducts(this.state.menuCat).map((p) => ({ ...p, ...this.makeItemToggle(p) })),
+      setMenuCat: (v) => this.setState({ menuCat: v }),
+      addToCartProps: { ariaLabel: 'Add to cart' },
+      onClose: this.props.onClose ?? (() => {}),
+      branch: {
+        image: b.image ?? null,
+        name: b.name ?? 'Coffee House',
+        description: b.description ?? 'Freshly roasted coffee & pastries',
+        rating: b.rating ?? 4.7,
+        reviewCount: b.reviewCount ?? 218,
+        address: b.address ?? '',
+        lat: b.lat ?? 40.1776,
+        lng: b.lng ?? 44.5126,
+        hours: b.hours ?? '08:00 – 22:00',
+        distance: b.distance ?? '',
+        isOpenNow: isOpen,
+        statusTone: isOpen ? 'success' : 'neutral',
+        statusLabel: isOpen ? 'Open now' : 'Closed',
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

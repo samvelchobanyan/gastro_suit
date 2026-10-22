@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+</helmet>
+<x-import component-from-global-scope="GastroDesignSystem_472aed.BottomSheet" open="{{ open }}" on-close="{{ onClose }}" title="{{ title }}" hint-size="100%,auto">
+  <div style="width: 100%; height: 320px; border-radius: var(--radius-md); overflow: hidden; background: var(--color-bg-surface-sunken);">
+    <sc-if value="{{ open }}" hint-placeholder-val="{{ false }}">
+      <iframe src="{{ mapSrc }}" title="Map" style="width: 100%; height: 100%; border: 0; display: block;" loading="lazy"></iframe>
+    </sc-if>
+  </div>
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Location&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;lat&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:40.1776,&quot;tsType&quot;:&quot;number&quot;},&quot;lng&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:44.5126,&quot;tsType&quot;:&quot;number&quot;},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const lat = this.props.lat ?? 40.1776;
+    const lng = this.props.lng ?? 44.5126;
+    const d = 0.006;
+    const bbox = [lng - d, lat - d * 0.75, lng + d, lat + d * 0.75].join(',');
+    return {
+      open: this.props.open ?? false,
+      onClose: this.props.onClose ?? (() => {}),
+      title: this.props.title ?? 'Location',
+      mapSrc: `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lng}`,
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+</helmet>
+<x-import component-from-global-scope="GastroDesignSystem_472aed.BottomSheet" open="{{ open }}" on-close="{{ onClose }}" title="Choose location" hint-size="100%,auto">
+  <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+    <div style="overflow-x: auto; scrollbar-width: none; margin-right: calc(-1 * var(--space-lg)); margin-bottom: var(--space-base);">
+      <div style="width: max-content; padding-right: var(--space-lg);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.TabBar" options="{{ districtOptions }}" value="{{ district }}" on-change="{{ setDistrict }}" size="xs" hint-size="auto,32px"></x-import>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: var(--space-md); max-height: 340px; overflow-y: auto; scrollbar-width: none;">
+      <sc-for list="{{ branches }}" as="branch" hint-placeholder-count="5">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.BranchSelectorCard" image="{{ branch.image }}" name="{{ branch.name }}" address="{{ branch.address }}" distance="{{ branch.distance }}" checked="{{ branch.checked }}" on-change="{{ branch.onSelect }}" hint-size="100%,52px"></x-import>
+      </sc-for>
+    </div>
+  </div>
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;},&quot;onSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(branch: any) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  branchData = [
+    { name: 'Coffee House Northern Ave', address: 'Northern Avenue 2', distance: '0.4 km', image: 'uploads/branch_1.png' },
+    { name: 'Coffee House Davtashen', address: 'Tigran Petrosyan 31/5', distance: '1.2 km', image: 'uploads/branch_2.png' },
+    { name: 'Coffee House Abovyan', address: 'Abovyan St. 12', distance: '2.1 km', image: 'uploads/branch_3.png' },
+    { name: 'Coffee House Komitas', address: 'Komitas Ave. 47', distance: '3.6 km', image: 'uploads/branch_1.png' },
+    { name: 'Coffee House Malatia', address: 'Malatia-Sebastia 8/1', distance: '4.8 km', image: 'uploads/branch_2.png' },
+    { name: 'Coffee House Kentron', address: 'Nalbandyan St. 3', distance: '0.9 km', image: 'uploads/branch_3.png' },
+    { name: 'Coffee House Arabkir', address: 'Kievyan St. 15', distance: '2.7 km', image: 'uploads/branch_1.png' },
+    { name: 'Coffee House Ajapnyak', address: 'Ajapnyak St. 22', distance: '5.3 km', image: 'uploads/branch_2.png' },
+    { name: 'Coffee House Erebuni', address: 'Erebuni St. 9', distance: '6.1 km', image: 'uploads/branch_3.png' },
+  ];
+  state = { selected: 0, district: 'kentron' };
+  renderVals() {
+    const onSelect = this.props.onSelect ?? (() => {});
+    return {
+      open: this.props.open ?? false,
+      onClose: this.props.onClose ?? (() => {}),
+      districtOptions: ['Kentron', 'Arabkir', 'Ajapnyak', 'Masiv', 'Erebuni'].map((d) => ({ label: d, value: d.toLowerCase() })),
+      district: this.state.district,
+      setDistrict: (v) => this.setState({ district: v }),
+      branches: this.branchData.map((b, i) => ({
+        ...b,
+        checked: this.state.selected === i,
+        onSelect: () => { this.setState({ selected: i }); onSelect(b); },
+      })),
+    };
+  }
+}
+</script>
+</body>
+</html>

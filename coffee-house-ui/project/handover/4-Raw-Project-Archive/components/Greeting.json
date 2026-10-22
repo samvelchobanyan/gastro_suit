@@ -1,0 +1,158 @@
+{
+  "kind": "component",
+  "name": "Greeting",
+  "version": "2026-09-12",
+  "description": "App home header: brand logo, two-line greeting, notification bell.",
+  "size": {
+    "width": "fill",
+    "height": "hug",
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "row",
+    "spacing": [
+      "--space-md",
+      "--space-md"
+    ],
+    "padding": {
+      "all": "--space-base"
+    },
+    "align": "center",
+    "justify": "start",
+    "scroll": "none",
+    "size": {
+      "width": "fill"
+    },
+    "children": [
+      {
+        "slot": "logo",
+        "type": "image",
+        "source": "{logoUrl}",
+        "size": [
+          44,
+          44
+        ],
+        "fit": "cover",
+        "radius": "--radius-md",
+        "fallback": {
+          "slot": "logo.fallback",
+          "type": "box",
+          "size": [
+            44,
+            44
+          ],
+          "background": "--color-brand-primary",
+          "radius": "--radius-md",
+          "border": null,
+          "padding": null,
+          "child": {
+            "slot": "logo.fallback.icon",
+            "type": "icon",
+            "name": "fork-knife",
+            "weight": "fill",
+            "size": "--icon-md",
+            "color": "--color-text-on-brand"
+          }
+        }
+      },
+      {
+        "slot": "text",
+        "type": "column",
+        "spacing": [
+          "--space-xxs"
+        ],
+        "padding": null,
+        "align": "start",
+        "justify": "center",
+        "scroll": "none",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "text.overline",
+            "type": "text",
+            "content": "{greeting}",
+            "style": "--text-caption",
+            "color": "--color-text-tertiary",
+            "lines": 1,
+            "overflow": "clip",
+            "align": "start",
+            "transform": "none",
+            "size": {
+              "width": "fill"
+            }
+          },
+          {
+            "slot": "text.title",
+            "type": "text",
+            "content": "{name}",
+            "style": "--text-h3",
+            "color": "--color-text-primary",
+            "lines": 1,
+            "overflow": "ellipsis",
+            "align": "start",
+            "transform": "none",
+            "size": {
+              "width": "fill"
+            }
+          }
+        ]
+      },
+      {
+        "slot": "bell",
+        "type": "box",
+        "size": [
+          44,
+          44
+        ],
+        "background": "transparent",
+        "radius": "--radius-full",
+        "border": null,
+        "padding": null,
+        "child": {
+          "slot": "bell.icon",
+          "type": "icon",
+          "name": "bell",
+          "weight": "regular",
+          "size": "--icon-md",
+          "color": "--color-text-primary"
+        },
+        "overlay": [
+          {
+            "slot": "bell.dot",
+            "type": "box",
+            "size": [
+              9,
+              9
+            ],
+            "background": "--color-brand-primary",
+            "radius": "--radius-full",
+            "border": {
+              "width": 2,
+              "color": "--color-bg-surface"
+            },
+            "padding": null,
+            "child": null
+          }
+        ]
+      }
+    ]
+  },
+  "variants": {
+    "hasNotifications": {
+      "prop": "hasNotifications",
+      "cases": {
+        "false": {
+          "bell.dot": {
+            "visible": false
+          }
+        }
+      }
+    }
+  },
+  "uses": [],
+  "notes": "Bell dot position is drawn as an overlay on the bell box."
+}

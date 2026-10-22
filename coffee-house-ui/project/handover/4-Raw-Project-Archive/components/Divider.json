@@ -1,0 +1,52 @@
+{
+  "kind": "component",
+  "name": "Divider",
+  "version": "2026-09-12",
+  "description": "1px horizontal rule separating list rows or sections.",
+  "size": {
+    "width": "fill",
+    "height": 1,
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "box",
+    "size": {
+      "width": "fill",
+      "height": 1
+    },
+    "background": "--color-border-muted",
+    "radius": null,
+    "border": null,
+    "padding": null,
+    "child": null
+  },
+  "variants": {
+    "vertical": {
+      "prop": "vertical",
+      "cases": {
+        "true": {
+          "root": {
+            "size": {
+              "width": 1,
+              "height": "fill"
+            }
+          }
+        }
+      }
+    },
+    "label": {
+      "prop": "label",
+      "cases": {
+        "set": {
+          "root": {
+            "visible": false
+          }
+        }
+      }
+    }
+  },
+  "uses": [],
+  "notes": "Labeled variant (two rule segments flanking a caption) not used by either screen; omitted from tree, described here."
+}

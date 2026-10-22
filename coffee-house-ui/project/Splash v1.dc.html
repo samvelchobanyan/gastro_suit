@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <style>
+    body { margin: 0; background: #e9e7e2; font-family: "Plus Jakarta Sans", system-ui, sans-serif; padding: 32px; }
+    a { color: var(--accent-400, #F14D53); }
+    a:hover { color: var(--accent-300, #F47A7E); }
+    @keyframes chStreamIn {
+      0%   { transform: translateX(-50%) scaleX(.3) scaleY(0); }
+      55%  { transform: translateX(-50%) scaleX(.45) scaleY(.62); }
+      100% { transform: translateX(-50%) scaleX(1) scaleY(1); }
+    }
+    @keyframes chGlint { 0% { transform: translateY(-80px); opacity: 0; } 20% { opacity: .9; } 80% { opacity: .9; } 100% { transform: translateY(368px); opacity: 0; } }
+    @keyframes chWobble { 0%, 100% { transform: translateX(calc(-50% - .8px)) scaleY(1); } 50% { transform: translateX(calc(-50% + .8px)) scaleY(1); } }
+    @keyframes chBead {
+      0%   { transform: translate(-50%, 30px) scale(.7, 1.5); opacity: 0; }
+      12%  { opacity: .95; }
+      88%  { opacity: .95; }
+      100% { transform: translate(-50%, 356px) scale(1.15, 2.1); opacity: 0; }
+    }
+    @keyframes chSatL {
+      0%   { transform: translate(0, 0) scale(.4); opacity: 0; }
+      25%  { transform: translate(-13px, -13px) scale(1); opacity: .95; }
+      100% { transform: translate(-24px, 6px) scale(.5); opacity: 0; }
+    }
+    @keyframes chSatR {
+      0%   { transform: translate(0, 0) scale(.4); opacity: 0; }
+      25%  { transform: translate(12px, -15px) scale(1); opacity: .95; }
+      100% { transform: translate(22px, 5px) scale(.5); opacity: 0; }
+    }
+    @keyframes chRipple { 0% { transform: translate(-50%, -50%) scale(.5); opacity: 0; } 15% { opacity: .55; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
+    @keyframes chSplash { 0% { transform: translateX(-50%) scale(.3); opacity: 0; } 30% { opacity: .8; } 100% { transform: translateX(-50%) scale(1.9); opacity: 0; } }
+    @keyframes chStreamSway { 0%, 100% { transform: translateX(-50%) scaleX(1); } 50% { transform: translateX(-50%) scaleX(1.5); } }
+    @keyframes chDrop {
+      0%   { transform: translate(-50%, -32px) scale(.5); opacity: 0; }
+      12%  { opacity: 1; }
+      88%  { opacity: 1; }
+      100% { transform: translate(-50%, 344px) scale(1.15); opacity: 0; }
+    }
+    @keyframes chSteam {
+      0%   { transform: translateY(8px) scaleX(.8); opacity: 0; }
+      30%  { opacity: .45; }
+      100% { transform: translateY(-64px) scaleX(1.7); opacity: 0; }
+    }
+    @keyframes chDot { 0%, 100% { opacity: .25; } 40% { opacity: 1; } }
+    @keyframes chCupRise { 0% { transform: translateY(120px); opacity: 0; } 60% { opacity: 1; } 100% { transform: translateY(0); opacity: 1; } }
+    @keyframes chFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes chFill {
+      0%   { opacity: 0; transform: translateX(-50%) translateY(22px) scale(.62, .72); }
+      14%  { opacity: 1; }
+      100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1, 1); }
+    }
+    @keyframes chRiseIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</helmet>
+<div style="width: 360px; height: 800px; margin: 0 auto; position: relative; overflow: hidden; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,.24); background: var(--gray-900, #16161a);">
+
+  <!-- Status bar -->
+  <div style="position: relative; z-index: 5; height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; font-size: 13px; font-weight: 600; color: var(--gray-0, #fff);">
+    <span>9:41</span>
+    <span style="display: flex; gap: 6px; align-items: center;"><i class="ph ph-cell-signal-full"></i><i class="ph ph-wifi-high"></i><i class="ph ph-battery-full"></i></span>
+  </div>
+
+  <!-- Pouring stream -->
+  <div style="position: absolute; z-index: 7; top: 0; left: 50%; width: 7px; height: 368px; transform: translateX(-50%); transform-origin: top center; border-radius: 2px 2px 999px 999px; background: linear-gradient(90deg, #120802 0%, #331A0B 22%, #6B3E22 44%, #C89B6A 52%, #4A2A17 70%, #1C0E06 88%, #0C0602 100%); animation: chStreamIn 620ms cubic-bezier(0,0,.2,1) 1000ms both, chWobble 3400ms ease-in-out 1620ms infinite;"></div>
+
+  <!-- Volumetric beads travelling down the stream -->
+  <div style="position: absolute; z-index: 7; top: 0; left: 50%; width: 9px; height: 15px; border-radius: 50%; filter: blur(.4px); transform: translate(-50%, 30px) scale(.7, 1.5); background: linear-gradient(90deg, #170B04 0%, #4A2A17 34%, #C89B6A 52%, #33190A 78%, #0C0602 100%); animation: chBead 1050ms cubic-bezier(.45,0,1,1) 1100ms infinite backwards;"></div>
+  <div style="position: absolute; z-index: 7; top: 0; left: 50%; width: 7px; height: 12px; border-radius: 50%; filter: blur(.4px); transform: translate(-50%, 30px) scale(.7, 1.5); background: linear-gradient(90deg, #120802 0%, #3A1E10 36%, #A9713F 54%, #2B1509 80%, #0C0602 100%); animation: chBead 1050ms cubic-bezier(.45,0,1,1) 1620ms infinite backwards;"></div>
+  <div style="position: absolute; z-index: 7; top: 0; left: 50%; width: 2px; height: 368px; transform: translateX(calc(-50% - 1px)); overflow: hidden; opacity: .5; animation: chFadeIn 300ms ease 1000ms backwards; background: linear-gradient(180deg, rgba(200,155,106,0), rgba(200,155,106,.55) 12%, rgba(200,155,106,.55) 88%, rgba(200,155,106,0));">
+    <div style="position: absolute; inset: 0 0 auto 0; height: 74px; border-radius: 999px; background: linear-gradient(180deg, rgba(240,214,186,0), rgba(240,214,186,.95), rgba(240,214,186,0)); animation: chGlint 900ms linear 1060ms infinite backwards;"></div>
+    <div style="position: absolute; inset: 0 0 auto 0; height: 52px; border-radius: 999px; background: linear-gradient(180deg, rgba(240,214,186,0), rgba(240,214,186,.75), rgba(240,214,186,0)); animation: chGlint 900ms linear 1510ms infinite backwards;"></div>
+  </div>
+  <div style="position: absolute; z-index: 7; top: 0; left: 50%; width: 22px; height: 368px; transform: translateX(-50%); border-radius: 0 0 999px 999px; background: radial-gradient(closest-side, rgba(169,113,63,.26), transparent 74%); filter: blur(7px); animation: chFadeIn 300ms ease 1000ms backwards, chStreamSway 2600ms ease-in-out 1620ms infinite;"></div>
+
+  <!-- Teardrops falling alongside the thread -->
+  <div style="position: absolute; z-index: 7; top: 0; left: calc(50% - 11px); width: 11px; height: 16px; border-radius: 50% 50% 58% 58%; background: radial-gradient(at 32% 30%, #C89B6A, #4A2A17 55%, #1C0E06); transform: translate(-50%, -32px) scale(.5); animation: chDrop 1300ms cubic-bezier(.4,0,1,1) 1140ms infinite backwards;"></div>
+  <div style="position: absolute; z-index: 7; top: 0; left: calc(50% + 12px); width: 8px; height: 12px; border-radius: 50% 50% 58% 58%; background: radial-gradient(at 32% 30%, #A9713F, #3A1E10 60%, #170B04); transform: translate(-50%, -32px) scale(.5); animation: chDrop 1300ms cubic-bezier(.4,0,1,1) 1560ms infinite backwards;"></div>
+  <div style="position: absolute; z-index: 7; top: 0; left: calc(50% - 15px); width: 6px; height: 9px; border-radius: 50% 50% 58% 58%; background: radial-gradient(at 32% 30%, #8B5A2B, #2B1509 60%, #150A03); transform: translate(-50%, -32px) scale(.5); animation: chDrop 1300ms cubic-bezier(.4,0,1,1) 1980ms infinite backwards;"></div>
+
+  <!-- Coffee surface inside the cup -->
+  <div style="position: absolute; z-index: 6; top: 335px; left: 50%; transform: translateX(-50%); width: 148px; height: 48px; border-radius: 50%; background: radial-gradient(at 42% 34%, #6B3E22 0%, #3A1E10 46%, #1C0E06 100%); box-shadow: inset 0 3px 8px rgba(0,0,0,.55), 0 0 18px rgba(169,113,63,.22); animation: chFill 2600ms cubic-bezier(.3,0,.4,1) 1620ms both;"></div>
+  <div style="position: absolute; z-index: 8; top: 359px; left: 50%; width: 130px; height: 42px; border-radius: 50%; border: 1px solid rgba(200,155,106,.45); transform: translate(-50%, -50%); animation: chRipple 1300ms cubic-bezier(0,0,.2,1) 1700ms infinite backwards;"></div>
+
+  <!-- Contact shadow where the pour enters the coffee -->
+  <div style="position: absolute; z-index: 8; top: 363px; left: 50%; transform: translateX(-50%); width: 24px; height: 9px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.75), rgba(0,0,0,0)); filter: blur(2px); animation: chFadeIn 400ms ease 1660ms both;"></div>
+
+  <!-- Satellite droplets thrown off the impact -->
+  <div style="position: absolute; z-index: 8; top: 354px; left: 50%; width: 4px; height: 4px; border-radius: 50%; background: #C89B6A; transform: translate(0, 0) scale(.4); animation: chSatL 1300ms cubic-bezier(.3,0,.7,1) 1740ms infinite backwards;"></div>
+  <div style="position: absolute; z-index: 8; top: 354px; left: 50%; width: 3px; height: 3px; border-radius: 50%; background: #A9713F; transform: translate(0, 0) scale(.4); animation: chSatR 1300ms cubic-bezier(.3,0,.7,1) 1810ms infinite backwards;"></div>
+
+  <!-- Splash crown on the coffee surface -->
+  <div style="position: absolute; z-index: 8; top: 353px; left: 50%; width: 34px; height: 12px; border-radius: 50%; border: 2px solid rgba(214,178,138,.7); transform: translateX(-50%); animation: chSplash 1300ms cubic-bezier(0,0,.2,1) 1700ms infinite backwards;"></div>
+
+  <!-- Rotating quotes, under the cup -->
+  <div style="position: absolute; top: 655px; left: 0; right: 0; height: 84px; z-index: 6; padding: 0 16px; animation: chRiseIn 600ms cubic-bezier(0,0,.2,1) 2300ms both;">
+    <sc-for list="{{ quotes }}" as="q" hint-placeholder-count="1">
+      <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; transition: opacity 700ms ease; opacity: {{ q.o }};">
+        <div style="max-width: 280px; text-align: center; text-wrap: pretty; font-size: var(--font-size-h2); line-height: var(--line-height-h2); letter-spacing: -.01em; color: var(--gray-0, #fff);">{{ q.text }}</div>
+        <div style="font-size: var(--font-size-body); line-height: var(--line-height-body); color: var(--gray-400, #9a9aa2);">{{ q.author }}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <!-- Loading progress -->
+  <div style="position: absolute; top: 763px; left: 50%; transform: translateX(-50%); width: 200px; z-index: 6; --color-bg-surface-sunken: var(--gray-700); animation: chFadeIn 500ms ease 2900ms both;">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.ProgressBar" value="{{ progress }}" hint-size="200px,6px"></x-import>
+  </div>
+
+  <!-- Cup -->
+  <div style="position: absolute; top: 330px; left: 0; right: 0; z-index: 5; display: flex; align-items: flex-start; justify-content: center; animation: chCupRise 760ms cubic-bezier(0,0,.2,1) 150ms both;">
+    <div style="position: relative; width: 176px;">
+      <div style="position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); display: flex; align-items: flex-end; gap: 16px; filter: blur(3px);">
+        <span style="display: block; width: 4px; height: 40px; border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,.5)); animation: chSteam 2800ms ease-out 1900ms infinite backwards;"></span>
+        <span style="display: block; width: 4px; height: 52px; border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,.55)); animation: chSteam 2800ms ease-out 2500ms infinite backwards;"></span>
+        <span style="display: block; width: 4px; height: 40px; border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,.5)); animation: chSteam 2800ms ease-out 3100ms infinite backwards;"></span>
+      </div>
+      <div style="position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 168px; height: 34px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.72), rgba(0,0,0,.34) 58%, rgba(0,0,0,0) 100%); filter: blur(9px); animation: chFadeIn 700ms ease 500ms both;"></div>
+      <div style="position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 96px; height: 14px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.8), rgba(0,0,0,0)); filter: blur(4px); animation: chFadeIn 700ms ease 500ms both;"></div>
+      <img src="uploads/ch_cup_enh_cut.png" alt="Coffee cup" style="width: 176px; height: auto; display: block; filter: drop-shadow(0 -8px 32px rgba(237,29,37,.19));">
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { i: 0, progress: 0 };
+  DURATION = 15000;
+  quotes = [
+    { text: "\u201CI'd rather take coffee than compliments just now.\u201D", author: "Louisa May Alcott" },
+    { text: "\u201CI have measured out my life with coffee spoons.\u201D", author: "T.S. Eliot" },
+  ];
+  componentDidMount() {
+    this.timer = setInterval(
+      () => this.setState((s) => ({ i: (s.i + 1) % this.quotes.length })),
+      this.DURATION / this.quotes.length
+    );
+    this.start = Date.now();
+    this.tick = setInterval(() => {
+      const pct = Math.min(100, ((Date.now() - this.start) / this.DURATION) * 100);
+      this.setState({ progress: pct });
+      if (pct >= 100) {
+        clearInterval(this.tick);
+        clearInterval(this.timer);
+        window.location.href = 'Home.dc.html';
+      }
+    }, 120);
+  }
+  componentWillUnmount() { clearInterval(this.timer); clearInterval(this.tick); }
+  renderVals() {
+    return {
+      progress: this.state.progress,
+      quotes: this.quotes.map((q, idx) => ({ ...q, o: idx === this.state.i ? 1 : 0 })),
+    };
+  }
+}
+</script>
+</body>
+</html>

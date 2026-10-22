@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+</helmet>
+<x-import component-from-global-scope="GastroDesignSystem_472aed.BottomSheet" open="{{ open }}" on-close="{{ onClose }}" title="Top up wallet" hint-size="100%,auto">
+  <div style="display: flex; flex-direction: column; gap: var(--space-base);">
+    <div style="position: relative;">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.PaymentMethods" icon="credit-card" name="Visa •••• 4242" balance="$24.50" chevron="{{ true }}" hint-size="100%,48px"></x-import>
+      <div style="position: absolute; inset: 0; cursor: pointer;" onClick="{{ onOpenPayment }}"></div>
+    </div>
+    <div style="position: relative;">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Input" type="text" value="{{ amount }}" on-change="{{ setAmount }}" placeholder="Enter amount" hint-size="100%,40px"></x-import>
+      <span style="position: absolute; top: 50%; right: var(--space-base); transform: translateY(-50%); pointer-events: none; font-size: var(--font-size-body-sm); line-height: var(--line-height-body-sm); font-weight: var(--font-weight-regular); font-family: var(--font-family-base); color: var(--color-text-tertiary);">֏</span>
+    </div>
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Button" variant="primary" size="sm" full-width="{{ true }}" disabled="{{ ctaDisabled }}" on-click="{{ submit }}" hint-size="100%,40px">Top up</x-import>
+  </div>
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;},&quot;onTopUp&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(amount: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { amount: '', method: 'card' };
+  methodData = [
+    { id: 'card', name: 'Visa •••• 4242', icon: 'credit-card', balance: '֏12,400' },
+    { id: 'card2', name: 'Mastercard •••• 8821', icon: 'credit-card', balance: '֏4,300' },
+  ];
+  renderVals() {
+    const s = this.state;
+    const onTopUp = this.props.onTopUp ?? (() => {});
+    return {
+      open: this.props.open ?? false,
+      onClose: this.props.onClose ?? (() => {}),
+      onOpenPayment: this.props.onOpenPayment ?? (() => {}),
+      amount: s.amount ? Number(s.amount).toLocaleString('en-US') : '',
+      setAmount: (v) => this.setState({ amount: String(v && v.target ? v.target.value : v).replace(/\D/g, '').slice(0, 7) }),
+      ctaDisabled: !s.amount,
+      submit: () => { onTopUp(s.amount); this.setState({ amount: '' }); },
+    };
+  }
+}
+</script>
+</body>
+</html>

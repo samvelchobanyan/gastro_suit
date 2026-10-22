@@ -1,0 +1,114 @@
+{
+  "kind": "component",
+  "name": "ProductMenuCard",
+  "version": "2026-09-12",
+  "description": "Dark menu grid card: square photo over a soft top glow, product name + price, and a floating add button bottom-right.",
+  "size": {
+    "width": 160,
+    "height": "hug",
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "column",
+    "spacing": [],
+    "padding": null,
+    "align": "start",
+    "justify": "start",
+    "scroll": "none",
+    "size": {
+      "width": 160
+    },
+    "children": [
+      {
+        "slot": "photo",
+        "type": "image",
+        "source": "{imageUrl}",
+        "size": [
+          160,
+          160
+        ],
+        "fit": "cover",
+        "radius": null,
+        "fallback": {
+          "slot": "photo.fallback",
+          "type": "box",
+          "size": [
+            160,
+            160
+          ],
+          "background": "--gray-100",
+          "radius": null,
+          "border": null,
+          "padding": null,
+          "child": null
+        }
+      },
+      {
+        "slot": "details",
+        "type": "column",
+        "spacing": [
+          "--space-xxs"
+        ],
+        "padding": {
+          "all": "--space-sm"
+        },
+        "align": "start",
+        "justify": "start",
+        "scroll": "none",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "details.name",
+            "type": "text",
+            "content": "{name}",
+            "style": "--text-body-sm",
+            "color": "--gray-0",
+            "lines": 1,
+            "overflow": "ellipsis",
+            "align": "start",
+            "transform": "none",
+            "size": {
+              "width": "fill"
+            }
+          },
+          {
+            "slot": "details.price",
+            "type": "text",
+            "content": "{price}",
+            "style": "--text-body-xs",
+            "color": "--gray-0",
+            "lines": 1,
+            "overflow": "ellipsis",
+            "align": "start",
+            "transform": "none",
+            "size": {
+              "width": "fill"
+            }
+          }
+        ]
+      }
+    ],
+    "overlay": [
+      {
+        "slot": "add",
+        "type": "component",
+        "component": "IconButton",
+        "shows": {
+          "icon": "plus",
+          "variant": "filled",
+          "size": "xs",
+          "ariaLabel": "Add to cart"
+        }
+      }
+    ]
+  },
+  "variants": {},
+  "uses": [
+    "IconButton"
+  ],
+  "notes": "Top glow (blurred translucent circle behind the photo) is generated art, not schema-expressible — see notes. Add button (\"add\", bottom-right overlay) is an IconButton instance (icon plus, variant filled, size xs) placed as an overlay on root; details padding-right reserves space for it so the trimmed name/price never sit under it."
+}

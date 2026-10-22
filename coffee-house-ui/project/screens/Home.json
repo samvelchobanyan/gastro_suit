@@ -1,0 +1,571 @@
+{
+  "kind": "screen",
+  "name": "Home",
+  "version": "2026-09-12",
+  "description": "App home: greeting header, stories, loyalty & wallet cards, vouchers rail, a Buy again/Favourites tab switch over a product rail, nearest branches list, bottom navigation.",
+  "frame": {
+    "width": 360,
+    "height": 800,
+    "background": "--color-bg-surface"
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "column",
+    "spacing": [],
+    "padding": null,
+    "align": "start",
+    "justify": "start",
+    "scroll": "none",
+    "size": {
+      "width": "fill",
+      "height": "fill"
+    },
+    "children": [
+      {
+        "slot": "greeting",
+        "type": "component",
+        "component": "Greeting",
+        "shows": {
+          "name": "Aram",
+          "greeting": "Let's enjoy some coffee",
+          "hasNotifications": true
+        }
+      },
+      {
+        "slot": "stories",
+        "type": "row",
+        "spacing": [
+          "--space-sm",
+          "--space-sm",
+          "--space-sm",
+          "--space-sm",
+          "--space-sm"
+        ],
+        "padding": {
+          "top": "--space-sm",
+          "right": "--space-base",
+          "bottom": "--space-base",
+          "left": "--space-base"
+        },
+        "align": "start",
+        "justify": "start",
+        "scroll": "horizontal",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "stories.item",
+            "type": "component",
+            "component": "Stories",
+            "shows": {
+              "label": "Cold brew",
+              "seen": false
+            }
+          }
+        ]
+      },
+      {
+        "slot": "loyalty",
+        "type": "column",
+        "spacing": [],
+        "padding": {
+          "x": "--space-base",
+          "y": 0
+        },
+        "align": "start",
+        "justify": "start",
+        "scroll": "none",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "loyalty.card",
+            "type": "component",
+            "component": "LoyaltyPointsCard",
+            "shows": {
+              "points": 1240,
+              "membership": "Master",
+              "discountLabel": "10%"
+            }
+          }
+        ]
+      },
+      {
+        "slot": "wallet",
+        "type": "column",
+        "spacing": [],
+        "padding": {
+          "top": 0,
+          "right": "--space-base",
+          "bottom": "--space-base",
+          "left": "--space-base"
+        },
+        "align": "start",
+        "justify": "start",
+        "scroll": "none",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "wallet.card",
+            "type": "component",
+            "component": "Wallet",
+            "shows": {
+              "balance": "֏5,680"
+            }
+          }
+        ]
+      },
+      {
+        "slot": "vouchers",
+        "type": "column",
+        "spacing": [
+          "--space-md"
+        ],
+        "padding": {
+          "top": 0,
+          "right": 0,
+          "bottom": "--space-lg",
+          "left": 0
+        },
+        "align": "start",
+        "justify": "start",
+        "scroll": "none",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "vouchers.header",
+            "type": "row",
+            "spacing": [],
+            "padding": {
+              "x": "--space-base",
+              "y": 0
+            },
+            "align": "start",
+            "justify": "start",
+            "scroll": "none",
+            "size": {
+              "width": "fill"
+            },
+            "children": [
+              {
+                "slot": "vouchers.header.title",
+                "type": "component",
+                "component": "SectionHeader",
+                "shows": {
+                  "title": "Vouchers"
+                }
+              }
+            ]
+          },
+          {
+            "slot": "vouchers.rail",
+            "type": "row",
+            "spacing": [
+              "--space-sm"
+            ],
+            "padding": {
+              "x": "--space-base",
+              "y": 0
+            },
+            "align": "start",
+            "justify": "start",
+            "scroll": "horizontal",
+            "size": {
+              "width": "fill"
+            },
+            "children": [
+              {
+                "slot": "vouchers.rail.item",
+                "type": "component",
+                "component": "Voucher",
+                "shows": {
+                  "name": "Bumble Cherry",
+                  "remaining": 2
+                }
+              },
+              {
+                "slot": "vouchers.rail.item2",
+                "type": "component",
+                "component": "Voucher",
+                "shows": {
+                  "name": "Iced Americano Specialty Arabica",
+                  "remaining": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "slot": "tabs",
+        "type": "row",
+        "spacing": [],
+        "padding": {
+          "x": "--space-base",
+          "bottom": "--space-base"
+        },
+        "align": "start",
+        "justify": "start",
+        "scroll": "none",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "tabs.control",
+            "type": "component",
+            "component": "TabBar",
+            "shows": {
+              "size": "small",
+              "options": [
+                "Buy again",
+                "Favourites"
+              ],
+              "value": "{tab}"
+            }
+          }
+        ]
+      },
+      {
+        "slot": "rail",
+        "type": "row",
+        "spacing": [
+          "--space-sm",
+          "--space-sm",
+          "--space-sm"
+        ],
+        "padding": {
+          "x": "--space-base",
+          "bottom": "--space-lg"
+        },
+        "align": "start",
+        "justify": "start",
+        "scroll": "horizontal",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "rail.item",
+            "type": "component",
+            "component": "BuyAgainCard",
+            "shows": {
+              "name": "Hot Salted Caramel Matcha Latte",
+              "location": "Northern Ave"
+            },
+            "size": {
+              "width": 128
+            }
+          }
+        ]
+      },
+      {
+        "slot": "branches",
+        "type": "column",
+        "spacing": [
+          "--space-md"
+        ],
+        "padding": {
+          "x": "--space-base",
+          "bottom": "--space-base"
+        },
+        "align": "start",
+        "justify": "start",
+        "scroll": "none",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "branches.header",
+            "type": "row",
+            "spacing": [],
+            "padding": {
+              "bottom": "--space-md"
+            },
+            "align": "start",
+            "justify": "start",
+            "scroll": "none",
+            "size": {
+              "width": "fill"
+            },
+            "children": [
+              {
+                "slot": "branches.header.title",
+                "type": "component",
+                "component": "SectionHeader",
+                "shows": {
+                  "title": "Nearest branches"
+                }
+              }
+            ]
+          },
+          {
+            "slot": "branches.list",
+            "type": "column",
+            "spacing": [
+              "--space-md",
+              "--space-md",
+              "--space-md",
+              "--space-md"
+            ],
+            "padding": null,
+            "align": "start",
+            "justify": "start",
+            "scroll": "none",
+            "size": {
+              "width": "fill"
+            },
+            "children": [
+              {
+                "slot": "branches.list.item",
+                "type": "component",
+                "component": "BranchCard",
+                "shows": {
+                  "name": "Northern Avenue",
+                  "address": "12 Northern Ave, Yerevan",
+                  "hours": "08:00 – 23:00",
+                  "distance": "0.4 km",
+                  "isOpenNow": true
+                }
+              },
+              {
+                "slot": "branches.list.divider",
+                "type": "component",
+                "component": "Divider",
+                "shows": {}
+              },
+              {
+                "slot": "branches.list.item2",
+                "type": "component",
+                "component": "BranchCard",
+                "shows": {
+                  "name": "Cascade",
+                  "address": "3 Tamanyan St, Yerevan",
+                  "hours": "09:00 – 22:00",
+                  "distance": "1.1 km",
+                  "isOpenNow": true
+                }
+              },
+              {
+                "slot": "branches.list.divider2",
+                "type": "component",
+                "component": "Divider",
+                "shows": {}
+              },
+              {
+                "slot": "branches.list.item3",
+                "type": "component",
+                "component": "BranchCard",
+                "shows": {
+                  "name": "Republic Square",
+                  "address": "5 Abovyan St, Yerevan",
+                  "hours": "08:00 – 00:00",
+                  "distance": "1.8 km",
+                  "isOpenNow": false
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "slot": "spacer",
+        "type": "box",
+        "size": {
+          "width": "fill",
+          "height": "fill"
+        },
+        "background": "transparent",
+        "radius": null,
+        "border": null,
+        "padding": null,
+        "child": null
+      },
+      {
+        "slot": "bottomNav",
+        "type": "row",
+        "spacing": [],
+        "padding": {
+          "top": "--space-sm",
+          "right": "--space-base",
+          "bottom": "--space-sm",
+          "left": "--space-base"
+        },
+        "align": "start",
+        "justify": "start",
+        "scroll": "none",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "bottomNav.bar",
+            "type": "component",
+            "component": "BottomNavigation",
+            "shows": {
+              "activeKey": "home",
+              "items": [
+                {
+                  "key": "home",
+                  "icon": "house",
+                  "label": "Home"
+                },
+                {
+                  "key": "order",
+                  "icon": "coffee",
+                  "label": "Order"
+                },
+                {
+                  "key": "gifts",
+                  "icon": "gift",
+                  "label": "Gifts"
+                },
+                {
+                  "key": "profile",
+                  "icon": "user",
+                  "label": "Profile"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "content": {
+    "greeting": {
+      "name": "Aram",
+      "greeting": "Let's enjoy some coffee"
+    },
+    "stories": [
+      {
+        "label": "A very very long story name"
+      },
+      {
+        "label": "Cold brew"
+      },
+      {
+        "label": "Espresso"
+      },
+      {
+        "label": "Pastries"
+      },
+      {
+        "label": "Beans"
+      },
+      {
+        "label": "Mocha"
+      }
+    ],
+    "loyalty": {
+      "points": 1240,
+      "membership": "Master",
+      "discountLabel": "10%",
+      "qrValue": "CH-ARAM-1240"
+    },
+    "wallet": {
+      "balance": "֏5,680"
+    },
+    "vouchers": [
+      {
+        "name": "Bumble Cherry",
+        "remaining": 2
+      },
+      {
+        "name": "Iced Americano Specialty Arabica",
+        "remaining": 1
+      }
+    ],
+    "buyAgainRail": [
+      {
+        "name": "Hot Salted Caramel Matcha Latte",
+        "location": "Northern Ave"
+      },
+      {
+        "name": "Dubai Cheesecake",
+        "location": "Cascade"
+      },
+      {
+        "name": "Muffin Chocolate",
+        "location": "Republic Sq"
+      }
+    ],
+    "favouritesRail": [
+      {
+        "name": "Iced Fantasy Coffee",
+        "price": "֏1,450"
+      },
+      {
+        "name": "Iced Cream Cheese Latte Aroma",
+        "price": "֏1,850"
+      },
+      {
+        "name": "Hot Raf Strawberry",
+        "price": "֏1,650"
+      }
+    ],
+    "branches": [
+      {
+        "name": "Northern Avenue",
+        "address": "12 Northern Ave, Yerevan",
+        "hours": "08:00 – 23:00",
+        "distance": "0.4 km",
+        "isOpenNow": true
+      },
+      {
+        "name": "Cascade",
+        "address": "3 Tamanyan St, Yerevan",
+        "hours": "09:00 – 22:00",
+        "distance": "1.1 km",
+        "isOpenNow": true
+      },
+      {
+        "name": "Republic Square",
+        "address": "5 Abovyan St, Yerevan",
+        "hours": "08:00 – 00:00",
+        "distance": "1.8 km",
+        "isOpenNow": false
+      }
+    ]
+  },
+  "variants": {
+    "tab": {
+      "prop": "tab",
+      "cases": {
+        "favourites": {
+          "rail.item": {
+            "visible": false
+          },
+          "tabs.control": {
+            "shows": {
+              "value": "favourites"
+            }
+          }
+        }
+      }
+    }
+  },
+  "uses": [
+    "Greeting",
+    "Stories",
+    "LoyaltyPointsCard",
+    "Wallet",
+    "SectionHeader",
+    "Voucher",
+    "TabBar",
+    "BuyAgainCard",
+    "ProductVerticalCard",
+    "BranchCard",
+    "Divider",
+    "BottomNavigation"
+  ],
+  "notes": "rail switches its item component (BuyAgainCard ↔ ProductVerticalCard) and content with the tab variant; only the default (Buy again) is drawn in tree, the alternate documented in variants and content.buyAgainRail/favouritesRail."
+}

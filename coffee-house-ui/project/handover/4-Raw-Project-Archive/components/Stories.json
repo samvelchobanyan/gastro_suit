@@ -1,0 +1,107 @@
+{
+  "kind": "component",
+  "name": "Stories",
+  "version": "2026-09-12",
+  "description": "Circular story avatar with seen/unseen ring and a label beneath.",
+  "size": {
+    "width": 72,
+    "height": "hug",
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "column",
+    "spacing": [
+      "--space-xs"
+    ],
+    "padding": null,
+    "align": "center",
+    "justify": "start",
+    "scroll": "none",
+    "size": {
+      "width": 72
+    },
+    "children": [
+      {
+        "slot": "ring",
+        "type": "box",
+        "size": [
+          64,
+          64
+        ],
+        "background": "--color-brand-primary",
+        "radius": "--radius-full",
+        "border": null,
+        "padding": {
+          "all": 2
+        },
+        "child": {
+          "slot": "ring.inner",
+          "type": "box",
+          "size": [
+            60,
+            60
+          ],
+          "background": "--color-bg-muted",
+          "radius": "--radius-full",
+          "border": {
+            "width": 2,
+            "color": "--color-bg-surface"
+          },
+          "padding": null,
+          "child": {
+            "slot": "ring.photo",
+            "type": "image",
+            "source": "{imageUrl}",
+            "size": [
+              60,
+              60
+            ],
+            "fit": "cover",
+            "radius": "--radius-full",
+            "fallback": {
+              "slot": "ring.photo.fallback",
+              "type": "icon",
+              "name": "image",
+              "weight": "fill",
+              "size": "--icon-md",
+              "color": "--color-text-tertiary"
+            }
+          }
+        }
+      },
+      {
+        "slot": "label",
+        "type": "text",
+        "content": "{label}",
+        "style": "--text-body-sm",
+        "color": "--color-text-primary",
+        "lines": 1,
+        "overflow": "ellipsis",
+        "align": "center",
+        "transform": "none",
+        "size": {
+          "width": 72
+        }
+      }
+    ]
+  },
+  "variants": {
+    "seen": {
+      "prop": "seen",
+      "cases": {
+        "true": {
+          "ring": {
+            "background": "--color-border-default"
+          },
+          "label": {
+            "color": "--color-text-tertiary"
+          }
+        }
+      }
+    }
+  },
+  "uses": [],
+  "notes": "Ring diameter (64) and inner white gap are fixed element dimensions, not spacing tokens."
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <style>
+    body { margin: 0; min-height: 100vh; box-sizing: border-box; padding: var(--space-lg) 0; background: var(--gray-100); font-family: "Plus Jakarta Sans", system-ui, sans-serif; display: flex; align-items: center; justify-content: center; }
+    a { color: var(--color-text-primary); } a:hover { color: var(--color-text-secondary); }
+  </style>
+</helmet>
+<div data-screen-label="History" style="width: 360px; height: 800px; background: var(--color-bg-surface); overflow: hidden; display: flex; flex-direction: column; flex: 0 0 auto; position: relative;">
+  <x-import component-from-global-scope="GastroDesignSystem_472aed.ScreenHeader" title="History" on-back="{{ goBack }}" hint-size="100%,56px"></x-import>
+  <div style="padding: 0 var(--space-base) var(--space-base);">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.TabBar" size="big" options="{{ tabOptions }}" value="{{ tab }}" on-change="{{ setTab }}" hint-size="100%,40px"></x-import>
+  </div>
+  <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none;">
+    <sc-if value="{{ showOrders }}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: var(--space-md); padding: 0 var(--space-base) var(--space-base);">
+        <sc-for list="{{ orders }}" as="o" hint-placeholder-count="6">
+          <sc-if value="{{ o.divider }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" hint-size="100%,1px"></x-import>
+          </sc-if>
+          <x-import component-from-global-scope="GastroDesignSystem_472aed.ProductHistory" name="{{ o.name }}" date="{{ o.date }}" price="{{ o.price }}" image-url="{{ o.image }}" hint-size="100%,64px"></x-import>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ showTransactions }}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: var(--space-sm); padding: 0 var(--space-base) var(--space-base);">
+        <sc-for list="{{ transactions }}" as="t" hint-placeholder-count="4">
+          <x-import component-from-global-scope="GastroDesignSystem_472aed.Transactions" type="{{ t.type }}" title="{{ t.title }}" details="{{ t.details }}" amount="{{ t.amount }}" direction="{{ t.direction }}" hint-size="100%,64px"></x-import>
+        </sc-for>
+      </div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:800}}">
+class Component extends DCLogic {
+  state = { tab: 'orders' };
+  renderVals() {
+    return {
+      goBack: () => { window.location.href = 'Profile.dc.html'; },
+      tabOptions: [
+        { label: 'Orders', value: 'orders', icon: 'receipt' },
+        { label: 'Transactions', value: 'transactions', icon: 'arrows-left-right' },
+      ],
+      tab: this.state.tab,
+      showOrders: this.state.tab === 'orders',
+      showTransactions: this.state.tab === 'transactions',
+      transactions: [
+        { type: 'wallet', title: 'Wallet top up', details: '14 Oct 2026, 09:10', amount: '+֏5,000', direction: 'in' },
+        { type: 'card', title: 'Card payment', details: 'Visa •••• 4556 · 12 Oct 2026', amount: '−֏2,250', direction: 'out' },
+        { type: 'voucher', title: 'Voucher purchase', details: '2× Iced Americano · 10 Oct 2026', amount: '−֏2,700', direction: 'out' },
+        { type: 'loyalty', title: 'Loyalty points', details: 'Earned on order · 7 Oct 2026', amount: '+175 pts', direction: 'in' },
+      ],
+      orders: [
+        { name: 'Iced Americano', date: '14 Oct 2026, 09:12', price: '֏1,350', image: 'uploads/ice%20americano-52926f9b.png' },
+        { name: 'Dubai Cheesecake', date: '12 Oct 2026, 16:40', price: '֏2,250', image: 'uploads/dubai%20cheesecake-83568b34.png' },
+        { name: 'Hot Raf Strawberry', date: '10 Oct 2026, 08:55', price: '֏1,650', image: 'uploads/raf%20strawberry-e6ea36ce.png' },
+        { name: 'Bumble Cherry', date: '7 Oct 2026, 13:20', price: '֏1,750', image: 'uploads/bumble%20cherry-ab6a4199.png' },
+        { name: 'Iced Fantasy Coffee', date: '3 Oct 2026, 10:05', price: '֏1,450', image: 'uploads/iced%20fantasy%20coffee-752e25b4.png' },
+        { name: 'Chocolate Muffin', date: '1 Oct 2026, 17:30', price: '֏1,250', image: 'uploads/chocolate%20muffin-8e511c76.png' },
+      ].map((o, i) => ({ ...o, divider: i > 0 })),
+      setTab: (v) => this.setState({ tab: v }),
+    };
+  }
+}
+</script>
+</body>
+</html>

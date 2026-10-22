@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <style>
+    body { margin: 0; min-height: 100vh; box-sizing: border-box; padding: var(--space-lg) 0; background: var(--gray-100); font-family: "Plus Jakarta Sans", system-ui, sans-serif; display: flex; align-items: center; justify-content: center; }
+    a { color: var(--color-text-primary); } a:hover { color: var(--color-text-secondary); }
+  </style>
+</helmet>
+<div data-screen-label="Upgrade" style="width: 360px; height: 800px; background: var(--color-bg-surface); overflow: hidden; display: flex; flex-direction: column; flex: 0 0 auto; position: relative; font-family: var(--font-family-base);">
+  <x-import component-from-global-scope="GastroDesignSystem_472aed.ScreenHeader" title="Upgrade" on-back="{{ goBack }}" hint-size="100%,56px"></x-import>
+  <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 0 var(--space-base) var(--space-base); display: flex; flex-direction: column;">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.MembershipCard" variant="current" badge-label="" name="{{ tier.name }}" benefits="{{ tier.benefits }}" image="{{ tier.image }}" hint-size="100%,160px"></x-import>
+    <div style="padding: var(--space-lg) 0 var(--space-sm);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Duration" hint-size="100%,28px"></x-import>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); padding: var(--space-md) var(--space-base); border-radius: var(--radius-md); background: var(--gray-50);">
+      <span style="font-size: var(--font-size-body-lg); line-height: var(--line-height-body-lg); font-weight: var(--font-weight-semibold); color: var(--color-text-primary);">{{ monthsLabel }}</span>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Stepper" value="{{ months }}" min="{{ 1 }}" max="{{ 12 }}" on-change="{{ setMonths }}" aria-label="Months" hint-size="120px,40px"></x-import>
+    </div>
+    <span style="padding-top: var(--space-sm); font-size: var(--font-size-body); line-height: var(--line-height-body); font-weight: var(--font-weight-regular); color: var(--color-text-secondary);">{{ activeUntil }}</span>
+    <div style="padding: var(--space-lg) 0 var(--space-sm);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Payment method" hint-size="100%,28px"></x-import>
+    </div>
+    <div style="position: relative;">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.PaymentMethods" icon="credit-card" name="Visa •••• 4242" balance="$24.50" chevron="{{ true }}" hint-size="100%,40px"></x-import>
+      <div style="position: absolute; inset: 0; cursor: pointer;" onClick="{{ openPaymentSheet }}"></div>
+    </div>
+  </div>
+  <div style="padding: var(--space-base); border-top: 1px solid var(--color-border-muted); background: var(--color-bg-surface);">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Button" variant="primary" size="sm" full-width="{{ true }}" on-click="{{ upgrade }}" hint-size="100%,40px">{{ ctaLabel }}</x-import>
+  </div>
+  <dc-import name="MembershipUpgradeSuccess" visible="{{ upgraded }}" tier-label="{{ tierLabel }}" active-until="{{ activeUntil }}" hint-size="360px,800px"></dc-import>
+  <dc-import name="PaymentBottomSheet" open="{{ paymentSheetOpen }}" on-close="{{ closePaymentSheet }}" on-select="{{ closePaymentSheet }}" hint-size="100%,100%"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:800}}">
+class Component extends DCLogic {
+  state = { months: 4 };
+  tiers = {
+    silver: { name: 'Silver', image: 'uploads/membership_silver.png', benefits: ['10% cashback in loyalty points', 'Birthday drink', 'Free size upgrade', 'Member-only offers', 'Priority pickup'] },
+    gold: { name: 'Gold', image: 'uploads/membership_gold.png', benefits: ['15% cashback in loyalty points', 'Birthday drink', 'Free size upgrade', 'Free drink every month', 'Priority pickup'] },
+  };
+  renderVals() {
+    const key = new URLSearchParams(window.location.search).get('tier');
+    const m = this.state.months;
+    const d = new Date(2026, 9, 19); d.setMonth(d.getMonth() + m);
+    const until = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    return {
+      goBack: () => { window.location.href = 'MembershipListing.dc.html'; },
+      tier: this.tiers[key] || this.tiers.silver,
+      paymentSheetOpen: !!this.state.paymentSheetOpen,
+      openPaymentSheet: () => this.setState({ paymentSheetOpen: true }),
+      closePaymentSheet: () => this.setState({ paymentSheetOpen: false }),
+      months: m,
+      monthsLabel: m + (m === 1 ? ' month' : ' months'),
+      setMonths: (v) => this.setState({ months: v }),
+      activeUntil: 'Active until ' + until,
+      upgraded: !!this.state.upgraded,
+      upgrade: () => this.setState({ upgraded: true }),
+      tierLabel: key === 'gold' ? 'Gold 15%' : 'Silver 10%',
+      ctaLabel: 'Upgrade · ֏' + ((key === 'gold' ? 5000 : 2000) * m).toLocaleString('en-US'),
+    };
+  }
+}
+</script>
+</body>
+</html>

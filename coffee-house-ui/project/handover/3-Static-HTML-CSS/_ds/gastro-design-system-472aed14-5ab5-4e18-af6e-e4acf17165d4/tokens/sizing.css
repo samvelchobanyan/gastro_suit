@@ -1,0 +1,46 @@
+/* ============================================================
+   SIZING TOKENS  (component dimensions & touch targets)
+   ------------------------------------------------------------
+   Fixed heights and icon/target sizes from the spec's Component
+   Sizes section. All values land on the 4px grid.
+   ============================================================ */
+
+:root {
+
+  /* ---- Touch target ---- */
+  --touch-target-min: 48px;   /* absolute minimum interactive size */
+
+  /* ---- Button heights ---- */
+  --button-height-lg: 56px;   /* primary CTA (also 48px variant)   */
+  --button-height-md: 48px;
+  --button-height-sm: 40px;   /* secondary / filter                */
+  --button-height-xs: 32px;   /* tertiary / inline card action     */
+
+  /* ---- Input / field heights ---- */
+  --input-height-floating: 56px;  /* floating-label style */
+  --input-height-fixed:    48px;  /* fixed-label style    */
+  --input-padding-x:       16px;  /* aligns to screen margin */
+  --input-padding-y:       12px;
+
+  /* ---- Bars & rows ---- */
+  --appbar-height:        56px;   /* top app bar (Android std)  */
+  --appbar-height-ios:    44px;
+  --bottomnav-height:         48px;  /* no labels               */
+  --bottomnav-height-labeled: 48px;  /* with labels (up to 80)  */
+  --row-height-compact:   48px;   /* single-line text          */
+  --row-height-icon:      56px;   /* icon + single line        */
+  --row-height-two-line:  72px;
+  --row-height-multi:     88px;
+
+  /* ---- Icon bounding boxes (multiples of 4) ---- */
+  --icon-xs: 16px;   /* status/inline chevrons; +16 pad for touch */
+  --icon-sm: 20px;   /* list items, input icons; +12 pad          */
+  --icon-md: 24px;   /* DEFAULT: nav bar, header actions; +12 pad */
+  --icon-lg: 32px;   /* FAB, primary quick actions; +8 pad        */
+  --icon-xl: 40px;   /* grid menus, onboarding; native target     */
+
+  /* ---- Borders / strokes ---- */
+  --border-width-default: 1px;
+  --border-width-focus:   2px;   /* input focus / focus ring width */
+  --focus-ring-offset:    2px;
+}

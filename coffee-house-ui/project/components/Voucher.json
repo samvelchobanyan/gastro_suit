@@ -1,0 +1,105 @@
+{
+  "kind": "component",
+  "name": "Voucher",
+  "version": "2026-09-12",
+  "description": "Reward/coupon row: product image, name, and remaining-count line.",
+  "size": {
+    "width": "hug",
+    "height": "hug",
+    "maxWidth": 328
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "row",
+    "spacing": [
+      "--space-md",
+      "--space-md"
+    ],
+    "padding": {
+      "top": "--space-md",
+      "right": "--space-base",
+      "bottom": "--space-md",
+      "left": "--space-md"
+    },
+    "align": "center",
+    "justify": "start",
+    "scroll": "none",
+    "size": {
+      "width": "hug"
+    },
+    "children": [
+      {
+        "slot": "photo",
+        "type": "image",
+        "source": "{image}",
+        "size": [
+          48,
+          48
+        ],
+        "fit": "cover",
+        "radius": "--radius-sm",
+        "fallback": {
+          "slot": "photo.fallback",
+          "type": "box",
+          "size": [
+            48,
+            48
+          ],
+          "background": "--color-bg-muted",
+          "radius": "--radius-sm",
+          "border": null,
+          "padding": null,
+          "child": null
+        }
+      },
+      {
+        "slot": "text",
+        "type": "column",
+        "spacing": [
+          "--space-xxs"
+        ],
+        "padding": null,
+        "align": "start",
+        "justify": "center",
+        "scroll": "none",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "text.name",
+            "type": "text",
+            "content": "{name}",
+            "style": "--text-body",
+            "color": "--color-text-primary",
+            "lines": 1,
+            "overflow": "clip",
+            "align": "start",
+            "transform": "none",
+            "size": {
+              "width": "fill"
+            }
+          },
+          {
+            "slot": "text.remaining",
+            "type": "text",
+            "content": "{remaining} remaining",
+            "style": "--text-body-sm",
+            "color": "--color-text-tertiary",
+            "lines": 1,
+            "overflow": "clip",
+            "align": "start",
+            "transform": "none",
+            "size": {
+              "width": "fill"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "variants": {},
+  "uses": [],
+  "notes": ""
+}

@@ -1,0 +1,72 @@
+/* ============================================================
+   TIER 2 — SEMANTIC TOKENS  (purpose / intent)
+   ------------------------------------------------------------
+   Named after their role in the interface. Components reference
+   THESE, never Tier-1 primitives. Resolves through primitives.css
+   + brand.css.
+
+   Surface & Contrast Layering Matrix (spec) is encoded here:
+   permitted text tokens are legally paired to background tokens.
+   ============================================================ */
+
+:root {
+
+  /* ---- Backgrounds (60% dominant neutrals) ---- */
+  --color-bg-canvas:        var(--gray-50);   /* app-level backdrop */
+  --color-bg-main:          var(--gray-0);    /* primary screen bg  */
+  --color-bg-surface:       var(--gray-0);    /* cards / modals     */
+  --color-bg-surface-sunken:var(--gray-100);  /* wells / inputs bg  */
+  --color-bg-inverse:       var(--gray-900);  /* dark surfaces      */
+  --color-bg-scrim:         var(--alpha-black-40); /* modal backdrop */
+
+  /* ---- Text ---- */
+  --color-text-primary:     var(--gray-900);  /* AAA on white       */
+  --color-text-secondary:   var(--gray-700);  /* AA  on white       */
+  --color-text-tertiary:    var(--gray-600);  /* captions / hints   */
+  --color-text-disabled:    var(--gray-500);
+  --color-text-accent:      var(--accent-600);/* accent text on surface */
+  --color-text-on-brand:    var(--accent-contrast); /* text on CTA  */
+  --color-text-inverse:     var(--gray-0);    /* text on dark bg    */
+
+  /* ---- Borders / dividers (30% structural) ---- */
+  --color-border-muted:     var(--gray-200);  /* subtle dividers    */
+  --color-border-default:   var(--gray-300);  /* default outlines   */
+  --color-border-strong:    var(--gray-400);  /* emphasized borders */
+  --color-border-interactive: var(--accent-500); /* focused input   */
+
+  /* ---- Brand / action (10% accent) ---- */
+  --color-brand-primary:     var(--accent-500);
+  --color-brand-interactive: var(--accent-600); /* active/pressed   */
+  --color-brand-subtle:      var(--accent-50);  /* tinted surfaces  */
+  --color-focus-ring:        var(--accent-500);
+
+  /* ---- Status: Success ---- */
+  --color-status-success:     var(--green-500);
+  --color-bg-success:         var(--green-50);
+  --color-border-success:     var(--green-100);
+  --color-text-success:       var(--green-700);
+
+  /* ---- Status: Warning ---- */
+  --color-status-warning:     var(--amber-500);
+  --color-bg-warning:         var(--amber-50);
+  --color-border-warning:     var(--amber-100);
+  --color-text-warning:       var(--amber-700);
+
+  /* ---- Status: Error ---- */
+  --color-status-error:       var(--red-500);
+  --color-bg-error:           var(--red-50);
+  --color-border-error:       var(--red-100);
+  --color-text-error:         var(--red-700);
+
+  /* ---- Status: Info ---- */
+  --color-status-info:        var(--blue-500);
+  --color-bg-info:            var(--blue-50);
+  --color-border-info:        var(--blue-100);
+  --color-text-info:          var(--blue-700);
+
+  /* ---- State overlays (Component State Matrix) ---- */
+  --overlay-press-dark:   var(--alpha-black-12);  /* +12% on light fills */
+  --overlay-press-light:  var(--alpha-white-12);  /* +12% on dark fills  */
+  --overlay-hover-dark:   var(--alpha-black-4);
+  --state-disabled-opacity: 0.35;  /* @kind other */ /* spec: 30%–38% reduction */
+}

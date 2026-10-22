@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <style>
+    body { margin: 0; min-height: 100vh; box-sizing: border-box; padding: var(--space-lg) 0; background: var(--gray-100); font-family: "Plus Jakarta Sans", system-ui, sans-serif; display: flex; align-items: center; justify-content: center; }
+    a { color: var(--color-text-primary); } a:hover { color: var(--color-text-secondary); }
+  </style>
+</helmet>
+<div style="width: 360px; height: 800px; background: var(--color-bg-surface); overflow: hidden; display: flex; flex-direction: column; flex: 0 0 auto; position: relative;">
+  <x-import component-from-global-scope="GastroDesignSystem_472aed.ScreenHeader" title="Gifts" hint-size="100%,56px"></x-import>
+  <div style="padding: 0 var(--space-base) var(--space-base);">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.TabBar" size="big" options="{{ tabOptions }}" value="{{ tabValue }}" on-change="{{ setTab }}" hint-size="100%,40px"></x-import>
+  </div>
+  <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none;">
+  <sc-if value="{{ showTopUp }}" hint-placeholder-val="{{ true }}">
+  <div style="padding: 0 var(--space-base) var(--space-base);">
+    <div style="display: flex; flex-direction: column; gap: var(--space-sm); padding: var(--space-base); border-radius: var(--radius-md); background: var(--gray-900); font-family: var(--font-family-base);">
+      <div style="display: flex; align-items: flex-start; gap: var(--space-md); margin-bottom: var(--space-xs);">
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-sm);">
+          <span style="font: var(--text-body-lg-semibold); color: var(--gray-0);">Top Up friend's Wallet</span>
+          <span style="font-size: var(--font-size-body); line-height: var(--line-height-body); font-weight: var(--font-weight-regular); color: var(--gray-500); text-wrap: pretty;">Enter your friend's mobile phone number to top up his wallet.</span>
+        </div>
+        <img src="uploads/wallet_topup-ecfcf0f0.png" alt="" style="width: 48px; height: 48px; object-fit: contain; flex: 0 0 auto; display: block;">
+      </div>
+      <div style="position: relative;">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Input" type="tel" value="{{ phone }}" on-change="{{ setPhone }}" placeholder="+374" leading-icon="phone" hint-size="100%,40px"></x-import>
+        <sc-if value="{{ showUser }}" hint-placeholder-val="{{ false }}">
+          <button type="button" aria-label="Clear phone number" onClick="{{ clearPhone }}" style="position: absolute; top: 50%; right: var(--space-xs); transform: translateY(-50%); width: 32px; height: 32px; padding: 0; border: none; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--color-text-tertiary);"><i class="ph ph-x" style="font-size: var(--icon-sm);"></i></button>
+        </sc-if>
+      </div>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Button" variant="primary" size="sm" full-width="{{ true }}" disabled="{{ searchDisabled }}" on-click="{{ search }}" hint-size="100%,40px">Search</x-import>
+    </div>
+  </div>
+  <sc-if value="{{ showUser }}" hint-placeholder-val="{{ false }}">
+    <div style="padding: var(--space-sm) var(--space-base) var(--space-base);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.UserCard" name="Anna" surname="Petrosyan" phone="{{ foundPhone }}" hint-size="100%,56px"></x-import>
+    </div>
+    <div style="padding: 0 var(--space-base) var(--space-sm);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Amount" hint-size="100%,28px"></x-import>
+    </div>
+    <div style="padding: 0 var(--space-base) var(--space-base);">
+      <div style="position: relative;">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Input" type="text" value="{{ amount }}" on-change="{{ setAmount }}" placeholder="Enter amount" hint-size="100%,40px"></x-import>
+        <span style="position: absolute; top: 50%; right: var(--space-base); transform: translateY(-50%); pointer-events: none; font-size: var(--font-size-body-sm); line-height: var(--line-height-body-sm); font-weight: var(--font-weight-regular); font-family: var(--font-family-base); color: var(--color-text-tertiary);">֏</span>
+      </div>
+    </div>
+    <div style="padding: 0 var(--space-base) var(--space-sm);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Pay from" hint-size="100%,28px"></x-import>
+    </div>
+    <div style="padding: 0 var(--space-base) var(--space-base); position: relative;">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.PaymentMethods" icon="credit-card" name="Visa •••• 4242" balance="$24.50" chevron="{{ true }}" hint-size="100%,48px"></x-import>
+      <div style="position: absolute; inset: 0 var(--space-base) var(--space-base) var(--space-base); cursor: pointer;" onClick="{{ openPaymentSheet }}"></div>
+    </div>
+    <div style="padding: var(--space-sm) var(--space-base) var(--space-base);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Button" variant="primary" size="sm" full-width="{{ true }}" disabled="{{ payDisabled }}" on-click="{{ topUp }}" hint-size="100%,40px">Top Up</x-import>
+    </div>
+  </sc-if>
+  </sc-if>
+  <sc-if value="{{ showVouchers }}" hint-placeholder-val="{{ false }}">
+    <div style="padding: 0 var(--space-base) var(--space-sm);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Buy vouchers for friends and family" hint-size="100%,28px"></x-import>
+    </div>
+    <div style="display: grid; grid-template-columns: 160px 160px; gap: var(--space-sm); justify-content: center; padding: 0 var(--space-base) var(--space-base);">
+      <sc-for list="{{ vouchers }}" as="v" hint-placeholder-count="4">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.VoucherListing" name="{{ v.name }}" image-url="{{ v.image }}" width="{{ 160 }}" on-click="{{ v.open }}" hint-size="160px,196px"></x-import>
+      </sc-for>
+    </div>
+  </sc-if>
+  </div>
+  <dc-import name="TopupSuccess" visible="{{ topupDone }}" amount="{{ amount }}" name="Anna" surname="Petrosyan" phone="{{ foundPhone }}" on-continue="{{ finishTopup }}" hint-size="360px,800px"></dc-import>
+  <dc-import name="PaymentBottomSheet" open="{{ paymentSheetOpen }}" on-close="{{ closePaymentSheet }}" on-select="{{ closePaymentSheet }}" hint-size="100%,100%"></dc-import>
+  <div style="padding: var(--space-sm) var(--space-base) calc(var(--space-sm) + env(safe-area-inset-bottom, 0px)); background: var(--color-bg-surface); border-top: 1px solid var(--color-border-muted);">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.BottomNavigation" items="{{ navItems }}" active-key="gifts" on-change="{{ setNav }}" hint-size="100%,56px"></x-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:800}}">class Component extends DCLogic {
+  state = { phone: '', tab: new URLSearchParams(window.location.search).get('tab') === 'vouchers' ? 'vouchers' : 'topup' };
+  renderVals() {
+    return {
+      tabOptions: [
+        { label: 'Top up', value: 'topup', icon: 'wallet' },
+        { label: 'Vouchers', value: 'vouchers', icon: 'ticket' },
+      ],
+      tabValue: this.state.tab,
+      showTopUp: this.state.tab === 'topup',
+      showVouchers: this.state.tab === 'vouchers',
+      setTab: (v) => this.setState({ tab: v }),
+      noop: () => {},
+      vouchers: [
+        { name: 'Iced Americano', image: 'uploads/ice%20americano-52926f9b.png' },
+        { name: 'Dubai Cheesecake', image: 'uploads/dubai%20cheesecake-83568b34.png' },
+        { name: 'Bumble Cherry', image: 'uploads/bumble%20cherry-ab6a4199.png' },
+        { name: 'Hot Raf Strawberry', image: 'uploads/raf%20strawberry-e6ea36ce.png' },
+      ].map((v, i) => ({ ...v, open: () => { window.location.href = 'BuyVoucher.dc.html?v=' + i; } })),
+      searchDisabled: this.state.phone.length < 8 || (!!this.state.searched && this.state.searched === this.state.phone),
+      clearPhone: () => this.setState({ phone: '', searched: null, amount: '' }),
+      amount: this.state.amount || '',
+      payDisabled: !this.state.amount,
+      topupDone: !!this.state.topupDone,
+      topUp: () => this.setState({ topupDone: true }),
+      finishTopup: () => this.setState({ topupDone: false, phone: '', searched: null, amount: '' }),
+      setAmount: (v) => this.setState({ amount: String(v).replace(/\D/g, '') }),
+      paymentSheetOpen: !!this.state.paymentSheetOpen,
+      openPaymentSheet: () => this.setState({ paymentSheetOpen: true }),
+      closePaymentSheet: () => this.setState({ paymentSheetOpen: false }),
+      search: () => this.setState({ searched: this.state.phone }),
+      showUser: !!this.state.searched && this.state.searched === this.state.phone,
+      foundPhone: '+374 ' + (this.state.searched || ''),
+      phone: this.state.phone ? '+374 ' + this.state.phone : '',
+      setPhone: (v) => {
+        let s = String(v);
+        s = s.startsWith('+374') ? s.slice(4) : s;
+        this.setState({ phone: s.replace(/\D/g, '').slice(0, 8) });
+      },
+      navItems: [
+        { key: 'home', icon: 'house', label: 'Home' },
+        { key: 'order', icon: 'coffee', label: 'Order' },
+        { key: 'gifts', icon: 'gift', label: 'Gifts' },
+        { key: 'profile', icon: 'user', label: 'Profile' },
+      ],
+      setNav: (k) => {
+        const routes = { home: 'Home.dc.html', order: 'Order.dc.html', profile: 'Profile.dc.html' };
+        if (routes[k]) window.location.href = routes[k];
+      },
+    };
+  }
+}</script>
+</body>
+</html>

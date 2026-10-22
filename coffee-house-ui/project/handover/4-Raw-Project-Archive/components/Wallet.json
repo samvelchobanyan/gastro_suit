@@ -1,0 +1,114 @@
+{
+  "kind": "component",
+  "name": "Wallet",
+  "version": "2026-09-12",
+  "description": "Fixed 328px dark balance card with a Top Up button.",
+  "size": {
+    "width": 328,
+    "height": "hug",
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "row",
+    "spacing": [
+      "--space-md",
+      "--space-md"
+    ],
+    "padding": {
+      "all": "--space-base"
+    },
+    "align": "center",
+    "justify": "start",
+    "scroll": "none",
+    "size": {
+      "width": 328
+    },
+    "children": [
+      {
+        "slot": "icon",
+        "type": "image",
+        "source": "{icon}",
+        "size": [
+          48,
+          48
+        ],
+        "fit": "cover",
+        "radius": "--radius-sm",
+        "fallback": {
+          "slot": "icon.fallback",
+          "type": "box",
+          "size": [
+            48,
+            48
+          ],
+          "background": "--color-bg-muted",
+          "radius": "--radius-sm",
+          "border": null,
+          "padding": null,
+          "child": null
+        }
+      },
+      {
+        "slot": "text",
+        "type": "column",
+        "spacing": [],
+        "padding": null,
+        "align": "start",
+        "justify": "center",
+        "scroll": "none",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "text.title",
+            "type": "text",
+            "content": "{title}",
+            "style": "--text-body-sm",
+            "color": "--gray-500",
+            "lines": 1,
+            "overflow": "clip",
+            "align": "start",
+            "transform": "none",
+            "size": {
+              "width": "fill"
+            }
+          },
+          {
+            "slot": "text.balance",
+            "type": "text",
+            "content": "{balance}",
+            "style": "--text-h1",
+            "color": "--gray-0",
+            "lines": 1,
+            "overflow": "clip",
+            "align": "start",
+            "transform": "none",
+            "size": {
+              "width": "fill"
+            }
+          }
+        ]
+      },
+      {
+        "slot": "cta",
+        "type": "component",
+        "component": "Button",
+        "shows": {
+          "children": "{topUpLabel}",
+          "variant": "primary",
+          "size": "xs",
+          "radius": "full",
+          "iconLeft": "plus"
+        }
+      }
+    ]
+  },
+  "variants": {},
+  "uses": [
+    "Button"
+  ],
+  "notes": ""
+}

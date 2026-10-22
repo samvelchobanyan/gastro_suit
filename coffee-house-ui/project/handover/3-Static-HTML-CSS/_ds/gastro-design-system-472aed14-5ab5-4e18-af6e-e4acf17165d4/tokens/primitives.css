@@ -1,0 +1,64 @@
+/* ============================================================
+   TIER 1 — PRIMITIVE / GLOBAL TOKENS  (brand-agnostic palette)
+   Raw hex values assigned to functional names.
+   Never reference these directly in components — go through the
+   semantic layer (semantic.css). See also: brand.css (accent).
+   ------------------------------------------------------------
+   System: monochrome by default. Black, white, shades of gray,
+   plus functional status hues. High-contrast, flat, minimal.
+   ============================================================ */
+
+:root {
+  /* --- Neutral ramp (the 60% + 30% of the 60-30-10 rule) --- */
+  --gray-0:    #FFFFFF;
+  --gray-50:   #F7F7F7;
+  --gray-100:  #F1F1F1;
+  --gray-200:  #EAEAEA;
+  --gray-300:  #E0E0E0;
+  --gray-400:  #D1D1D1;
+  --gray-500:  #B3B3B3;
+  --gray-600:  #8C8C8C;
+  --gray-700:  #4F4F4F;
+  --gray-800:  #383838;
+  --gray-900:  #232323;
+  --gray-950:  #171717;
+  --gray-1000: #000000;
+
+  /* --- Status: Success (Green) --- */
+  --green-50:  #EBFBEE;
+  --green-100: #D3F9D8;
+  --green-500: #2F9E44;
+  --green-600: #2B8A3E;
+  --green-700: #237032;
+
+  /* --- Status: Warning (Amber) --- */
+  --amber-50:  #FFF9DB;
+  --amber-100: #FFF3BF;
+  --amber-500: #F08C00;
+  --amber-600: #E67700;
+  --amber-700: #B35A00;
+
+  /* --- Status: Error (Red) --- */
+  --red-50:    #FFF5F5;
+  --red-100:   #FFE3E3;
+  --red-500:   #E03131;
+  --red-600:   #C92A2A;
+  --red-700:   #A51F1F;
+
+  /* --- Status: Info (Blue/Teal) --- */
+  --blue-50:   #E7F5FF;
+  --blue-100:  #D0EBFF;
+  --blue-500:  #1971C2;
+  --blue-600:  #1864AB;
+  --blue-700:  #145591;
+
+  /* --- Raw alpha overlays (used for pressed/scrim states) --- */
+  --alpha-black-4:   rgba(0, 0, 0, 0.04);
+  --alpha-black-8:   rgba(0, 0, 0, 0.08);
+  --alpha-black-12:  rgba(0, 0, 0, 0.12);
+  --alpha-black-40:  rgba(0, 0, 0, 0.40);
+  --alpha-black-60:  rgba(0, 0, 0, 0.60);
+  --alpha-white-8:   rgba(255, 255, 255, 0.08);
+  --alpha-white-12:  rgba(255, 255, 255, 0.12);
+  --alpha-white-24:  rgba(255, 255, 255, 0.24);
+}

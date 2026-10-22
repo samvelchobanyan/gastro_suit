@@ -1,0 +1,102 @@
+{
+  "kind": "component",
+  "name": "MenuTabsVertical",
+  "version": "2026-09-12",
+  "description": "Horizontal scroll row of category items: round category image stacked over a wrapping label; active item gets accent label and full color image.",
+  "size": {
+    "width": "fill",
+    "height": 84,
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "row",
+    "spacing": [
+      "--space-md"
+    ],
+    "padding": {
+      "all": "--space-xs"
+    },
+    "align": "start",
+    "justify": "start",
+    "scroll": "horizontal",
+    "size": {
+      "width": "fill"
+    },
+    "children": [
+      {
+        "slot": "item",
+        "type": "column",
+        "spacing": [
+          "--space-xs"
+        ],
+        "padding": null,
+        "align": "center",
+        "justify": "start",
+        "scroll": "none",
+        "size": {
+          "width": 64
+        },
+        "children": [
+          {
+            "slot": "item.image",
+            "type": "image",
+            "source": "{image}",
+            "size": [
+              56,
+              56
+            ],
+            "fit": "cover",
+            "radius": null,
+            "fallback": {
+              "slot": "item.image.fallback",
+              "type": "box",
+              "size": [
+                56,
+                56
+              ],
+              "background": "--color-bg-surface-sunken",
+              "radius": null,
+              "border": null,
+              "padding": null,
+              "child": null
+            }
+          },
+          {
+            "slot": "item.label",
+            "type": "text",
+            "content": "{label}",
+            "style": "--text-body-sm",
+            "color": "--gray-600",
+            "lines": 1,
+            "overflow": "clip",
+            "align": "center",
+            "transform": "none",
+            "size": {
+              "width": 64
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "variants": {
+    "active": {
+      "prop": "interaction",
+      "cases": {
+        "true": {
+          "item.image": {
+            "filter": "none"
+          },
+          "item.label": {
+            "color": "--color-text-accent",
+            "style": "--text-body-semibold"
+          }
+        }
+      }
+    }
+  },
+  "uses": [],
+  "notes": "Root repeats one \"item\" per category. Inactive item.image is desaturated (grayscale filter) — not a listed schema field, recorded here."
+}

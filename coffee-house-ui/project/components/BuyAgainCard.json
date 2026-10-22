@@ -1,0 +1,123 @@
+{
+  "kind": "component",
+  "name": "BuyAgainCard",
+  "version": "2026-09-12",
+  "description": "Vertical re-order card: square photo, product name, location line.",
+  "size": {
+    "width": 128,
+    "height": "hug",
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "column",
+    "spacing": [
+      "--space-sm"
+    ],
+    "padding": null,
+    "align": "start",
+    "justify": "start",
+    "scroll": "none",
+    "size": {
+      "width": 128
+    },
+    "children": [
+      {
+        "slot": "photo",
+        "type": "image",
+        "source": "{imageUrl}",
+        "size": [
+          128,
+          128
+        ],
+        "fit": "cover",
+        "radius": "--radius-card",
+        "fallback": {
+          "slot": "photo.fallback",
+          "type": "box",
+          "size": [
+            128,
+            128
+          ],
+          "background": "--gray-100",
+          "radius": "--radius-card",
+          "border": null,
+          "padding": null,
+          "child": null
+        }
+      },
+      {
+        "slot": "details",
+        "type": "column",
+        "spacing": [
+          "--space-xxs"
+        ],
+        "padding": null,
+        "align": "start",
+        "justify": "start",
+        "scroll": "none",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "details.name",
+            "type": "text",
+            "content": "{name}",
+            "style": "--text-body-sm",
+            "color": "--color-text-primary",
+            "lines": 1,
+            "overflow": "ellipsis",
+            "align": "start",
+            "transform": "none",
+            "size": {
+              "width": "fill"
+            }
+          },
+          {
+            "slot": "details.location",
+            "type": "row",
+            "spacing": [
+              "--space-xs"
+            ],
+            "padding": null,
+            "align": "center",
+            "justify": "start",
+            "scroll": "none",
+            "size": {
+              "width": "fill"
+            },
+            "children": [
+              {
+                "slot": "details.location.icon",
+                "type": "icon",
+                "name": "map-pin",
+                "weight": "regular",
+                "size": "--icon-xs",
+                "color": "--color-text-tertiary"
+              },
+              {
+                "slot": "details.location.text",
+                "type": "text",
+                "content": "{location}",
+                "style": "--text-body-xs",
+                "color": "--color-text-secondary",
+                "lines": 1,
+                "overflow": "ellipsis",
+                "align": "start",
+                "transform": "none",
+                "size": {
+                  "width": "fill"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "variants": {},
+  "uses": [],
+  "notes": "Photo is a square (aspect-ratio 1:1) sized to the card width; exported as its default 128px."
+}

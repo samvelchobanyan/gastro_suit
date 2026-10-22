@@ -1,0 +1,18 @@
+/* ============================================================
+   BASE RESET
+   ------------------------------------------------------------
+   Minimal, foundational normalization shipped with the token
+   layer. Its main job: form/interactive elements do NOT inherit
+   font-family by default in browsers, so <button>, <input>,
+   <textarea> and <select> would fall back to the platform UI
+   font. We force the brand family on them so every component
+   (and every consumer's own controls) renders in Plus Jakarta
+   Sans without each element having to re-declare it.
+   ============================================================ */
+
+button,
+input,
+textarea,
+select {
+  font-family: var(--font-family-base);
+}

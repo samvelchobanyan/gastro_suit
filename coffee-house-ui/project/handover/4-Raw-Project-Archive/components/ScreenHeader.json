@@ -1,0 +1,58 @@
+{
+  "kind": "component",
+  "name": "ScreenHeader",
+  "version": "2026-09-12",
+  "description": "Top-of-screen H1 page title with optional back button and right-aligned action.",
+  "size": {
+    "width": "fill",
+    "height": "hug",
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "row",
+    "spacing": [
+      "--space-sm"
+    ],
+    "padding": {
+      "all": "--space-base"
+    },
+    "align": "center",
+    "justify": "start",
+    "scroll": "none",
+    "size": {
+      "width": "fill"
+    },
+    "children": [
+      {
+        "slot": "title",
+        "type": "text",
+        "content": "{title}",
+        "style": "--text-h1",
+        "color": "--color-text-primary",
+        "lines": 1,
+        "overflow": "clip",
+        "align": "start",
+        "transform": "none",
+        "size": {
+          "width": "fill"
+        }
+      }
+    ]
+  },
+  "variants": {
+    "onBack": {
+      "prop": "onBack",
+      "cases": {
+        "set": {
+          "root": {
+            "children": "back button prepended"
+          }
+        }
+      }
+    }
+  },
+  "uses": [],
+  "notes": "Back button (44px circular, arrow-left icon) and action slot are omitted from the default tree — neither screen uses them; see variants note."
+}

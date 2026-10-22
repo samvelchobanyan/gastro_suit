@@ -1,0 +1,125 @@
+{
+  "screen": "Home",
+  "width": 360,
+  "height": 800,
+  "designSystem": "GastroDesignSystem_472aed",
+  "background": "var(--color-bg-surface)",
+  "sideMargin": "var(--space-base)",
+  "spacingLegend": { "--space-sm": "8px", "--space-md": "12px", "--space-base": "16px", "--space-lg": "24px" },
+  "sections": [
+    {
+      "component": "Greeting",
+      "props": { "name": "Aram", "greeting": "Let's enjoy some coffee", "logoUrl": "assets/ch_logo-69a8ddeb.svg", "hasNotifications": true },
+      "spacingAfter": "var(--space-sm)"
+    },
+    {
+      "component": "Stories",
+      "layout": "horizontal-scroll",
+      "gap": "var(--space-sm)",
+      "spacingAfter": "var(--space-base)",
+      "items": [
+        { "imageUrl": "https://images.unsplash.com/photo-1541167760496-1628856ab772?w=200&h=200&fit=crop&q=80", "label": "A very very long story title", "seen": false },
+        { "imageUrl": "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=200&h=200&fit=crop&q=80", "label": "Cold brew", "seen": false },
+        { "imageUrl": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=200&h=200&fit=crop&q=80", "label": "Espresso", "seen": false },
+        { "imageUrl": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=200&h=200&fit=crop&q=80", "label": "Pastries", "seen": true },
+        { "imageUrl": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=200&h=200&fit=crop&q=80", "label": "Beans", "seen": true },
+        { "imageUrl": "https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=200&h=200&fit=crop&q=80", "label": "Mocha", "seen": true }
+      ]
+    },
+    {
+      "component": "LoyaltyPointsCard",
+      "props": { "points": 1240, "membership": "Master", "discountLabel": "10%", "qrValue": "CH-ARAM-1240", "backgroundImage": "assets/ch_loyalty_bg-19967daa.png" },
+      "spacingAfter": "var(--space-base)"
+    },
+    {
+      "component": "Wallet",
+      "props": { "balance": "֏5,680", "icon": "assets/ch_wallet.png" },
+      "spacingAfter": "var(--space-base)"
+    },
+    {
+      "component": "SectionHeader",
+      "title": "Vouchers",
+      "titleGap": "var(--space-md)",
+      "gap": "var(--space-sm)",
+      "spacingAfter": "var(--space-lg)",
+      "children": [
+        { "component": "Voucher", "props": { "name": "Bumble Cherry", "remaining": 2, "image": "assets/ch_voucher_bumble_cherry.png" } },
+        { "component": "Voucher", "props": { "name": "Iced Americano Specialty Arabica", "remaining": 1, "image": "assets/ch_voucher_iced_americano_specialty_arabica.png" } }
+      ]
+    },
+    {
+      "component": "TabBar",
+      "size": "small",
+      "options": [
+        { "label": "Buy again", "value": "buy-again", "icon": "arrow-counter-clockwise" },
+        { "label": "Favourites", "value": "favourites", "icon": "heart" }
+      ],
+      "defaultValue": "buy-again",
+      "spacingAfter": "var(--space-base)"
+    },
+    {
+      "component": "BuyAgainCard",
+      "visibleWhenTab": "buy-again",
+      "layout": "horizontal-scroll",
+      "gap": "var(--space-sm)",
+      "spacingAfter": "var(--space-lg)",
+      "items": [
+        { "name": "Hot Salted Caramel Matcha Latte", "location": "Northern Ave", "imageUrl": "assets/ch_prod_hot_salted_caramel_matcha_latte.png" },
+        { "name": "Dubai Cheesecake", "location": "Cascade", "imageUrl": "assets/ch_prod_dubai_cheesecake.png" },
+        { "name": "Muffin Chocolate", "location": "Republic Sq", "imageUrl": "assets/ch_prod_muffin_chocolate.png" }
+      ]
+    },
+    {
+      "component": "ProductVerticalCard",
+      "visibleWhenTab": "favourites",
+      "layout": "horizontal-scroll",
+      "gap": "var(--space-sm)",
+      "spacingAfter": "var(--space-lg)",
+      "items": [
+        { "name": "Iced Fantasy Coffee", "price": "֏1,450", "imageUrl": "assets/ch_fav_iced_fantasy_coffee.png" },
+        { "name": "Iced Cream Cheese Latte Aroma", "price": "֏1,850", "imageUrl": "assets/ch_fav_iced_cream_cheese_latte_aroma.png" },
+        { "name": "Hot Raf Strawberry", "price": "֏1,650", "imageUrl": "assets/ch_fav_hot_raf_strawberry.png" }
+      ]
+    },
+    {
+      "component": "custom-promo-tiles",
+      "note": "No DS component for promo ads; plain anchor+image tiles",
+      "layout": "horizontal-scroll",
+      "gap": "var(--space-sm)",
+      "spacingAfter": "var(--space-lg)",
+      "tile": { "type": "image", "size": ["152px", "auto"], "aspectRatio": "512/264", "radius": "var(--radius-md)", "shadow": "var(--elevation-card)" },
+      "items": [
+        { "href": "#", "image": "assets/promo_1png.png", "alt": "Horizon · Stephan Bodzin" },
+        { "href": "#", "image": "assets/promo_2.png", "alt": "App exclusive combos" },
+        { "href": "#", "image": "assets/promo_3.png", "alt": "Iconic Armo Y2K Diva's playlist" }
+      ]
+    },
+    {
+      "component": "SectionHeader",
+      "title": "Nearest branches",
+      "titleGap": "var(--space-md)",
+      "gap": "var(--space-md)",
+      "spacingAfter": "var(--space-base)",
+      "children": [
+        { "component": "BranchCard", "props": { "name": "Northern Avenue", "address": "12 Northern Ave, Yerevan", "hours": "08:00 – 23:00", "distance": "0.4 km", "isOpenNow": true, "image": "assets/branch_1.png" } },
+        { "component": "Divider" },
+        { "component": "BranchCard", "props": { "name": "Cascade", "address": "3 Tamanyan St, Yerevan", "hours": "09:00 – 22:00", "distance": "1.1 km", "isOpenNow": true, "image": "assets/branch_2.png" } },
+        { "component": "Divider" },
+        { "component": "BranchCard", "props": { "name": "Republic Square", "address": "5 Abovyan St, Yerevan", "hours": "08:00 – 00:00", "distance": "1.8 km", "isOpenNow": false, "image": "assets/branch_3.png" } }
+      ]
+    },
+    {
+      "component": "BottomNavigation",
+      "activeKey": "home",
+      "pinned": "bottom",
+      "surface": { "background": "var(--color-bg-surface)", "borderTop": "1px solid var(--color-border-muted)" },
+      "padding": "var(--space-sm) var(--space-base)",
+      "items": [
+        { "key": "home", "icon": "house", "label": "Home" },
+        { "key": "order", "icon": "coffee", "label": "Order" },
+        { "key": "gifts", "icon": "gift", "label": "Gifts" },
+        { "key": "profile", "icon": "user", "label": "Profile" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,506 @@
+{
+  "kind": "screen",
+  "name": "Order",
+  "version": "2026-09-12",
+  "description": "Order screen: header, a Products/Branches tab, a featured-products rail, a vertical menu-category rail, Combo sub-tabs, a two-column product grid, and a branch list — with bottom navigation.",
+  "frame": {
+    "width": 360,
+    "height": 800,
+    "background": "--color-bg-surface"
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "column",
+    "spacing": [],
+    "padding": null,
+    "align": "start",
+    "justify": "start",
+    "scroll": "none",
+    "size": {
+      "width": "fill",
+      "height": "fill"
+    },
+    "children": [
+      {
+        "slot": "header",
+        "type": "component",
+        "component": "ScreenHeader",
+        "shows": {
+          "title": "Order"
+        }
+      },
+      {
+        "slot": "tabs",
+        "type": "row",
+        "spacing": [],
+        "padding": {
+          "x": "--space-base",
+          "bottom": "--space-base"
+        },
+        "align": "start",
+        "justify": "start",
+        "scroll": "none",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "tabs.control",
+            "type": "component",
+            "component": "TabBar",
+            "shows": {
+              "size": "big",
+              "options": [
+                "Products",
+                "Branches"
+              ],
+              "value": "products"
+            }
+          }
+        ]
+      },
+      {
+        "slot": "content",
+        "type": "column",
+        "spacing": [],
+        "padding": null,
+        "align": "start",
+        "justify": "start",
+        "scroll": "vertical",
+        "size": {
+          "width": "fill",
+          "height": "fill"
+        },
+        "children": [
+          {
+            "slot": "featured",
+            "type": "column",
+            "spacing": [],
+            "padding": {
+              "x": "--space-base",
+              "bottom": "--space-base"
+            },
+            "align": "start",
+            "justify": "start",
+            "scroll": "none",
+            "size": {
+              "width": "fill"
+            },
+            "children": [
+              {
+                "slot": "featured.title",
+                "type": "component",
+                "component": "SectionHeader",
+                "shows": {
+                  "title": "Featured products"
+                }
+              }
+            ]
+          },
+          {
+            "slot": "featured.rail",
+            "type": "row",
+            "spacing": [
+              "--space-sm",
+              "--space-sm",
+              "--space-sm",
+              "--space-sm"
+            ],
+            "padding": {
+              "x": "--space-base",
+              "bottom": "--space-lg"
+            },
+            "align": "start",
+            "justify": "start",
+            "scroll": "horizontal",
+            "size": {
+              "width": "fill"
+            },
+            "children": [
+              {
+                "slot": "featured.rail.item",
+                "type": "component",
+                "component": "ProductVerticalCard",
+                "shows": {
+                  "name": "Iced Fantasy Coffee",
+                  "price": "֏1,450"
+                },
+                "size": {
+                  "width": 128
+                }
+              }
+            ]
+          },
+          {
+            "slot": "menu.header",
+            "type": "row",
+            "spacing": [],
+            "padding": {
+              "x": "--space-base",
+              "bottom": "--space-sm"
+            },
+            "align": "start",
+            "justify": "start",
+            "scroll": "none",
+            "size": {
+              "width": "fill"
+            },
+            "children": [
+              {
+                "slot": "menu.header.title",
+                "type": "component",
+                "component": "SectionHeader",
+                "shows": {
+                  "title": "Menu"
+                }
+              }
+            ]
+          },
+          {
+            "slot": "menu.tabs",
+            "type": "row",
+            "spacing": [],
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": "--space-base",
+              "left": "--space-sm"
+            },
+            "align": "start",
+            "justify": "start",
+            "scroll": "horizontal",
+            "size": {
+              "width": "fill"
+            },
+            "children": [
+              {
+                "slot": "menu.tabs.item",
+                "type": "component",
+                "component": "MenuTabsVertical",
+                "shows": {
+                  "value": "combo",
+                  "categories": [
+                    {
+                      "label": "Combo\ndeals"
+                    },
+                    {
+                      "label": "Iced\nCoffee"
+                    },
+                    {
+                      "label": "Iced\nDrinks"
+                    },
+                    {
+                      "label": "Matcha and Tea"
+                    },
+                    {
+                      "label": "Hot\nCoffee"
+                    },
+                    {
+                      "label": "Sweets"
+                    },
+                    {
+                      "label": "Other"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "slot": "subtabs",
+            "type": "row",
+            "spacing": [],
+            "padding": {
+              "x": "--space-base",
+              "bottom": "--space-lg"
+            },
+            "align": "start",
+            "justify": "start",
+            "scroll": "horizontal",
+            "size": {
+              "width": "fill"
+            },
+            "children": [
+              {
+                "slot": "subtabs.control",
+                "type": "component",
+                "component": "TabBar",
+                "shows": {
+                  "size": "xs",
+                  "options": [
+                    "Iced Matcha Based",
+                    "Iced Tea",
+                    "Hot Matcha Based",
+                    "Hot Tea"
+                  ],
+                  "value": "iced-matcha"
+                }
+              }
+            ]
+          },
+          {
+            "slot": "grid",
+            "type": "row",
+            "spacing": [
+              "--space-sm"
+            ],
+            "padding": {
+              "x": "--space-base",
+              "bottom": "--space-base"
+            },
+            "align": "start",
+            "justify": "center",
+            "scroll": "none",
+            "size": {
+              "width": "fill"
+            },
+            "children": [
+              {
+                "slot": "grid.card",
+                "type": "component",
+                "component": "ProductMenuCard",
+                "shows": {
+                  "name": "Iced Fantasy Coffee",
+                  "price": "֏1,450"
+                },
+                "size": {
+                  "width": 160
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "slot": "bottomNav",
+        "type": "row",
+        "spacing": [],
+        "padding": {
+          "top": "--space-sm",
+          "right": "--space-base",
+          "bottom": "--space-sm",
+          "left": "--space-base"
+        },
+        "align": "start",
+        "justify": "start",
+        "scroll": "none",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "bottomNav.bar",
+            "type": "component",
+            "component": "BottomNavigation",
+            "shows": {
+              "activeKey": "order",
+              "items": [
+                {
+                  "key": "home",
+                  "icon": "house",
+                  "label": "Home"
+                },
+                {
+                  "key": "order",
+                  "icon": "coffee",
+                  "label": "Order"
+                },
+                {
+                  "key": "gifts",
+                  "icon": "gift",
+                  "label": "Gifts"
+                },
+                {
+                  "key": "profile",
+                  "icon": "user",
+                  "label": "Profile"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "content": {
+    "header": {
+      "title": "Order"
+    },
+    "tabs": {
+      "options": [
+        "Products",
+        "Branches"
+      ],
+      "value": "products"
+    },
+    "featuredRail": [
+      {
+        "name": "Iced Fantasy Coffee",
+        "price": "֏1,450"
+      },
+      {
+        "name": "Iced Cream Cheese Latte Aroma",
+        "price": "֏1,850"
+      },
+      {
+        "name": "Hot Raf Strawberry",
+        "price": "֏1,650"
+      },
+      {
+        "name": "Hot Salted Caramel Matcha Latte",
+        "price": "֏1,950"
+      },
+      {
+        "name": "Dubai Cheesecake",
+        "price": "֏2,250"
+      }
+    ],
+    "menuCategories": [
+      "Combo deals",
+      "Iced Coffee",
+      "Iced Drinks",
+      "Matcha and Tea",
+      "Hot Coffee",
+      "Sweets",
+      "Other"
+    ],
+    "comboSubTabs": [
+      "Iced Matcha Based",
+      "Iced Tea",
+      "Hot Matcha Based",
+      "Hot Tea"
+    ],
+    "productGrid": [
+      {
+        "name": "Iced Fantasy Coffee",
+        "price": "֏1,450"
+      },
+      {
+        "name": "Iced Cream Cheese Latte Aroma",
+        "price": "֏1,850"
+      },
+      {
+        "name": "Hot Raf Strawberry",
+        "price": "֏1,650"
+      },
+      {
+        "name": "Hot Salted Caramel Matcha Latte",
+        "price": "֏1,950"
+      },
+      {
+        "name": "Dubai Cheesecake",
+        "price": "֏2,250"
+      },
+      {
+        "name": "Muffin Chocolate",
+        "price": "֏1,350"
+      },
+      {
+        "name": "Bumble Cherry",
+        "price": "֏1,550"
+      },
+      {
+        "name": "Iced Americano Specialty Arabica",
+        "price": "֏1,250"
+      }
+    ],
+    "branches": [
+      {
+        "name": "Northern Avenue",
+        "address": "12 Northern Ave, Yerevan",
+        "hours": "08:00 – 23:00",
+        "distance": "0.4 km",
+        "isOpenNow": true
+      },
+      {
+        "name": "Cascade",
+        "address": "3 Tamanyan St, Yerevan",
+        "hours": "09:00 – 22:00",
+        "distance": "1.1 km",
+        "isOpenNow": true
+      },
+      {
+        "name": "Republic Square",
+        "address": "5 Abovyan St, Yerevan",
+        "hours": "08:00 – 00:00",
+        "distance": "1.8 km",
+        "isOpenNow": false
+      },
+      {
+        "name": "Komitas",
+        "address": "28 Komitas Ave, Yerevan",
+        "hours": "08:00 – 22:00",
+        "distance": "2.3 km",
+        "isOpenNow": true
+      },
+      {
+        "name": "Saryan Street",
+        "address": "14 Saryan St, Yerevan",
+        "hours": "09:00 – 23:00",
+        "distance": "2.9 km",
+        "isOpenNow": true
+      }
+    ]
+  },
+  "variants": {
+    "tab": {
+      "prop": "tab",
+      "cases": {
+        "branches": {
+          "featured": {
+            "visible": false
+          },
+          "featured.rail": {
+            "visible": false
+          },
+          "menu.header": {
+            "visible": false
+          },
+          "menu.tabs": {
+            "visible": false
+          },
+          "subtabs": {
+            "visible": false
+          },
+          "grid": {
+            "visible": false
+          },
+          "tabs.control": {
+            "shows": {
+              "value": "branches"
+            }
+          }
+        }
+      }
+    },
+    "menuCat": {
+      "prop": "menuCat",
+      "cases": {
+        "not-combo": {
+          "subtabs": {
+            "visible": false
+          },
+          "menu.tabs.item": {
+            "shows": {
+              "value": "{menuCat}"
+            }
+          }
+        }
+      }
+    }
+  },
+  "uses": [
+    "ScreenHeader",
+    "TabBar",
+    "SectionHeader",
+    "ProductVerticalCard",
+    "MenuTabsVertical",
+    "ProductMenuCard",
+    "BranchCard",
+    "Divider",
+    "BottomNavigation",
+    "IconButton"
+  ],
+  "notes": "Branches tab replaces the whole scroll content (featured rail through product grid) with a BranchCard list separated by Dividers, mirroring Home; only the Products/Combo default path is drawn in tree, the Branches path is described in variants.tab and content.branches. The Combo sub-tabs row is shown only when menuCat is combo (variants.menuCat)."
+}

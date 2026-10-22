@@ -1,0 +1,114 @@
+{
+  "kind": "component",
+  "name": "LoyaltyPointsCard",
+  "version": "2026-09-12",
+  "description": "Fixed 328x116 dark membership card with points balance and a QR code.",
+  "size": {
+    "width": 328,
+    "height": 116,
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "row",
+    "spacing": [],
+    "padding": {
+      "top": "--space-base",
+      "right": "--space-lg",
+      "bottom": "--space-base",
+      "left": "--space-base"
+    },
+    "align": "center",
+    "justify": "between",
+    "scroll": "none",
+    "size": {
+      "width": 328,
+      "height": 116
+    },
+    "children": [
+      {
+        "slot": "left",
+        "type": "column",
+        "spacing": [],
+        "padding": null,
+        "align": "start",
+        "justify": "center",
+        "scroll": "none",
+        "size": {
+          "width": "hug"
+        },
+        "children": [
+          {
+            "slot": "left.label",
+            "type": "text",
+            "content": "Loyalty points",
+            "style": "--text-body-sm",
+            "color": "--gray-500",
+            "lines": 1,
+            "overflow": "clip",
+            "align": "start",
+            "transform": "none",
+            "size": {
+              "width": "fill"
+            }
+          },
+          {
+            "slot": "left.points",
+            "type": "text",
+            "content": "{points}",
+            "style": "--text-h1",
+            "color": "--gray-0",
+            "lines": 1,
+            "overflow": "clip",
+            "align": "start",
+            "transform": "none",
+            "size": {
+              "width": "fill"
+            }
+          },
+          {
+            "slot": "left.tier",
+            "type": "component",
+            "component": "MembershipTierPill",
+            "shows": {
+              "membership": "Regular",
+              "discountLabel": null
+            }
+          }
+        ]
+      },
+      {
+        "slot": "qr",
+        "type": "box",
+        "size": [
+          64,
+          64
+        ],
+        "background": "#fff",
+        "radius": "--radius-sm",
+        "border": null,
+        "padding": {
+          "all": "--space-xs"
+        },
+        "child": {
+          "slot": "qr.code",
+          "type": "image",
+          "source": "generated-qr:{qrValue}",
+          "size": [
+            48,
+            48
+          ],
+          "fit": "contain",
+          "radius": null,
+          "fallback": null
+        }
+      }
+    ]
+  },
+  "variants": {},
+  "uses": [
+    "MembershipTierPill"
+  ],
+  "notes": "Background is a per-brand image when set, else a diagonal placeholder tile (fills the root, behind content); QR is generated art, described only in notes per 4.3."
+}

@@ -1,0 +1,236 @@
+{
+  "kind": "component",
+  "name": "BranchCard",
+  "version": "2026-09-12",
+  "description": "Branch listing row: photo, name + distance, address, hours + open/closed status.",
+  "size": {
+    "width": "fill",
+    "height": "hug",
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "row",
+    "spacing": [
+      "--space-md"
+    ],
+    "padding": null,
+    "align": "center",
+    "justify": "start",
+    "scroll": "none",
+    "size": {
+      "width": "fill"
+    },
+    "children": [
+      {
+        "slot": "photo",
+        "type": "image",
+        "source": "{image}",
+        "size": [
+          72,
+          72
+        ],
+        "fit": "cover",
+        "radius": "--radius-md",
+        "fallback": {
+          "slot": "photo.fallback",
+          "type": "box",
+          "size": [
+            72,
+            72
+          ],
+          "background": "--color-bg-surface-sunken",
+          "radius": "--radius-md",
+          "border": null,
+          "padding": null,
+          "child": null
+        }
+      },
+      {
+        "slot": "details",
+        "type": "column",
+        "spacing": [
+          "--space-xs",
+          "--space-xs"
+        ],
+        "padding": null,
+        "align": "start",
+        "justify": "start",
+        "scroll": "none",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "details.title",
+            "type": "row",
+            "spacing": [
+              "--space-sm"
+            ],
+            "padding": null,
+            "align": "baseline",
+            "justify": "start",
+            "scroll": "none",
+            "size": {
+              "width": "fill"
+            },
+            "children": [
+              {
+                "slot": "details.title.name",
+                "type": "text",
+                "content": "{name}",
+                "style": "--text-body",
+                "color": "--color-text-primary",
+                "lines": 1,
+                "overflow": "ellipsis",
+                "align": "start",
+                "transform": "none",
+                "size": {
+                  "width": "fill"
+                }
+              },
+              {
+                "slot": "details.title.distance",
+                "type": "text",
+                "content": "{distance}",
+                "style": "--text-caption",
+                "color": "--color-text-tertiary",
+                "lines": 1,
+                "overflow": "clip",
+                "align": "start",
+                "transform": "none",
+                "size": {
+                  "width": "hug"
+                }
+              }
+            ]
+          },
+          {
+            "slot": "details.address",
+            "type": "row",
+            "spacing": [
+              "--space-xs"
+            ],
+            "padding": null,
+            "align": "center",
+            "justify": "start",
+            "scroll": "none",
+            "size": {
+              "width": "fill"
+            },
+            "children": [
+              {
+                "slot": "details.address.icon",
+                "type": "icon",
+                "name": "map-pin",
+                "weight": "regular",
+                "size": "--icon-xs",
+                "color": "--color-text-tertiary"
+              },
+              {
+                "slot": "details.address.text",
+                "type": "text",
+                "content": "{address}",
+                "style": "--text-body-sm",
+                "color": "--color-text-secondary",
+                "lines": 1,
+                "overflow": "ellipsis",
+                "align": "start",
+                "transform": "none",
+                "size": {
+                  "width": "fill"
+                }
+              }
+            ]
+          },
+          {
+            "slot": "details.hours",
+            "type": "row",
+            "spacing": [
+              "--space-xs",
+              "--space-xs"
+            ],
+            "padding": null,
+            "align": "center",
+            "justify": "start",
+            "scroll": "none",
+            "size": {
+              "width": "fill"
+            },
+            "children": [
+              {
+                "slot": "details.hours.icon",
+                "type": "icon",
+                "name": "clock",
+                "weight": "regular",
+                "size": "--icon-xs",
+                "color": "--color-text-tertiary"
+              },
+              {
+                "slot": "details.hours.text",
+                "type": "text",
+                "content": "{hours}",
+                "style": "--text-body-xs",
+                "color": "--color-text-tertiary",
+                "lines": 1,
+                "overflow": "clip",
+                "align": "start",
+                "transform": "none",
+                "size": {
+                  "width": "hug"
+                }
+              },
+              {
+                "slot": "details.hours.status",
+                "type": "component",
+                "component": "StatusPill",
+                "shows": {
+                  "children": "Open",
+                  "tone": "success"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "slot": "chevron",
+        "type": "icon",
+        "name": "caret-right",
+        "weight": "regular",
+        "size": "--icon-sm",
+        "color": "--color-text-tertiary"
+      }
+    ]
+  },
+  "variants": {
+    "isOpenNow": {
+      "prop": "isOpenNow",
+      "cases": {
+        "false": {
+          "details.hours.status": {
+            "shows": {
+              "children": "Closed",
+              "tone": "error"
+            }
+          }
+        }
+      }
+    },
+    "interactive": {
+      "prop": "interaction",
+      "cases": {
+        "false": {
+          "chevron": {
+            "visible": false
+          }
+        }
+      }
+    }
+  },
+  "uses": [
+    "StatusPill"
+  ],
+  "notes": "distance is hidden when not provided."
+}

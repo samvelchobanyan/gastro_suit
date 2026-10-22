@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <style>
+    body { margin: 0; min-height: 100vh; box-sizing: border-box; padding: var(--space-lg) 0; background: var(--gray-100); font-family: "Plus Jakarta Sans", system-ui, sans-serif; display: flex; align-items: center; justify-content: center; }
+    a { color: var(--color-text-primary); } a:hover { color: var(--color-text-secondary); }
+  </style>
+</helmet>
+<div data-screen-label="Default branch" style="width: 360px; height: 800px; background: var(--color-bg-surface); overflow: hidden; display: flex; flex-direction: column; flex: 0 0 auto; position: relative;">
+  <x-import component-from-global-scope="GastroDesignSystem_472aed.ScreenHeader" title="Default branch" on-back="{{ goBack }}" hint-size="100%,56px"></x-import>
+  <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none;">
+    <div style="margin: 0 var(--space-base) var(--space-base); display: flex; align-items: flex-start; gap: var(--space-sm); padding: var(--space-md); border-radius: var(--radius-md); background: var(--gray-50); font-family: var(--font-family-base);">
+      <i class="ph ph-info" aria-hidden="true" style="font-size: var(--icon-sm); color: var(--color-text-secondary); flex: 0 0 auto;"></i>
+      <span style="flex: 1; min-width: 0; font-size: var(--font-size-body); line-height: var(--line-height-body); font-weight: var(--font-weight-regular); color: var(--color-text-secondary); text-wrap: pretty;">Select a branch which will be your default option when ordering products.</span>
+    </div>
+    <div style="padding: 0 var(--space-base) var(--space-base);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Dropdown" value="{{ city }}" options="{{ cityOptions }}" on-change="{{ setCity }}" hint-size="100%,40px"></x-import>
+    </div>
+    <div style="overflow-x: auto; scrollbar-width: none; padding: 0 var(--space-base) var(--space-lg);">
+      <div style="width: max-content;">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.TabBar" options="{{ districtOptions }}" value="{{ district }}" on-change="{{ setDistrict }}" size="xs" hint-size="auto,32px"></x-import>
+      </div>
+    </div>
+    <div style="padding: 0 var(--space-base) var(--space-base);">
+      <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+        <sc-for list="{{ branchList }}" as="branch" hint-placeholder-count="5">
+          <x-import component-from-global-scope="GastroDesignSystem_472aed.BranchSelectorCard" name="{{ branch.name }}" address="{{ branch.address }}" distance="{{ branch.distance }}" image="{{ branch.image }}" checked="{{ branch.checked }}" on-change="{{ branch.select }}" hint-size="100%,72px"></x-import>
+          <sc-if value="{{ branch.showDivider }}" hint-placeholder-val="{{ true }}">
+            <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" hint-size="100%,1px"></x-import>
+          </sc-if>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  <div style="padding: var(--space-base); border-top: 1px solid var(--color-border-muted); background: var(--color-bg-surface);">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Button" variant="primary" size="sm" full-width="{{ true }}" on-click="{{ goBack }}" hint-size="100%,40px">Choose</x-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:800}}">
+class Component extends DCLogic {
+  state = { city: 'yerevan', district: 'kentron', selected: 'Northern Avenue' };
+  branchData = [
+    { name: 'Northern Avenue', address: '12 Northern Ave, Yerevan', distance: '0.4 km', image: 'uploads/branch_1.png' },
+    { name: 'Cascade', address: '3 Tamanyan St, Yerevan', distance: '1.1 km', image: 'uploads/branch_2.png' },
+    { name: 'Republic Square', address: '5 Abovyan St, Yerevan', distance: '1.8 km', image: 'uploads/branch_3.png' },
+    { name: 'Komitas', address: '28 Komitas Ave, Yerevan', distance: '2.3 km', image: 'uploads/branch_1.png' },
+    { name: 'Saryan Street', address: '14 Saryan St, Yerevan', distance: '2.9 km', image: 'uploads/branch_2.png' },
+  ];
+  renderVals() {
+    const n = this.branchData.length;
+    return {
+      city: this.state.city,
+      cityOptions: [{ label: 'Yerevan', value: 'yerevan' }, { label: 'Gyumri', value: 'gyumri' }, { label: 'Vanadzor', value: 'vanadzor' }, { label: 'Dilijan', value: 'dilijan' }],
+      setCity: (v) => this.setState({ city: v }),
+      districtOptions: ['Kentron', 'Arabkir', 'Ajapnyak', 'Masiv', 'Erebuni'].map((d) => ({ label: d, value: d.toLowerCase() })),
+      district: this.state.district,
+      setDistrict: (v) => this.setState({ district: v }),
+      branchList: this.branchData.map((b, i) => ({ ...b, showDivider: i < n - 1, checked: b.name === this.state.selected, select: () => this.setState({ selected: b.name }) })),
+      goBack: () => { window.location.href = 'Profile.dc.html'; },
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+/* ============================================================
+   GASTRO DESIGN SYSTEM — global entry point
+   ------------------------------------------------------------
+   White-label restaurant mobile app platform.
+   Consumers link THIS file only. It is an @import manifest —
+   no rules live here directly.
+
+   Token architecture: Global → Semantic → Component.
+   Import order matters (later files resolve var()s from earlier).
+   ============================================================ */
+
+/* Fonts */
+@import url('tokens/fonts.css');
+
+/* Tier 1 — Global / primitive palette (+ swappable brand accent) */
+@import url('tokens/primitives.css');
+@import url('tokens/brand.css');
+
+/* Foundations — type, spacing, radius, sizing, elevation, motion */
+@import url('tokens/typography.css');
+@import url('tokens/spacing.css');
+@import url('tokens/radius.css');
+@import url('tokens/sizing.css');
+@import url('tokens/elevation.css');
+@import url('tokens/motion.css');
+
+/* Tier 2 — Semantic aliases (resolves through Tier 1) */
+@import url('tokens/semantic.css');
+
+/* Tier 3 — Component tokens (resolves through Tier 2) */
+@import url('tokens/components.css');
+
+/* Base reset — normalize font inheritance on interactive elements */
+@import url('tokens/base.css');

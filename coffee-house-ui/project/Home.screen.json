@@ -1,0 +1,150 @@
+{
+  "screen": "Home",
+  "file": "Home.dc.html",
+  "designSystem": "GastroDesignSystem_472aed",
+  "frame": { "width": 360, "height": 800, "background": "var(--color-bg-surface)", "canvas": "var(--gray-100)" },
+  "layout": {
+    "structure": "vertical stack: scrollable content region + fixed bottom navigation",
+    "sideMargins": "var(--space-base) (16px)",
+    "verticalGaps": {
+      "greeting-to-stories": "var(--space-sm) (8px)",
+      "stories-to-loyalty": "var(--space-base) (16px)",
+      "loyalty-to-wallet": "var(--space-base) (16px)",
+      "wallet-to-vouchers": "var(--space-base) (16px)",
+      "voucher-header-to-rail": "var(--space-md) (12px)",
+      "vouchers-to-tabs": "var(--space-lg) (24px)",
+      "tabs-to-rail": "var(--space-base) (16px)",
+      "rail-to-promo": "var(--space-lg) (24px)",
+      "promo-to-branches": "var(--space-lg) (24px)",
+      "branches-header-to-list": "var(--space-md) (12px)",
+      "branch-card-gap": "var(--space-md) (12px)",
+      "branches-to-nav": "var(--space-base) (16px)"
+    }
+  },
+  "sections": [
+    {
+      "id": "greeting",
+      "component": "Greeting",
+      "props": { "name": "Aram", "greeting": "Let's enjoy some coffee", "logoUrl": "uploads/ch_logo-69a8ddeb.svg", "hasNotifications": true }
+    },
+    {
+      "id": "stories",
+      "type": "horizontalRail",
+      "component": "Stories",
+      "count": 6,
+      "items": [
+        { "label": "A very very long story title", "seen": false },
+        { "label": "Cold brew", "seen": false },
+        { "label": "Espresso", "seen": false },
+        { "label": "Pastries", "seen": true },
+        { "label": "Beans", "seen": true },
+        { "label": "Mocha", "seen": true }
+      ]
+    },
+    {
+      "id": "loyalty",
+      "component": "LoyaltyPointsCard",
+      "props": { "points": 1240, "membership": "Master", "discountLabel": "10%", "qrValue": "CH-ARAM-1240", "backgroundImage": "uploads/ch_loyalty_bg-19967daa.png" }
+    },
+    {
+      "id": "wallet",
+      "component": "Wallet",
+      "props": { "balance": "֏5,680", "icon": "uploads/ch_wallet.png" }
+    },
+    {
+      "id": "vouchers",
+      "type": "section",
+      "header": { "component": "SectionHeader", "title": "Vouchers" },
+      "rail": {
+        "component": "Voucher",
+        "items": [
+          { "name": "Bumble Cherry", "remaining": 2, "image": "uploads/ch_voucher_bumble_cherry.png" },
+          { "name": "Iced Americano Specialty Arabica", "remaining": 1, "image": "uploads/ch_voucher_iced_americano_specialty_arabica.png" }
+        ]
+      }
+    },
+    {
+      "id": "productTabs",
+      "component": "TabBar",
+      "props": { "size": "small", "fullWidth": false },
+      "options": [
+        { "label": "Buy again", "value": "buy-again", "icon": "arrow-counter-clockwise" },
+        { "label": "Favourites", "value": "favourites", "icon": "heart" }
+      ],
+      "default": "buy-again",
+      "controls": ["buyAgainRail", "favouritesRail"]
+    },
+    {
+      "id": "buyAgainRail",
+      "type": "horizontalRail",
+      "component": "BuyAgainCard",
+      "visibleWhen": "productTabs == 'buy-again'",
+      "items": [
+        { "name": "Hot Salted Caramel Matcha Latte", "location": "Northern Ave", "imageUrl": "uploads/ch_prod_hot_salted_caramel_matcha_latte.png" },
+        { "name": "Dubai Cheesecake", "location": "Cascade", "imageUrl": "uploads/ch_prod_dubai_cheesecake.png" },
+        { "name": "Muffin Chocolate", "location": "Republic Sq", "imageUrl": "uploads/ch_prod_muffin_chocolate.png" }
+      ]
+    },
+    {
+      "id": "favouritesRail",
+      "type": "horizontalRail",
+      "component": "ProductVerticalCard",
+      "visibleWhen": "productTabs == 'favourites'",
+      "items": [
+        { "name": "Iced Fantasy Coffee", "price": "֏1,450", "imageUrl": "uploads/ch_fav_iced_fantasy_coffee.png" },
+        { "name": "Iced Cream Cheese Latte Aroma", "price": "֏1,850", "imageUrl": "uploads/ch_fav_iced_cream_cheese_latte_aroma.png" },
+        { "name": "Hot Raf Strawberry", "price": "֏1,650", "imageUrl": "uploads/ch_fav_hot_raf_strawberry.png" }
+      ]
+    },
+    {
+      "id": "promos",
+      "type": "horizontalRail",
+      "component": "imageLink",
+      "cardWidth": "280px",
+      "radius": "var(--radius-md)",
+      "elevation": "var(--elevation-card)",
+      "items": [
+        { "image": "uploads/promo_1png.png", "alt": "Horizon · Stephan Bodzin" },
+        { "image": "uploads/promo_2.png", "alt": "App exclusive combos" },
+        { "image": "uploads/promo_3.png", "alt": "Iconic Armo Y2K Diva's playlist" }
+      ]
+    },
+    {
+      "id": "branches",
+      "type": "section",
+      "header": { "component": "SectionHeader", "title": "Nearest branches" },
+      "list": {
+        "component": "BranchCard",
+        "separator": "Divider",
+        "items": [
+          { "name": "Northern Avenue", "address": "12 Northern Ave, Yerevan", "hours": "08:00 – 23:00", "distance": "0.4 km", "isOpenNow": true },
+          { "name": "Cascade", "address": "3 Tamanyan St, Yerevan", "hours": "09:00 – 22:00", "distance": "1.1 km", "isOpenNow": true },
+          { "name": "Republic Square", "address": "5 Abovyan St, Yerevan", "hours": "08:00 – 00:00", "distance": "1.8 km", "isOpenNow": false }
+        ]
+      }
+    },
+    {
+      "id": "bottomNav",
+      "component": "BottomNavigation",
+      "position": "fixed-bottom",
+      "default": "home",
+      "items": [
+        { "key": "home", "icon": "house", "label": "Home" },
+        { "key": "order", "icon": "coffee", "label": "Order" },
+        { "key": "gifts", "icon": "gift", "label": "Gifts" },
+        { "key": "profile", "icon": "user", "label": "Profile" }
+      ]
+    }
+  ],
+  "state": {
+    "tab": { "default": "buy-again", "values": ["buy-again", "favourites"] },
+    "nav": { "default": "home", "values": ["home", "order", "gifts", "profile"] }
+  },
+  "tokens": {
+    "spacing": ["--space-sm", "--space-md", "--space-base", "--space-lg"],
+    "radius": ["--radius-md"],
+    "elevation": ["--elevation-card"],
+    "color": ["--color-bg-surface", "--gray-100", "--color-border-muted", "--accent-500"],
+    "accent": "#ED1D25"
+  }
+}

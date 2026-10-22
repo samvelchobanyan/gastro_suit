@@ -1,0 +1,153 @@
+{
+  "kind": "component",
+  "name": "Button",
+  "version": "2026-09-12",
+  "description": "Primary/secondary/tertiary/destructive CTA button, four sizes, optional icons and loading state.",
+  "size": {
+    "width": "hug",
+    "height": 48,
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "row",
+    "spacing": [
+      "--space-sm"
+    ],
+    "padding": {
+      "x": 20,
+      "y": 0
+    },
+    "align": "center",
+    "justify": "center",
+    "scroll": "none",
+    "size": {
+      "width": "hug",
+      "height": 48
+    },
+    "children": [
+      {
+        "slot": "root.iconLeft",
+        "type": "icon",
+        "name": "{iconLeft}",
+        "weight": "regular",
+        "size": 16,
+        "color": "--button-primary-text"
+      },
+      {
+        "slot": "root.label",
+        "type": "text",
+        "content": "{children}",
+        "style": "--text-body-semibold",
+        "color": "--button-primary-text",
+        "lines": 1,
+        "overflow": "clip",
+        "align": "start",
+        "transform": "none",
+        "size": {
+          "width": "hug"
+        }
+      },
+      {
+        "slot": "root.iconRight",
+        "type": "icon",
+        "name": "{iconRight}",
+        "weight": "regular",
+        "size": 16,
+        "color": "--button-primary-text"
+      }
+    ]
+  },
+  "variants": {
+    "variant": {
+      "prop": "variant",
+      "cases": {
+        "secondary": {
+          "root": {
+            "background": "--button-secondary-bg"
+          },
+          "root.label": {
+            "color": "--button-secondary-text"
+          },
+          "root.iconLeft": {
+            "color": "--button-secondary-text"
+          },
+          "root.iconRight": {
+            "color": "--button-secondary-text"
+          }
+        },
+        "tertiary": {
+          "root": {
+            "background": "transparent"
+          },
+          "root.label": {
+            "color": "--button-tertiary-text"
+          }
+        },
+        "destructive": {
+          "root": {
+            "background": "--color-status-error"
+          },
+          "root.label": {
+            "color": "--color-text-on-brand"
+          }
+        }
+      }
+    },
+    "size": {
+      "prop": "size",
+      "cases": {
+        "lg": {
+          "root": {
+            "size": {
+              "width": "hug",
+              "height": 56
+            }
+          }
+        },
+        "sm": {
+          "root": {
+            "size": {
+              "width": "hug",
+              "height": 40
+            }
+          }
+        },
+        "xs": {
+          "root": {
+            "size": {
+              "width": "hug",
+              "height": 32
+            },
+            "radius": "--radius-sm"
+          }
+        }
+      }
+    },
+    "disabled": {
+      "prop": "disabled",
+      "cases": {
+        "true": {
+          "root": {
+            "opacity": "--state-disabled-opacity"
+          }
+        }
+      }
+    },
+    "fullWidth": {
+      "prop": "fullWidth",
+      "cases": {
+        "true": {
+          "root": {
+            "size": {
+              "width": "fill"
+            }
+          }
+        }
+      }
+    }
+  },
+  "uses": [],
+  "notes": "root box carries background/radius directly (row type extended with those two fields per 2.8 — a button is a row that also paints itself, avoiding an extra wrapper box)."
+}

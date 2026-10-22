@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+</helmet>
+<sc-if value="{{ visible }}" hint-placeholder-val="{{ true }}">
+  <div style="position: absolute; inset: 0; z-index: 80; background: var(--color-bg-surface); display: flex; flex-direction: column; font-family: var(--font-family-base);">
+    <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; display: flex; flex-direction: column; justify-content: center; gap: var(--space-lg); padding: var(--space-xl) var(--space-base);">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-base); text-align: center;">
+        <div style="width: 72px; height: 72px; border-radius: var(--radius-full); background: var(--color-bg-success); display: flex; align-items: center; justify-content: center;">
+          <i class="ph-fill ph-check-circle" aria-hidden="true" style="font-size: 40px; color: var(--color-status-success);"></i>
+        </div>
+        <h1 style="margin: 0; font-size: var(--font-size-h1); line-height: var(--line-height-h1); font-weight: var(--font-weight-bold); color: var(--color-text-primary); text-wrap: pretty;">{{ title }}</h1>
+      </div>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.UserCard" name="{{ name }}" surname="{{ surname }}" phone="{{ phone }}" hint-size="100%,64px"></x-import>
+    </div>
+    <div style="flex: 0 0 auto; padding: var(--space-base); background: var(--color-bg-surface); border-top: var(--border-width-default) solid var(--color-border-muted);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Button" variant="primary" size="sm" full-width="{{ true }}" on-click="{{ onContinue }}" hint-size="100%,40px">Continue</x-import>
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:800},&quot;visible&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;amount&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;800&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;name&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Anna&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;surname&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Petrosyan&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;+374 91234567&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onContinue&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const amount = this.props.amount || '800';
+    return {
+      visible: this.props.visible ?? true,
+      title: `You have successfully topped up your friend's wallet by ${Number(amount).toLocaleString('en-US')} ֏`,
+      name: this.props.name ?? 'Anna',
+      surname: this.props.surname ?? 'Petrosyan',
+      phone: this.props.phone ?? '+374 91234567',
+      onContinue: this.props.onContinue ?? (() => { window.location.href = 'Gifts.dc.html'; }),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+{
+  "kind": "component",
+  "name": "ProductVerticalCard",
+  "version": "2026-09-12",
+  "description": "Vertical product card: square photo, product name, price line.",
+  "size": {
+    "width": 128,
+    "height": "hug",
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "column",
+    "spacing": [
+      "--space-sm"
+    ],
+    "padding": null,
+    "align": "start",
+    "justify": "start",
+    "scroll": "none",
+    "size": {
+      "width": 128
+    },
+    "children": [
+      {
+        "slot": "photo",
+        "type": "image",
+        "source": "{imageUrl}",
+        "size": [
+          128,
+          128
+        ],
+        "fit": "cover",
+        "radius": "--radius-card",
+        "fallback": {
+          "slot": "photo.fallback",
+          "type": "box",
+          "size": [
+            128,
+            128
+          ],
+          "background": "--gray-100",
+          "radius": "--radius-card",
+          "border": null,
+          "padding": null,
+          "child": null
+        }
+      },
+      {
+        "slot": "details",
+        "type": "column",
+        "spacing": [
+          "--space-xxs"
+        ],
+        "padding": null,
+        "align": "start",
+        "justify": "start",
+        "scroll": "none",
+        "size": {
+          "width": "fill"
+        },
+        "children": [
+          {
+            "slot": "details.name",
+            "type": "text",
+            "content": "{name}",
+            "style": "--text-body-sm",
+            "color": "--color-text-primary",
+            "lines": 1,
+            "overflow": "ellipsis",
+            "align": "start",
+            "transform": "none",
+            "size": {
+              "width": "fill"
+            }
+          },
+          {
+            "slot": "details.price",
+            "type": "text",
+            "content": "{price}",
+            "style": "--text-body-xs",
+            "color": "--color-text-secondary",
+            "lines": 1,
+            "overflow": "ellipsis",
+            "align": "start",
+            "transform": "none",
+            "size": {
+              "width": "fill"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "variants": {},
+  "uses": [],
+  "notes": ""
+}

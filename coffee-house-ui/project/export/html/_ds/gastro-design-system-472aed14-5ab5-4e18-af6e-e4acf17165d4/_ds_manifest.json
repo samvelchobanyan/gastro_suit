@@ -1,0 +1,1042 @@
+{
+  "namespace": "GastroDesignSystem_472aed",
+  "components": [
+    {
+      "name": "Avatar",
+      "sourcePath": "components/avatar/Avatar.jsx"
+    },
+    {
+      "name": "Badge",
+      "sourcePath": "components/badge/Badge.jsx"
+    },
+    {
+      "name": "Button",
+      "sourcePath": "components/buttons/Button.jsx"
+    },
+    {
+      "name": "CartSummaryBar",
+      "sourcePath": "components/cart/CartSummaryBar.jsx"
+    },
+    {
+      "name": "OrderTotalBreakdown",
+      "sourcePath": "components/cart/OrderTotalBreakdown.jsx"
+    },
+    {
+      "name": "PromoCodeInput",
+      "sourcePath": "components/cart/PromoCodeInput.jsx"
+    },
+    {
+      "name": "PaymentMethodCard",
+      "sourcePath": "components/checkout/PaymentMethodCard.jsx"
+    },
+    {
+      "name": "PaymentMethodPicker",
+      "sourcePath": "components/checkout/PaymentMethodPicker.jsx"
+    },
+    {
+      "name": "TipSelector",
+      "sourcePath": "components/checkout/TipSelector.jsx"
+    },
+    {
+      "name": "Chip",
+      "sourcePath": "components/chip/Chip.jsx"
+    },
+    {
+      "name": "ReservationConfirmationCard",
+      "sourcePath": "components/confirmations/ReservationConfirmationCard.jsx"
+    },
+    {
+      "name": "Card",
+      "sourcePath": "components/data-display/Card.jsx"
+    },
+    {
+      "name": "Divider",
+      "sourcePath": "components/data-display/Divider.jsx"
+    },
+    {
+      "name": "Fab",
+      "sourcePath": "components/fab/Fab.jsx"
+    },
+    {
+      "name": "BottomSheet",
+      "sourcePath": "components/feedback/BottomSheet.jsx"
+    },
+    {
+      "name": "Dialog",
+      "sourcePath": "components/feedback/Dialog.jsx"
+    },
+    {
+      "name": "EmptyState",
+      "sourcePath": "components/feedback/EmptyState.jsx"
+    },
+    {
+      "name": "ErrorState",
+      "sourcePath": "components/feedback/ErrorState.jsx"
+    },
+    {
+      "name": "ProgressBar",
+      "sourcePath": "components/feedback/ProgressBar.jsx"
+    },
+    {
+      "name": "Skeleton",
+      "sourcePath": "components/feedback/Skeleton.jsx"
+    },
+    {
+      "name": "Spinner",
+      "sourcePath": "components/feedback/Spinner.jsx"
+    },
+    {
+      "name": "Toast",
+      "sourcePath": "components/feedback/Toast.jsx"
+    },
+    {
+      "name": "Filter",
+      "sourcePath": "components/filter/Filter.jsx"
+    },
+    {
+      "name": "FilterBar",
+      "sourcePath": "components/filter/FilterBar.jsx"
+    },
+    {
+      "name": "Checkbox",
+      "sourcePath": "components/forms/Checkbox.jsx"
+    },
+    {
+      "name": "FormGroup",
+      "sourcePath": "components/forms/FormGroup.jsx"
+    },
+    {
+      "name": "Radio",
+      "sourcePath": "components/forms/Radio.jsx"
+    },
+    {
+      "name": "RadioGroup",
+      "sourcePath": "components/forms/Radio.jsx"
+    },
+    {
+      "name": "Slider",
+      "sourcePath": "components/forms/Slider.jsx"
+    },
+    {
+      "name": "Stepper",
+      "sourcePath": "components/forms/Stepper.jsx"
+    },
+    {
+      "name": "Switch",
+      "sourcePath": "components/forms/Switch.jsx"
+    },
+    {
+      "name": "Greeting",
+      "sourcePath": "components/greeting/Greeting.jsx"
+    },
+    {
+      "name": "IconButton",
+      "sourcePath": "components/icon-button/IconButton.jsx"
+    },
+    {
+      "name": "Accordion",
+      "sourcePath": "components/inputs/Accordion.jsx"
+    },
+    {
+      "name": "Dropdown",
+      "sourcePath": "components/inputs/Dropdown.jsx"
+    },
+    {
+      "name": "TextArea",
+      "sourcePath": "components/inputs/TextArea.jsx"
+    },
+    {
+      "name": "TextInput",
+      "sourcePath": "components/inputs/TextInput.jsx"
+    },
+    {
+      "name": "AdvancedListItem",
+      "sourcePath": "components/list-items/AdvancedListItem.jsx"
+    },
+    {
+      "name": "SimpleListItem",
+      "sourcePath": "components/list-items/SimpleListItem.jsx"
+    },
+    {
+      "name": "LoyaltyPointsCard",
+      "sourcePath": "components/loyalty/LoyaltyPointsCard.jsx"
+    },
+    {
+      "name": "LoyaltyRewardsBadge",
+      "sourcePath": "components/loyalty/LoyaltyRewardsBadge.jsx"
+    },
+    {
+      "name": "MembershipTierPill",
+      "sourcePath": "components/loyalty/MembershipTierPill.jsx"
+    },
+    {
+      "name": "Wallet",
+      "sourcePath": "components/loyalty/Wallet.jsx"
+    },
+    {
+      "name": "MapView",
+      "sourcePath": "components/media/MapView.jsx"
+    },
+    {
+      "name": "CartLineItem",
+      "sourcePath": "components/menu/CartLineItem.jsx"
+    },
+    {
+      "name": "ItemCustomizationSheet",
+      "sourcePath": "components/menu/ItemCustomizationSheet.jsx"
+    },
+    {
+      "name": "MenuItemCard",
+      "sourcePath": "components/menu/MenuItemCard.jsx"
+    },
+    {
+      "name": "BottomNavigation",
+      "sourcePath": "components/navigation/BottomNavigation.jsx"
+    },
+    {
+      "name": "NewsListing",
+      "sourcePath": "components/news/NewsListing.jsx"
+    },
+    {
+      "name": "LiveOrderTrackingMap",
+      "sourcePath": "components/order/LiveOrderTrackingMap.jsx"
+    },
+    {
+      "name": "OrderHistoryCard",
+      "sourcePath": "components/order/OrderHistoryCard.jsx"
+    },
+    {
+      "name": "OrderStatusTimeline",
+      "sourcePath": "components/order/OrderStatusTimeline.jsx"
+    },
+    {
+      "name": "RatingReviewPrompt",
+      "sourcePath": "components/order/RatingReviewPrompt.jsx"
+    },
+    {
+      "name": "ReorderButton",
+      "sourcePath": "components/order/ReorderButton.jsx"
+    },
+    {
+      "name": "Calendar",
+      "sourcePath": "components/pickers/Calendar.jsx"
+    },
+    {
+      "name": "DatePicker",
+      "sourcePath": "components/pickers/DatePicker.jsx"
+    },
+    {
+      "name": "TimePicker",
+      "sourcePath": "components/pickers/TimePicker.jsx"
+    },
+    {
+      "name": "BuyAgainCard",
+      "sourcePath": "components/product-cards/BuyAgainCard.jsx"
+    },
+    {
+      "name": "ProductVerticalCard",
+      "sourcePath": "components/product-cards/ProductVerticalCard.jsx"
+    },
+    {
+      "name": "QuickActionTile",
+      "sourcePath": "components/quick-action-tiles/QuickActionTiles.jsx"
+    },
+    {
+      "name": "QuickActionTiles",
+      "sourcePath": "components/quick-action-tiles/QuickActionTiles.jsx"
+    },
+    {
+      "name": "RatingStars",
+      "sourcePath": "components/rating/RatingStars.jsx"
+    },
+    {
+      "name": "AddressSelector",
+      "sourcePath": "components/restaurant/AddressSelector.jsx"
+    },
+    {
+      "name": "BranchCard",
+      "sourcePath": "components/restaurant/BranchCard.jsx"
+    },
+    {
+      "name": "DeliveryPickupToggle",
+      "sourcePath": "components/restaurant/DeliveryPickupToggle.jsx"
+    },
+    {
+      "name": "DeliveryTimeEstimate",
+      "sourcePath": "components/restaurant/DeliveryTimeEstimate.jsx"
+    },
+    {
+      "name": "RestaurantCard",
+      "sourcePath": "components/restaurant/RestaurantCard.jsx"
+    },
+    {
+      "name": "RestaurantHeader",
+      "sourcePath": "components/restaurant/RestaurantHeader.jsx"
+    },
+    {
+      "name": "SearchBar",
+      "sourcePath": "components/search/SearchBar.jsx"
+    },
+    {
+      "name": "SearchFiltersPanel",
+      "sourcePath": "components/search/SearchFiltersPanel.jsx"
+    },
+    {
+      "name": "SectionHeader",
+      "sourcePath": "components/section-header/SectionHeader.jsx"
+    },
+    {
+      "name": "StatusPill",
+      "sourcePath": "components/status-pill/StatusPill.jsx"
+    },
+    {
+      "name": "Stories",
+      "sourcePath": "components/stories/Stories.jsx"
+    },
+    {
+      "name": "MenuCategoryTabs",
+      "sourcePath": "components/tabs/MenuCategoryTabs.jsx"
+    },
+    {
+      "name": "TabBar",
+      "sourcePath": "components/tabs/TabBar.jsx"
+    },
+    {
+      "name": "Tag",
+      "sourcePath": "components/tag/Tag.jsx"
+    },
+    {
+      "name": "Tooltip",
+      "sourcePath": "components/tooltip/Tooltip.jsx"
+    },
+    {
+      "name": "Voucher",
+      "sourcePath": "components/voucher/Voucher.jsx"
+    }
+  ],
+  "startingPoints": [],
+  "cards": [
+    {
+      "path": "components/avatar/avatar.card.html",
+      "group": "Components",
+      "viewport": "700x150",
+      "subtitle": "Small, medium, large",
+      "name": "Avatar"
+    },
+    {
+      "path": "components/badge/badge.card.html",
+      "group": "Components",
+      "viewport": "700x160",
+      "subtitle": "Counts, dot, tones — standalone or overlaid",
+      "name": "Badge"
+    },
+    {
+      "path": "components/buttons/buttons.card.html",
+      "group": "Components",
+      "viewport": "700x220",
+      "subtitle": "Button variants & sizes",
+      "name": "Buttons"
+    },
+    {
+      "path": "components/chip/chip.card.html",
+      "group": "Components",
+      "viewport": "700x150",
+      "subtitle": "Selectable toggle · removable",
+      "name": "Chip"
+    },
+    {
+      "path": "components/data-display/data-display.card.html",
+      "group": "Components",
+      "viewport": "700x160",
+      "subtitle": "Divider — plain line and labeled",
+      "name": "Dividers"
+    },
+    {
+      "path": "components/fab/fab.card.html",
+      "group": "Components",
+      "viewport": "700x140",
+      "subtitle": "Floating action button — round and extended",
+      "name": "FAB"
+    },
+    {
+      "path": "components/filter/filter.card.html",
+      "group": "Components",
+      "viewport": "700x220",
+      "subtitle": "Round icon-over-label · FilterBar horizontal alternative",
+      "name": "Filter"
+    },
+    {
+      "path": "components/forms/selection-controls.card.html",
+      "group": "Components",
+      "viewport": "700x300",
+      "subtitle": "Checkbox · Radio · Switch · Slider",
+      "name": "Selection controls"
+    },
+    {
+      "path": "components/forms/stepper.card.html",
+      "group": "Components",
+      "viewport": "700x220",
+      "subtitle": "Quantity stepper — sizes, bounds, disabled",
+      "name": "Stepper"
+    },
+    {
+      "path": "components/icon-button/icon-button.card.html",
+      "group": "Components",
+      "viewport": "700x150",
+      "subtitle": "Ghost · filled · tonal — active/disabled",
+      "name": "Icon Button"
+    },
+    {
+      "path": "components/inputs/accordion.card.html",
+      "group": "Components",
+      "viewport": "700x300",
+      "subtitle": "Collapsible sections — single-open & multi-open",
+      "name": "Accordion"
+    },
+    {
+      "path": "components/inputs/dropdown.card.html",
+      "group": "Components",
+      "viewport": "700x340",
+      "subtitle": "Select field — default, placeholder, error, disabled",
+      "name": "Dropdown"
+    },
+    {
+      "path": "components/inputs/text-fields.card.html",
+      "group": "Components",
+      "viewport": "700x360",
+      "subtitle": "TextInput · TextArea — states",
+      "name": "Text fields"
+    },
+    {
+      "path": "components/list-items/list-items.card.html",
+      "group": "Components",
+      "viewport": "700x300",
+      "subtitle": "AdvancedListItem · SimpleListItem",
+      "name": "List items"
+    },
+    {
+      "path": "components/loyalty/loyalty.card.html",
+      "group": "Components",
+      "viewport": "700x140",
+      "subtitle": "LoyaltyRewardsBadge",
+      "name": "Loyalty"
+    },
+    {
+      "path": "components/media/mapview.card.html",
+      "group": "Components",
+      "viewport": "700x140",
+      "subtitle": "Map placeholder — used by LiveOrderTrackingMap",
+      "name": "Map View"
+    },
+    {
+      "path": "components/navigation/navigation.card.html",
+      "group": "Components",
+      "viewport": "700x180",
+      "subtitle": "Bottom tabs",
+      "name": "Navigation"
+    },
+    {
+      "path": "components/pickers/pickers.card.html",
+      "group": "Components",
+      "viewport": "700x520",
+      "subtitle": "Calendar (date + time) · DatePicker · TimePicker",
+      "name": "Date and Time"
+    },
+    {
+      "path": "components/quick-action-tiles/quick-action-tiles.card.html",
+      "group": "Components",
+      "viewport": "700x150",
+      "subtitle": "Icon + label shortcut tiles",
+      "name": "Quick Action Tiles"
+    },
+    {
+      "path": "components/rating/rating.card.html",
+      "group": "Components",
+      "viewport": "700x140",
+      "subtitle": "Display (halves + count) and interactive input",
+      "name": "Rating"
+    },
+    {
+      "path": "components/search/search.card.html",
+      "group": "Components",
+      "viewport": "700x420",
+      "subtitle": "SearchBar · SearchFiltersPanel",
+      "name": "Search"
+    },
+    {
+      "path": "components/section-header/section-header.card.html",
+      "group": "Components",
+      "viewport": "700x140",
+      "subtitle": "Heading 2 style",
+      "name": "Section Header"
+    },
+    {
+      "path": "components/status-pill/status-pill.card.html",
+      "group": "Components",
+      "viewport": "700x120",
+      "subtitle": "Open / Closed / status states",
+      "name": "Status Pill"
+    },
+    {
+      "path": "components/stories/stories.card.html",
+      "group": "Components",
+      "viewport": "700x160",
+      "subtitle": "Story ring — seen / unseen states",
+      "name": "Stories"
+    },
+    {
+      "path": "components/tabs/tabs.card.html",
+      "group": "Components",
+      "viewport": "700x440",
+      "subtitle": "Big · Small · Line Tabs",
+      "name": "Tabs"
+    },
+    {
+      "path": "components/tag/tag.card.html",
+      "group": "Components",
+      "viewport": "700x150",
+      "subtitle": "Static tones, selectable, removable chips",
+      "name": "Tag"
+    },
+    {
+      "path": "components/tooltip/tooltip.card.html",
+      "group": "Components",
+      "viewport": "700x140",
+      "subtitle": "Contextual hint on hover/focus",
+      "name": "Tooltip"
+    },
+    {
+      "path": "components/feedback/overlays.card.html",
+      "group": "Foundations",
+      "viewport": "700x460",
+      "subtitle": "BottomSheet · Dialog · Toast (tap to open)",
+      "name": "Overlays"
+    },
+    {
+      "path": "guidelines/brand-distribution.card.html",
+      "group": "Foundations",
+      "viewport": "700x150",
+      "subtitle": "Neutrals dominate · structure supports · accent acts",
+      "name": "60 · 30 · 10 distribution"
+    },
+    {
+      "path": "guidelines/brand-states.card.html",
+      "group": "Foundations",
+      "viewport": "700x180",
+      "subtitle": "Enabled · Pressed · Focused · Disabled · Loading · Error",
+      "name": "Component states"
+    },
+    {
+      "path": "guidelines/colors-accent.card.html",
+      "group": "Foundations",
+      "viewport": "700x160",
+      "subtitle": "Swappable per customer — the 10% action color",
+      "name": "Brand accent (placeholder)"
+    },
+    {
+      "path": "guidelines/colors-borders.card.html",
+      "group": "Foundations",
+      "viewport": "700x130",
+      "subtitle": "Structural strokes — the 30% layer",
+      "name": "Borders & dividers"
+    },
+    {
+      "path": "guidelines/colors-neutral.card.html",
+      "group": "Foundations",
+      "viewport": "700x150",
+      "subtitle": "Global gray primitives — the 60% + 30% of the palette",
+      "name": "Neutral ramp"
+    },
+    {
+      "path": "guidelines/colors-status.card.html",
+      "group": "Foundations",
+      "viewport": "700x180",
+      "subtitle": "Success · Warning · Error · Info — functional roles",
+      "name": "Status hues"
+    },
+    {
+      "path": "guidelines/colors-surfaces.card.html",
+      "group": "Foundations",
+      "viewport": "700x170",
+      "subtitle": "Locked bg ↔ text pairings (contrast matrix)",
+      "name": "Semantic surfaces & text"
+    },
+    {
+      "path": "guidelines/elevation-scale.card.html",
+      "group": "Foundations",
+      "viewport": "700x180",
+      "subtitle": "Restrained, neutral shadows for true layers",
+      "name": "Elevation"
+    },
+    {
+      "path": "guidelines/iconography-phosphor.card.html",
+      "group": "Foundations",
+      "viewport": "700x210",
+      "subtitle": "Phosphor icon set · 24px default · 48px touch target",
+      "name": "Iconography — Phosphor"
+    },
+    {
+      "path": "guidelines/motion-scale.card.html",
+      "group": "Foundations",
+      "viewport": "700x190",
+      "subtitle": "Durations & easing — feedback under 100ms",
+      "name": "Motion"
+    },
+    {
+      "path": "guidelines/radius-scale.card.html",
+      "group": "Foundations",
+      "viewport": "700x160",
+      "subtitle": "Corner radii scale with element size",
+      "name": "Radius scale"
+    },
+    {
+      "path": "guidelines/sizing-buttons.card.html",
+      "group": "Foundations",
+      "viewport": "700x150",
+      "subtitle": "56 / 48 · 40 · 32 — matched to touch targets",
+      "name": "Button heights"
+    },
+    {
+      "path": "guidelines/sizing-icons.card.html",
+      "group": "Foundations",
+      "viewport": "700x170",
+      "subtitle": "Bounding boxes (mult. of 4) · 48px min target",
+      "name": "Icons & touch targets"
+    },
+    {
+      "path": "guidelines/spacing-gaps.card.html",
+      "group": "Foundations",
+      "viewport": "700x180",
+      "subtitle": "8px between text · 16px between blocks",
+      "name": "Stacking gaps"
+    },
+    {
+      "path": "guidelines/spacing-grid.card.html",
+      "group": "Foundations",
+      "viewport": "700x210",
+      "subtitle": "360px · 16px margins · 8px gutter · 4 columns",
+      "name": "Mobile layout grid"
+    },
+    {
+      "path": "guidelines/spacing-scale.card.html",
+      "group": "Foundations",
+      "viewport": "700x180",
+      "subtitle": "4px-grid scale · xs → xxl",
+      "name": "Spacing scale"
+    },
+    {
+      "path": "guidelines/type-weights.card.html",
+      "group": "Foundations",
+      "viewport": "700x150",
+      "subtitle": "Plus Jakarta Sans — 400 / 500 / 600 / 700",
+      "name": "Weights"
+    },
+    {
+      "path": "guidelines/typography-scale.card.html",
+      "group": "Foundations",
+      "viewport": "700x500",
+      "subtitle": "Display through Overline — full 10-style scale",
+      "name": "Typography"
+    },
+    {
+      "path": "components/cart/cart-checkout.card.html",
+      "group": "Organisms",
+      "viewport": "700x420",
+      "subtitle": "CartSummaryBar · OrderTotalBreakdown · PromoCodeInput",
+      "name": "Cart & checkout summary"
+    },
+    {
+      "path": "components/checkout/checkout.card.html",
+      "group": "Organisms",
+      "viewport": "700x380",
+      "subtitle": "TipSelector · PaymentMethodPicker",
+      "name": "Checkout"
+    },
+    {
+      "path": "components/confirmations/confirmations.card.html",
+      "group": "Organisms",
+      "viewport": "700x320",
+      "subtitle": "ReservationConfirmationCard",
+      "name": "Confirmations"
+    },
+    {
+      "path": "components/feedback/status-loading.card.html",
+      "group": "Organisms",
+      "viewport": "700x440",
+      "subtitle": "ProgressBar · Spinner · Skeleton · Empty · Error",
+      "name": "Status & loading"
+    },
+    {
+      "path": "components/greeting/greeting.card.html",
+      "group": "Organisms",
+      "viewport": "700x180",
+      "subtitle": "Home header — logo, greeting, notification bell",
+      "name": "Greeting"
+    },
+    {
+      "path": "components/loyalty/loyalty-points-card.card.html",
+      "group": "Organisms",
+      "viewport": "700x180",
+      "subtitle": "328×116 · Neutral-900 · brand background image · QR",
+      "name": "Loyalty points card"
+    },
+    {
+      "path": "components/loyalty/membership-tier-pill.card.html",
+      "group": "Organisms",
+      "viewport": "700x160",
+      "subtitle": "Tier + optional discount, for dark loyalty surfaces",
+      "name": "Membership Tier Pill"
+    },
+    {
+      "path": "components/loyalty/wallet.card.html",
+      "group": "Organisms",
+      "viewport": "700x180",
+      "subtitle": "Balance title + value on dark surface",
+      "name": "Wallet"
+    },
+    {
+      "path": "components/menu/menu.card.html",
+      "group": "Organisms",
+      "viewport": "700x620",
+      "subtitle": "MenuItemCard · ItemCustomizationSheet · CartLineItem",
+      "name": "Menu"
+    },
+    {
+      "path": "components/news/news-listing.card.html",
+      "group": "Organisms",
+      "viewport": "700x300",
+      "subtitle": "Image, title, publish date",
+      "name": "News Listing"
+    },
+    {
+      "path": "components/order/order-tracking-history.card.html",
+      "group": "Organisms",
+      "viewport": "700x460",
+      "subtitle": "OrderStatusTimeline · LiveOrderTrackingMap · OrderHistoryCard · Reorder · Rating",
+      "name": "Order tracking & history"
+    },
+    {
+      "path": "components/product-cards/product-cards.card.html",
+      "group": "Organisms",
+      "viewport": "700x480",
+      "subtitle": "Buy Again · Favourite Vertical",
+      "name": "Product Cards"
+    },
+    {
+      "path": "components/restaurant/branch-listing.card.html",
+      "group": "Organisms",
+      "viewport": "700x340",
+      "subtitle": "BranchCard — image, name, address, working hours",
+      "name": "Branch listing"
+    },
+    {
+      "path": "components/restaurant/restaurant-discovery.card.html",
+      "group": "Organisms",
+      "viewport": "700x460",
+      "subtitle": "RestaurantHeader · RestaurantCard · Address · ETA",
+      "name": "Restaurant"
+    },
+    {
+      "path": "components/voucher/voucher.card.html",
+      "group": "Organisms",
+      "viewport": "700x200",
+      "subtitle": "Product image · name · remaining count",
+      "name": "Voucher"
+    }
+  ],
+  "templates": [],
+  "hasThumbnailHtml": true,
+  "globalCssPaths": [
+    "tokens/fonts.css",
+    "tokens/primitives.css",
+    "tokens/brand.css",
+    "tokens/typography.css",
+    "tokens/spacing.css",
+    "tokens/radius.css",
+    "tokens/sizing.css",
+    "tokens/elevation.css",
+    "tokens/motion.css",
+    "tokens/semantic.css",
+    "tokens/components.css",
+    "tokens/base.css",
+    "styles.css"
+  ],
+  "tokens": [
+    "--accent-100",
+    "--accent-200",
+    "--accent-300",
+    "--accent-400",
+    "--accent-50",
+    "--accent-500",
+    "--accent-600",
+    "--accent-700",
+    "--accent-800",
+    "--accent-900",
+    "--accent-contrast",
+    "--alpha-black-12",
+    "--alpha-black-4",
+    "--alpha-black-40",
+    "--alpha-black-60",
+    "--alpha-black-8",
+    "--alpha-white-12",
+    "--alpha-white-24",
+    "--alpha-white-8",
+    "--amber-100",
+    "--amber-50",
+    "--amber-500",
+    "--amber-600",
+    "--amber-700",
+    "--appbar-bg",
+    "--appbar-border",
+    "--appbar-height",
+    "--appbar-height-ios",
+    "--badge-bg",
+    "--badge-text",
+    "--blue-100",
+    "--blue-50",
+    "--blue-500",
+    "--blue-600",
+    "--blue-700",
+    "--border-width-default",
+    "--border-width-focus",
+    "--bottomnav-bg",
+    "--bottomnav-height",
+    "--bottomnav-height-labeled",
+    "--bottomnav-icon",
+    "--bottomnav-icon-active",
+    "--button-height-lg",
+    "--button-height-md",
+    "--button-height-sm",
+    "--button-height-xs",
+    "--button-primary-bg",
+    "--button-primary-bg-active",
+    "--button-primary-text",
+    "--button-secondary-bg",
+    "--button-secondary-bg-active",
+    "--button-secondary-border",
+    "--button-secondary-text",
+    "--button-tertiary-bg-active",
+    "--button-tertiary-text",
+    "--card-bg",
+    "--card-border",
+    "--chip-bg",
+    "--chip-bg-selected",
+    "--chip-text",
+    "--chip-text-selected",
+    "--col-full",
+    "--col-half",
+    "--col-quarter",
+    "--col-three",
+    "--color-bg-canvas",
+    "--color-bg-error",
+    "--color-bg-info",
+    "--color-bg-inverse",
+    "--color-bg-main",
+    "--color-bg-scrim",
+    "--color-bg-success",
+    "--color-bg-surface",
+    "--color-bg-surface-sunken",
+    "--color-bg-warning",
+    "--color-border-default",
+    "--color-border-error",
+    "--color-border-info",
+    "--color-border-interactive",
+    "--color-border-muted",
+    "--color-border-strong",
+    "--color-border-success",
+    "--color-border-warning",
+    "--color-brand-interactive",
+    "--color-brand-primary",
+    "--color-brand-subtle",
+    "--color-focus-ring",
+    "--color-status-error",
+    "--color-status-info",
+    "--color-status-success",
+    "--color-status-warning",
+    "--color-text-accent",
+    "--color-text-disabled",
+    "--color-text-error",
+    "--color-text-info",
+    "--color-text-inverse",
+    "--color-text-on-brand",
+    "--color-text-primary",
+    "--color-text-secondary",
+    "--color-text-success",
+    "--color-text-tertiary",
+    "--color-text-warning",
+    "--content-width",
+    "--control-glow",
+    "--control-off-bg",
+    "--control-off-border",
+    "--control-on-bg",
+    "--control-on-mark",
+    "--duration-base",
+    "--duration-fast",
+    "--duration-instant",
+    "--duration-slow",
+    "--duration-slower",
+    "--ease-accelerate",
+    "--ease-decelerate",
+    "--ease-emphasized",
+    "--ease-standard",
+    "--elevation-card",
+    "--elevation-overlay",
+    "--elevation-raised",
+    "--elevation-sheet",
+    "--fab-bg",
+    "--fab-bg-active",
+    "--fab-icon",
+    "--focus-ring-offset",
+    "--font-family-base",
+    "--font-size-body",
+    "--font-size-body-lg",
+    "--font-size-body-sm",
+    "--font-size-body-xs",
+    "--font-size-caption",
+    "--font-size-display",
+    "--font-size-h1",
+    "--font-size-h2",
+    "--font-size-h3",
+    "--font-size-overline",
+    "--font-weight-bold",
+    "--font-weight-medium",
+    "--font-weight-regular",
+    "--font-weight-semibold",
+    "--gap-block",
+    "--gap-text",
+    "--gray-0",
+    "--gray-100",
+    "--gray-1000",
+    "--gray-200",
+    "--gray-300",
+    "--gray-400",
+    "--gray-50",
+    "--gray-500",
+    "--gray-600",
+    "--gray-700",
+    "--gray-800",
+    "--gray-900",
+    "--gray-950",
+    "--green-100",
+    "--green-50",
+    "--green-500",
+    "--green-600",
+    "--green-700",
+    "--grid-unit",
+    "--icon-lg",
+    "--icon-md",
+    "--icon-sm",
+    "--icon-xl",
+    "--icon-xs",
+    "--input-bg",
+    "--input-border",
+    "--input-border-error",
+    "--input-border-focus",
+    "--input-height-fixed",
+    "--input-height-floating",
+    "--input-helper",
+    "--input-label",
+    "--input-padding-x",
+    "--input-padding-y",
+    "--input-placeholder",
+    "--input-text",
+    "--layout-gutter",
+    "--layout-margin",
+    "--letter-spacing-normal",
+    "--letter-spacing-overline",
+    "--letter-spacing-tight",
+    "--line-height-body",
+    "--line-height-body-lg",
+    "--line-height-body-sm",
+    "--line-height-body-xs",
+    "--line-height-caption",
+    "--line-height-display",
+    "--line-height-h1",
+    "--line-height-h2",
+    "--line-height-h3",
+    "--line-height-overline",
+    "--overlay-hover-dark",
+    "--overlay-press-dark",
+    "--overlay-press-light",
+    "--press-scale",
+    "--radius-2xl",
+    "--radius-avatar",
+    "--radius-badge",
+    "--radius-button-sm",
+    "--radius-card",
+    "--radius-checkbox",
+    "--radius-dialog",
+    "--radius-full",
+    "--radius-input",
+    "--radius-lg",
+    "--radius-md",
+    "--radius-modal",
+    "--radius-pill",
+    "--radius-sheet",
+    "--radius-sm",
+    "--radius-tag",
+    "--radius-tooltip",
+    "--radius-xl",
+    "--radius-xs",
+    "--red-100",
+    "--red-50",
+    "--red-500",
+    "--red-600",
+    "--red-700",
+    "--row-height-compact",
+    "--row-height-icon",
+    "--row-height-multi",
+    "--row-height-two-line",
+    "--safe-bottom",
+    "--safe-top",
+    "--safe-top-ios",
+    "--screen-width",
+    "--shadow-lg",
+    "--shadow-md",
+    "--shadow-none",
+    "--shadow-sheet",
+    "--shadow-sm",
+    "--space-base",
+    "--space-lg",
+    "--space-md",
+    "--space-sm",
+    "--space-xl",
+    "--space-xs",
+    "--space-xxl",
+    "--space-xxs",
+    "--state-disabled-opacity",
+    "--text-body",
+    "--text-body-lg",
+    "--text-body-semibold",
+    "--text-body-sm",
+    "--text-body-xs",
+    "--text-caption",
+    "--text-display",
+    "--text-h1",
+    "--text-h2",
+    "--text-h3",
+    "--text-overline",
+    "--toast-bg",
+    "--toast-text",
+    "--tooltip-bg",
+    "--tooltip-text",
+    "--touch-target-min",
+    "--transition-colors",
+    "--transition-press",
+    "--transition-sheet"
+  ],
+  "themes": [],
+  "fonts": [],
+  "brandFonts": [
+    {
+      "family": "Plus Jakarta Sans",
+      "status": "ok",
+      "tokens": [
+        "--font-family-base"
+      ],
+      "path": "tokens/typography.css"
+    }
+  ],
+  "source": "spa",
+  "exportDate": "2026-09-12"
+}

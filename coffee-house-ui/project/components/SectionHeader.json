@@ -1,0 +1,70 @@
+{
+  "kind": "component",
+  "name": "SectionHeader",
+  "version": "2026-09-12",
+  "description": "Heading-3 label introducing a page section, with an optional right-aligned text action.",
+  "size": {
+    "width": "fill",
+    "height": "hug",
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "row",
+    "spacing": [
+      "--space-md"
+    ],
+    "padding": null,
+    "align": "center",
+    "justify": "between",
+    "scroll": "none",
+    "size": {
+      "width": "fill"
+    },
+    "children": [
+      {
+        "slot": "title",
+        "type": "text",
+        "content": "{title}",
+        "style": "--text-h3",
+        "color": "--color-text-primary",
+        "lines": 1,
+        "overflow": "clip",
+        "align": "start",
+        "transform": "none",
+        "size": {
+          "width": "fill"
+        }
+      },
+      {
+        "slot": "action",
+        "type": "text",
+        "content": "{action}",
+        "style": "--text-body",
+        "color": "--color-brand-primary",
+        "lines": 1,
+        "overflow": "clip",
+        "align": "start",
+        "transform": "none",
+        "size": {
+          "width": "fill"
+        }
+      }
+    ]
+  },
+  "variants": {
+    "action": {
+      "prop": "action",
+      "cases": {
+        "null": {
+          "action": {
+            "visible": false
+          }
+        }
+      }
+    }
+  },
+  "uses": [],
+  "notes": ""
+}

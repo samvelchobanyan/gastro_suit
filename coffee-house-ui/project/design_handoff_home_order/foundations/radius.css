@@ -1,0 +1,34 @@
+/* ============================================================
+   RADIUS TOKENS
+   ------------------------------------------------------------
+   Corner radii scale proportionally with element size
+   (spec: Rounding Rules). Part of the swappable brand layer —
+   a customer may dial the whole app rounder or sharper by
+   remapping these aliases.
+   ============================================================ */
+
+:root {
+
+  /* ---- Raw ramp ---- */
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-2xl:  32px;
+  --radius-full: 9999px;
+
+  /* ---- Semantic aliases (by component scale) ---- */
+  --radius-badge:     var(--radius-xs);   /* badges, checkboxes, stars */
+  --radius-checkbox:  var(--radius-xs);
+  --radius-tag:       var(--radius-sm);   /* tags, small buttons, thumbs */
+  --radius-button-sm: var(--radius-sm);
+  --radius-tooltip:   var(--radius-sm);
+  --radius-input:     var(--radius-md);   /* inputs, dialogs, cards */
+  --radius-dialog:    var(--radius-md);
+  --radius-card:      var(--radius-lg);
+  --radius-sheet:     var(--radius-xl);   /* bottom sheets, modals */
+  --radius-modal:     var(--radius-2xl);
+  --radius-pill:      var(--radius-full); /* pills, tabs, avatars */
+  --radius-avatar:    var(--radius-full);
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <style>
+    body { margin: 0; min-height: 100vh; box-sizing: border-box; padding: var(--space-lg) 0; background: var(--gray-100); font-family: "Plus Jakarta Sans", system-ui, sans-serif; display: flex; align-items: center; justify-content: center; }
+    a { color: var(--color-text-primary); } a:hover { color: var(--color-text-secondary); }
+  </style>
+</helmet>
+<div data-screen-label="Profile" style="width: 360px; height: 800px; background: var(--color-bg-surface); overflow: hidden; display: flex; flex-direction: column; flex: 0 0 auto; position: relative;">
+  <x-import component-from-global-scope="GastroDesignSystem_472aed.ScreenHeader" title="Profile" hint-size="100%,56px"></x-import>
+  <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none;">
+    <div style="padding: 0 var(--space-base);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.UserProfile" name="Aram" surname="Shahinyan" avatar-url="uploads/OGLfuz%20400x400.jpg" phone="+374 91 234 567" on-edit="{{ goEdit }}" hint-size="100%,80px"></x-import>
+      <div style="padding-top: var(--space-base);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.UserStatus" status="Bronze" illustration="uploads/membership_bronze.png" on-action="{{ goMembership }}" hint-size="100%,72px"></x-import>
+      </div>
+      <div style="padding-top: var(--space-base);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Invite" description="and get loyalty points" illustration="uploads/invite_friend.png" on-action="{{ goInvite }}" hint-size="100%,72px"></x-import>
+      </div>
+      <div style="margin: var(--space-base) 0; display: flex; flex-direction: column; background: var(--color-bg-main); border: 1px solid var(--color-border-muted); border-radius: var(--radius-md); overflow: hidden;">
+        <sc-for list="{{ listItems }}" as="it" hint-placeholder-count="4">
+          <sc-if value="{{ it.divider }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" inset="{{ 56 }}" hint-size="100%,1px"></x-import>
+          </sc-if>
+          <x-import component-from-global-scope="GastroDesignSystem_472aed.AdvancedListItem" title="{{ it.title }}" subtitle="{{ it.subtitle }}" leading-icon="{{ it.icon }}" chevron="{{ true }}" on-click="{{ it.onClick }}" hint-size="100%,72px"></x-import>
+        </sc-for>
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" inset="{{ 56 }}" hint-size="100%,1px"></x-import>
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.AdvancedListItem" title="Push notifications" leading-icon="bell" trailing="{{ pushToggle }}" hint-size="100%,56px"></x-import>
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" inset="{{ 56 }}" hint-size="100%,1px"></x-import>
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.AdvancedListItem" title="Geolocation" leading-icon="map-pin" trailing="{{ geoToggle }}" hint-size="100%,56px"></x-import>
+      </div>
+      <div style="padding-bottom: var(--space-sm);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Language" hint-size="100%,28px"></x-import>
+      </div>
+      <div style="display: flex; gap: var(--space-sm); padding-bottom: var(--space-base);">
+        <sc-for list="{{ languages }}" as="l" hint-placeholder-count="3">
+          <div style="flex: 1; min-width: 0; display: flex;">
+            <x-import component-from-global-scope="GastroDesignSystem_472aed.LanguageSwitcher" label="{{ l.label }}" country-code="{{ l.code }}" selected="{{ l.selected }}" on-click="{{ l.select }}" hint-size="100%,48px"></x-import>
+          </div>
+        </sc-for>
+      </div>
+      <div style="padding-bottom: var(--space-sm);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Danger zone" hint-size="100%,28px"></x-import>
+      </div>
+      <div style="margin-bottom: var(--space-base); display: flex; flex-direction: column; background: var(--color-bg-main); border: 1px solid var(--color-border-muted); border-radius: var(--radius-md); overflow: hidden;">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.AdvancedListItem" title="Logout" leading-icon="sign-out" chevron="{{ true }}" hint-size="100%,56px"></x-import>
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" inset="{{ 56 }}" hint-size="100%,1px"></x-import>
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.AdvancedListItem" title="Delete account" leading-icon="trash" chevron="{{ true }}" hint-size="100%,56px"></x-import>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-sm); padding: var(--space-sm) 0 var(--space-lg); font-family: var(--font-family-base);">
+        <a href="#" style="font-size: var(--font-size-body); line-height: var(--line-height-body); font-weight: var(--font-weight-regular); color: var(--color-text-secondary); text-decoration: underline;">Terms &amp; conditions</a>
+        <a href="#" style="font-size: var(--font-size-body); line-height: var(--line-height-body); font-weight: var(--font-weight-regular); color: var(--color-text-secondary); text-decoration: underline;">About developer</a>
+      </div>
+    </div>
+  </div>
+  <div style="padding: var(--space-sm) var(--space-base) calc(var(--space-sm) + env(safe-area-inset-bottom, 0px)); background: var(--color-bg-surface); border-top: 1px solid var(--color-border-muted);">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.BottomNavigation" items="{{ navItems }}" active-key="profile" on-change="{{ setNav }}" hint-size="100%,56px"></x-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:800}}">
+class Component extends DCLogic {
+  renderVals() {
+    const noop = () => {};
+    const lang = (this.state && this.state.lang) || 'en';
+    const Toggle = window.GastroDesignSystem_472aed && window.GastroDesignSystem_472aed.Toggle;
+    const st = this.state || {};
+    const push = st.push ?? true;
+    const geo = st.geo ?? false;
+    return {
+      goInvite: () => { window.location.href = 'InviteFriend.dc.html'; },
+      goMembership: () => { window.location.href = 'MembershipListing.dc.html'; },
+      goEdit: () => { window.location.href = 'EditProfile.dc.html'; },
+      pushToggle: Toggle ? React.createElement(Toggle, { checked: push, onChange: (v) => this.setState({ push: v }) }) : null,
+      geoToggle: Toggle ? React.createElement(Toggle, { checked: geo, onChange: (v) => this.setState({ geo: v }) }) : null,
+      languages: [
+        { key: 'hy', label: 'Armenian', code: 'am' },
+        { key: 'ru', label: 'Russian', code: 'ru' },
+        { key: 'en', label: 'English', code: 'gb' },
+      ].map(l => ({ ...l, selected: l.key === lang, select: () => this.setState({ lang: l.key }) })),
+      listItems: [
+        { title: 'Bank cards', subtitle: '**** 4556', icon: 'credit-card', onClick: () => { window.location.href = 'BankCards.dc.html'; } },
+        { title: 'History', subtitle: 'Your orders and transactions', icon: 'receipt', onClick: () => { window.location.href = 'History.dc.html'; } },
+        { title: 'Favorite products', subtitle: '5 products', icon: 'heart', onClick: () => { window.location.href = 'FavoriteProducts.dc.html'; } },
+        { title: 'Default branch', subtitle: 'Northern Avenue · 08:00–22:00', icon: 'storefront', onClick: () => { window.location.href = 'DefaultBranch.dc.html'; } },
+      ].map((it, i) => ({ ...it, divider: i > 0 })),
+      navItems: [
+        { key: 'home', icon: 'house', label: 'Home' },
+        { key: 'order', icon: 'coffee', label: 'Order' },
+        { key: 'gifts', icon: 'gift', label: 'Gifts' },
+        { key: 'profile', icon: 'user', label: 'Profile' },
+      ],
+      setNav: (k) => {
+        const routes = { home: 'Home.dc.html', order: 'Order.dc.html', gifts: 'Gifts.dc.html' };
+        if (routes[k]) window.location.href = routes[k];
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

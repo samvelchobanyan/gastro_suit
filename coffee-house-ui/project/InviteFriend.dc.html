@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <style>
+    body { margin: 0; min-height: 100vh; box-sizing: border-box; padding: var(--space-lg) 0; background: var(--gray-100); font-family: "Plus Jakarta Sans", system-ui, sans-serif; display: flex; align-items: center; justify-content: center; }
+    a { color: var(--color-text-primary); } a:hover { color: var(--color-text-secondary); }
+  </style>
+</helmet>
+<div data-screen-label="Invite friend" style="width: 360px; height: 800px; background: var(--color-bg-surface); overflow: hidden; display: flex; flex-direction: column; flex: 0 0 auto; position: relative;">
+  <x-import component-from-global-scope="GastroDesignSystem_472aed.ScreenHeader" title="Invite a friend" on-back="{{ goBack }}" hint-size="100%,56px"></x-import>
+  <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 0 var(--space-base) var(--space-base);">
+    <div style="display: flex; flex-direction: column; gap: var(--space-sm); padding: var(--space-base); border-radius: var(--radius-md); background: var(--gray-900); font-family: var(--font-family-base);">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-md); margin-bottom: var(--space-xs); text-align: center;">
+        <img src="uploads/invite_friend.png" alt="" style="width: 96px; height: 96px; object-fit: contain; flex: 0 0 auto; display: block;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-sm);">
+          <span style="font: var(--text-body-lg-semibold); color: var(--gray-0);">Invite your friend</span>
+          <span style="font-size: var(--font-size-body); line-height: var(--line-height-body); font-weight: var(--font-weight-regular); color: var(--gray-500); text-wrap: pretty;">Enter your friend's mobile phone number. When they register and make their first purchase, you'll both get 5000 loyalty points.</span>
+        </div>
+      </div>
+      <div style="position: relative;">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Input" type="tel" value="{{ phone }}" on-change="{{ setPhone }}" placeholder="+374" leading-icon="phone" hint-size="100%,40px"></x-import>
+        <sc-if value="{{ hasPhone }}" hint-placeholder-val="{{ false }}">
+          <button type="button" aria-label="Clear phone number" onClick="{{ clearPhone }}" style="position: absolute; top: 50%; right: var(--space-xs); transform: translateY(-50%); width: 32px; height: 32px; padding: 0; border: none; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--color-text-tertiary);"><i class="ph ph-x" style="font-size: var(--icon-sm);"></i></button>
+        </sc-if>
+      </div>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Button" variant="primary" size="sm" full-width="{{ true }}" disabled="{{ inviteDisabled }}" on-click="{{ invite }}" hint-size="100%,40px">{{ inviteLabel }}</x-import>
+    </div>
+  </div>
+  <dc-import name="InviteSuccess" visible="{{ sent }}" hint-size="360px,800px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:800}}">
+class Component extends DCLogic {
+  state = { phone: '', sent: null };
+  renderVals() {
+    const s = this.state;
+    const sent = !!s.sent && s.sent === s.phone;
+    return {
+      goBack: () => { window.location.href = 'Profile.dc.html'; },
+      phone: s.phone ? '+374 ' + s.phone : '',
+      setPhone: (v) => {
+        let t = String(v && v.target ? v.target.value : v);
+        t = t.startsWith('+374') ? t.slice(4) : t;
+        this.setState({ phone: t.replace(/\D/g, '').slice(0, 8) });
+      },
+      hasPhone: s.phone.length > 0,
+      clearPhone: () => this.setState({ phone: '', sent: null }),
+      inviteDisabled: s.phone.length < 8 || sent,
+      inviteLabel: sent ? 'Invitation sent' : 'Invite',
+      invite: () => this.setState({ sent: s.phone }),
+      sent,
+    };
+  }
+}
+</script>
+</body>
+</html>

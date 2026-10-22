@@ -1,0 +1,127 @@
+{
+  "kind": "component",
+  "name": "IconButton",
+  "version": "2026-09-12",
+  "description": "Icon-only tappable control inside a circular hit target.",
+  "size": {
+    "width": 40,
+    "height": 40,
+    "maxWidth": null
+  },
+  "surface": null,
+  "tree": {
+    "slot": "root",
+    "type": "box",
+    "size": [
+      40,
+      40
+    ],
+    "background": "--button-primary-bg",
+    "radius": "--radius-full",
+    "border": null,
+    "padding": null,
+    "child": {
+      "slot": "root.icon",
+      "type": "icon",
+      "name": "{icon}",
+      "weight": "regular",
+      "size": "--icon-sm",
+      "color": "--button-primary-text"
+    }
+  },
+  "variants": {
+    "size": {
+      "prop": "size",
+      "cases": {
+        "xxs": {
+          "root": {
+            "size": [
+              24,
+              24
+            ]
+          },
+          "root.icon": {
+            "size": "--icon-xs"
+          }
+        },
+        "xs": {
+          "root": {
+            "size": [
+              28,
+              28
+            ]
+          },
+          "root.icon": {
+            "size": "--icon-xs"
+          }
+        },
+        "sm": {
+          "root": {
+            "size": [
+              40,
+              40
+            ]
+          },
+          "root.icon": {
+            "size": "--icon-sm"
+          }
+        },
+        "md": {
+          "root": {
+            "size": [
+              48,
+              48
+            ]
+          },
+          "root.icon": {
+            "size": "--icon-md"
+          }
+        },
+        "lg": {
+          "root": {
+            "size": [
+              56,
+              56
+            ]
+          },
+          "root.icon": {
+            "size": "--icon-md"
+          }
+        }
+      }
+    },
+    "variant": {
+      "prop": "variant",
+      "cases": {
+        "ghost": {
+          "root": {
+            "background": "transparent"
+          },
+          "root.icon": {
+            "color": "--color-text-primary"
+          }
+        },
+        "tonal": {
+          "root": {
+            "background": "--color-brand-subtle"
+          },
+          "root.icon": {
+            "color": "--color-text-accent"
+          }
+        }
+      }
+    },
+    "disabled": {
+      "prop": "disabled",
+      "cases": {
+        "true": {
+          "root": {
+            "opacity": "--state-disabled-opacity"
+          }
+        }
+      }
+    }
+  },
+  "uses": [],
+  "notes": "Sizes exported here are the used tokens (sm/xs); opacity value uses the disabled-state token, no numeric override."
+}
