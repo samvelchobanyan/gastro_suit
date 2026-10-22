@@ -27,7 +27,15 @@ You (Claude Code) act as the implementation agent.
 
 ## 2. Knowledge base
 
-Location: **`C:\knowledge\flutter-kb\`** — a separate repository.
+A separate repository: **`samvelchobanyan/flutter-kb`**.
+
+- Local session: **`C:\knowledge\flutter-kb\`**
+- Cloud session: the `flutter-kb` clone attached to the session (find it next to this
+  repository). If it is not attached, say so before architectural work — do not proceed
+  without the wiki.
+
+Paths below are relative to the knowledge base root. In a cloud session, commit and push
+`log.md` changes to `flutter-kb` at the end of the work.
 
 You must:
 - Read `index.md` before architectural work, then the relevant pages
@@ -131,7 +139,7 @@ to it; no match → log as new.
 
 ### 7.4 Log entry
 
-Append to the end of `C:\knowledge\flutter-kb\log.md`:
+Append to the end of `log.md` in the knowledge base (Section 2):
 
 ```
 ## [YYYY-MM-DD] candidate | GastroSuit | <topic>
