@@ -1,0 +1,53 @@
+# Publishes the Claude Design prototype (coffee-house-ui/project) to GitHub Pages,
+# so the design can be viewed online. Old export snapshots are left out.
+name: Design preview
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "coffee-house-ui/project/**"
+      - ".github/workflows/design-preview.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build site
+        run: |
+          rsync -a \
+            --exclude 'export/' \
+            --exclude 'handover/' \
+            --exclude 'design_handoff_home_order/' \
+            --exclude 'Home Screen.html' \
+            --exclude 'Order Screen.html' \
+            coffee-house-ui/project/ _site/
+          cat > _site/index.html <<'HTML'
+          <!doctype html>
+          <meta charset="utf-8">
+          <meta http-equiv="refresh" content="0; url=Home.dc.html">
+          <title>Design preview</title>
+          <a href="Home.dc.html">Open Home</a>
+          HTML
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
