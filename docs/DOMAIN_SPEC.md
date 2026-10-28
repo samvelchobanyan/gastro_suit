@@ -38,7 +38,8 @@ A product exists only within a branch menu; buying is always a product at a bran
 ### 2.2 Composition
 
 **Product** (entity)
-- identity, category (exactly one), name, description, image
+- identity, category (exactly one), name
+- description and image, both optional
 - price — the base price; for a product with sizes, the price of the smallest size
 - availability at the branch
 - portion — amount and unit (e.g. 300 ml), optional
@@ -67,8 +68,6 @@ A product exists only within a branch menu; buying is always a product at a bran
 - A group is required when its minimum is at least 1, and single-choice when its maximum
   is 1. A group is paid when any of its options has a surcharge.
 - An option is selected at most once; there is no quantity per option.
-- A feature of the product screen exists only when its data does: no sizes, no portion,
-  no nutrition, no description — no corresponding block.
 - Favourites are not part of the product: they are the user's set of product ids,
   resolved against the loaded menu.
 
