@@ -3,7 +3,7 @@
 | Document | Defines | Status |
 |---|---|---|
 | `ARCHITECTURE_SPEC.md` | Structure, layers, how they interact | Canonical |
-| `DOMAIN_SPEC.md` | Domain entities: meaning, relationships, invariants | To be written (from API, screens, business rules) |
+| `DOMAIN_SPEC.md` | Domain entities: meaning, relationships, invariants | In progress: Product |
 | `SCREENS_SPEC.md` | Screen inventory: purpose and behaviour | To be written (from the design handoff) |
 | `API_SPEC.md` | Backend endpoints, auth, error format, localization | To be written (from Swagger / Postman) |
 | `DESIGN_SYSTEM.md` | Tokens, theme, brand layer, typography usage | To be written (from the design handoff) |
