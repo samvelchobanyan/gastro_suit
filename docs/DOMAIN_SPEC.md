@@ -87,3 +87,52 @@ product is added to the cart.
 - Portion per size (the API has one portion per product).
 - A fixed shape for nutrition and ingredients (both are free-form POS objects).
 - A product in more than one category (the API allows one).
+
+---
+
+## 3. Menu
+
+**Menu** (value) — what one branch offers: its categories and products. A menu is
+identified by its branch and has no life of its own.
+
+- Categories form at most two levels (category → subcategory). Each product belongs to
+  exactly one category.
+- Several menus may be loaded at once: the active branch's menu and the menu of a branch
+  the user is browsing.
+
+---
+
+## 4. Branches
+
+### 4.1 Default and active branch
+
+- The **default branch** is a user setting stored on the server (part of the profile).
+  It changes only in the settings.
+- The **active branch** is the branch the application works with: its menu is shown,
+  the cart belongs to it and orders are placed in it. There is always an active branch.
+- On start the active branch is the default branch. How it is chosen when there is no
+  default branch is decided later.
+- The active branch changes when the user:
+  - picks a branch in the menu screen's branch bar;
+  - picks a branch in the cart;
+  - uses "Buy again" on a purchase from another branch (the active branch becomes the
+    branch of that purchase);
+  - adds a product from a branch page.
+- Browsing a branch page shows that branch's menu and does not change the active branch.
+  Only adding a product from it does.
+- Changing the active branch does not change the default branch.
+
+### 4.2 On a change of the active branch
+
+- The active menu is reloaded for the new branch.
+- The cart moves to the new branch: its lines stay, prices and availability are checked
+  again, and lines unavailable there are marked, not removed.
+
+### 4.3 Open questions
+
+- Whether changing the default branch in the settings also changes the active branch.
+- Whether moving a non-empty cart asks the user to confirm.
+- What happens to the cart until the backend can move it between branches (today it is
+  cleared).
+- A non-empty cart left in another branch when the application starts again.
+- A change of organisation (multi-concept): loyalty and wallet are per organisation.
