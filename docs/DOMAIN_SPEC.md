@@ -1,6 +1,6 @@
 # GastroSuit — Domain Specification
 
-Status: in progress · 2026-10-28
+Status: in progress · 2026-10-29
 
 ## 0. About this document
 
@@ -19,23 +19,14 @@ owned), `API_SPEC.md` (the wire format).
 
 ---
 
-## 1. Language of content
+## 1. Product
 
-Entities hold plain strings in the current application language. Text is resolved when
-an API response is mapped: the current language, else the default language from the
-instance configuration, else the POS name. A change of language reloads the data that
-carries text. Past orders keep the language they were placed in.
-
----
-
-## 2. Product
-
-### 2.1 Meaning
+### 1.1 Meaning
 
 A product is an item that can be ordered, as it is offered in the menu of one branch.
 A product exists only within a branch menu; buying is always a product at a branch.
 
-### 2.2 Composition
+### 1.2 Composition
 
 **Product** (entity)
 - identity, category (exactly one), name
@@ -59,7 +50,7 @@ A product exists only within a branch menu; buying is always a product at a bran
 **ProductOption** (value, part of a group) — one answer to that question
 - identity, name, surcharge (0 means free), availability, whether it is pre-selected
 
-### 2.3 Rules
+### 1.3 Rules
 
 - A product with sizes always has exactly one default size: the one the API marks, else
   the smallest. Sizes are ordered from the cheapest.
@@ -71,7 +62,7 @@ A product exists only within a branch menu; buying is always a product at a bran
 - Favourites are not part of the product: they are the user's set of product ids,
   resolved against the loaded menu.
 
-### 2.4 Related values
+### 1.4 Related values
 
 **ProductChoice** (value) — what was chosen: the product (id and name), the size if
 any, the chosen options (each with its group, name and surcharge). It is part of a cart
@@ -81,7 +72,7 @@ The choice being assembled on the product screen is screen state. It works again
 full product (groups, limits, availability) and becomes a `ProductChoice` when the
 product is added to the cart.
 
-### 2.5 Open questions for the backend
+### 1.5 Open questions for the backend
 
 - Quantity per add-on (shown in the design, not supported by the API).
 - Portion per size (the API has one portion per product).
@@ -90,7 +81,7 @@ product is added to the cart.
 
 ---
 
-## 3. Menu
+## 2. Menu
 
 **Menu** (value) — what one branch offers: its categories and products. A menu is
 identified by its branch and has no life of its own.
@@ -102,37 +93,6 @@ identified by its branch and has no life of its own.
 
 ---
 
-## 4. Branches
+## 3. Branch
 
-### 4.1 Default and active branch
-
-- The **default branch** is a user setting stored on the server (part of the profile).
-  It changes only in the settings.
-- The **active branch** is the branch the application works with: its menu is shown,
-  the cart belongs to it and orders are placed in it. There is always an active branch.
-- On start the active branch is the default branch. How it is chosen when there is no
-  default branch is decided later.
-- The active branch changes when the user:
-  - picks a branch in the menu screen's branch bar;
-  - picks a branch in the cart;
-  - uses "Buy again" on a purchase from another branch (the active branch becomes the
-    branch of that purchase);
-  - adds a product from a branch page.
-- Browsing a branch page shows that branch's menu and does not change the active branch.
-  Only adding a product from it does.
-- Changing the active branch does not change the default branch.
-
-### 4.2 On a change of the active branch
-
-- The active menu is reloaded for the new branch.
-- The cart moves to the new branch: its lines stay, prices and availability are checked
-  again, and lines unavailable there are marked, not removed.
-
-### 4.3 Open questions
-
-- Whether changing the default branch in the settings also changes the active branch.
-- Whether moving a non-empty cart asks the user to confirm.
-- What happens to the cart until the backend can move it between branches (today it is
-  cleared).
-- A non-empty cart left in another branch when the application starts again.
-- A change of organisation (multi-concept): loyalty and wallet are per organisation.
+To be written: the branch entity (composition and rules).

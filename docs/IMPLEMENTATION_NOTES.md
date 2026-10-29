@@ -78,7 +78,41 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - Open (screen behaviour): unavailable product or option, duplicates in one branch,
   which price to show.
 
-## 7. Menu state — agreed in principle, details with the implementation agent
+## 7. Default and active branch — agreed
+
+
+- The **default branch** is a user setting stored on the server (part of the profile).
+  It changes only in the settings.
+- The **active branch** is the branch the application works with: its menu is shown,
+  the cart belongs to it and orders are placed in it. There is always an active branch.
+- On start the active branch is the default branch. How it is chosen when there is no
+  default branch is decided later.
+- The active branch changes when the user:
+  - picks a branch in the menu screen's branch bar;
+  - picks a branch in the cart;
+  - uses "Buy again" on a purchase from another branch (the active branch becomes the
+    branch of that purchase);
+  - adds a product from a branch page.
+- Browsing a branch page shows that branch's menu and does not change the active branch.
+  Only adding a product from it does.
+- Changing the active branch does not change the default branch.
+
+**On a change of the active branch**
+
+- The active menu is reloaded for the new branch.
+- The cart moves to the new branch: its lines stay, prices and availability are checked
+  again, and lines unavailable there are marked, not removed.
+
+**Open questions**
+
+- Whether changing the default branch in the settings also changes the active branch.
+- Whether moving a non-empty cart asks the user to confirm.
+- What happens to the cart until the backend can move it between branches (today it is
+  cleared).
+- A non-empty cart left in another branch when the application starts again.
+- A change of organisation (multi-concept): loyalty and wallet are per organisation.
+
+## 8. Menu state — agreed in principle, details with the implementation agent
 
 - `Menu` value class: branch id, categories (two levels), products; helpers such as
   product by id, products of a category, featured products.
@@ -94,7 +128,7 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   The active menu then reuses the menu the branch page already loaded.
 - Default branch: `profile.preferredLocationId`. Active branch starts from it.
 
-## 8. Riverpod — proposed
+## 9. Riverpod — proposed
 
 - Current Riverpod (3.x): family arguments arrive through the notifier's constructor.
 - Load data with `AsyncNotifier` (`AsyncValue` loading / data / error, async `build`)
@@ -105,7 +139,7 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - go_sport precedent for a shared parametrised provider: `scheduleControllerProvider`
   (family by date, three consumers).
 
-## 9. Questions for the backend
+## 10. Questions for the backend
 
 - Move the cart between branches: keep the lines, re-price, mark what is unavailable
   (`available` / `unavailableReason` already exist) instead of clearing it.
