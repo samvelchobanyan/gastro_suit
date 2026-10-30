@@ -9,6 +9,7 @@
 | `DESIGN_SYSTEM.md` | Tokens, theme, brand layer, typography usage | To be written (from the design handoff) |
 | `BUNDLE.md` | How to read the design handoff | To be written |
 | `IMPLEMENTATION_NOTES.md` | Implementation details agreed in architecture sessions, to start development from | Working notes |
+| `DESIGN_PRODUCT_QUESTIONS.md` | Open behaviour questions for the designer and the product owner | Open list |
 | `guestpilot-api.swagger.json` | Backend OpenAPI export | Reference |
 | `design_export/FORMAT.md` | JSON export format agreed with the design team | Carried over; check against the new handoff |
 | `design_export/PROMPT.md` | Prompts for exporting from Claude Design | Carried over |
