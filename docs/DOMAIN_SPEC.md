@@ -1,6 +1,6 @@
 # GastroSuit — Domain Specification
 
-Status: in progress · 2026-10-29
+Status: in progress · 2026-10-30
 
 ## 0. About this document
 
@@ -62,17 +62,7 @@ A product exists only within a branch menu; buying is always a product at a bran
 - Favourites are not part of the product: they are the user's set of product ids,
   resolved against the loaded menu.
 
-### 1.4 Related values
-
-**ProductChoice** (value) — what was chosen: the product (id and name), the size if
-any, the chosen options (each with its group, name and surcharge). It is part of a cart
-line and of an order line, and is what "Buy again" re-adds to the cart.
-
-The choice being assembled on the product screen is screen state. It works against the
-full product (groups, limits, availability) and becomes a `ProductChoice` when the
-product is added to the cart.
-
-### 1.5 Open questions for the backend
+### 1.4 Open questions for the backend
 
 - Quantity per add-on (shown in the design, not supported by the API).
 - Portion per size (the API has one portion per product).
@@ -96,3 +86,51 @@ identified by its branch and has no life of its own.
 ## 3. Branch
 
 To be written: the branch entity (composition and rules).
+
+---
+
+## 4. ProductChoice
+
+**ProductChoice** (value) — what was chosen for one product: the product (id and name),
+the size if any, and the chosen add-ons. Each chosen add-on: id, group id, name,
+surcharge.
+
+- It groups the "what was chosen" fields that a cart line and an order line share, and
+  is what "Buy again" re-adds to the cart.
+- Two choices are equal when the product, the size and the add-ons are equal.
+- It carries no quantity and no line prices; those belong to the line that holds it.
+
+---
+
+## 5. Cart
+
+### 5.1 Meaning
+
+The cart is what the user is about to order. Each user has one cart; it lives on the
+server and belongs to one branch, the active branch.
+
+### 5.2 Composition
+
+**Cart** (entity, one per user)
+- identity (absent while the server holds no cart yet), branch, lines, total
+- computed: whether it is empty, the number of items (sum of quantities), whether any
+  line is unavailable
+
+**CartLine** (part of a cart)
+- identity of the line (used to change its quantity or remove it), the `ProductChoice`,
+  image, quantity, unit price (with add-ons), line total
+- availability at the cart's branch and, when unavailable, the reason
+
+### 5.3 Rules
+
+- Adding sends the choice, the quantity (1 by default) and the branch. The server prices
+  the line; prices are never sent.
+- Adding a choice already in the cart increases that line's quantity instead of creating
+  a second line.
+- A line's choice does not change; only its quantity does. Changing the choice replaces
+  the line.
+- Prices and availability in the cart are the server's, re-checked on every read. Every
+  change returns the whole cart, which replaces the one held.
+- An order cannot be placed while any line is unavailable.
+- The cart moves with the active branch (see `IMPLEMENTATION_NOTES.md`, default and
+  active branch).
