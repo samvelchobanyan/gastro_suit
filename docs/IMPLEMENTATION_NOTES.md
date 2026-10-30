@@ -96,6 +96,8 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - Browsing a branch page shows that branch's menu and does not change the active branch.
   Only adding a product from it does.
 - Changing the active branch does not change the default branch.
+- Changing the default branch in the settings also makes it the active branch when the
+  cart is empty; with a non-empty cart the active branch stays (to confirm with design).
 
 **On a change of the active branch**
 
@@ -105,8 +107,7 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 
 **Open questions**
 
-- Whether changing the default branch in the settings also changes the active branch.
-- Whether moving a non-empty cart asks the user to confirm.
+- Whether moving a non-empty cart asks the user to confirm (design question).
 - What happens to the cart until the backend can move it between branches (today it is
   cleared).
 - A non-empty cart left in another branch when the application starts again.
@@ -145,9 +146,16 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   (`available` / `unavailableReason` already exist) instead of clearing it.
 - Return the user's cart without a branch, with the branch it is in (needed to restore
   the active branch on start).
-- Quantity per add-on (`restrictions` on options exist in the POS data and are ignored).
-- Portion per size.
-- A fixed shape for `nutritionalInfo` and `ingredients`.
-- A product in more than one category.
+- Quantity per add-on: the design has steppers on add-ons; the API selects an option at
+  most once (`restrictions` on options exist in the POS data and are ignored).
+- Portion per size: the design shows the portion next to the price and it should follow
+  the chosen size; the API has one portion per product.
+- A fixed shape for `nutritionalInfo` (the design shows calories, proteins, fats,
+  carbohydrates) and `ingredients`.
+- A product in more than one category (e.g. an iced latte under both "Iced Coffee" and
+  "Iced Drinks"); the API allows one.
+- Data for the "Anything else?" rail on the product screen (no endpoint yet).
+- An image on order lines (history rows show one; today it can only come from the
+  current menu).
 - `docs/mobile/FLOWS.md` is referenced by the Swagger and the collection but is not in
   the repository.
