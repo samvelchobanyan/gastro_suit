@@ -85,7 +85,32 @@ identified by its branch and has no life of its own.
 
 ## 3. Branch
 
-To be written: the branch entity (composition and rules).
+### 3.1 Meaning
+
+A branch is a place of the restaurant or coffee chain where the user picks up an order.
+Each branch has its own menu (prices and availability).
+
+### 3.2 Composition
+
+**Branch** (entity)
+- identity, name
+- description and photo, both optional
+- address; city and district, optional (used to filter the list)
+- coordinates, optional (map, distance to the user)
+- time zone, optional (the device's time is used without it)
+- opening hours for the week: per day an opening and a closing time; a missing day is a
+  day off; absent altogether when the hours are unknown
+- rating: average and number of ratings, optional
+- whether it accepts tips
+
+### 3.3 Rules
+
+- Working hours for a day and whether the branch is open are computed for a given moment
+  on the branch's own clock. A window whose closing time is earlier than its opening time
+  runs past midnight, so the previous day's window counts in the early hours.
+- Distance is not part of the branch: it depends on where the user is.
+- Ordering availability (taking orders, from the app, temporarily closed, ordering hours)
+  is pending the design (`DESIGN_PRODUCT_QUESTIONS.md`).
 
 ---
 

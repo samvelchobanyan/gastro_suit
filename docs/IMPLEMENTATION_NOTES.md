@@ -140,7 +140,7 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - go_sport precedent for a shared parametrised provider: `scheduleControllerProvider`
   (family by date, three consumers).
 
-## 10. Branches: hours, distance, order — agreed
+## 10. Branches: hours, distance, order — agreed (sorting open)
 
 - Branches are loaded once (all of them) and refreshed on resume (§11) and by
   pull-to-refresh. Filters (city, district) work on the loaded list.
@@ -157,10 +157,11 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   - Branch methods take `now` explicitly: `workingHoursOn(now)`, `isOpenAt(now)`.
   - The value is computed when a screen builds; no ticker, it does not change on screen
     by itself.
-- Distance and sorting are computed in the app from the branch coordinates and the
-  user's current position; the API's `lat`/`lng` sorting and `distanceKm` are not used.
-  Without a position: the API order (the admin's order). Branches without coordinates go
-  last in API order.
+- Distance and sorting by distance: decide during implementation — in the app (from the
+  branch coordinates and the user's position; the list has no pagination, all branches
+  come at once) or by the API (`lat`/`lng`, `distanceKm`). Either way distance lives in
+  the list state, not in `Branch`. Without a position: the API order (the admin's
+  order).
 
 ## 11. Refresh on resume — agreed, details with the implementation agent
 
