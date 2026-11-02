@@ -140,7 +140,41 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - go_sport precedent for a shared parametrised provider: `scheduleControllerProvider`
   (family by date, three consumers).
 
-## 10. Questions for the backend
+## 10. Branches: hours, distance, order — agreed
+
+- Branches are loaded once (all of them) and refreshed on resume (§11) and by
+  pull-to-refresh. Filters (city, district) work on the loaded list.
+- "Open now" and today's working hours are computed in the app from `openingHours` and
+  the branch `timezone`; the API's `today` / `openNow` are not used.
+  - `openingHours` shape (backend `src/shared/utils/opening-hours.util.ts`):
+    `{ mon: { open: "08:00", close: "22:00" }, … }`; a missing day is a day off; `null`
+    means unknown hours. The legacy form `"08:00-22:00"` per day may still occur.
+  - "Now" is converted to the branch's time zone (`timezone` package; load the time zone
+    database once at start). No `timezone` → the device's time.
+  - A window with `close` earlier than `open` runs past midnight: at 01:10 on Tuesday the
+    branch is open on Monday's window. Check today's window and yesterday's. Reference:
+    backend `todayHoursOf` in `src/shared/utils/location-card.util.ts`.
+  - Branch methods take `now` explicitly: `workingHoursOn(now)`, `isOpenAt(now)`.
+  - The value is computed when a screen builds; no ticker, it does not change on screen
+    by itself.
+- Distance and sorting are computed in the app from the branch coordinates and the
+  user's current position; the API's `lat`/`lng` sorting and `distanceKm` are not used.
+  Without a position: the API order (the admin's order). Branches without coordinates go
+  last in API order.
+
+## 11. Refresh on resume — agreed, details with the implementation agent
+
+- When the app returns from the background after more than 5 minutes (value to tune),
+  shared data is refreshed: branches, the active menu, the cart (later: loyalty,
+  wallet).
+- Refresh is silent: data already on screen stays, the request runs in the background,
+  new data replaces old when it arrives; on failure the old data stays and no error is
+  shown. Only a first load shows a loading state or an error.
+- Riverpod: re-running an `AsyncNotifier` keeps the previous value (`isRefreshing`);
+  screens do not hide data that is already shown.
+- After a cold start everything loads as on first start.
+
+## 12. Questions for the backend
 
 - Move the cart between branches: keep the lines, re-price, mark what is unavailable
   (`available` / `unavailableReason` already exist) instead of clearing it.

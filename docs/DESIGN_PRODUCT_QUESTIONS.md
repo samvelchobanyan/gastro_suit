@@ -52,3 +52,9 @@ for an order and its status (the PRD has "order & status").
 ### 9. Viewing an order with several products
 History shows one product per row. There is no way to open an order and see all its
 products, the pickup branch and time, and the amounts.
+
+### 10. Branch open but not taking orders
+The PRD asks to show the guest a branch's ordering availability (active / ordering off /
+temporarily closed). The design shows only open / closed. How a branch that is open but
+does not take orders (or not from the app, or outside ordering hours) is shown in the
+list, on its page and in the cart.
