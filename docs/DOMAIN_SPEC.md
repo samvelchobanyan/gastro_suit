@@ -159,3 +159,30 @@ server and belongs to one branch, the active branch.
 - An order cannot be placed while any line is unavailable.
 - The cart moves with the active branch (see `IMPLEMENTATION_NOTES.md`, default and
   active branch).
+
+---
+
+## 6. Story
+
+### 6.1 Meaning
+
+A story is a short sequence of pictures the restaurant shows on the home screen, with an
+optional button that leads into the app or to a web page.
+
+### 6.2 Composition
+
+**Story** (entity)
+- identity, title (optional), cover image, slides (pictures in order, at least one)
+- link — where its button leads (optional: no link, no button)
+- whether the user has seen it
+
+**AppLink** (value) — where a tap leads: a type (product, menu category, web address)
+and its target (the product id, the category id or the address). The type and the
+target exist only together. Shared with banners.
+
+### 6.3 Rules
+
+- Stories are shown in the order the server returns them.
+- "Seen" means seen since the story last changed; the server keeps track of that.
+- Opening a story marks it seen at once; the server is told without waiting for it.
+- A link to a product or a category opens it in the active branch.

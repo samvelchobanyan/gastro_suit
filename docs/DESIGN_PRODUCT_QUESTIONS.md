@@ -58,3 +58,10 @@ The PRD asks to show the guest a branch's ordering availability (active / orderi
 temporarily closed). The design shows only open / closed. How a branch that is open but
 does not take orders (or not from the app, or outside ordering hours) is shown in the
 list, on its page and in the cart.
+
+### 11. Story viewer
+The design has only the story circles on the home screen. There is no screen for
+watching a story: how slides advance, where the link button is.
+
+### 12. Seen stories in the row
+Whether seen stories move to the end of the row or keep their place.
