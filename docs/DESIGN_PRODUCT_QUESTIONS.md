@@ -44,3 +44,11 @@ It leads to the same branch page as the list.
 ### 7. Changing the default branch — to confirm
 Agreed in the sessions: a new default branch also becomes the active branch when the cart
 is empty; with a non-empty cart the active branch stays.
+
+### 8. Order tracking screen
+The success screen after placing an order has a "Track" action, but there is no screen
+for an order and its status (the PRD has "order & status").
+
+### 9. Viewing an order with several products
+History shows one product per row. There is no way to open an order and see all its
+products, the pickup branch and time, and the amounts.
