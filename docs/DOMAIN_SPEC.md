@@ -186,3 +186,24 @@ target exist only together. Shared with banners.
 - "Seen" means seen since the story last changed; the server keeps track of that.
 - Opening a story marks it seen at once; the server is told without waiting for it.
 - A link to a product or a category opens it in the active branch.
+
+---
+
+## 7. Banner
+
+### 7.1 Meaning
+
+A banner is a promotional picture on the home screen. A tap may lead into the app or to
+a web page.
+
+### 7.2 Composition
+
+**Banner** (entity)
+- identity, image
+- title (optional): the picture's text for accessibility, not shown
+- link (optional, `AppLink`): no link — the banner is not tappable
+
+### 7.3 Rules
+
+- Banners are shown in the order the server returns them; the server returns only the
+  banners on show now.

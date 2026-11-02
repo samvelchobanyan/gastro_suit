@@ -65,3 +65,9 @@ watching a story: how slides advance, where the link button is.
 
 ### 12. Seen stories in the row
 Whether seen stories move to the end of the row or keep their place.
+
+### 13. Banner end time
+The API gives each banner an end time (`endsAt`). The server returns only banners on show
+when the list loads, but a banner whose time ends while the app is open stays until the
+next refresh. Whether the app should hide it once its time has passed (checked when the
+screen is shown, not live).
