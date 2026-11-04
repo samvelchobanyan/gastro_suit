@@ -71,3 +71,10 @@ The API gives each banner an end time (`endsAt`). The server returns only banner
 when the list loads, but a banner whose time ends while the app is open stays until the
 next refresh. Whether the app should hide it once its time has passed (checked when the
 screen is shown, not live).
+
+### 14. Points and cashback — one balance or two
+The PRD (5.3 Loyalty) shows points and cashback as two separate balances, each enabled
+by the operator, and itself marks this as unconfirmed. The design shows points only, and
+the backend reports one bonus balance (with iiko, cashback accrues as points). For now
+the app follows the API: one points balance. If cashback must be money, the wallet
+already has a promo part.
