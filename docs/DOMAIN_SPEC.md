@@ -207,3 +207,32 @@ a web page.
 
 - Banners are shown in the order the server returns them; the server returns only the
   banners on show now.
+
+---
+
+## 8. Loyalty card
+
+### 8.1 Meaning
+
+The loyalty card is the user's place in the restaurant's loyalty programme: the points
+they have collected, their loyalty tier, and the card the cashier scans at the counter.
+How points are earned is the POS's business, not the app's.
+
+Loyalty tiers are not the tiers of a paid membership; membership is a separate concept,
+described when it is designed.
+
+### 8.2 Composition
+
+**LoyaltyCard** (entity, one per user)
+- points
+- tier (optional, `LoyaltyTier`)
+- card number — what the cashier scans; the QR code shows this number
+
+**LoyaltyTier** (value)
+- name
+- percent (optional; pending the backend)
+
+### 8.3 Rules
+
+- There is one points balance (see `DESIGN_PRODUCT_QUESTIONS.md`, points and cashback).
+- Balances are the POS's and are read live; the app never computes or adjusts them.

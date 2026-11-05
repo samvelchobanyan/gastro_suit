@@ -175,7 +175,19 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   screens do not hide data that is already shown.
 - After a cold start everything loads as on first start.
 
-## 12. Questions for the backend
+## 12. Loyalty card — agreed (QR proposed)
+
+- `LoyaltyCard` is assembled by the repository from two requests made in parallel:
+  `GET /loyalty/balance` (points, tier) and `GET /loyalty/counter-qr` (card number).
+  Both take `restaurantId` (the organisation).
+- Not mapped: `cashback` (always 0 with iiko: cashback accrues as points), `categories`
+  (the tier already comes from them), `wallets` (the wallet comes from
+  `/wallet/balance`; vouchers are discussed separately).
+- The card number does not change; a refresh may re-read only the balance.
+- Proposed: draw the QR in the app from the card number (e.g. `qr_flutter`) instead of
+  showing the PNG the API sends.
+
+## 13. Questions for the backend
 
 - Move the cart between branches: keep the lines, re-price, mark what is unavailable
   (`available` / `unavailableReason` already exist) instead of clearing it.
@@ -194,3 +206,8 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   current menu).
 - `docs/mobile/FLOWS.md` is referenced by the Swagger and the collection but is not in
   the repository.
+- The loyalty tier's percent (the design shows it on the loyalty card; today only the
+  tier name comes, taken from the guest's POS category).
+- A list of loyalty tiers, if a screen needs it.
+- Paid membership (the design has membership levels and buying one for a number of
+  months); the API has nothing for it.
