@@ -236,3 +236,26 @@ described when it is designed.
 
 - There is one points balance (see `DESIGN_PRODUCT_QUESTIONS.md`, points and cashback).
 - Balances are the POS's and are read live; the app never computes or adjusts them.
+
+---
+
+## 9. Wallet
+
+### 9.1 Meaning
+
+The wallet holds the user's money at the restaurant: what they topped up themselves,
+what a friend sent them, what the organisation credited. It is money, not a reward, and
+is kept apart from loyalty points.
+
+### 9.2 Composition
+
+**Wallet** (entity, one per user)
+- balance — the total, in the currency of the instance
+
+### 9.3 Rules
+
+- Money in the wallet does not expire (a decision of the sessions; the PRD allows gift
+  and promo value to expire — see `DESIGN_PRODUCT_QUESTIONS.md`).
+- Topping up is an action, not part of the wallet. Its limits (minimum and maximum
+  amount) are a setting of the instance, not of the wallet.
+- The balance is the POS's and is read live; the app never computes it.

@@ -78,3 +78,7 @@ by the operator, and itself marks this as unconfirmed. The design shows points o
 the backend reports one bonus balance (with iiko, cashback accrues as points). For now
 the app follows the API: one points balance. If cashback must be money, the wallet
 already has a promo part.
+
+### 15. Wallet money does not expire — to confirm
+The PRD (5.5 Wallet) lets gift-card and promo value in the wallet expire. Decided in the
+sessions: wallet money never expires; only loyalty points can expire.

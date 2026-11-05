@@ -211,3 +211,5 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - A list of loyalty tiers, if a screen needs it.
 - Paid membership (the design has membership levels and buying one for a number of
   months); the API has nothing for it.
+- Expiry of loyalty points (the PRD shows expiry dates and "expiring soon"; the API has
+  nothing for points).
