@@ -187,7 +187,25 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - Proposed: draw the QR in the app from the card number (e.g. `qr_flutter`) instead of
   showing the PNG the API sends.
 
-## 13. Questions for the backend
+## 13. Order mapping (`OrderResponse` → `Order`) — agreed
+
+- Status: `payment_pending` → awaiting payment; `paid`, `placed`, `accepted` → accepted;
+  `preparing` → preparing; `ready` → ready; `completed` → collected; `cancelled` →
+  cancelled; `payment_failed` → payment failed; anything else → accepted (the Swagger
+  says to show an unknown status as in progress).
+- Total = `totalToCharge` + `walletSpent` − `walletReturned` (= `itemsTotal` −
+  `discount` + `tipAmount`). `walletReturned` is balance released back when the till
+  closed the order without taking the balance payment (backend
+  `src/shared/utils/wallet-returned.util.ts`).
+- Branch from `location` (name in the current language from its translations).
+- Lines: `name` is the product name as ordered; `modifiersJson` becomes the choice's
+  size (group id starting with `size:`) and add-ons; `itemId` may be null.
+- Not mapped: `paymentStatus`, `paymentProvider`, `gatewayOrderId` (payment flow, not the
+  order), guest contact, `itemsTotal` / `walletSpent` / `totalToCharge` separately,
+  `updatedAt`. Pending a screen: `posNumber` (number called at the till), `scheduledAt`
+  (pickup time).
+
+## 14. Questions for the backend
 
 - Move the cart between branches: keep the lines, re-price, mark what is unavailable
   (`available` / `unavailableReason` already exist) instead of clearing it.

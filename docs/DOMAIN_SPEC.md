@@ -259,3 +259,39 @@ is kept apart from loyalty points.
 - Topping up is an action, not part of the wallet. Its limits (minimum and maximum
   amount) are a setting of the instance, not of the wallet.
 - The balance is the POS's and is read live; the app never computes it.
+
+---
+
+## 10. Order
+
+### 10.1 Meaning
+
+An order is what the user bought: placed from the cart, sent to one branch, and kept in
+the history. After it is placed its contents and prices do not change; only its status
+does.
+
+### 10.2 Composition
+
+**Order** (entity)
+- identity, order number
+- status (see 10.3)
+- date and time it was placed
+- fulfilment type (pickup only for now)
+- branch — the branch as it was when the order was placed (identity, name)
+- comment for the kitchen (optional)
+- lines
+- discount (0 when none), tip (0 when none)
+- total — what the order cost the user: items minus discount plus tip, however it was
+  paid (card, balance or both)
+
+**OrderLine** (part of an order)
+- the `ProductChoice` (name and chosen options as they were when ordered)
+- quantity, unit price with add-ons, line total — as they were when ordered
+
+### 10.3 Rules
+
+- Status, as the user sees it: awaiting payment, accepted, preparing, ready, collected,
+  cancelled, payment failed. An unknown status is shown as accepted.
+- Prices, names and the branch of an order are the ones at the time it was placed; they
+  never follow later changes of the menu or the branch.
+- An order line's product may have left the menu since; the line keeps its name.
