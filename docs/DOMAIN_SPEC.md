@@ -324,3 +324,26 @@ favourites) is not part of this entity.
 - The membership status shown on the profile is not part of the user; paid membership is
   a separate concept, to be revisited.
 - The geolocation switch on the profile is a device permission, not user data.
+
+---
+
+## 12. Voucher
+
+### 12.1 Meaning
+
+A voucher is the user's right to get a product for free, a number of times
+("2 Iced Americanos left"). It may come as a gift from a friend or as a loyalty reward;
+for the app there is no difference.
+
+### 12.2 Composition
+
+**Voucher** (value)
+- product: identity, name, image (identity and image may be absent)
+- remaining — how many of the product can still be taken
+- valid until, optional (pending the backend)
+
+### 12.3 Rules
+
+- One voucher is for one product.
+- A voucher is spent without a separate action: the product added to the cart is given
+  free when the order is placed; at the counter the cashier scans the loyalty card.

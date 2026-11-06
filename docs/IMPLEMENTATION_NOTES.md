@@ -205,7 +205,17 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   `updatedAt`. Pending a screen: `posNumber` (number called at the till), `scheduledAt`
   (pickup time).
 
-## 14. Questions for the backend
+## 14. Voucher mapping (`GET /loyalty/entitlements` → `Voucher`) — agreed
+
+- One voucher per entitlement. The product is `products[0]`: from its `item` (id, name,
+  image) — always present in practice; if `item` is null, the name is `posName`, with no
+  id and no image.
+- `remaining` = `claimable` (how many free items the held count comes to). `count`,
+  `costPerUse` and `programName` are not mapped.
+- An entitlement with several products: only the first is used for now.
+- Takes `restaurantId` (the organisation), like the rest of loyalty.
+
+## 15. Questions for the backend
 
 - Move the cart between branches: keep the lines, re-price, mark what is unavailable
   (`available` / `unavailableReason` already exist) instead of clearing it.
@@ -231,3 +241,4 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   months); the API has nothing for it.
 - Expiry of loyalty points (the PRD shows expiry dates and "expiring soon"; the API has
   nothing for points).
+- Voucher validity date (the API has none).
