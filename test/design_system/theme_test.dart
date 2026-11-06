@@ -2,28 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gastro_suit/design_system/ds_extensions.dart';
 import 'package:gastro_suit/design_system/theme/app_theme.dart';
-import 'package:gastro_suit/design_system/theme/brands/coffee_house_brand.dart';
-import 'package:gastro_suit/design_system/theme/brands/demo_brand.dart';
+import 'package:gastro_suit/design_system/theme/ds_colors.dart';
 
 void main() {
-  for (final brand in [coffeeHouseBrand, demoBrand]) {
-    testWidgets('context.brand returns the brand the theme was built with',
-        (tester) async {
-      late DSBrand read;
-      await tester.pumpWidget(
-        MaterialApp(
-          theme: buildAppTheme(brand),
-          home: Builder(builder: (context) {
-            read = context.brand;
+  testWidgets('context.colors returns the role set the theme was built with', (
+    tester,
+  ) async {
+    late DSColors colors;
+    late ThemeData theme;
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildAppTheme(lightColors),
+        home: Builder(
+          builder: (context) {
+            colors = context.colors;
+            theme = Theme.of(context);
             return const SizedBox();
-          }),
+          },
         ),
-      );
-      expect(read, same(brand));
-      expect(Theme.of(tester.element(find.byType(SizedBox))).colorScheme.primary,
-          brand.brandPrimary);
-    });
-  }
+      ),
+    );
+    expect(colors, same(lightColors));
+    // Stock widgets are coloured from the same set.
+    expect(theme.colorScheme.primary, lightColors.brandPrimary);
+    expect(theme.textTheme.bodyMedium!.color, lightColors.textPrimary);
+  });
 
   test('line heights match the handoff in pixels', () {
     expect(DSTypography.body.fontSize! * DSTypography.body.height!, 20);

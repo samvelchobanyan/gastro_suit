@@ -59,8 +59,9 @@ Rules that hold regardless of format:
   `ARCHITECTURE_SPEC.md`.
 - The handoff's component list and folder layout do not decide where a widget lives in
   code; `ARCHITECTURE_SPEC.md` §8 does.
-- Brand-dependent values are read only through `Theme.of(context)`. A direct import removes
-  the element from the re-skin, and the breakage shows up only with the second client.
+- Colours are read only through `context.colors` (the theme), never from `DSPalette` or a
+  hardcoded value. A colour taken around the theme drops out of a re-skin or a dark theme,
+  and the breakage shows up only when one is added.
 
 ---
 
@@ -105,7 +106,7 @@ propose candidates immediately; append them only after the user confirms (Sectio
 3. **Present the plan before writing code** and wait for confirmation. Sam prefers
    conceptual alignment before code.
 4. **Implement** — following the project's structure, design system tokens for every
-   visual value, brand values only through `Theme.of(context)`.
+   visual value, colours only through `context.colors`.
 5. **Capture** decision events (Section 7). If a decision changes a rule in the project
    docs, propose the doc change too.
 
@@ -172,4 +173,4 @@ after the user confirms; a declined candidate is not logged. No candidate — sa
   need. A rule or structure must prevent a real problem; ceremony for the sake of
   regulation is rejected.
 - **Porting code from the design handoff.** It is web code; Flutter is written from it.
-- **Reading brand values outside `Theme.of(context)`.**
+- **Reading colours outside `context.colors`.**

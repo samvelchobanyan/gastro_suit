@@ -217,11 +217,16 @@ Two places:
 ## 12. Design system and theme
 
 - Every visual value in features comes from design system tokens.
-- Brand-dependent values live in a `ThemeExtension` and are read only through
-  `Theme.of(context)` (via context aliases). Brand-independent tokens (gray ramp, status
-  colors, spacing, radius, sizing, typography) are plain constants.
-- Typography is applied through context aliases; features do not build their own text
+- Colours are roles (`DSColors`, a `ThemeExtension`) read only through `context.colors`.
+  The raw palette fills the role sets and is not used in widgets. A second role set (a dark
+  theme, another client) then replaces the colours without touching widgets.
+- Material's colour scheme and text theme are filled from the same role set, in one place,
+  so stock widgets match ours.
+- Everything else (typography, spacing, radius, sizing, elevation) is a plain constant.
+  Typography is applied as `DSTypography` styles; features do not build their own text
   styles.
+- Each client is a separate app build; the brand is chosen at build time, never at
+  runtime.
 - The design handoff defines what things look like; this document and `BUNDLE.md` define
   how they map into code.
 
@@ -247,3 +252,4 @@ Two places:
 | [[layered-architecture]]: three places for shared widgets (`design_system`, `shared/widgets`, `features/shared_widgets`) | Two places (`design_system/components`, `features/shared_widgets`) | Domain-agnostic helpers belong to the design system; the third place had no clear boundary |
 | [[centralized-network-error-notification]]: one root SnackBar for failed mutations | Not adopted by default | Error presentation depends on the design, which may differ per case; revisit if many places end up showing errors the same way |
 | [[design-system-tokens-mandatory]]: numeric names for scales longer than 5–6 values | Token names follow the design handoff (`DSSpacing.md`, `DSRadius.card`) | A handoff value maps to code without a lookup table |
+| [[design-system-tokens-mandatory]]: colours are `DSColors` constants; typography is read through context aliases | Colours are read through the theme (`context.colors`); typography is `DSTypography` constants | Colours are what a dark theme or another client changes; reading them through the theme from the start avoids rewriting every widget later. Text styles never change at runtime, and aliases only duplicated their names |

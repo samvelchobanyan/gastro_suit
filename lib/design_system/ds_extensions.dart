@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'theme/ds_brand.dart';
+import 'theme/ds_colors.dart';
 
-export 'foundations/ds_colors.dart';
 export 'foundations/ds_elevation.dart';
 export 'foundations/ds_radius.dart';
 export 'foundations/ds_sizes.dart';
 export 'foundations/ds_spacing.dart';
 export 'foundations/ds_typography.dart';
-export 'theme/ds_brand.dart';
+export 'theme/ds_colors.dart' show DSColors;
 
-/// Context aliases for the design system.
+/// Import this one file to get every token plus `context.colors`.
 ///
-/// Import this one file to get every token plus `context.brand`.
+/// The palette (`DSPalette`) is deliberately not exported: widgets read colour
+/// roles, not raw colours.
 extension DSContext on BuildContext {
-  /// The current brand. Brand values are read only through this.
-  DSBrand get brand => Theme.of(this).extension<DSBrand>()!;
+  /// The current colour role set. Colours are read only through this.
+  DSColors get colors => Theme.of(this).extension<DSColors>()!;
 }

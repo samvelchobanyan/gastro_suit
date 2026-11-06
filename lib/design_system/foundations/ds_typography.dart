@@ -2,8 +2,8 @@ import 'package:flutter/painting.dart';
 
 /// Text styles. Source: handoff `tokens/typography.css` (composite `--text-*`).
 ///
-/// Styles carry no colour: the colour is a separate role from `DSColors` or
-/// `DSBrand`. CSS line heights are pixels; Flutter takes a multiplier, so
+/// Styles carry no colour: the colour is a role from `context.colors`, applied
+/// on use. CSS line heights are pixels; Flutter takes a multiplier, so
 /// `height` is lineHeight / fontSize, and the extra space is split evenly
 /// above and below as in CSS.
 abstract final class DSTypography {

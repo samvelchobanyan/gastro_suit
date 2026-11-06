@@ -1,6 +1,6 @@
 # GastroSuit — Design System
 
-Status: tokens done · components not started · 2026-11-06
+Status: tokens done · components not started · 2026-11-07
 
 ## 0. About this document
 
@@ -14,29 +14,28 @@ tokens in the handoff (`export/`, `handover/`, `design_handoff_home_order/`) are
 snapshots and are not used.
 
 Code: `lib/design_system/`. Import `design_system/ds_extensions.dart` to get every token
-and `context.brand`.
+and `context.colors`.
 
 ---
 
 ## 1. Layers
 
-| Layer | Code | Depends on the brand |
+| Layer | Code | How it is read |
 |---|---|---|
-| Palette — raw colours by ramp position | `DSPalette` | No |
-| Colour roles — what a colour is for | `DSColors` | No |
-| Brand — accent ramp and brand roles | `DSBrand` (`ThemeExtension`) | Yes |
-| Typography | `DSTypography` | No |
-| Spacing scale, screen layout | `DSSpacing`, `DSLayout` | No |
-| Radii | `DSRadius` | No |
-| Sizes, icons, strokes | `DSSizes` | No |
-| Shadows | `DSElevation` | No |
+| Palette — raw colours by ramp position, incl. the client's accent ramp | `DSPalette` (`foundations/ds_palette.dart`) | Not in widgets; only to fill role sets |
+| Colour roles — what a colour is for | `DSColors` (`ThemeExtension`, `theme/ds_colors.dart`) | `context.colors.textPrimary` |
+| Typography | `DSTypography` | Constant |
+| Spacing scale, screen layout | `DSSpacing`, `DSLayout` | Constant |
+| Radii | `DSRadius` | Constant |
+| Sizes, icons, strokes | `DSSizes` | Constant |
+| Shadows | `DSElevation` | Constant |
 
 Rules:
-- Use colour roles (`DSColors`, `context.brand.*`). Use `DSPalette` only where no role
-  fits.
-- Brand values are read only through `context.brand`. Importing a concrete brand
-  (`coffeeHouseBrand`) in a widget removes it from the re-skin.
-- Everything except the brand is a plain constant.
+- Colours are read only through `context.colors`. A colour taken from `DSPalette` or
+  hardcoded drops out of a dark theme or another client's colours.
+- A colour the design needs and no role covers: add a role to `DSColors` (and its value to
+  every role set), then use it.
+- Everything except colours is a plain constant.
 
 ---
 
@@ -47,10 +46,9 @@ Names follow the handoff, so a handoff value maps to code without a lookup table
 | Handoff | Code |
 |---|---|
 | `--space-md` | `DSSpacing.md` |
-| `--color-text-primary` | `DSColors.textPrimary` |
-| `--gray-100` | `DSPalette.gray100` |
-| `--accent-500` | `context.brand.accent500` |
-| `--color-brand-primary` | `context.brand.brandPrimary` |
+| `--color-text-primary` | `context.colors.textPrimary` |
+| `--color-brand-primary` | `context.colors.brandPrimary` |
+| `--gray-100`, `--accent-500` | `DSPalette.gray100`, `DSPalette.accent500` (role sets only) |
 | `--radius-card` | `DSRadius.card` |
 | `--text-body-semibold` | `DSTypography.bodySemibold` |
 | `--icon-md` | `DSSizes.iconMd` |
@@ -61,10 +59,11 @@ Where a CSS name is not a valid Dart identifier: `--radius-2xl` → `DSRadius.xx
 
 ---
 
-## 3. Brand layer
+## 3. Colour roles and the theme
 
-`DSBrand` holds the accent ramp (`accent50` … `accent900`) and `accentContrast` (the
-foreground on an accent fill). The brand roles are derived from the ramp:
+`DSColors` lists every colour role (backgrounds, brand, text, borders, status, overlays,
+the hero scrim). A role set is an instance with values from the palette; there is one,
+`lightColors`. Brand roles are ordinary roles in it:
 
 | Role | Value |
 |---|---|
@@ -73,15 +72,16 @@ foreground on an accent fill). The brand roles are derived from the ramp:
 | `brandSubtle` (tinted surfaces) | accent 50 |
 | `textOnBrand` | `accentContrast` |
 
-Brands live in `lib/design_system/theme/brands/`:
-- `coffeeHouseBrand` — the first client, values from the handoff;
-- `demoBrand` — not a client: a different accent to check the re-skin. Anything that
-  stays red under it reads a brand value outside the theme.
+`buildAppTheme(colors)` builds the `ThemeData` from one role set: the set itself as an
+extension (for our widgets), and Material's colour scheme and text theme (for stock
+widgets and `Text` without a style). Both come from the same set, so they cannot drift.
 
-`buildAppTheme(brand)` builds the `ThemeData`: the brand as an extension, and Material's
-colour scheme filled from the tokens so stock Material widgets match.
+Each client is a separate app; its colours are chosen at build time. The accent ramp in
+`DSPalette` is Coffee House's. How another client's colours are supplied is decided when
+the second client arrives.
 
-Adding a client: a new `DSBrand` constant in `brands/`. Nothing else changes.
+A dark theme, if it comes: a second role set (`darkColors`) passed as `darkTheme`. Widgets
+do not change.
 
 ---
 
@@ -103,7 +103,7 @@ Plus Jakarta Sans, weights 400 / 500 / 600 / 700, bundled in `assets/fonts/`.
 | `overline` | 10 / 12, tracking 0.08 em, upper case | 600 |
 
 - Styles carry no colour; the colour is a role applied on use
-  (`DSTypography.body.copyWith(color: DSColors.textSecondary)`).
+  (`DSTypography.body.copyWith(color: context.colors.textSecondary)`).
 - CSS line heights are pixels; Flutter's `height` is a multiplier, so it is set to
   lineHeight / fontSize, with the extra space split evenly above and below as in CSS.
 - `overline` is shown in upper case: the text is upper-cased where it is used.
@@ -136,7 +136,7 @@ with real content (see §7).
 - Component tokens (`--button-primary-bg`, `--input-border-focus`, …): added with the
   components that use them.
 - `--color-bg-muted`: referenced by the handoff but never defined; it is
-  `DSColors.bgSurfaceSunken`.
+  `context.colors.bgSurfaceSunken`.
 - `--alpha-white-40`: referenced by the handoff (ProductOverlay) but missing from its
   tokens; added as `DSPalette.alphaWhite40`.
 
