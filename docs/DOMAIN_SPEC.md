@@ -295,3 +295,32 @@ does.
 - Prices, names and the branch of an order are the ones at the time it was placed; they
   never follow later changes of the menu or the branch.
 - An order line's product may have left the menu since; the line keeps its name.
+
+---
+
+## 11. User
+
+### 11.1 Meaning
+
+The user is the signed-in account in the app: who they are and their personal settings.
+What belongs to the user but lives on its own (cart, orders, wallet, loyalty card,
+favourites) is not part of this entity.
+
+### 11.2 Composition
+
+**User** (entity, one — the signed-in user)
+- identity
+- first name and last name, both optional
+- phone
+- photo, optional
+- birthday, city, gender — each optional
+- language
+- default branch, optional (see `IMPLEMENTATION_NOTES.md`, default and active branch)
+
+### 11.3 Rules
+
+- The phone cannot be changed in the profile (disabled in the MVP).
+- The counter QR is not part of the user: it is the loyalty card's number.
+- The membership status shown on the profile is not part of the user; paid membership is
+  a separate concept, to be revisited.
+- The geolocation switch on the profile is a device permission, not user data.

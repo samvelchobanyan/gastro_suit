@@ -82,3 +82,8 @@ already has a promo part.
 ### 15. Wallet money does not expire — to confirm
 The PRD (5.5 Wallet) lets gift-card and promo value in the wallet expire. Decided in the
 sessions: wallet money never expires; only loyalty points can expire.
+
+### 16. "Push notifications" switch on the profile
+Whether it is the consent to marketing pushes (the PRD has per-channel marketing
+consents; the API has push, SMS and email consents) or turning all notifications on the
+device on and off.
