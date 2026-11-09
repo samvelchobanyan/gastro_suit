@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/network/app_exception.dart';
-import '../../../../design_system/ds_extensions.dart';
-import '../../../../l10n/generated/app_localizations.dart';
+import '../../../core/network/app_exception.dart';
+import '../../../design_system/ds_extensions.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import 'login_controller.dart';
 
 /// Temporary sign-in screen built from stock widgets until the design has one.

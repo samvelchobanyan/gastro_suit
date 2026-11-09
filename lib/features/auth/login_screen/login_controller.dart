@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/di/repositories.dart';
+import '../../../core/di/repositories.dart';
 
 /// Login screen state: idle, signing in, or the last failure.
 class LoginController extends Notifier<AsyncValue<void>> {

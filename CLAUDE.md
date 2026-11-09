@@ -6,8 +6,9 @@ GastroSuit is a white-label Flutter mobile app (iOS, Android) for restaurants an
 shops: menu and ordering, loyalty, branches. One codebase, re-skinned per client through a
 swappable brand layer in the theme.
 
-A backend exists; its API is described by Swagger and Postman collections (summarized in
-`docs/API_SPEC.md` once written). The app supports several languages.
+A backend exists; its API is described by the Swagger and Postman exports in `docs/`
+(`guestpilot-api.swagger.json`, `guestpilot-mobile.postman_collection.json`), read
+directly. The app supports several languages.
 
 Sources of truth:
 - **Project docs** (`docs/`, index in `docs/README.md`) define this project: architecture,

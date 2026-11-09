@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:gastro_suit/core/di/repositories.dart';
 import 'package:gastro_suit/core/network/app_exception.dart';
 import 'package:gastro_suit/domain/repositories/auth_repository.dart';
-import 'package:gastro_suit/features/auth/presentation/login/login_controller.dart';
+import 'package:gastro_suit/features/auth/login_screen/login_controller.dart';
 
 class FakeAuthRepository implements AuthRepository {
   FakeAuthRepository([this.error]);

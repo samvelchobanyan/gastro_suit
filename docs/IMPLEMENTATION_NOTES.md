@@ -39,6 +39,15 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   - multi-language maps (`name`, `description`, …): current language → default language
     from `GET /config` → `internalName`;
   - group and option names: `optionNames[id][lang]` → the POS `name`.
+- One function does it for every DTO: `localized()` in `data/dto/localized_text.dart`.
+  Repositories receive a `ContentLanguage` (current + default) from
+  `contentLanguageProvider`, which waits for `GET /config`.
+- The current language is the device's for now (`core/locale/app_language.dart`). With
+  the profile's language switch it becomes the user's choice, stored on the device, and
+  the one source for the UI, the `Accept-Language` header and content mapping; signed-in
+  users also send it to the profile so notifications use it.
+- `Accept-Language` does not affect translated maps; it is for text the server writes
+  itself.
 - A language change reloads the data that carries text (menu, cart, branches, …).
 - Requests carry `Accept-Language` (interceptor): server messages, allergens and cart
   option names come back in it.
@@ -78,15 +87,22 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - Open (screen behaviour): unavailable product or option, duplicates in one branch,
   which price to show.
 
-## 7. Default and active branch — agreed
+## 7. Default and active branch — agreed (revised 2026-11-09)
 
-
-- The **default branch** is a user setting stored on the server (part of the profile).
-  It changes only in the settings.
+- The **default branch** is one branch for all users, set by the admins. It is a
+  fallback for when the nearest branch is unknown. There is no per-user default branch:
+  the nearest branch takes priority, so a personal setting would rarely be used.
 - The **active branch** is the branch the application works with: its menu is shown,
   the cart belongs to it and orders are placed in it. There is always an active branch.
-- On start the active branch is the default branch. How it is chosen when there is no
-  default branch is decided later.
+- On start (guest or signed in) the active branch is:
+  1. the nearest branch, when the device position is known;
+  2. otherwise the default branch.
+- Until the API serves the default branch (questions for the backend), the first branch
+  in the API order stands in for it; that order is also set by the admins.
+- The user's choice is not kept across restarts: every start picks again as above.
+- Proposed: on start, wait for the position with a short timeout (about 3 s) before
+  choosing, so the menu does not switch to another branch in front of the user. No
+  permission, a refusal or the timeout → the default branch.
 - The active branch changes when the user:
   - picks a branch in the menu screen's branch bar;
   - picks a branch in the cart;
@@ -95,9 +111,6 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   - adds a product from a branch page.
 - Browsing a branch page shows that branch's menu and does not change the active branch.
   Only adding a product from it does.
-- Changing the active branch does not change the default branch.
-- Changing the default branch in the settings also makes it the active branch when the
-  cart is empty; with a non-empty cart the active branch stays (to confirm with design).
 
 **On a change of the active branch**
 
@@ -112,6 +125,8 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   cleared).
 - A non-empty cart left in another branch when the application starts again.
 - A change of organisation (multi-concept): loyalty and wallet are per organisation.
+  For now each build serves one organisation, set in the build config (`RESTAURANT_ID`);
+  its branches, menu, loyalty and wallet are requested with it.
 
 ## 8. Menu state — agreed in principle, details with the implementation agent
 
@@ -127,9 +142,10 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   unless it is the active branch's.
 - Adding from a branch page: set the active branch to that branch, move the cart, add.
   The active menu then reuses the menu the branch page already loaded.
-- Default branch: `profile.preferredLocationId`. Active branch starts from it.
+- Active branch on start: nearest, else the default branch (§7). `profile.preferredLocationId`
+  is not used.
 
-## 9. Riverpod — proposed
+## 9. Riverpod — agreed (2026-11-10; the rules are in `ARCHITECTURE_SPEC.md` §6)
 
 - Current Riverpod (3.x): family arguments arrive through the notifier's constructor.
 - Load data with `AsyncNotifier` (`AsyncValue` loading / data / error, async `build`)
@@ -242,3 +258,8 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - Expiry of loyalty points (the PRD shows expiry dates and "expiring soon"; the API has
   nothing for points).
 - Voucher validity date (the API has none).
+- Cities and districts as reference lists with ids (agreed 2026-11-09, the backend will
+  add them). Today a branch's `city` is a plain untranslated string and `district` a
+  translated map, so filters can only group branches by matching text.
+- The default branch for all users, set by the admins (e.g. in `GET /config`). Today the
+  API has only the per-user `preferredLocationId`, which the app no longer uses.

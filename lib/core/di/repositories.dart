@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/repositories/auth_repository_impl.dart';
+import '../../data/repositories/server_config_repository_impl.dart';
 import '../../domain/repositories/auth_repository.dart';
+import '../../domain/repositories/server_config_repository.dart';
 import '../auth/token_storage.dart';
 import '../network/api_client.dart';
 
@@ -12,4 +14,8 @@ final authRepositoryProvider = Provider<AuthRepository>(
     ref.watch(apiClientProvider),
     ref.watch(tokenStorageProvider),
   ),
+);
+
+final serverConfigRepositoryProvider = Provider<ServerConfigRepository>(
+  (ref) => ServerConfigRepositoryImpl(ref.watch(apiClientProvider)),
 );

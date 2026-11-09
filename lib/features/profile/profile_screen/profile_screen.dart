@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/auth/auth_status.dart';
-import '../../../../core/di/repositories.dart';
-import '../../../../core/navigation/app_routes.dart';
-import '../../../../design_system/ds_extensions.dart';
-import '../../../../l10n/generated/app_localizations.dart';
+import '../../../core/auth/auth_status.dart';
+import '../../../core/di/repositories.dart';
+import '../../../core/navigation/app_routes.dart';
+import '../../../design_system/ds_extensions.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 /// Placeholder until the Profile screen is built. Holds the temporary sign-in
 /// entry point until the app opens on the login screen.

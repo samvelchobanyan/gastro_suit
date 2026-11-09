@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/auth/token_storage.dart';
 import 'core/config/app_config.dart';
+import 'core/locale/app_language.dart';
 import 'core/navigation/app_router.dart';
 import 'core/network/api_client.dart';
 import 'core/network/interceptors/auth_interceptor.dart';
@@ -27,7 +26,7 @@ Future<void> main() async {
   final apiClient = ApiClient(
     baseUrl: config.apiBaseUrl,
     interceptors: [
-      LocaleInterceptor(_languageCode),
+      LocaleInterceptor(appLanguageCode),
       AuthInterceptor(
         tokenStorage: tokenStorage,
         sessionClient: Dio(
@@ -43,7 +42,11 @@ Future<void> main() async {
 
   runApp(
     ProviderScope(
+      // No automatic retries: a failed load shows its error state and is
+      // retried by the user (pull to refresh, a retry button).
+      retry: (_, _) => null,
       overrides: [
+        appConfigProvider.overrideWithValue(config),
         tokenStorageProvider.overrideWithValue(tokenStorage),
         apiClientProvider.overrideWithValue(apiClient),
       ],
@@ -66,16 +69,6 @@ Future<void> _dropSessionIfApiChanged(
 
   await tokenStorage.clear();
   await prefs.setString(sessionApiKey, config.apiBaseUrl);
-}
-
-/// The language sent to the API: the device's if the app supports it,
-/// otherwise the first supported one (English), as the UI does.
-String _languageCode() {
-  final device = PlatformDispatcher.instance.locale.languageCode;
-  const supported = AppLocalizations.supportedLocales;
-  return supported.any((l) => l.languageCode == device)
-      ? device
-      : supported.first.languageCode;
 }
 
 class App extends ConsumerWidget {

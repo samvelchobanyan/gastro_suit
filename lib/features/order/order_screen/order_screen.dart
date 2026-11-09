@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../design_system/ds_extensions.dart';
-import '../../../../l10n/generated/app_localizations.dart';
+import '../../../design_system/ds_extensions.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 /// Placeholder until the Order screen is built.
 class OrderScreen extends StatelessWidget {

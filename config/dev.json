@@ -1,3 +1,4 @@
 {
-  "API_BASE_URL": "http://37.157.212.21:3000/api/v1"
+  "API_BASE_URL": "http://37.157.212.21:3000/api/v1",
+  "RESTAURANT_ID": "3453157d-dc69-4366-8728-3c89ff0f090b"
 }

@@ -15,7 +15,7 @@ what they consist of and the rules that hold for them. Field-level details live 
   responses into it.
 
 Related documents: `ARCHITECTURE_SPEC.md` (where these classes live and how state is
-owned), `API_SPEC.md` (the wire format).
+owned), `guestpilot-api.swagger.json` (the wire format).
 
 ---
 
@@ -315,7 +315,9 @@ favourites) is not part of this entity.
 - photo, optional
 - birthday, city, gender — each optional
 - language
-- default branch, optional (see `IMPLEMENTATION_NOTES.md`, default and active branch)
+
+The user has no default branch: the active branch on start is the nearest one, else the
+default branch set by the admins for all users (`IMPLEMENTATION_NOTES.md` §7).
 
 ### 11.3 Rules
 

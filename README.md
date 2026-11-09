@@ -17,7 +17,9 @@ In VS Code: Run and Debug → "GastroSuit (dev)". A personal file such as
 
 Localization (`lib/l10n/*.arb`) regenerates on `flutter run`, or `flutter gen-l10n`.
 
-DTOs (`json_serializable`, not added yet): when the first one arrives, generate with
+Entities (`freezed`) and DTOs (`json_serializable`): the generated `*.freezed.dart` and
+`*.g.dart` files are committed, so a fresh clone builds as is. After changing an entity or
+a DTO, regenerate with
 
 ```
 dart run build_runner build --delete-conflicting-outputs --force-jit

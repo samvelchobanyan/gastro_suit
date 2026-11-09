@@ -33,17 +33,20 @@ When the active branch changes, the cart moves with it; prices and availability 
 checked again. Whether the user is asked to confirm ("Your cart moves to Cascade; prices
 and availability may change") or it moves silently.
 
-### 5. First branch and no default branch
-How the active branch is set the first time and what the flow is when the user has no
-default branch (likely a branch selection screen in the first versions).
+### 5. First branch and no default branch — decided
+Decided (2026-11-09): on every start the active branch is the nearest one; without a
+position, the default branch set by the admins for all users. The user's choice is not
+kept across restarts. Details in `IMPLEMENTATION_NOTES.md` §7.
+Still open: when the app asks for the location permission (at the first start, or after
+a screen explaining why).
 
 ### 6. Branch map
 The PRD has a map with pins and a "select branch" action; the design has no map screen.
 It leads to the same branch page as the list.
 
-### 7. Changing the default branch — to confirm
-Agreed in the sessions: a new default branch also becomes the active branch when the cart
-is empty; with a non-empty cart the active branch stays.
+### 7. Default branch setting in the profile — dropped
+There is no per-user default branch any more (see 5). The design's `DefaultBranch`
+screen is not needed; to confirm with the designer.
 
 ### 8. Order tracking screen
 The success screen after placing an order has a "Track" action, but there is no screen
@@ -88,9 +91,10 @@ Whether it is the consent to marketing pushes (the PRD has per-channel marketing
 consents; the API has push, SMS and email consents) or turning all notifications on the
 device on and off.
 
-### 17. Guest access or sign-in first
-Whether the app can be used without signing in (menu and branches are public in the API;
-cart, loyalty, wallet and orders need an account), or the sign-in screen opens first
-whenever the user is not signed in. There is no sign-in or registration design yet.
-For now: a temporary sign-in screen opened from the Profile tab. Either answer is one
-router redirect on the auth state.
+### 17. Guest access or sign-in first — decided: guest access
+Decided (2026-11-09): the app can be used without signing in. Menu and branches are
+public in the API; cart, loyalty, wallet and orders need an account, and sign-in is asked
+for when the guest reaches them.
+Still open: how the sign-in and registration screens look, and where exactly the guest is
+asked to sign in. Until there is a design: a temporary sign-in screen opened from the
+Profile tab.

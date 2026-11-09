@@ -18,8 +18,8 @@ one owns, and how they interact. It states rules, not implementations.
 
 Related documents:
 - `DOMAIN_SPEC.md` — domain entities and their meaning
-- `SCREENS_SPEC.md` — screen inventory and behaviour
-- `API_SPEC.md` — backend endpoints and contracts
+- `guestpilot-api.swagger.json`, `guestpilot-mobile.postman_collection.json` — backend
+  endpoints and contracts
 - `BUNDLE.md` — how to read the design handoff
 
 ---
@@ -147,27 +147,46 @@ Rules:
   it to domain state.
 - Each piece of data has one owner. A controller may derive what its screen needs from
   domain state by watching it; it does not keep its own copy.
-- A screen gets a controller only when it has state of its own. A screen that only
-  displays domain state reads it directly.
+- A screen gets a controller only when it has data state of its own: data it loads,
+  derives or edits. A screen that only displays domain state reads it directly.
+- A screen's data may be split into several controllers, one per independent source
+  (stories and banners on Home); each loads, fails and refreshes on its own. They sit next
+  to the screen file, so the screen's folder shows all of its data.
+- Controllers that load data are `AsyncNotifier`s by default: loading, data and error
+  are one exhaustive state, a refresh keeps the previous data on screen, and the error
+  keeps its `AppException` type. A plain `Notifier` is used where its state fits better.
+- Failed loads are not retried automatically (Riverpod's retry is off): the screen shows
+  its error state and the user retries.
+- Interface state (selected tab or segment, selected category, scroll position, an open
+  section) lives in the widget's `State`. Nothing else reads it and it holds no data, so a
+  controller would only add ceremony. Tabs stay alive in the shell, so it survives tab
+  switches.
 
 ---
 
 ## 7. Features
 
 ```text
-features/<feature>/presentation/
-  <screen>/
+features/<feature>/
+  <screen>_screen/
     <screen>_screen.dart
-    <screen>_controller.dart      only if the screen has its own state
-    widgets/                      widgets used by this screen only
-  widgets/                        widgets shared by several screens of this feature
+    <source>_controller.dart      the screen's data, one per source; none if it has no data
+    widgets/                      parts of this screen
+  widgets/                        parts shared by several screens of this feature
 ```
 
-- A feature groups related screens. A multi-step flow (sign-up, checkout) is one feature
-  with one folder per step.
-- Every navigation target is a `*Screen` widget.
-- A complex widget may have its own controller, placed next to it.
-- Bottom sheets and dialogs follow the same placement rules as screens and widgets.
+- A feature groups the screens of one user task. A multi-step flow (sign-up, checkout) is
+  one feature with one folder per step. A feature holds only interface: entities, state
+  and data access live in `domain/` and `data/`.
+- A screen is a navigation target (a page, a sheet, a dialog) and is a `*Screen` widget.
+  Its folder carries the `_screen` suffix, so a feature and its main screen do not share a
+  name (`home/home_screen/`).
+- In `widgets/` a widget is a file. It gets a folder only when it has more than one file
+  (its own sub-widgets).
+- Data belongs to a screen (its controllers) or is domain state; widgets own none. A part
+  of a screen may read providers itself (a block that loads and fails on its own) or get
+  its data from the screen; this is decided per case. Reusable widgets never read
+  providers (§8).
 
 ---
 
@@ -183,9 +202,9 @@ Two places:
 - Reusable widgets hold no state and read no providers: state comes in as props, actions
   go out as callbacks. The screen that uses them wires them to state.
 - A widget lives at the lowest level that covers its consumers: one screen →
-  `<screen>/widgets/`; several screens of one feature → `<feature>/presentation/widgets/`;
-  several features → `shared_widgets/`. It moves up when a new consumer appears, not in
-  advance.
+  `<screen>_screen/widgets/`; several screens of one feature → `<feature>/widgets/`;
+  several features → `shared_widgets/`. It moves up when a new consumer appears, or at
+  once when the design already shows it in several places.
 - The design handoff's components decide neither how a screen is split into widgets nor
   where a widget lives; that is decided here, per screen (`BUNDLE.md`).
 
