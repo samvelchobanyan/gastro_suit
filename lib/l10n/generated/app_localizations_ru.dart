@@ -21,6 +21,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tabProfile => 'Профиль';
 
   @override
+  String get homeGreeting => 'Время насладиться кофе';
+
+  @override
+  String get notifications => 'Уведомления';
+
+  @override
   String get loginTitle => 'Вход';
 
   @override

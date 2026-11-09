@@ -16,6 +16,14 @@
   "@tabProfile": {
     "description": "Bottom navigation: Profile tab"
   },
+  "homeGreeting": "Let's enjoy some coffee",
+  "@homeGreeting": {
+    "description": "Home header: the small line above the user's name"
+  },
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "Accessibility label of the notifications bell"
+  },
   "loginTitle": "Sign in",
   "@loginTitle": {
     "description": "Login screen: title"

@@ -124,6 +124,18 @@ abstract class AppLocalizations {
   /// **'Profile'**
   String get tabProfile;
 
+  /// Home header: the small line above the user's name
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s enjoy some coffee'**
+  String get homeGreeting;
+
+  /// Accessibility label of the notifications bell
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
   /// Login screen: title
   ///
   /// In en, this message translates to:

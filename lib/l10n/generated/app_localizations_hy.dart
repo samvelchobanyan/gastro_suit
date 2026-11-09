@@ -21,6 +21,12 @@ class AppLocalizationsHy extends AppLocalizations {
   String get tabProfile => 'Պրոֆիլ';
 
   @override
+  String get homeGreeting => 'Եկեք վայելենք սուրճը';
+
+  @override
+  String get notifications => 'Ծանուցումներ';
+
+  @override
   String get loginTitle => 'Մուտք';
 
   @override

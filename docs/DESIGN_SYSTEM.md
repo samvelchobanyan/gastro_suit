@@ -75,6 +75,9 @@ the hero scrim). A role set is an instance with values from the palette; there i
 | `brandSubtle` (tinted surfaces) | accent 50 |
 | `textOnBrand` | `accentContrast` |
 
+Roles added for handoff components that use raw palette values: `skeletonBase` (gray 100)
+and `skeletonHighlight` (gray 200) for `Skeleton`.
+
 `buildAppTheme(colors)` builds the `ThemeData` from one role set: the set itself as an
 extension (for our widgets), and Material's colour scheme and text theme (for stock
 widgets and `Text` without a style). Both come from the same set, so they cannot drift.
@@ -126,7 +129,10 @@ with real content (see §7).
 - `DSRadius`: scale `xs` 4 · `sm` 8 · `md` 12 · `lg` 16 · `xl` 24 · `xxl` 32 · `full`, and
   by element (`badge`, `tag`, `input`, `card`, `sheet`, `modal`, `pill`, …).
 - `DSSizes`: button, input, bar and row heights; icon sizes 16 / 20 / 24 / 32 / 40;
-  stroke widths; minimum touch target 48.
+  stroke widths; minimum touch target 48. Component sizes the handoff hard-codes inside a
+  component, not in its tokens, are added here by name when the component is built:
+  `headerLogo` and `headerAction` 44, `notificationDot` 9 (`Greeting`); `storyCircle` 64
+  and `storyItemWidth` 72 (`Stories`); `bannerWidth` 280 (Home's promo row).
 - `DSElevation`: `card`, `raised`, `overlay`, `sheet` — lists of `BoxShadow`.
 
 ---
@@ -145,6 +151,16 @@ with real content (see §7).
 
 ---
 
-## 7. Open
+## 7. Components
+
+| Component | Handoff | What it is |
+|---|---|---|
+| `DSBottomNavigation` | `BottomNavigation` | Flat bar, hairline on top, 48 high; the active item is the brand colour with a filled icon |
+| `DSSkeleton` | `Skeleton` | A loading shape (box or circle) with a sweeping band; blocks compose their own skeletons from it |
+| `DSNetworkImage` | — | A cached network picture; a recessed fill while loading, with an image icon on error or without an address |
+
+---
+
+## 8. Open
 
 - Font coverage for Russian, Armenian and the dram sign (§4).

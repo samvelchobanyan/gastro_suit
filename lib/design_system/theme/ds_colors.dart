@@ -15,6 +15,8 @@ class DSColors extends ThemeExtension<DSColors> {
     required this.bgMain,
     required this.bgSurface,
     required this.bgSurfaceSunken,
+    required this.skeletonBase,
+    required this.skeletonHighlight,
     required this.bgInverse,
     required this.bgScrim,
     required this.brandPrimary,
@@ -64,6 +66,11 @@ class DSColors extends ThemeExtension<DSColors> {
 
   /// Recessed areas, placeholders.
   final Color bgSurfaceSunken;
+
+  /// Loading placeholders (handoff `Skeleton`): the shape's fill and the
+  /// lighter band that sweeps across it.
+  final Color skeletonBase;
+  final Color skeletonHighlight;
 
   /// Dark surfaces.
   final Color bgInverse;
@@ -147,6 +154,8 @@ class DSColors extends ThemeExtension<DSColors> {
     Color? bgMain,
     Color? bgSurface,
     Color? bgSurfaceSunken,
+    Color? skeletonBase,
+    Color? skeletonHighlight,
     Color? bgInverse,
     Color? bgScrim,
     Color? brandPrimary,
@@ -190,6 +199,8 @@ class DSColors extends ThemeExtension<DSColors> {
       bgMain: bgMain ?? this.bgMain,
       bgSurface: bgSurface ?? this.bgSurface,
       bgSurfaceSunken: bgSurfaceSunken ?? this.bgSurfaceSunken,
+      skeletonBase: skeletonBase ?? this.skeletonBase,
+      skeletonHighlight: skeletonHighlight ?? this.skeletonHighlight,
       bgInverse: bgInverse ?? this.bgInverse,
       bgScrim: bgScrim ?? this.bgScrim,
       brandPrimary: brandPrimary ?? this.brandPrimary,
@@ -238,6 +249,12 @@ class DSColors extends ThemeExtension<DSColors> {
       bgMain: Color.lerp(bgMain, other.bgMain, t)!,
       bgSurface: Color.lerp(bgSurface, other.bgSurface, t)!,
       bgSurfaceSunken: Color.lerp(bgSurfaceSunken, other.bgSurfaceSunken, t)!,
+      skeletonBase: Color.lerp(skeletonBase, other.skeletonBase, t)!,
+      skeletonHighlight: Color.lerp(
+        skeletonHighlight,
+        other.skeletonHighlight,
+        t,
+      )!,
       bgInverse: Color.lerp(bgInverse, other.bgInverse, t)!,
       bgScrim: Color.lerp(bgScrim, other.bgScrim, t)!,
       brandPrimary: Color.lerp(brandPrimary, other.brandPrimary, t)!,
@@ -305,6 +322,8 @@ const lightColors = DSColors(
   bgMain: DSPalette.gray0,
   bgSurface: DSPalette.gray0,
   bgSurfaceSunken: DSPalette.gray100,
+  skeletonBase: DSPalette.gray100,
+  skeletonHighlight: DSPalette.gray200,
   bgInverse: DSPalette.gray900,
   bgScrim: DSPalette.alphaBlack40,
   brandPrimary: DSPalette.accent500,

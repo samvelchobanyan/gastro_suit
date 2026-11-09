@@ -4,6 +4,8 @@
   "tabOrder": "Заказ",
   "tabGifts": "Подарки",
   "tabProfile": "Профиль",
+  "homeGreeting": "Время насладиться кофе",
+  "notifications": "Уведомления",
   "loginTitle": "Вход",
   "loginFieldLogin": "Email или телефон",
   "loginFieldPassword": "Пароль",

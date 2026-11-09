@@ -23,6 +23,20 @@ abstract final class DSSizes {
   static const double appBarHeight = 56;
   static const double bottomNavHeight = 48;
 
+  // Home header (handoff `Greeting`)
+  static const double headerLogo = 44;
+  static const double headerAction = 44;
+
+  /// The unread dot on a notification icon.
+  static const double notificationDot = 9;
+
+  // Home rails (handoff `Stories`, Home promo banners)
+  static const double storyCircle = 64;
+
+  /// A story's circle plus room for its label.
+  static const double storyItemWidth = 72;
+  static const double bannerWidth = 280;
+
   // Rows and list items
   static const double rowHeightCompact = 48;
   static const double rowHeightIcon = 56;

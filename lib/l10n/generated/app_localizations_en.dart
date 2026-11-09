@@ -21,6 +21,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tabProfile => 'Profile';
 
   @override
+  String get homeGreeting => 'Let\'s enjoy some coffee';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
   String get loginTitle => 'Sign in';
 
   @override

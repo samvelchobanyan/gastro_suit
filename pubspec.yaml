@@ -45,6 +45,9 @@ dependencies:
   freezed_annotation: ^3.1.0
   json_annotation: ^4.9.0
   phosphor_flutter: ^2.1.0
+  flutter_svg: ^2.3.0
+  cached_network_image: ^3.4.1
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +74,10 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   generate: true
+
+  # The client's brand: each client build ships its own files here.
+  assets:
+    - assets/brand/
 
   fonts:
     - family: PlusJakartaSans
