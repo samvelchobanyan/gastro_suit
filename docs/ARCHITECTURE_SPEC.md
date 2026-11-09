@@ -66,7 +66,7 @@ and domain state.
 
 ```text
 core/
-  config/       environment config (dev / prod), selected at build time via --dart-define
+  config/       build config (API address, …) from a JSON file: --dart-define-from-file
   network/      ApiClient (single wrapper over Dio), interceptors, AppException
   auth/         token storage, auth state
   navigation/   router, tab shell, route definitions
@@ -74,11 +74,20 @@ core/
   utils/        formatters and small helpers with no layer of their own
 ```
 
-- `ApiClient` is the only HTTP entry point. Only the data layer uses it.
-- Cross-cutting request concerns (auth header, locale header, error translation, logging)
-  are interceptors, not repository code.
-- The auth token is stored in `core/auth` and attached by an interceptor. Repositories and
-  features never handle the token.
+- Build config comes from `config/<env>.json`; code holds no addresses. A missing value
+  fails at startup.
+- `ApiClient` is the only HTTP entry point. Only the data layer uses it. The auth
+  interceptor is the exception: it refreshes the token and retries through its own bare
+  client, since requests made from inside the interceptor chain cannot pass through it
+  again.
+- Cross-cutting request concerns (auth header, token refresh, locale header, logging) are
+  interceptors, not repository code. Error translation is done by `ApiClient` itself: an
+  interceptor cannot change the type of the error Dio throws.
+- The auth tokens are owned by `TokenStorage` in `core/auth` and attached by an
+  interceptor. Only the auth repository writes them; other repositories and features never
+  handle them.
+- Whether the user is signed in is derived from `TokenStorage`, not stored separately:
+  sign-in, sign-out and a failed refresh change only the tokens.
 - Infrastructure that needs async initialization (token storage, API client) is created in
   `main` before `runApp` and injected via `ProviderScope` overrides. Consumers receive a
   ready instance synchronously.
@@ -177,7 +186,8 @@ Two places:
   `<screen>/widgets/`; several screens of one feature → `<feature>/presentation/widgets/`;
   several features → `shared_widgets/`. It moves up when a new consumer appears, not in
   advance.
-- The design handoff's component list does not decide placement; these rules do.
+- The design handoff's components decide neither how a screen is split into widgets nor
+  where a widget lives; that is decided here, per screen (`BUNDLE.md`).
 
 ---
 
@@ -206,8 +216,11 @@ Two places:
 
 ## 11. Errors
 
-- The application has one error type, `AppException`, with a kind (e.g. no connection,
-  timeout, unauthorized, validation, server) and an optional server message.
+- The application has one error type, `AppException`: a kind (no connection, timeout,
+  unauthorized, server, unknown) and, when the server answered, its `code` and `message`.
+  Logic branches on `code` (`invalid_credentials`, `email_not_verified`, …), which the API
+  keeps stable; `message` is one sentence for the user, already in the request's
+  language.
 - The data layer is the only place that creates it from transport failures.
 - The code that receives an error decides what to do with it (roll back, show an error
   state, retry). How an error is presented to the user is a design decision made per case.
@@ -252,4 +265,6 @@ Two places:
 | [[layered-architecture]]: three places for shared widgets (`design_system`, `shared/widgets`, `features/shared_widgets`) | Two places (`design_system/components`, `features/shared_widgets`) | Domain-agnostic helpers belong to the design system; the third place had no clear boundary |
 | [[centralized-network-error-notification]]: one root SnackBar for failed mutations | Not adopted by default | Error presentation depends on the design, which may differ per case; revisit if many places end up showing errors the same way |
 | [[design-system-tokens-mandatory]]: numeric names for scales longer than 5–6 values | Token names follow the design handoff (`DSSpacing.md`, `DSRadius.card`) | A handoff value maps to code without a lookup table |
+| [[api-client-with-config-and-interceptors]]: dev / prod addresses as constants in `AppConfig`, chosen by `--dart-define=ENV` | Values in `config/<env>.json`, passed with `--dart-define-from-file`; `AppConfig` only reads them | White-label: values differ per client as well as per environment; a file per build adds a client without touching code |
+| [[dto-to-domain-mapping]]: every API response is parsed through a DTO | The token pair (login, refresh) is read by a small function in `core/auth`, without a DTO | The pair never becomes domain data: it goes straight to `TokenStorage` and the auth header. A DTO would only wrap two strings, and the refresh in `core` could not use one from `data` |
 | [[design-system-tokens-mandatory]]: colours are `DSColors` constants; typography is read through context aliases | Colours are read through the theme (`context.colors`); typography is `DSTypography` constants | Colours are what a dark theme or another client changes; reading them through the theme from the start avoids rewriting every widget later. Text styles never change at runtime, and aliases only duplicated their names |

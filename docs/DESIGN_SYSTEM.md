@@ -1,12 +1,15 @@
 # GastroSuit — Design System
 
-Status: tokens done · components not started · 2026-11-07
+Status: tokens done · components added as they are reused · 2026-11-07
 
 ## 0. About this document
 
 How the design handoff's tokens map into code, and the rules for using them. Tokens are
-constants: colours, numbers for spacing, radii, heights, text styles. Components are
-described here when they are built.
+constants: colours, numbers for spacing, radii, heights, text styles.
+
+Components are not taken from the handoff's component list. A widget enters
+`design_system/components/` when it is reused and knows no domain
+(`ARCHITECTURE_SPEC.md` §8), and is described here then. See `BUNDLE.md`.
 
 Source of every value: the live handoff tokens in
 `coffee-house-ui/project/_ds/gastro-design-system-*/tokens/*.css`. Other copies of the

@@ -1,0 +1,14 @@
+{
+  "@@locale": "hy",
+  "tabHome": "Գլխավոր",
+  "tabOrder": "Պատվեր",
+  "tabGifts": "Նվերներ",
+  "tabProfile": "Պրոֆիլ",
+  "loginTitle": "Մուտք",
+  "loginFieldLogin": "Էլ. փոստ կամ հեռախոս",
+  "loginFieldPassword": "Գաղտնաբառ",
+  "signIn": "Մուտք գործել",
+  "signOut": "Դուրս գալ",
+  "errorNoConnection": "Ինտերնետ կապ չկա",
+  "errorGeneric": "Ինչ-որ բան սխալ է։ Խնդրում ենք կրկին փորձել։"
+}

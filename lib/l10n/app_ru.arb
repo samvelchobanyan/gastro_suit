@@ -1,0 +1,14 @@
+{
+  "@@locale": "ru",
+  "tabHome": "Главная",
+  "tabOrder": "Заказ",
+  "tabGifts": "Подарки",
+  "tabProfile": "Профиль",
+  "loginTitle": "Вход",
+  "loginFieldLogin": "Email или телефон",
+  "loginFieldPassword": "Пароль",
+  "signIn": "Войти",
+  "signOut": "Выйти",
+  "errorNoConnection": "Нет подключения к интернету",
+  "errorGeneric": "Что-то пошло не так. Попробуйте ещё раз."
+}

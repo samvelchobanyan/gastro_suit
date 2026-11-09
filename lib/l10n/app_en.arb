@@ -1,0 +1,47 @@
+{
+  "@@locale": "en",
+  "tabHome": "Home",
+  "@tabHome": {
+    "description": "Bottom navigation: Home tab"
+  },
+  "tabOrder": "Order",
+  "@tabOrder": {
+    "description": "Bottom navigation: Order tab"
+  },
+  "tabGifts": "Gifts",
+  "@tabGifts": {
+    "description": "Bottom navigation: Gifts tab"
+  },
+  "tabProfile": "Profile",
+  "@tabProfile": {
+    "description": "Bottom navigation: Profile tab"
+  },
+  "loginTitle": "Sign in",
+  "@loginTitle": {
+    "description": "Login screen: title"
+  },
+  "loginFieldLogin": "Email or phone",
+  "@loginFieldLogin": {
+    "description": "Login screen: login field label"
+  },
+  "loginFieldPassword": "Password",
+  "@loginFieldPassword": {
+    "description": "Login screen: password field label"
+  },
+  "signIn": "Sign in",
+  "@signIn": {
+    "description": "Button that signs in (login screen, profile)"
+  },
+  "signOut": "Sign out",
+  "@signOut": {
+    "description": "Profile: sign-out button"
+  },
+  "errorNoConnection": "No internet connection",
+  "@errorNoConnection": {
+    "description": "Error shown when the device is offline"
+  },
+  "errorGeneric": "Something went wrong. Please try again.",
+  "@errorGeneric": {
+    "description": "Error shown when nothing more specific is known"
+  }
+}

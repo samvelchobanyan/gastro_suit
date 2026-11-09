@@ -1,16 +1,27 @@
-# gastro_suit
+# GastroSuit
 
-A new Flutter project.
+White-label Flutter app for restaurants and coffee shops. Project docs: `docs/README.md`.
 
-## Getting Started
+## Run
 
-This project is a starting point for a Flutter application.
+Build values (API address, …) come from a JSON file in `config/`:
 
-A few resources to get you started if this is your first Flutter project:
+```
+flutter run --dart-define-from-file=config/dev.json
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+In VS Code: Run and Debug → "GastroSuit (dev)". A personal file such as
+`config/dev.local.json` is git-ignored.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Generated code
+
+Localization (`lib/l10n/*.arb`) regenerates on `flutter run`, or `flutter gen-l10n`.
+
+DTOs (`json_serializable`, not added yet): when the first one arrives, generate with
+
+```
+dart run build_runner build --delete-conflicting-outputs --force-jit
+```
+
+`--force-jit` is needed: a dependency uses build hooks, which the default (AOT) build
+script does not support.

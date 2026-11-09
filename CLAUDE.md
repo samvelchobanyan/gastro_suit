@@ -48,17 +48,19 @@ You must not create, modify or reorganize wiki pages — only the curator agent 
 
 ## 3. Design handoff
 
-Location and structure: to be defined after the handoff is analyzed (see `docs/BUNDLE.md`
-once written). The agreed JSON export format is `docs/design_export/FORMAT.md`.
+Location `coffee-house-ui/project/`; which files to read and what to take from them is in
+`docs/BUNDLE.md`. Only the rendered pages (`*.dc.html`) and what they load are read; JSON
+exports are not used.
 
-Rules that hold regardless of format:
-- From a component spec take: variants, size scale, states, icon slots, prop names and
-  meaning, internal composition. Ignore web markup, class names, inline styles.
-- React-flavoured constructs (`setState`, `{{ }}` bindings, logic classes) describe
-  **intent** — what state a screen has — never how to manage it. State management follows
+Rules:
+- The handoff defines **look and behaviour only**: layout, spacing, sizes, states, what
+  opens what. It does not define the architecture or how screens are split into widgets.
+- Its components are how the design tool drew the design, not a widget specification.
+  Widget boundaries, names and APIs are decided in this project per screen; matching a
+  handoff component is allowed, not required. Placement follows `ARCHITECTURE_SPEC.md` §8.
+- Page logic (`setState`, `{{ }}` bindings, `sc-if` / `sc-for`) describes **intent** —
+  what state a screen has — never how to manage it. State management follows
   `ARCHITECTURE_SPEC.md`.
-- The handoff's component list and folder layout do not decide where a widget lives in
-  code; `ARCHITECTURE_SPEC.md` §8 does.
 - Colours are read only through `context.colors` (the theme), never from `DSPalette` or a
   hardcoded value. A colour taken around the theme drops out of a re-skin or a dark theme,
   and the breakage shows up only when one is added.

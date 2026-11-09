@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Debug builds only: the dev API (config/dev.json) is plain HTTP.
+     Release builds use the system default, which blocks cleartext traffic. -->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">37.157.212.21</domain>
+    </domain-config>
+</network-security-config>

@@ -1,0 +1,64 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../features/auth/presentation/login/login_screen.dart';
+import '../../features/gifts/presentation/gifts/gifts_screen.dart';
+import '../../features/home/presentation/home/home_screen.dart';
+import '../../features/order/presentation/order/order_screen.dart';
+import '../../features/profile/presentation/profile/profile_screen.dart';
+import 'app_routes.dart';
+import 'main_shell.dart';
+
+/// The app router. A provider, so redirects can later watch auth state.
+final routerProvider = Provider<GoRouter>((ref) {
+  final router = GoRouter(
+    initialLocation: AppRoutes.home,
+    routes: [
+      // Each branch keeps its own navigation stack across tab switches.
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, shell) => MainShell(shell: shell),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.home,
+                builder: (context, state) => const HomeScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.order,
+                builder: (context, state) => const OrderScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.gifts,
+                builder: (context, state) => const GiftsScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.profile,
+                builder: (context, state) => const ProfileScreen(),
+              ),
+            ],
+          ),
+        ],
+      ),
+      // Outside the shell: sign-in belongs to no tab and covers the tab bar.
+      GoRoute(
+        path: AppRoutes.login,
+        builder: (context, state) => const LoginScreen(),
+      ),
+    ],
+  );
+  ref.onDispose(router.dispose);
+  return router;
+});

@@ -87,3 +87,10 @@ sessions: wallet money never expires; only loyalty points can expire.
 Whether it is the consent to marketing pushes (the PRD has per-channel marketing
 consents; the API has push, SMS and email consents) or turning all notifications on the
 device on and off.
+
+### 17. Guest access or sign-in first
+Whether the app can be used without signing in (menu and branches are public in the API;
+cart, loyalty, wallet and orders need an account), or the sign-in screen opens first
+whenever the user is not signed in. There is no sign-in or registration design yet.
+For now: a temporary sign-in screen opened from the Profile tab. Either answer is one
+router redirect on the auth state.
