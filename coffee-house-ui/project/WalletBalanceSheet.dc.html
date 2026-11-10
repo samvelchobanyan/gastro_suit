@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+</helmet>
+<x-import component-from-global-scope="GastroDesignSystem_472aed.BottomSheet" open="{{ open }}" on-close="{{ onClose }}" title="Wallet balance" hint-size="100%,auto">
+  <div style="display: flex; flex-direction: column; gap: var(--space-lg);">
+    <div style="display: flex; align-items: center; gap: var(--space-base); padding: var(--space-base); background: var(--gray-900); border-radius: var(--radius-md);">
+      <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-xxs);">
+        <span style="font: var(--text-body-sm); color: var(--gray-500);">Total balance</span>
+        <span style="font: var(--text-display); color: var(--gray-0);">֏5,680</span>
+      </div>
+      <img src="uploads/wallet_icon.png" alt="" style="flex: 0 0 auto; width: 56px; height: 56px; object-fit: contain; display: block;">
+    </div>
+    <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+      <div style="display: flex; align-items: center; gap: var(--space-md);">
+        <div style="flex: 0 0 auto; width: var(--button-height-sm); height: var(--button-height-sm); display: flex; align-items: center; justify-content: center; background: var(--gray-50); border-radius: var(--radius-md);">
+          <i class="ph ph-wallet" style="font-size: var(--icon-md); color: var(--color-text-primary);"></i>
+        </div>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-xxs);">
+          <span style="font: var(--text-body-semibold); color: var(--color-text-primary);">Top-up balance</span>
+          <span style="font: var(--text-body-sm); color: var(--color-text-tertiary);">No expiry · use anytime</span>
+        </div>
+        <span style="font: var(--text-body-semibold); color: var(--color-text-primary);">֏3,000</span>
+      </div>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" hint-size="100%,1px"></x-import>
+      <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <span style="font: var(--text-body-semibold); color: var(--color-text-primary);">From gift cards</span>
+        <span style="font: var(--text-body-sm); color: var(--color-text-tertiary);">֏2,680 total</span>
+      </div>
+      <sc-for list="{{ gifts }}" as="g" hint-placeholder-count="3">
+        <div style="display: flex; align-items: center; gap: var(--space-md);">
+          <div style="flex: 0 0 auto; width: var(--button-height-sm); height: var(--button-height-sm); display: flex; align-items: center; justify-content: center; background: var(--gray-50); border-radius: var(--radius-md);">
+            <i class="ph ph-gift" style="font-size: var(--icon-md); color: var(--color-text-primary);"></i>
+          </div>
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-xxs);">
+            <span style="font: var(--text-body); color: var(--color-text-primary);">{{ g.from }}</span>
+            <span style="font: var(--text-body-sm); color: {{ g.expColor }};">{{ g.expires }}</span>
+          </div>
+          <span style="font: var(--text-body-semibold); color: var(--color-text-primary);">{{ g.amount }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Button" variant="primary" size="sm" full-width="{{ true }}" on-click="{{ onTopUp }}" hint-size="100%,40px">Top up</x-import>
+  </div>
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;},&quot;onTopUp&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const soon = 'var(--color-text-error)', normal = 'var(--color-text-tertiary)';
+    return {
+      open: this.props.open ?? false,
+      onClose: this.props.onClose ?? (() => {}),
+      onTopUp: this.props.onTopUp ?? (() => {}),
+      gifts: [
+        { from: 'Gift card from Anna', amount: '֏1,000', expires: 'Expires 18 Nov 2026', expColor: soon },
+        { from: 'Gift card from Davit', amount: '֏980', expires: 'Expires 31 Dec 2026', expColor: normal },
+        { from: 'Gift card from Mariam', amount: '֏700', expires: 'Expires 15 Feb 2027', expColor: normal },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

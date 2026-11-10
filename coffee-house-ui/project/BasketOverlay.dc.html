@@ -178,7 +178,7 @@ class Component extends DCLogic {
       successOpen: !!this.state.successOpen,
       successLocation: this.props.branchName || this.state.selectedLocation || 'Tigran Petrosyan 31/5 (near Davtashen Yerevan City)',
       placeOrder: () => this.setState({ successOpen: true }),
-      trackOrder: () => { this.setState({ successOpen: false }); (this.props.onClose || (() => {}))(); },
+      trackOrder: () => { this.setState({ successOpen: false }); window.location.href = 'Home.dc.html?order=active'; },
       paymentMethods: [
         { id: '1', name: 'Visa •••• 4242', icon: 'credit-card', balance: '$24.50', chevron: true },
       ],

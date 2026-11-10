@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <style>
+    body { margin: 0; min-height: 100vh; box-sizing: border-box; padding: var(--space-lg) 0; background: var(--gray-100); font-family: "Plus Jakarta Sans", system-ui, sans-serif; display: flex; align-items: center; justify-content: center; }
+    a { color: var(--color-text-primary); } a:hover { color: var(--color-text-secondary); }
+  </style>
+</helmet>
+<div data-screen-label="Notifications" style="width: 360px; height: 800px; background: var(--color-bg-surface); overflow: hidden; display: flex; flex-direction: column; flex: 0 0 auto; position: relative;">
+  <x-import component-from-global-scope="GastroDesignSystem_472aed.ScreenHeader" title="Notifications" on-back="{{ goBack }}" hint-size="100%,56px"></x-import>
+  <div style="display: flex; justify-content: flex-end; padding: 0 var(--space-base) var(--space-sm);">
+    <button type="button" onClick="{{ markAll }}" disabled="{{ noUnread }}" style="padding: 0; border: none; background: transparent; cursor: pointer; font: var(--text-body-semibold); color: var(--color-text-primary); opacity: {{ markOpacity }};">Mark all as read</button>
+  </div>
+  <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 0 var(--space-base) var(--space-lg); display: flex; flex-direction: column; gap: var(--space-lg);">
+    <sc-for list="{{ groups }}" as="g" hint-placeholder-count="2">
+      <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="{{ g.title }}" hint-size="100%,28px"></x-import>
+        <sc-for list="{{ g.items }}" as="n" hint-placeholder-count="3">
+          <sc-if value="{{ n.divider }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" hint-size="100%,1px"></x-import>
+          </sc-if>
+          <div onClick="{{ n.read }}" style="display: flex; align-items: flex-start; gap: var(--space-md); cursor: pointer;">
+            <div style="flex: 0 0 auto; width: var(--button-height-md); height: var(--button-height-md); display: flex; align-items: center; justify-content: center; background: {{ n.iconBg }}; border-radius: var(--radius-md);">
+              <i class="ph {{ n.icon }}" style="font-size: var(--icon-md); color: {{ n.iconColor }};"></i>
+            </div>
+            <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-xxs);">
+              <div style="display: flex; align-items: baseline; gap: var(--space-sm);">
+                <span style="flex: 1; min-width: 0; font: var(--text-body-semibold); color: var(--color-text-primary);">{{ n.title }}</span>
+                <span style="flex: 0 0 auto; font: var(--text-caption); color: var(--color-text-tertiary);">{{ n.time }}</span>
+              </div>
+              <span style="font: var(--text-body); color: var(--color-text-secondary); text-wrap: pretty;">{{ n.body }}</span>
+            </div>
+            <div style="flex: 0 0 auto; width: 8px; height: 8px; margin-top: var(--space-sm); border-radius: var(--radius-full); background: {{ n.dot }};"></div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:800}}">
+class Component extends DCLogic {
+  state = { read: {} };
+  data = [
+    { title: 'Today', items: [
+      { id: 'ready', icon: 'ph-coffee', title: 'Your order is ready', body: 'Order No. 13631 is waiting for you at Northern Avenue.', time: '09:42', accent: true },
+      { id: 'gift', icon: 'ph-gift', title: 'You received a gift card', body: 'Anna sent you ֏1,000. It was added to your wallet.', time: '08:15' },
+      { id: 'points', icon: 'ph-star', title: '120 points earned', body: 'Thanks for your purchase — your balance is now 1,240 pts.', time: '08:03' },
+    ] },
+    { title: 'Earlier', items: [
+      { id: 'expire', icon: 'ph-clock', title: 'Gift card expires soon', body: '֏1,000 from Anna expires on 18 Nov. Use it before then.', time: 'Yesterday' },
+      { id: 'offer', icon: 'ph-percent', title: 'Iced drinks −20%', body: 'All iced drinks are 20% off until Sunday at every branch.', time: '8 Nov' },
+      { id: 'tier', icon: 'ph-crown', title: 'Welcome to Master', body: 'You now get 10% cashback on every order.', time: '2 Nov' },
+    ] },
+  ];
+  componentDidMount() { this.setState({ read: { offer: true, tier: true } }); }
+  renderVals() {
+    const read = this.state.read;
+    const all = this.data.flatMap((g) => g.items);
+    const unread = all.filter((n) => !read[n.id]).length;
+    return {
+      goBack: () => { window.location.href = 'Home.dc.html'; },
+      noUnread: unread === 0,
+      markOpacity: unread === 0 ? 'var(--state-disabled-opacity)' : 1,
+      markAll: () => this.setState({ read: Object.fromEntries(all.map((n) => [n.id, true])) }),
+      groups: this.data.map((g) => ({
+        title: g.title,
+        items: g.items.map((n, i) => {
+          const isRead = !!read[n.id];
+          return {
+            ...n,
+            divider: i > 0,
+            iconBg: n.accent ? 'var(--accent-500)' : 'var(--gray-50)',
+            iconColor: n.accent ? 'var(--gray-0)' : 'var(--color-text-primary)',
+            dot: isRead ? 'transparent' : 'var(--accent-500)',
+            read: () => this.setState((s) => ({ read: { ...s.read, [n.id]: true } })),
+          };
+        }),
+      })),
+    };
+  }
+}
+</script>
+</body>
+</html>

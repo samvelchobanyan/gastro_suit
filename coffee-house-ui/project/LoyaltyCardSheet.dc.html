@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+</helmet>
+<div style="position: absolute; inset: 0; z-index: 50; pointer-events: {{ pe }}; overflow: hidden;">
+  <div onClick="{{ close }}" style="position: absolute; inset: 0; background: var(--alpha-black-40); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); opacity: {{ scrimOpacity }}; transition: opacity var(--duration-slow, 300ms) ease;"></div>
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; transform: {{ sheetTransform }}; transition: transform var(--duration-slow, 300ms) cubic-bezier(0.2, 0, 0, 1); border-radius: var(--radius-xl) var(--radius-xl) 0 0; overflow: hidden; background: color-mix(in oklab, var(--gray-1000, #000) 78%, transparent); backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%); box-shadow: {{ sheetShadow }};">
+    <div aria-hidden="true" style="position: absolute; top: -140px; left: -100px; width: 300px; height: 300px; border-radius: 50%; background: var(--gray-0); opacity: 0.08; filter: blur(80px); pointer-events: none;"></div>
+    <div aria-hidden="true" style="position: absolute; bottom: -100px; right: -90px; width: 260px; height: 260px; border-radius: 50%; background: var(--accent-500); opacity: 0.22; filter: blur(90px); pointer-events: none;"></div>
+    <div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: var(--space-lg); padding: var(--space-sm) var(--space-base) var(--space-lg);">
+      <div style="width: 36px; height: 4px; border-radius: var(--radius-full); background: color-mix(in oklab, var(--gray-0) 35%, transparent);"></div>
+      <div style="align-self: stretch; display: flex; align-items: center; justify-content: flex-end;">
+        <button type="button" onClick="{{ openInfo }}" aria-label="How the loyalty program works" style="width: 44px; height: 44px; margin: calc(var(--space-sm) * -1) calc(var(--space-sm) * -1) calc(var(--space-sm) * -1) 0; padding: 0; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--gray-0);"><i class="ph ph-info" style="font-size: var(--icon-md);"></i></button>
+      </div>
+      <img src="uploads/ch_logo-69a8ddeb.svg" alt="Coffee House" style="width: var(--button-height-md); height: var(--button-height-md); object-fit: contain; display: block;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-sm);">
+        <img src="qr-code.svg" alt="Loyalty QR code" style="width: 200px; height: 200px; display: block;">
+        <span style="font: var(--text-body-sm); color: color-mix(in oklab, var(--gray-0) 70%, transparent);">Scan at checkout to earn points</span>
+      </div>
+      <div style="align-self: stretch; display: flex; flex-direction: column; align-items: center; gap: var(--space-xxs); padding: var(--space-base); border-radius: var(--radius-lg); background: url('uploads/balance_bg-465a711c.png') center / 328px 90px no-repeat, color-mix(in oklab, var(--gray-0) 6%, transparent);">
+        <span style="font: var(--text-body-sm); color: color-mix(in oklab, var(--gray-0) 70%, transparent);">Available balance</span>
+        <span style="font: var(--text-display); color: var(--gray-0);">1,240 pts</span>
+      </div>
+      <div style="align-self: stretch; display: flex; flex-direction: column; gap: var(--space-sm); padding-top: var(--space-base); border-top: 1px solid color-mix(in oklab, var(--gray-0) 14%, transparent);">
+        <div style="display: flex; justify-content: space-between;">
+          <span style="display: flex; align-items: center; gap: var(--space-xs); font: var(--text-body-semibold); color: var(--gray-0);"><i class="ph ph-crown" style="font-size: var(--icon-sm);"></i>Master 10%</span>
+          <span style="display: flex; align-items: center; gap: var(--space-xs); font: var(--text-body); color: color-mix(in oklab, var(--gray-0) 70%, transparent);"><i class="ph ph-crown" style="font-size: var(--icon-sm);"></i>Gold 15%</span>
+        </div>
+        <div style="height: 8px; border-radius: var(--radius-full); background: color-mix(in oklab, var(--gray-0) 16%, transparent); overflow: hidden;">
+          <div style="width: 65%; height: 100%; border-radius: var(--radius-full); background: var(--accent-500); box-shadow: 0 0 12px var(--accent-500);"></div>
+        </div>
+        <span style="font: var(--text-body-sm); color: color-mix(in oklab, var(--gray-0) 70%, transparent); text-align: center;">Spend ֏35,000 more to reach Gold 15%</span>
+      </div>
+    </div>
+  </div>
+  <dc-import name="LoyaltyInfoSheet" open="{{ infoOpen }}" on-close="{{ closeInfo }}" hint-size="100%,100%"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:800},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { infoOpen: false };
+  renderVals() {
+    const open = !!this.props.open;
+    const onClose = this.props.onClose ?? (() => {});
+    return {
+      pe: open ? 'auto' : 'none',
+      scrimOpacity: open ? 1 : 0,
+      sheetTransform: open ? 'translateY(0)' : 'translateY(100%)',
+      sheetShadow: open ? 'var(--elevation-sheet)' : 'none',
+      close: () => { this.setState({ infoOpen: false }); onClose(); },
+      infoOpen: open && this.state.infoOpen,
+      openInfo: () => this.setState({ infoOpen: true }),
+      closeInfo: () => this.setState({ infoOpen: false }),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"GastroDesignSystem_472aed","components":[{"name":"Avatar","sourcePath":"components/avatar/Avatar.jsx"},{"name":"Badge","sourcePath":"components/badge/Badge.jsx"},{"name":"BankCard","sourcePath":"components/bank-card/BankCard.jsx"},{"name":"Button","sourcePath":"components/buttons/Button.jsx"},{"name":"Cart","sourcePath":"components/cart/Cart.jsx"},{"name":"Chip","sourcePath":"components/chip/Chip.jsx"},{"name":"ReservationConfirmationCard","sourcePath":"components/confirmations/ReservationConfirmationCard.jsx"},{"name":"Checkbox","sourcePath":"components/controls/Checkbox.jsx"},{"name":"CheckboxAddOn","sourcePath":"components/controls/CheckboxAddOn.jsx"},{"name":"CheckboxAddOnSimple","sourcePath":"components/controls/CheckboxAddOnSimple.jsx"},{"name":"Dropdown","sourcePath":"components/controls/Dropdown.jsx"},{"name":"Input","sourcePath":"components/controls/Input.jsx"},{"name":"LanguageSwitcher","sourcePath":"components/controls/LanguageSwitcher.jsx"},{"name":"RadioAddOn","sourcePath":"components/controls/RadioAddOn.jsx"},{"name":"RadioAddOnSimple","sourcePath":"components/controls/RadioAddOnSimple.jsx"},{"name":"RadioButton","sourcePath":"components/controls/RadioButton.jsx"},{"name":"SizeSelector","sourcePath":"components/controls/SizeSelector.jsx"},{"name":"Textarea","sourcePath":"components/controls/Textarea.jsx"},{"name":"TipSelector","sourcePath":"components/controls/TipSelector.jsx"},{"name":"Toggle","sourcePath":"components/controls/Toggle.jsx"},{"name":"Card","sourcePath":"components/data-display/Card.jsx"},{"name":"Divider","sourcePath":"components/data-display/Divider.jsx"},{"name":"BottomSheet","sourcePath":"components/feedback/BottomSheet.jsx"},{"name":"Dialog","sourcePath":"components/feedback/Dialog.jsx"},{"name":"EmptyState","sourcePath":"components/feedback/EmptyState.jsx"},{"name":"ErrorState","sourcePath":"components/feedback/ErrorState.jsx"},{"name":"ProgressBar","sourcePath":"components/feedback/ProgressBar.jsx"},{"name":"Skeleton","sourcePath":"components/feedback/Skeleton.jsx"},{"name":"Spinner","sourcePath":"components/feedback/Spinner.jsx"},{"name":"Toast","sourcePath":"components/feedback/Toast.jsx"},{"name":"Filter","sourcePath":"components/filter/Filter.jsx"},{"name":"FilterBar","sourcePath":"components/filter/FilterBar.jsx"},{"name":"FormGroup","sourcePath":"components/forms/FormGroup.jsx"},{"name":"Slider","sourcePath":"components/forms/Slider.jsx"},{"name":"Stepper","sourcePath":"components/forms/Stepper.jsx"},{"name":"Greeting","sourcePath":"components/greeting/Greeting.jsx"},{"name":"IconButton","sourcePath":"components/icon-button/IconButton.jsx"},{"name":"Invite","sourcePath":"components/invite/Invite.jsx"},{"name":"AdvancedListItem","sourcePath":"components/list-items/AdvancedListItem.jsx"},{"name":"SimpleListItem","sourcePath":"components/list-items/SimpleListItem.jsx"},{"name":"LoyaltyPointsCard","sourcePath":"components/loyalty/LoyaltyPointsCard.jsx"},{"name":"MembershipTierPill","sourcePath":"components/loyalty/MembershipTierPill.jsx"},{"name":"Wallet","sourcePath":"components/loyalty/Wallet.jsx"},{"name":"MembershipCard","sourcePath":"components/membership-card/MembershipCard.jsx"},{"name":"CartLineItem","sourcePath":"components/menu/CartLineItem.jsx"},{"name":"MenuItemCard","sourcePath":"components/menu/MenuItemCard.jsx"},{"name":"BottomNavigation","sourcePath":"components/navigation/BottomNavigation.jsx"},{"name":"NewsListing","sourcePath":"components/news/NewsListing.jsx"},{"name":"PaymentMethods","sourcePath":"components/payment-methods/PaymentMethods.jsx"},{"name":"Calendar","sourcePath":"components/pickers/Calendar.jsx"},{"name":"DatePicker","sourcePath":"components/pickers/DatePicker.jsx"},{"name":"TimePicker","sourcePath":"components/pickers/TimePicker.jsx"},{"name":"BuyAgainCard","sourcePath":"components/product-cards/BuyAgainCard.jsx"},{"name":"ProductBasket","sourcePath":"components/product-cards/ProductBasket.jsx"},{"name":"ProductBasketDark","sourcePath":"components/product-cards/ProductBasketDark.jsx"},{"name":"ProductFavorite","sourcePath":"components/product-cards/ProductFavorite.jsx"},{"name":"ProductHistory","sourcePath":"components/product-cards/ProductHistory.jsx"},{"name":"ProductHorizontalCard","sourcePath":"components/product-cards/ProductHorizontalCard.jsx"},{"name":"ProductMenuCard","sourcePath":"components/product-cards/ProductMenuCard.jsx"},{"name":"ProductVerticalCard","sourcePath":"components/product-cards/ProductVerticalCard.jsx"},{"name":"QuickActionTile","sourcePath":"components/quick-action-tiles/QuickActionTiles.jsx"},{"name":"QuickActionTiles","sourcePath":"components/quick-action-tiles/QuickActionTiles.jsx"},{"name":"RatingStars","sourcePath":"components/rating/RatingStars.jsx"},{"name":"AddressSelector","sourcePath":"components/restaurant/AddressSelector.jsx"},{"name":"BranchCard","sourcePath":"components/restaurant/BranchCard.jsx"},{"name":"BranchSelectorCard","sourcePath":"components/restaurant/BranchSelectorCard.jsx"},{"name":"DeliveryPickupToggle","sourcePath":"components/restaurant/DeliveryPickupToggle.jsx"},{"name":"DeliveryTimeEstimate","sourcePath":"components/restaurant/DeliveryTimeEstimate.jsx"},{"name":"RestaurantCard","sourcePath":"components/restaurant/RestaurantCard.jsx"},{"name":"RestaurantHeader","sourcePath":"components/restaurant/RestaurantHeader.jsx"},{"name":"ScreenHeader","sourcePath":"components/screen-header/ScreenHeader.jsx"},{"name":"SectionHeader","sourcePath":"components/section-header/SectionHeader.jsx"},{"name":"StatusPill","sourcePath":"components/status-pill/StatusPill.jsx"},{"name":"Stories","sourcePath":"components/stories/Stories.jsx"},{"name":"MenuCategoryTabs","sourcePath":"components/tabs/MenuCategoryTabs.jsx"},{"name":"MenuTabs","sourcePath":"components/tabs/MenuTabs.jsx"},{"name":"MenuTabsVertical","sourcePath":"components/tabs/MenuTabsVertical.jsx"},{"name":"TabBar","sourcePath":"components/tabs/TabBar.jsx"},{"name":"Tag","sourcePath":"components/tag/Tag.jsx"},{"name":"Tooltip","sourcePath":"components/tooltip/Tooltip.jsx"},{"name":"Transactions","sourcePath":"components/transactions/Transactions.jsx"},{"name":"UserCard","sourcePath":"components/user-card/UserCard.jsx"},{"name":"UserProfile","sourcePath":"components/user-card/UserProfile.jsx"},{"name":"UserStatus","sourcePath":"components/user-status/UserStatus.jsx"},{"name":"Voucher","sourcePath":"components/voucher/Voucher.jsx"},{"name":"VoucherListing","sourcePath":"components/voucher/VoucherListing.jsx"},{"name":"VoucherPurchase","sourcePath":"components/voucher/VoucherPurchase.jsx"}],"sourceHashes":{"components/avatar/Avatar.jsx":"da069a8b2510","components/badge/Badge.jsx":"51e8a7f25f39","components/bank-card/BankCard.jsx":"5d7ceae60a31","components/buttons/Button.jsx":"99fa7a106048","components/cart/Cart.jsx":"1eaa5c4bebdb","components/chip/Chip.jsx":"a9d2a705b8ca","components/confirmations/ReservationConfirmationCard.jsx":"2d19e3bf2f71","components/controls/Checkbox.jsx":"342f33669381","components/controls/CheckboxAddOn.jsx":"6aef662849dc","components/controls/CheckboxAddOnSimple.jsx":"0aed429cb063","components/controls/Dropdown.jsx":"d16cbf17b9fa","components/controls/Input.jsx":"b661e3b3d465","components/controls/LanguageSwitcher.jsx":"704c6d834872","components/controls/RadioAddOn.jsx":"155bbef947d3","components/controls/RadioAddOnSimple.jsx":"c2de1cdd1702","components/controls/RadioButton.jsx":"f6c30e33839d","components/controls/SizeSelector.jsx":"29b558200859","components/controls/Textarea.jsx":"4de9b9dbd0bd","components/controls/TipSelector.jsx":"9bae2e3e34ea","components/controls/Toggle.jsx":"42eee0804b7c","components/data-display/Card.jsx":"80d80df71363","components/data-display/Divider.jsx":"a7fd88025b91","components/feedback/BottomSheet.jsx":"f2a9494397a7","components/feedback/Dialog.jsx":"ec1efb7ed9d8","components/feedback/EmptyState.jsx":"eace8779db2e","components/feedback/ErrorState.jsx":"dcc9e6fe71c7","components/feedback/ProgressBar.jsx":"e33af52bd6b6","components/feedback/Skeleton.jsx":"055d1a5bb98e","components/feedback/Spinner.jsx":"b3ab6cc557cc","components/feedback/Toast.jsx":"c651d9ac3bf6","components/filter/Filter.jsx":"af97cc989f70","components/filter/FilterBar.jsx":"c29849f85d8f","components/forms/FormGroup.jsx":"fc86105170e8","components/forms/Slider.jsx":"d9dbebc631a1","components/forms/Stepper.jsx":"28cbdff61267","components/greeting/Greeting.jsx":"0bafc19ac206","components/icon-button/IconButton.jsx":"74d2c2d19d41","components/invite/Invite.jsx":"0d40b427cd69","components/list-items/AdvancedListItem.jsx":"81bc6eed0faf","components/list-items/SimpleListItem.jsx":"b1ca23d9b3bb","components/loyalty/LoyaltyPointsCard.jsx":"9d74068cf0d8","components/loyalty/MembershipTierPill.jsx":"52942d99afaa","components/loyalty/Wallet.jsx":"7fb0d9cc6064","components/membership-card/MembershipCard.jsx":"248f07651cd7","components/menu/CartLineItem.jsx":"af8c08afc065","components/menu/MenuItemCard.jsx":"2c4b72347704","components/navigation/BottomNavigation.jsx":"c69e09501dc2","components/news/NewsListing.jsx":"f36a0e83ddfe","components/payment-methods/PaymentMethods.jsx":"2db4cbec39ff","components/pickers/Calendar.jsx":"49834a03989a","components/pickers/DatePicker.jsx":"fc29f9a519bc","components/pickers/TimePicker.jsx":"c026eab68ca8","components/product-cards/BuyAgainCard.jsx":"90bdaa8b67c0","components/product-cards/ProductBasket.jsx":"a687791269af","components/product-cards/ProductBasketDark.jsx":"607a07d4fc79","components/product-cards/ProductFavorite.jsx":"e2c457acea3a","components/product-cards/ProductHistory.jsx":"96a8438fdc73","components/product-cards/ProductHorizontalCard.jsx":"99178ce65e75","components/product-cards/ProductMenuCard.jsx":"c429e398e48d","components/product-cards/ProductVerticalCard.jsx":"5ed45e0c1c18","components/quick-action-tiles/QuickActionTiles.jsx":"fd07286ef2ad","components/rating/RatingStars.jsx":"2d7b9578e01b","components/restaurant/AddressSelector.jsx":"aafadf4f60d9","components/restaurant/BranchCard.jsx":"9aaf42833df9","components/restaurant/BranchSelectorCard.jsx":"a7a1fcdaf02d","components/restaurant/DeliveryPickupToggle.jsx":"4c3c0499a02f","components/restaurant/DeliveryTimeEstimate.jsx":"3e8f14992235","components/restaurant/RestaurantCard.jsx":"746b5c237a5c","components/restaurant/RestaurantHeader.jsx":"16bcd96656cb","components/screen-header/ScreenHeader.jsx":"7005b9bb8e9a","components/section-header/SectionHeader.jsx":"275066926db6","components/status-pill/StatusPill.jsx":"e3e69e7bfaa0","components/stories/Stories.jsx":"8c019f319741","components/tabs/MenuCategoryTabs.jsx":"f6c7b6ba35f7","components/tabs/MenuTabs.jsx":"3f4a890aed18","components/tabs/MenuTabsVertical.jsx":"44124a93cf82","components/tabs/TabBar.jsx":"d1545e48792b","components/tag/Tag.jsx":"69c7dd1918a1","components/tooltip/Tooltip.jsx":"4ea5cfa6b7e2","components/transactions/Transactions.jsx":"4c7057248c9e","components/user-card/UserCard.jsx":"442fdfc15945","components/user-card/UserProfile.jsx":"3b9d0b0f258a","components/user-status/UserStatus.jsx":"8a4c3ca97c21","components/voucher/Voucher.jsx":"af10efabb3ca","components/voucher/VoucherListing.jsx":"2554e02d2912","components/voucher/VoucherPurchase.jsx":"a87a760b7ad2"},"inlinedExternals":[],"unexposedExports":[]} */
+/* @ds-bundle: {"format":4,"namespace":"GastroDesignSystem_472aed","components":[{"name":"Avatar","sourcePath":"components/avatar/Avatar.jsx"},{"name":"Badge","sourcePath":"components/badge/Badge.jsx"},{"name":"BadgeCounter","sourcePath":"components/badge/BadgeCounter.jsx"},{"name":"BankCard","sourcePath":"components/bank-card/BankCard.jsx"},{"name":"Button","sourcePath":"components/buttons/Button.jsx"},{"name":"Cart","sourcePath":"components/cart/Cart.jsx"},{"name":"Chip","sourcePath":"components/chip/Chip.jsx"},{"name":"ReservationConfirmationCard","sourcePath":"components/confirmations/ReservationConfirmationCard.jsx"},{"name":"Checkbox","sourcePath":"components/controls/Checkbox.jsx"},{"name":"CheckboxAddOn","sourcePath":"components/controls/CheckboxAddOn.jsx"},{"name":"CheckboxAddOnSimple","sourcePath":"components/controls/CheckboxAddOnSimple.jsx"},{"name":"Dropdown","sourcePath":"components/controls/Dropdown.jsx"},{"name":"Input","sourcePath":"components/controls/Input.jsx"},{"name":"LanguageSwitcher","sourcePath":"components/controls/LanguageSwitcher.jsx"},{"name":"RadioAddOn","sourcePath":"components/controls/RadioAddOn.jsx"},{"name":"RadioAddOnSimple","sourcePath":"components/controls/RadioAddOnSimple.jsx"},{"name":"RadioButton","sourcePath":"components/controls/RadioButton.jsx"},{"name":"SizeSelector","sourcePath":"components/controls/SizeSelector.jsx"},{"name":"Textarea","sourcePath":"components/controls/Textarea.jsx"},{"name":"TipSelector","sourcePath":"components/controls/TipSelector.jsx"},{"name":"Toggle","sourcePath":"components/controls/Toggle.jsx"},{"name":"Card","sourcePath":"components/data-display/Card.jsx"},{"name":"Divider","sourcePath":"components/data-display/Divider.jsx"},{"name":"BottomSheet","sourcePath":"components/feedback/BottomSheet.jsx"},{"name":"Dialog","sourcePath":"components/feedback/Dialog.jsx"},{"name":"EmptyState","sourcePath":"components/feedback/EmptyState.jsx"},{"name":"ErrorState","sourcePath":"components/feedback/ErrorState.jsx"},{"name":"ProgressBar","sourcePath":"components/feedback/ProgressBar.jsx"},{"name":"Skeleton","sourcePath":"components/feedback/Skeleton.jsx"},{"name":"Spinner","sourcePath":"components/feedback/Spinner.jsx"},{"name":"Toast","sourcePath":"components/feedback/Toast.jsx"},{"name":"Filter","sourcePath":"components/filter/Filter.jsx"},{"name":"FilterBar","sourcePath":"components/filter/FilterBar.jsx"},{"name":"FormGroup","sourcePath":"components/forms/FormGroup.jsx"},{"name":"Slider","sourcePath":"components/forms/Slider.jsx"},{"name":"Stepper","sourcePath":"components/forms/Stepper.jsx"},{"name":"Greeting","sourcePath":"components/greeting/Greeting.jsx"},{"name":"IconButton","sourcePath":"components/icon-button/IconButton.jsx"},{"name":"Invite","sourcePath":"components/invite/Invite.jsx"},{"name":"AdvancedListItem","sourcePath":"components/list-items/AdvancedListItem.jsx"},{"name":"SimpleListItem","sourcePath":"components/list-items/SimpleListItem.jsx"},{"name":"LoyaltyPointsCard","sourcePath":"components/loyalty/LoyaltyPointsCard.jsx"},{"name":"MembershipTierPill","sourcePath":"components/loyalty/MembershipTierPill.jsx"},{"name":"Wallet","sourcePath":"components/loyalty/Wallet.jsx"},{"name":"MembershipCard","sourcePath":"components/membership-card/MembershipCard.jsx"},{"name":"CartLineItem","sourcePath":"components/menu/CartLineItem.jsx"},{"name":"MenuItemCard","sourcePath":"components/menu/MenuItemCard.jsx"},{"name":"BottomNavigation","sourcePath":"components/navigation/BottomNavigation.jsx"},{"name":"NewsListing","sourcePath":"components/news/NewsListing.jsx"},{"name":"PaymentMethods","sourcePath":"components/payment-methods/PaymentMethods.jsx"},{"name":"Calendar","sourcePath":"components/pickers/Calendar.jsx"},{"name":"DatePicker","sourcePath":"components/pickers/DatePicker.jsx"},{"name":"TimePicker","sourcePath":"components/pickers/TimePicker.jsx"},{"name":"BuyAgainCard","sourcePath":"components/product-cards/BuyAgainCard.jsx"},{"name":"ProductBasket","sourcePath":"components/product-cards/ProductBasket.jsx"},{"name":"ProductBasketDark","sourcePath":"components/product-cards/ProductBasketDark.jsx"},{"name":"ProductFavorite","sourcePath":"components/product-cards/ProductFavorite.jsx"},{"name":"ProductHistory","sourcePath":"components/product-cards/ProductHistory.jsx"},{"name":"ProductHorizontalCard","sourcePath":"components/product-cards/ProductHorizontalCard.jsx"},{"name":"ProductMenuCard","sourcePath":"components/product-cards/ProductMenuCard.jsx"},{"name":"ProductVerticalCard","sourcePath":"components/product-cards/ProductVerticalCard.jsx"},{"name":"QuickActionTile","sourcePath":"components/quick-action-tiles/QuickActionTiles.jsx"},{"name":"QuickActionTiles","sourcePath":"components/quick-action-tiles/QuickActionTiles.jsx"},{"name":"RatingStars","sourcePath":"components/rating/RatingStars.jsx"},{"name":"AddressSelector","sourcePath":"components/restaurant/AddressSelector.jsx"},{"name":"BranchCard","sourcePath":"components/restaurant/BranchCard.jsx"},{"name":"BranchSelectorCard","sourcePath":"components/restaurant/BranchSelectorCard.jsx"},{"name":"DeliveryPickupToggle","sourcePath":"components/restaurant/DeliveryPickupToggle.jsx"},{"name":"DeliveryTimeEstimate","sourcePath":"components/restaurant/DeliveryTimeEstimate.jsx"},{"name":"RestaurantCard","sourcePath":"components/restaurant/RestaurantCard.jsx"},{"name":"RestaurantHeader","sourcePath":"components/restaurant/RestaurantHeader.jsx"},{"name":"ScreenHeader","sourcePath":"components/screen-header/ScreenHeader.jsx"},{"name":"SectionHeader","sourcePath":"components/section-header/SectionHeader.jsx"},{"name":"StatusPill","sourcePath":"components/status-pill/StatusPill.jsx"},{"name":"Stories","sourcePath":"components/stories/Stories.jsx"},{"name":"MenuCategoryTabs","sourcePath":"components/tabs/MenuCategoryTabs.jsx"},{"name":"MenuTabs","sourcePath":"components/tabs/MenuTabs.jsx"},{"name":"MenuTabsVertical","sourcePath":"components/tabs/MenuTabsVertical.jsx"},{"name":"TabBar","sourcePath":"components/tabs/TabBar.jsx"},{"name":"Tag","sourcePath":"components/tag/Tag.jsx"},{"name":"Tooltip","sourcePath":"components/tooltip/Tooltip.jsx"},{"name":"Transactions","sourcePath":"components/transactions/Transactions.jsx"},{"name":"UserCard","sourcePath":"components/user-card/UserCard.jsx"},{"name":"UserProfile","sourcePath":"components/user-card/UserProfile.jsx"},{"name":"UserStatus","sourcePath":"components/user-status/UserStatus.jsx"},{"name":"Voucher","sourcePath":"components/voucher/Voucher.jsx"},{"name":"VoucherListing","sourcePath":"components/voucher/VoucherListing.jsx"},{"name":"VoucherPurchase","sourcePath":"components/voucher/VoucherPurchase.jsx"}],"sourceHashes":{"components/avatar/Avatar.jsx":"da069a8b2510","components/badge/Badge.jsx":"51e8a7f25f39","components/bank-card/BankCard.jsx":"5d7ceae60a31","components/buttons/Button.jsx":"99fa7a106048","components/cart/Cart.jsx":"1eaa5c4bebdb","components/chip/Chip.jsx":"a9d2a705b8ca","components/confirmations/ReservationConfirmationCard.jsx":"2d19e3bf2f71","components/controls/Checkbox.jsx":"342f33669381","components/controls/CheckboxAddOn.jsx":"6aef662849dc","components/controls/CheckboxAddOnSimple.jsx":"0aed429cb063","components/controls/Dropdown.jsx":"d16cbf17b9fa","components/controls/Input.jsx":"b661e3b3d465","components/controls/LanguageSwitcher.jsx":"704c6d834872","components/controls/RadioAddOn.jsx":"155bbef947d3","components/controls/RadioAddOnSimple.jsx":"c2de1cdd1702","components/controls/RadioButton.jsx":"f6c30e33839d","components/controls/SizeSelector.jsx":"29b558200859","components/controls/Textarea.jsx":"4de9b9dbd0bd","components/controls/TipSelector.jsx":"9bae2e3e34ea","components/controls/Toggle.jsx":"42eee0804b7c","components/data-display/Card.jsx":"80d80df71363","components/data-display/Divider.jsx":"a7fd88025b91","components/feedback/BottomSheet.jsx":"f2a9494397a7","components/feedback/Dialog.jsx":"ec1efb7ed9d8","components/feedback/EmptyState.jsx":"eace8779db2e","components/feedback/ErrorState.jsx":"dcc9e6fe71c7","components/feedback/ProgressBar.jsx":"e33af52bd6b6","components/feedback/Skeleton.jsx":"055d1a5bb98e","components/feedback/Spinner.jsx":"b3ab6cc557cc","components/feedback/Toast.jsx":"c651d9ac3bf6","components/filter/Filter.jsx":"af97cc989f70","components/filter/FilterBar.jsx":"c29849f85d8f","components/forms/FormGroup.jsx":"fc86105170e8","components/forms/Slider.jsx":"d9dbebc631a1","components/forms/Stepper.jsx":"28cbdff61267","components/greeting/Greeting.jsx":"0bafc19ac206","components/icon-button/IconButton.jsx":"74d2c2d19d41","components/invite/Invite.jsx":"0d40b427cd69","components/list-items/AdvancedListItem.jsx":"81bc6eed0faf","components/list-items/SimpleListItem.jsx":"b1ca23d9b3bb","components/loyalty/LoyaltyPointsCard.jsx":"9d74068cf0d8","components/loyalty/MembershipTierPill.jsx":"52942d99afaa","components/loyalty/Wallet.jsx":"7fb0d9cc6064","components/membership-card/MembershipCard.jsx":"248f07651cd7","components/menu/CartLineItem.jsx":"af8c08afc065","components/menu/MenuItemCard.jsx":"2c4b72347704","components/navigation/BottomNavigation.jsx":"c69e09501dc2","components/news/NewsListing.jsx":"f36a0e83ddfe","components/payment-methods/PaymentMethods.jsx":"2db4cbec39ff","components/pickers/Calendar.jsx":"49834a03989a","components/pickers/DatePicker.jsx":"fc29f9a519bc","components/pickers/TimePicker.jsx":"c026eab68ca8","components/product-cards/BuyAgainCard.jsx":"90bdaa8b67c0","components/product-cards/ProductBasket.jsx":"a687791269af","components/product-cards/ProductBasketDark.jsx":"607a07d4fc79","components/product-cards/ProductFavorite.jsx":"e2c457acea3a","components/product-cards/ProductHistory.jsx":"96a8438fdc73","components/product-cards/ProductHorizontalCard.jsx":"99178ce65e75","components/product-cards/ProductMenuCard.jsx":"c429e398e48d","components/product-cards/ProductVerticalCard.jsx":"5ed45e0c1c18","components/quick-action-tiles/QuickActionTiles.jsx":"fd07286ef2ad","components/rating/RatingStars.jsx":"2d7b9578e01b","components/restaurant/AddressSelector.jsx":"aafadf4f60d9","components/restaurant/BranchCard.jsx":"9aaf42833df9","components/restaurant/BranchSelectorCard.jsx":"a7a1fcdaf02d","components/restaurant/DeliveryPickupToggle.jsx":"4c3c0499a02f","components/restaurant/DeliveryTimeEstimate.jsx":"3e8f14992235","components/restaurant/RestaurantCard.jsx":"746b5c237a5c","components/restaurant/RestaurantHeader.jsx":"16bcd96656cb","components/screen-header/ScreenHeader.jsx":"7005b9bb8e9a","components/section-header/SectionHeader.jsx":"275066926db6","components/status-pill/StatusPill.jsx":"e3e69e7bfaa0","components/stories/Stories.jsx":"8c019f319741","components/tabs/MenuCategoryTabs.jsx":"f6c7b6ba35f7","components/tabs/MenuTabs.jsx":"3f4a890aed18","components/tabs/MenuTabsVertical.jsx":"44124a93cf82","components/tabs/TabBar.jsx":"d1545e48792b","components/tag/Tag.jsx":"69c7dd1918a1","components/tooltip/Tooltip.jsx":"4ea5cfa6b7e2","components/transactions/Transactions.jsx":"4c7057248c9e","components/user-card/UserCard.jsx":"442fdfc15945","components/user-card/UserProfile.jsx":"3b9d0b0f258a","components/user-status/UserStatus.jsx":"8a4c3ca97c21","components/voucher/Voucher.jsx":"af10efabb3ca","components/voucher/VoucherListing.jsx":"2554e02d2912","components/voucher/VoucherPurchase.jsx":"a87a760b7ad2"},"inlinedExternals":[],"unexposedExports":[]} */
 
 (() => {
 
@@ -7,6 +7,17 @@ const __ds_ns = (window.GastroDesignSystem_472aed = window.GastroDesignSystem_47
 const __ds_scope = {};
 
 (__ds_ns.__errors = __ds_ns.__errors || []);
+
+// components/badge/BadgeCounter.jsx
+try { (() => {
+function BadgeCounter({ label = '+3', children = null, style = null }) {
+  const pill = { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: 'calc(var(--icon-xs) + var(--space-xxs))', height: 'calc(var(--icon-xs) + var(--space-xxs))', padding: '0 var(--space-xs)', boxSizing: 'border-box', background: 'var(--gray-900)', color: 'var(--gray-0)', borderRadius: 'var(--radius-full)', font: 'var(--text-body-xs)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' };
+  if (!children) return React.createElement("span", { style: { ...pill, ...style } }, label);
+  return React.createElement("span", { style: { position: 'relative', display: 'inline-flex' } }, children,
+    React.createElement("span", { style: { ...pill, position: 'absolute', top: 'calc(var(--space-xs) * -1)', right: 'calc(var(--space-xs) * -1)', ...style } }, label));
+}
+Object.assign(__ds_scope, { BadgeCounter });
+})(); } catch (e) { __ds_ns.__errors.push({ path: "components/badge/BadgeCounter.jsx", error: String((e && e.message) || e) }); }
 
 // components/avatar/Avatar.jsx
 try { (() => {
@@ -2417,123 +2428,20 @@ Object.assign(__ds_scope, { RadioAddOn });
 
 // components/greeting/Greeting.jsx
 try { (() => {
-/**
- * Greeting — app home header row: brand logo on the left, a two-line
- * greeting beside it ("Greetings" overline + "Hi, {name}" title), and a
- * notification bell on the right with an optional unread dot.
- * White-label: pass `logoUrl` to swap the placeholder brand mark.
- */
-function Greeting({
-  name = 'there',
-  greeting = 'Greetings',
-  logoUrl = null,
-  hasNotifications = true,
-  onBellClick = () => {}
-}) {
-  const bell = /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    onClick: onBellClick,
-    "aria-label": "Notifications",
-    style: {
-      position: 'relative',
-      width: 44,
-      height: 44,
-      flex: '0 0 auto',
-      borderRadius: 'var(--radius-full)',
-      border: 'none',
-      background: 'transparent',
-      color: 'var(--color-text-primary)',
-      cursor: 'pointer',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      WebkitTapHighlightColor: 'transparent',
-      transition: 'var(--transition-colors)'
-    }
-  }, /*#__PURE__*/React.createElement("i", {
-    className: "ph ph-bell",
-    style: {
-      fontSize: 'var(--icon-md)'
-    },
-    "aria-hidden": "true"
-  }), hasNotifications && /*#__PURE__*/React.createElement("span", {
-    "aria-hidden": "true",
-    style: {
-      position: 'absolute',
-      top: 9,
-      right: 10,
-      width: 9,
-      height: 9,
-      borderRadius: '50%',
-      background: 'var(--color-brand-primary)',
-      border: '2px solid var(--color-bg-surface)'
-    }
-  }));
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: 'var(--space-md)',
-      padding: 'var(--space-base)',
-      background: 'var(--color-bg-surface)',
-      fontFamily: 'var(--font-family-base)',
-      boxSizing: 'border-box',
-      width: '100%'
-    }
-  }, logoUrl ? /*#__PURE__*/React.createElement("img", {
-    src: logoUrl,
-    alt: "",
-    style: {
-      width: 44,
-      height: 44,
-      borderRadius: 'var(--radius-md)',
-      objectFit: 'cover',
-      flex: '0 0 auto'
-    }
-  }) : /*#__PURE__*/React.createElement("div", {
-    "aria-hidden": "true",
-    style: {
-      width: 44,
-      height: 44,
-      borderRadius: 'var(--radius-md)',
-      flex: '0 0 auto',
-      background: 'var(--color-brand-primary)',
-      color: 'var(--color-text-on-brand)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }
-  }, /*#__PURE__*/React.createElement("i", {
-    className: "ph-fill ph-fork-knife",
-    style: {
-      fontSize: 'var(--icon-md)'
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      flex: 1,
-      minWidth: 0,
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 'var(--space-xxs)'
-    }
-  }, /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: 'var(--font-size-caption)',
-      lineHeight: 'var(--line-height-caption)',
-      color: 'var(--color-text-tertiary)',
-      fontWeight: 'var(--font-weight-regular)'
-    }
-  }, greeting), /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: 'var(--font-size-h3)',
-      lineHeight: 'var(--line-height-h3)',
-      fontWeight: 'var(--font-weight-bold)',
-      color: 'var(--color-text-primary)',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis'
-    }
-  }, name)), bell);
+function Greeting({ branchName = 'Branch name', branchAddress = 'Branch address', logoUrl = null, hasNotifications = true, onBellClick = () => {} }) {
+  const h = React.createElement;
+  const bell = h("button", { type: "button", onClick: onBellClick, "aria-label": "Notifications", style: { position: 'relative', width: 44, height: 44, flex: '0 0 auto', borderRadius: 'var(--radius-full)', border: 'none', background: 'transparent', color: 'var(--color-text-primary)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', WebkitTapHighlightColor: 'transparent', transition: 'var(--transition-colors)' } },
+    h("i", { className: "ph ph-bell", style: { fontSize: 'var(--icon-md)' }, "aria-hidden": "true" }),
+    hasNotifications && h("span", { "aria-hidden": "true", style: { position: 'absolute', top: 9, right: 10, width: 9, height: 9, borderRadius: '50%', background: 'var(--color-brand-primary)', border: '2px solid var(--color-bg-surface)' } }));
+  return h("div", { style: { display: 'flex', alignItems: 'center', gap: 'var(--space-md)', padding: 'var(--space-base)', background: 'var(--color-bg-surface)', fontFamily: 'var(--font-family-base)', boxSizing: 'border-box', width: '100%' } },
+    logoUrl ? h("img", { src: logoUrl, alt: "", style: { width: 44, height: 44, borderRadius: 'var(--radius-md)', objectFit: 'cover', flex: '0 0 auto' } })
+      : h("div", { "aria-hidden": "true", style: { width: 44, height: 44, borderRadius: 'var(--radius-md)', flex: '0 0 auto', background: 'var(--color-brand-primary)', color: 'var(--color-text-on-brand)', display: 'flex', alignItems: 'center', justifyContent: 'center' } }, h("i", { className: "ph-fill ph-fork-knife", style: { fontSize: 'var(--icon-md)' } })),
+    h("div", { style: { flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-xxs)' } },
+      h("span", { style: { fontSize: 'var(--font-size-caption)', lineHeight: 'var(--line-height-caption)', color: 'var(--color-text-tertiary)', fontWeight: 'var(--font-weight-regular)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' } }, branchName),
+      h("span", { style: { display: 'flex', alignItems: 'center', gap: 'var(--space-xs)', minWidth: 0, color: 'var(--color-text-primary)' } },
+        h("span", { style: { font: 'var(--text-body-semibold)', minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' } }, branchAddress),
+        h("i", { className: "ph-bold ph-caret-down", "aria-hidden": "true", style: { flex: '0 0 auto', fontSize: 'var(--icon-xs)' } }))),
+    bell);
 }
 Object.assign(__ds_scope, { Greeting });
 })(); } catch (e) { __ds_ns.__errors.push({ path: "components/greeting/Greeting.jsx", error: String((e && e.message) || e) }); }
@@ -4539,95 +4447,17 @@ Object.assign(__ds_scope, { ProductFavorite });
 
 // components/product-cards/ProductHistory.jsx
 try { (() => {
-/**
- * ProductHistory — order-history row replicating ProductHorizontalCard:
- * square photo left, product name with purchase date below, price on the right.
- * Same tokens as ProductHorizontalCard.
- */
-function ProductHistory({
-  name = 'Product name',
-  date = '',
-  price = '',
-  imageUrl = null,
-  imageSize = 64,
-  onClick = () => {}
-}) {
-  return /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    onClick: onClick,
-    style: {
-      boxSizing: 'border-box',
-      width: '100%',
-      padding: 0,
-      border: 'none',
-      background: 'transparent',
-      cursor: 'pointer',
-      textAlign: 'left',
-      fontFamily: 'var(--font-family-base)',
-      display: 'flex',
-      alignItems: 'center',
-      gap: 'var(--space-md)',
-      WebkitTapHighlightColor: 'transparent'
-    }
-  }, imageUrl ? /*#__PURE__*/React.createElement("img", {
-    src: imageUrl,
-    alt: "",
-    style: {
-      width: imageSize,
-      height: imageSize,
-      flex: '0 0 auto',
-      objectFit: 'cover',
-      borderRadius: 'var(--radius-md)',
-      display: 'block'
-    }
-  }) : /*#__PURE__*/React.createElement("div", {
-    "aria-hidden": "true",
-    style: {
-      width: imageSize,
-      height: imageSize,
-      flex: '0 0 auto',
-      borderRadius: 'var(--radius-md)',
-      background: 'repeating-linear-gradient(45deg, var(--gray-100), var(--gray-100) 8px, var(--gray-200) 8px, var(--gray-200) 16px)'
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      minWidth: 0,
-      flex: 1,
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 'var(--space-xxs)'
-    }
-  }, /*#__PURE__*/React.createElement("span", {
-    style: {
-      font: 'var(--text-body-semibold)',
-      fontFamily: 'var(--font-family-base)',
-      color: 'var(--color-text-primary)',
-      whiteSpace: 'normal',
-      display: '-webkit-box',
-      WebkitLineClamp: 2,
-      WebkitBoxOrient: 'vertical',
-      overflow: 'hidden'
-    }
-  }, name), date && /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: 'var(--font-size-body-sm)',
-      lineHeight: 'var(--line-height-body-sm)',
-      fontFamily: 'var(--font-family-base)',
-      color: 'var(--color-text-tertiary)',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis'
-    }
-  }, date)), price && /*#__PURE__*/React.createElement("span", {
-    style: {
-      flex: '0 0 auto',
-      fontSize: 'var(--font-size-body)',
-      lineHeight: 'var(--line-height-body)',
-      fontFamily: 'var(--font-family-base)',
-      color: 'var(--color-text-secondary)',
-      whiteSpace: 'nowrap'
-    }
-  }, price));
+function ProductHistory({ name = 'Product name', date = '', orderNumber = '', price = '', imageUrl = null, imageSize = 64, onClick = () => {} }) {
+  const h = React.createElement;
+  const sub = { fontSize: 'var(--font-size-body-sm)', lineHeight: 'var(--line-height-body-sm)', fontFamily: 'var(--font-family-base)', color: 'var(--color-text-tertiary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' };
+  return h("button", { type: "button", onClick, style: { boxSizing: 'border-box', width: '100%', padding: 0, border: 'none', background: 'transparent', cursor: 'pointer', textAlign: 'left', fontFamily: 'var(--font-family-base)', display: 'flex', alignItems: 'center', gap: 'var(--space-md)', WebkitTapHighlightColor: 'transparent' } },
+    imageUrl ? h("img", { src: imageUrl, alt: "", style: { width: imageSize, height: imageSize, flex: '0 0 auto', objectFit: 'cover', borderRadius: 'var(--radius-md)', display: 'block' } })
+      : h("div", { "aria-hidden": "true", style: { width: imageSize, height: imageSize, flex: '0 0 auto', borderRadius: 'var(--radius-md)', background: 'repeating-linear-gradient(45deg, var(--gray-100), var(--gray-100) 8px, var(--gray-200) 8px, var(--gray-200) 16px)' } }),
+    h("div", { style: { minWidth: 0, flex: 1, display: 'flex', flexDirection: 'column', gap: 'var(--space-xxs)' } },
+      h("span", { style: { font: 'var(--text-body-semibold)', fontFamily: 'var(--font-family-base)', color: 'var(--color-text-primary)', whiteSpace: 'normal', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' } }, name),
+      date && h("span", { style: sub }, date),
+      orderNumber && h("span", { style: sub }, orderNumber)),
+    price && h("span", { style: { flex: '0 0 auto', fontSize: 'var(--font-size-body)', lineHeight: 'var(--line-height-body)', fontFamily: 'var(--font-family-base)', color: 'var(--color-text-secondary)', whiteSpace: 'nowrap' } }, price));
 }
 Object.assign(__ds_scope, { ProductHistory });
 })(); } catch (e) { __ds_ns.__errors.push({ path: "components/product-cards/ProductHistory.jsx", error: String((e && e.message) || e) }); }
@@ -6847,18 +6677,7 @@ function Voucher({
       font: 'var(--text-body-sm)',
       color: 'var(--color-text-tertiary)'
     }
-  }, subtitle)), remaining > 0 && /*#__PURE__*/React.createElement("span", {
-    style: {
-      position: 'absolute',
-      top: 'var(--space-sm)',
-      right: 'var(--space-sm)',
-      padding: 'var(--space-xxs) var(--space-sm)',
-      borderRadius: 'var(--radius-pill)',
-      background: 'var(--gray-900)',
-      color: 'var(--color-text-inverse)',
-      font: 'var(--text-body-sm-semibold)'
-    }
-  }, "\xD7", remaining));
+  }, subtitle)), remaining > 0 && React.createElement(__ds_scope.BadgeCounter, { label: '\u00D7' + remaining, style: { position: 'absolute', top: 'var(--space-sm)', right: 'var(--space-sm)' } }));
 }
 Object.assign(__ds_scope, { Voucher });
 })(); } catch (e) { __ds_ns.__errors.push({ path: "components/voucher/Voucher.jsx", error: String((e && e.message) || e) }); }
@@ -7070,6 +6889,8 @@ Object.assign(__ds_scope, { VoucherPurchase });
 __ds_ns.Avatar = __ds_scope.Avatar;
 
 __ds_ns.Badge = __ds_scope.Badge;
+
+__ds_ns.BadgeCounter = __ds_scope.BadgeCounter;
 
 __ds_ns.BankCard = __ds_scope.BankCard;
 

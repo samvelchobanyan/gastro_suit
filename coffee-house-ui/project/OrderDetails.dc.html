@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/primitives.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/brand.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/sizing.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/semantic.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/components.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/tokens/base.css">
+  <link rel="stylesheet" href="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/styles.css">
+  <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <style>
+    body { margin: 0; min-height: 100vh; box-sizing: border-box; padding: var(--space-lg) 0; background: var(--gray-100); font-family: "Plus Jakarta Sans", system-ui, sans-serif; display: flex; align-items: center; justify-content: center; }
+    a { color: var(--color-text-primary); } a:hover { color: var(--color-text-secondary); }
+  </style>
+</helmet>
+<div data-screen-label="Order details" style="width: 360px; height: 800px; background: var(--color-bg-surface); overflow: hidden; display: flex; flex-direction: column; flex: 0 0 auto; position: relative;">
+  <x-import component-from-global-scope="GastroDesignSystem_472aed.ScreenHeader" title="Order details" on-back="{{ goBack }}" hint-size="100%,56px"></x-import>
+  <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; display: flex; flex-direction: column; gap: var(--space-lg); padding: 0 var(--space-base) var(--space-lg);">
+    <div style="display: flex; flex-direction: column; gap: var(--space-base);">
+      <div style="display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-md) var(--space-base); background: var(--gray-900); border-radius: var(--radius-md);">
+        <i class="ph ph-fork-knife" style="font-size: var(--icon-md); color: var(--gray-0);"></i>
+        <span style="flex: 1; font: var(--text-body); color: var(--gray-0);">Completed</span>
+        <span style="font: var(--text-body); color: var(--color-text-inverse);">{{ orderNo }}</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-md);">
+        <div style="flex: 0 0 auto; width: var(--button-height-md); height: var(--button-height-md); display: flex; align-items: center; justify-content: center; background: var(--gray-50); border-radius: var(--radius-md);">
+          <i class="ph ph-map-pin" style="font-size: var(--icon-md); color: var(--color-text-primary);"></i>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: var(--space-xxs); min-width: 0;">
+          <span style="font: var(--text-body-semibold); color: var(--color-text-primary);">Abovyan st. (Near the Moscow cinema)</span>
+          <span style="font: var(--text-body-sm); color: var(--color-text-tertiary);">Abovyan str. 18/3</span>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+      <sc-for list="{{ details }}" as="d" hint-placeholder-count="6">
+        <sc-if value="{{ d.divider }}" hint-placeholder-val="{{ false }}">
+          <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" hint-size="100%,1px"></x-import>
+        </sc-if>
+        <div style="display: flex; justify-content: space-between; gap: var(--space-base);">
+          <span style="font: var(--text-body); color: var(--color-text-tertiary);">{{ d.label }}</span>
+          <span style="font: var(--text-body); color: {{ d.color }}; text-align: right;">{{ d.value }}</span>
+        </div>
+      </sc-for>
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" hint-size="100%,1px"></x-import>
+      <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+      <span style="font: var(--text-body); color: var(--color-text-tertiary);">Order comment</span>
+      <div style="padding: var(--space-md) var(--space-base); border: 1px solid var(--color-border-muted); border-radius: var(--radius-input); font: var(--text-body); color: var(--color-text-secondary);">Please make it extra hot.</div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+      <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Your order" hint-size="100%,28px"></x-import>
+      <sc-for list="{{ items }}" as="it" hint-placeholder-count="1">
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.ProductHorizontalCard" name="{{ it.name }}" info="{{ it.info }}" price="{{ it.price }}" image-url="{{ it.image }}" hint-size="100%,64px"></x-import>
+      </sc-for>
+      <div style="border-top: 1px dashed var(--color-border-default);"></div>
+      <div style="display: flex; justify-content: space-between;">
+        <span style="font: var(--text-body); color: var(--color-text-tertiary);">Order subtotal</span>
+        <span style="font: var(--text-body); color: var(--color-text-primary);">{{ total }}</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <span style="font: var(--text-h2); color: var(--color-text-primary);">Total</span>
+        <span style="font: var(--text-h2); color: var(--color-text-primary);">{{ total }}</span>
+      </div>
+    </div>
+  </div>
+  <div style="padding: var(--space-base); border-top: 1px solid var(--color-border-muted); background: var(--color-bg-surface);">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Button" variant="primary" size="sm" full-width="{{ true }}" on-click="{{ repeat }}" hint-size="100%,40px">Repeat order</x-import>
+  </div>
+  <dc-import name="BasketOverlay" visible="{{ basketOpen }}" items="{{ basketItems }}" on-close="{{ closeBasket }}" hint-size="360px,800px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:800}}">
+class Component extends DCLogic {
+  state = { basketOpen: false };
+  renderVals() {
+    const q = new URLSearchParams(window.location.search);
+    const name = q.get('name') || 'Hot Americano';
+    const price = q.get('price') || '֏700';
+    const date = q.get('date') || '20 Oct 2026, 18:23';
+    const no = q.get('no') || '13630';
+    const image = q.get('image') || 'uploads/ice%20americano-52926f9b.png';
+    return {
+      goBack: () => { window.location.href = 'History.dc.html'; },
+      repeat: () => this.setState({ basketOpen: true }),
+      basketOpen: !!(this.state && this.state.basketOpen),
+      closeBasket: () => this.setState({ basketOpen: false }),
+      basketItems: [{ name, info: 'No sugar', price, image, qty: 1 }],
+      orderNo: 'No. ' + no.replace(/\D/g, ''),
+      details: [
+        { label: 'Order date', value: date, color: 'var(--color-text-primary)' },
+        { label: 'Received', value: date, divider: true, color: 'var(--color-text-primary)' },
+        { divider: true, label: 'Guests', value: '1', color: 'var(--color-text-primary)' },
+        { divider: true, label: 'Fulfilment type', value: 'Pickup', color: 'var(--color-text-primary)' },
+        { divider: true, label: 'Payment method', value: 'Online payment', color: 'var(--color-text-primary)' },
+        { divider: true, label: 'Payment status', value: 'Paid', color: 'var(--color-text-success)' },
+      ],
+      items: [{ name, info: 'No sugar · ×1', price, image }],
+      total: price,
+    };
+  }
+}
+</script>
+</body>
+</html>

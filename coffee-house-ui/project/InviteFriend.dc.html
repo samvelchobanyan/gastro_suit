@@ -32,15 +32,16 @@
 <div data-screen-label="Invite friend" style="width: 360px; height: 800px; background: var(--color-bg-surface); overflow: hidden; display: flex; flex-direction: column; flex: 0 0 auto; position: relative;">
   <x-import component-from-global-scope="GastroDesignSystem_472aed.ScreenHeader" title="Invite a friend" on-back="{{ goBack }}" hint-size="100%,56px"></x-import>
   <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 0 var(--space-base) var(--space-base);">
-    <div style="display: flex; flex-direction: column; gap: var(--space-sm); padding: var(--space-base); border-radius: var(--radius-md); background: var(--gray-900); font-family: var(--font-family-base);">
+    <div style="position: relative; overflow: hidden; isolation: isolate; display: flex; flex-direction: column; gap: var(--space-sm); padding: var(--space-xl) var(--space-base) var(--space-base); border-radius: var(--radius-md); background: var(--gray-900); font-family: var(--font-family-base);">
+      <div aria-hidden="true" style="position: absolute; z-index: -1; inset: 0; background: radial-gradient(circle at 100% 100%, color-mix(in oklab, var(--accent-500) 35%, transparent) 0%, transparent 55%); pointer-events: none;"></div>
       <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-md); margin-bottom: var(--space-xs); text-align: center;">
-        <img src="uploads/invite_friend.png" alt="" style="width: 96px; height: 96px; object-fit: contain; flex: 0 0 auto; display: block;">
-        <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-sm);">
+        <img src="uploads/invite_a_friend_plane.png" alt="" style="width: 110px; height: 110px; object-fit: contain; flex: 0 0 auto; display: block;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-xs);">
           <span style="font: var(--text-body-lg-semibold); color: var(--gray-0);">Invite your friend</span>
           <span style="font-size: var(--font-size-body); line-height: var(--line-height-body); font-weight: var(--font-weight-regular); color: var(--gray-500); text-wrap: pretty;">Enter your friend's mobile phone number. When they register and make their first purchase, you'll both get 5000 loyalty points.</span>
         </div>
       </div>
-      <div style="position: relative;">
+      <div style="position: relative;" onFocus="{{ phoneFocus }}" onBlur="{{ phoneBlur }}">
         <x-import component-from-global-scope="GastroDesignSystem_472aed.Input" type="tel" value="{{ phone }}" on-change="{{ setPhone }}" placeholder="+374" leading-icon="phone" hint-size="100%,40px"></x-import>
         <sc-if value="{{ hasPhone }}" hint-placeholder-val="{{ false }}">
           <button type="button" aria-label="Clear phone number" onClick="{{ clearPhone }}" style="position: absolute; top: 50%; right: var(--space-xs); transform: translateY(-50%); width: 32px; height: 32px; padding: 0; border: none; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--color-text-tertiary);"><i class="ph ph-x" style="font-size: var(--icon-sm);"></i></button>
@@ -60,7 +61,12 @@ class Component extends DCLogic {
     const sent = !!s.sent && s.sent === s.phone;
     return {
       goBack: () => { window.location.href = 'Profile.dc.html'; },
-      phone: s.phone ? '+374 ' + s.phone : '',
+      phone: (s.phone || s.phoneFocused) ? '+374 ' + s.phone : '',
+      phoneFocus: (e) => {
+        const el = e.target;
+        this.setState({ phoneFocused: true }, () => requestAnimationFrame(() => { if (el && el.setSelectionRange) { const n = el.value.length; el.setSelectionRange(n, n); } }));
+      },
+      phoneBlur: () => this.setState({ phoneFocused: false }),
       setPhone: (v) => {
         let t = String(v && v.target ? v.target.value : v);
         t = t.startsWith('+374') ? t.slice(4) : t;

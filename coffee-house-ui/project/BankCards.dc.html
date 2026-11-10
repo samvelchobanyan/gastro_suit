@@ -37,7 +37,7 @@
         <span style="font: var(--text-body-semibold); color: var(--gray-0);">Attach your bank card</span>
         <span style="font: var(--text-body-sm); color: var(--gray-500);">to buy products, gifts and vouchers</span>
       </div>
-      <img src="uploads/bank_card-e6bb4dc6.png" alt="" style="width: 64px; height: 64px; object-fit: contain; flex: 0 0 auto; display: block;">
+      <img src="uploads/bank_card-b7d39d0c.png" alt="" style="width: 64px; height: 64px; object-fit: contain; flex: 0 0 auto; display: block;">
     </div>
     <div style="padding-top: var(--space-base);">
       <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Attached cards" hint-size="100%,28px"></x-import>
@@ -58,7 +58,7 @@ class Component extends DCLogic {
   renderVals() {
     const DS = window.GastroDesignSystem_472aed;
     return {
-      addButton: DS && DS.IconButton ? React.createElement(DS.IconButton, { icon: 'plus', variant: 'tonal', size: 'sm', ariaLabel: 'Add card', onClick: () => {} }) : null,
+      addButton: DS && DS.IconButton ? React.createElement(DS.IconButton, { icon: 'plus', variant: 'filled', size: 'sm', ariaLabel: 'Add card', onClick: () => {} }) : null,
       goBack: () => { window.location.href = 'Profile.dc.html'; },
       cards: this.state.cards.map(c => ({ ...c, remove: () => this.setState(s => ({ cards: s.cards.filter(x => x.id !== c.id) })) })),
     };

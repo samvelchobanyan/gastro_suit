@@ -38,7 +38,7 @@
         <x-import component-from-global-scope="GastroDesignSystem_472aed.UserStatus" status="Bronze" illustration="uploads/membership_bronze.png" on-action="{{ goMembership }}" hint-size="100%,72px"></x-import>
       </div>
       <div style="padding-top: var(--space-base);">
-        <x-import component-from-global-scope="GastroDesignSystem_472aed.Invite" description="and get loyalty points" illustration="uploads/invite_friend.png" on-action="{{ goInvite }}" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.Invite" description="and get loyalty points" illustration="uploads/invite_a_friend_plane.png" on-action="{{ goInvite }}" hint-size="100%,72px"></x-import>
       </div>
       <div style="margin: var(--space-base) 0; display: flex; flex-direction: column; background: var(--color-bg-main); border: 1px solid var(--color-border-muted); border-radius: var(--radius-md); overflow: hidden;">
         <sc-for list="{{ listItems }}" as="it" hint-placeholder-count="4">
@@ -105,7 +105,6 @@ class Component extends DCLogic {
         { title: 'Bank cards', subtitle: '**** 4556', icon: 'credit-card', onClick: () => { window.location.href = 'BankCards.dc.html'; } },
         { title: 'History', subtitle: 'Your orders and transactions', icon: 'receipt', onClick: () => { window.location.href = 'History.dc.html'; } },
         { title: 'Favorite products', subtitle: '5 products', icon: 'heart', onClick: () => { window.location.href = 'FavoriteProducts.dc.html'; } },
-        { title: 'Default branch', subtitle: 'Northern Avenue · 08:00–22:00', icon: 'storefront', onClick: () => { window.location.href = 'DefaultBranch.dc.html'; } },
       ].map((it, i) => ({ ...it, divider: i > 0 })),
       navItems: [
         { key: 'home', icon: 'house', label: 'Home' },

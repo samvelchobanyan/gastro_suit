@@ -28,10 +28,8 @@
 <sc-if value="{{ visible }}" hint-placeholder-val="{{ true }}">
   <div style="position: absolute; inset: 0; z-index: 80; background: var(--color-bg-surface); display: flex; flex-direction: column; font-family: var(--font-family-base);">
     <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; display: flex; flex-direction: column; justify-content: center; gap: var(--space-lg); padding: var(--space-xl) var(--space-base);">
-      <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-base); text-align: center;">
-        <div style="width: 72px; height: 72px; border-radius: var(--radius-full); background: var(--color-bg-success); display: flex; align-items: center; justify-content: center;">
-          <i class="ph-fill ph-check-circle" aria-hidden="true" style="font-size: 40px; color: var(--color-status-success);"></i>
-        </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-base); text-align: center; padding: var(--space-xl) var(--space-base); border-radius: var(--radius-md); background: var(--gray-50);">
+        <img src="uploads/success_check.png" alt="" style="width: 110px; height: 110px; object-fit: contain; flex: 0 0 auto; display: block;">
         <h1 style="margin: 0; font-size: var(--font-size-h1); line-height: var(--line-height-h1); font-weight: var(--font-weight-bold); color: var(--color-text-primary); text-wrap: pretty;">{{ title }}</h1>
       </div>
       <x-import component-from-global-scope="GastroDesignSystem_472aed.UserCard" name="{{ name }}" surname="{{ surname }}" phone="{{ phone }}" hint-size="100%,64px"></x-import>

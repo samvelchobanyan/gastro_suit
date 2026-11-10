@@ -28,25 +28,23 @@
 <sc-if value="{{ visible }}" hint-placeholder-val="{{ true }}">
   <div style="position: absolute; inset: 0; z-index: 80; background: var(--color-bg-surface); display: flex; flex-direction: column; font-family: var(--font-family-base);">
     <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; display: flex; flex-direction: column; justify-content: center; gap: var(--space-lg); padding: var(--space-xl) var(--space-base);">
-      <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-base); text-align: center;">
-        <div style="width: 72px; height: 72px; border-radius: var(--radius-full); background: var(--color-bg-success); display: flex; align-items: center; justify-content: center;">
-          <i class="ph-fill ph-check-circle" aria-hidden="true" style="font-size: 40px; color: var(--color-status-success);"></i>
-        </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-base); text-align: center; padding: var(--space-xl) var(--space-base); border-radius: var(--radius-md); background: var(--gray-50);">
+        <img src="uploads/success_check.png" alt="" style="width: 110px; height: 110px; object-fit: contain; flex: 0 0 auto; display: block;">
         <h1 style="margin: 0; font-size: var(--font-size-h1); line-height: var(--line-height-h1); font-weight: var(--font-weight-bold); color: var(--color-text-primary); text-wrap: pretty;">Your order has been successfully placed!</h1>
       </div>
       <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
-        <div style="display: flex; align-items: flex-start; gap: var(--space-sm); padding: var(--space-base); border-radius: var(--radius-md); background: var(--color-bg-canvas, var(--gray-50)); border: var(--border-width-default) solid var(--color-border-muted);">
-          <i class="ph ph-map-pin" aria-hidden="true" style="font-size: var(--icon-md); color: var(--color-text-primary); flex: 0 0 auto;"></i>
+        <div style="display: flex; align-items: flex-start; gap: var(--space-sm); padding: var(--space-base); border-radius: var(--radius-md); background: var(--gray-900);">
+          <i class="ph ph-map-pin" aria-hidden="true" style="font-size: var(--icon-md); color: var(--gray-0); flex: 0 0 auto;"></i>
           <div style="display: flex; flex-direction: column; gap: var(--space-xxs); min-width: 0;">
-            <span style="font-size: var(--font-size-caption); line-height: var(--line-height-caption); font-weight: var(--font-weight-regular); color: var(--color-text-secondary);">Pickup location</span>
-            <span style="font-size: var(--font-size-body-lg); line-height: var(--line-height-body-lg); font-weight: var(--font-weight-semibold); color: var(--color-text-primary);">{{ location }}</span>
+            <span style="font-size: var(--font-size-caption); line-height: var(--line-height-caption); font-weight: var(--font-weight-regular); color: var(--gray-500);">Pickup location</span>
+            <span style="font-size: var(--font-size-body-lg); line-height: var(--line-height-body-lg); font-weight: var(--font-weight-semibold); color: var(--gray-0);">{{ location }}</span>
           </div>
         </div>
-        <div style="display: flex; align-items: flex-start; gap: var(--space-sm); padding: var(--space-base); border-radius: var(--radius-md); background: var(--color-bg-canvas, var(--gray-50)); border: var(--border-width-default) solid var(--color-border-muted);">
-          <i class="ph ph-clock" aria-hidden="true" style="font-size: var(--icon-md); color: var(--color-text-primary); flex: 0 0 auto;"></i>
+        <div style="display: flex; align-items: flex-start; gap: var(--space-sm); padding: var(--space-base); border-radius: var(--radius-md); background: var(--gray-900);">
+          <i class="ph ph-clock" aria-hidden="true" style="font-size: var(--icon-md); color: var(--gray-0); flex: 0 0 auto;"></i>
           <div style="display: flex; flex-direction: column; gap: var(--space-xxs);">
-            <span style="font-size: var(--font-size-caption); line-height: var(--line-height-caption); font-weight: var(--font-weight-regular); color: var(--color-text-secondary);">Pickup time</span>
-            <span style="font-size: var(--font-size-body-lg); line-height: var(--line-height-body-lg); font-weight: var(--font-weight-semibold); color: var(--color-text-primary);">{{ time }}</span>
+            <span style="font-size: var(--font-size-caption); line-height: var(--line-height-caption); font-weight: var(--font-weight-regular); color: var(--gray-500);">Pickup time</span>
+            <span style="font-size: var(--font-size-body-lg); line-height: var(--line-height-body-lg); font-weight: var(--font-weight-semibold); color: var(--gray-0);">{{ time }}</span>
           </div>
         </div>
       </div>

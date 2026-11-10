@@ -60,7 +60,7 @@
             </div>
             <div style="display: grid; grid-template-columns: 160px 160px; gap: var(--space-sm); justify-content: center; padding: 0 var(--space-base) var(--space-base);">
               <sc-for list="{{ section.products }}" as="p" hint-placeholder-count="2">
-                <div style="position: relative;"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductMenuCard" name="{{ p.name }}" price="{{ p.price }}" image-url="{{ p.image }}" width="{{ 160 }}" on-click="{{ p.open }}" hint-size="160px,220px"></x-import><div style="position:absolute; right: var(--space-sm); bottom: var(--space-sm); z-index:1;"><x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="{{ p.icon }}" variant="{{ p.variant }}" size="xs" dc-props="{{ addToCartProps }}" on-click="{{ p.toggle }}" hint-size="36px,36px"></x-import></div></div>
+                <div style="position: relative;"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductMenuCard" name="{{ p.name }}" price="{{ p.price }}" image-url="{{ p.image }}" width="{{ 160 }}" on-click="{{ p.open }}" hint-size="160px,220px"></x-import><sc-if value="{{ p.added }}" hint-placeholder-val="{{ false }}"><div style="position:absolute; top: calc(160px - var(--button-height-xxs) - var(--space-sm)); right: var(--space-sm); z-index:1;"><x-import component-from-global-scope="GastroDesignSystem_472aed.Stepper" size="sm" value="{{ p.qty }}" on-change="{{ p.setQty }}" hint-size="96px,32px"></x-import></div></sc-if><sc-if value="{{ p.notAdded }}" hint-placeholder-val="{{ true }}"><div style="position:absolute; top: calc(160px - var(--button-height-xs) - var(--space-sm)); right: var(--space-sm); z-index:1;"><x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="plus" variant="filled" size="xs" dc-props="{{ addToCartProps }}" on-click="{{ p.add }}" hint-size="36px,36px"></x-import></div></sc-if></div>
               </sc-for>
             </div>
           </div>
@@ -72,7 +72,7 @@
         </div>
         <div style="display: grid; grid-template-columns: 160px 160px; gap: var(--space-sm); justify-content: center; padding: 0 var(--space-base) var(--space-base);">
           <sc-for list="{{ categoryProducts }}" as="p" hint-placeholder-count="8">
-            <div style="position: relative;"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductMenuCard" name="{{ p.name }}" price="{{ p.price }}" image-url="{{ p.image }}" width="{{ 160 }}" on-click="{{ p.open }}" hint-size="160px,220px"></x-import><div style="position:absolute; right: var(--space-sm); bottom: var(--space-sm); z-index:1;"><x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="{{ p.icon }}" variant="{{ p.variant }}" size="xs" dc-props="{{ addToCartProps }}" on-click="{{ p.toggle }}" hint-size="36px,36px"></x-import></div></div>
+            <div style="position: relative;"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductMenuCard" name="{{ p.name }}" price="{{ p.price }}" image-url="{{ p.image }}" width="{{ 160 }}" on-click="{{ p.open }}" hint-size="160px,220px"></x-import><sc-if value="{{ p.added }}" hint-placeholder-val="{{ false }}"><div style="position:absolute; top: calc(160px - var(--button-height-xxs) - var(--space-sm)); right: var(--space-sm); z-index:1;"><x-import component-from-global-scope="GastroDesignSystem_472aed.Stepper" size="sm" value="{{ p.qty }}" on-change="{{ p.setQty }}" hint-size="96px,32px"></x-import></div></sc-if><sc-if value="{{ p.notAdded }}" hint-placeholder-val="{{ true }}"><div style="position:absolute; top: calc(160px - var(--button-height-xs) - var(--space-sm)); right: var(--space-sm); z-index:1;"><x-import component-from-global-scope="GastroDesignSystem_472aed.IconButton" icon="plus" variant="filled" size="xs" dc-props="{{ addToCartProps }}" on-click="{{ p.add }}" hint-size="36px,36px"></x-import></div></sc-if></div>
           </sc-for>
         </div>
       </sc-if>
@@ -100,18 +100,22 @@ class Component extends DCLogic {
   addOverlayToCart = () => this.setState((s) => ({ overlay: null, overlayAdds: (s.overlayAdds || 0) + 1, overlayTotal: (s.overlayTotal || 0) + this.parsePrice(s.overlay && s.overlay.price) }));
   parsePrice = (p) => Number(String(p || '').replace(/[^0-9]/g, '')) || 0;
   cartTotal() {
-    const added = this.baseProducts.filter((p) => this.state.addedIds['item-' + p.name]).reduce((sum, p) => sum + this.parsePrice(p.price), 0);
+    const added = this.baseProducts.reduce((sum, p) => sum + this.parsePrice(p.price) * (Number(this.state.addedIds['item-' + p.name]) || 0), 0);
     return added + (this.state.overlayTotal || 0);
   }
-  toggleId = (id) => this.setState((s) => ({ addedIds: { ...s.addedIds, [id]: !s.addedIds[id] } }));
+  setQtyId = (id, q) => this.setState((s) => ({ addedIds: { ...s.addedIds, [id]: Math.max(0, q) } }));
+  qtyCtl(id) {
+    const qty = this.state.addedIds[id] || 0;
+    return { qty, added: qty > 0, notAdded: qty < 1, add: () => this.setQtyId(id, 1), setQty: (v) => this.setQtyId(id, v) };
+  }
+  itemQty() { return Object.values(this.state.addedIds).reduce((a, b) => a + (Number(b) || 0), 0); }
   truncateForIcon(name) {
     const max = 14;
     return name.length > max ? name.slice(0, max).trimEnd() + '… ' : name;
   }
   makeItemToggle(p) {
     const id = 'item-' + p.name;
-    const added = !!this.state.addedIds[id];
-    return { added, icon: added ? 'x' : 'plus', variant: added ? 'tonal' : 'filled', toggle: () => this.toggleId(id), name: this.truncateForIcon(p.name), open: () => this.openOverlay(p.name, p.image, p.price) };
+    return { ...this.qtyCtl(id), name: p.name, open: () => this.openOverlay(p.name, p.image, p.price) };
   }
   baseProducts = [
     { name: 'Iced Fantasy Coffee', price: '֏1,450', image: 'uploads/iced%20fantasy%20coffee-752e25b4.png' },
@@ -187,8 +191,8 @@ class Component extends DCLogic {
       closeOverlay: this.closeOverlay,
       addOverlayToCart: this.addOverlayToCart,
       checkoutLabel: 'Checkout · ֏' + this.cartTotal().toLocaleString('en-US'),
-      cartCount: Object.values(this.state.addedIds).filter(Boolean).length + (this.state.overlayAdds || 0),
-      checkoutVariant: (Object.values(this.state.addedIds).some(Boolean) || (this.state.overlayAdds || 0) > 0) ? 'primary' : 'secondary',
+      cartCount: this.itemQty() + (this.state.overlayAdds || 0),
+      checkoutVariant: (this.itemQty() > 0 || (this.state.overlayAdds || 0) > 0) ? 'primary' : 'secondary',
       cartBadgeVariant: 'empty',
       noop: () => {},
       mapOpen: !!this.state.mapOpen,

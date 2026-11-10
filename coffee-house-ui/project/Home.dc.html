@@ -24,6 +24,7 @@
   <script src="_ds/gastro-design-system-472aed14-5ab5-4e18-af6e-e4acf17165d4/_ds_bundle.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
   <style>
     body { margin: 0; min-height: 100vh; box-sizing: border-box; padding: var(--space-lg) 0; background: var(--gray-100); font-family: "Plus Jakarta Sans", system-ui, sans-serif; display: flex; align-items: center; justify-content: center; }
   </style>
@@ -36,7 +37,10 @@
   <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none;">
 
   <!-- Greeting header -->
-  <x-import component-from-global-scope="GastroDesignSystem_472aed.Greeting" name="Aram" greeting="Let's enjoy some coffee" logo-url="uploads/ch_logo-69a8ddeb.svg" has-notifications="{{ true }}" hint-size="100%,76px"></x-import>
+  <div style="position: relative;">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Greeting" branch-name="{{ branchName }}" branch-address="{{ branchAddress }}" logo-url="uploads/ch_logo-69a8ddeb.svg" has-notifications="{{ true }}" on-bell-click="{{ openNotifications }}" hint-size="100%,76px"></x-import>
+    <div onClick="{{ openBranch }}" aria-label="Choose branch" style="position: absolute; top: 0; bottom: 0; left: calc(var(--space-base) + 44px + var(--space-md)); right: calc(var(--space-base) + 44px + var(--space-md)); cursor: pointer;"></div>
+  </div>
 
   <!-- Stories row -->
   <div style="display: flex; gap: var(--space-sm); overflow-x: auto; padding: var(--space-sm) var(--space-base) var(--space-base); scrollbar-width: none;">
@@ -48,14 +52,45 @@
     <x-import component-from-global-scope="GastroDesignSystem_472aed.Stories" image-url="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=200&h=200&fit=crop&q=80" label="Mocha" seen="{{ true }}" style="flex:0 0 auto" hint-size="72px,92px"></x-import>
   </div>
 
-  <!-- Loyalty points card -->
+  <sc-if value="{{ orderActive }}" hint-placeholder-val="{{ false }}">
   <div style="padding: 0 var(--space-base) var(--space-base);">
+    <div style="display: flex; flex-direction: column; gap: var(--space-base); padding: var(--space-base); background: var(--color-bg-surface); border: var(--border-width-default) solid var(--color-border-muted); border-radius: var(--radius-lg);">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm);">
+        <div style="display: flex; align-items: center; gap: var(--space-md); min-width: 0;">
+          <div style="flex: 0 0 auto; width: var(--button-height-md); height: var(--button-height-md); display: flex; align-items: center; justify-content: center; background: var(--accent-500); border-radius: var(--radius-md);">
+            <i class="ph ph-coffee" style="font-size: var(--icon-md); color: var(--gray-0);"></i>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: var(--space-xxs); min-width: 0;">
+            <span style="font: var(--text-h3); color: var(--color-text-primary);">Order status</span>
+            <span style="font: var(--text-body-sm); color: var(--color-text-tertiary);">Pickup · ASAP</span>
+          </div>
+        </div>
+        <span style="flex: 0 0 auto; font: var(--text-body-semibold); color: var(--color-text-primary);">No. 13631</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-xs);">
+        <sc-for list="{{ orderSteps }}" as="st" hint-placeholder-count="4">
+          <div style="display: flex; flex-direction: column; gap: var(--space-sm); min-width: 0; opacity: {{ st.opacity }};">
+            <div style="height: 4px; border-radius: var(--radius-full); background: {{ st.bar }};"></div>
+            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-xxs); min-width: 0;">
+              <i class="ph {{ st.icon }}" style="font-size: var(--icon-sm); color: {{ st.color }};"></i>
+              <span style="font: var(--text-caption); color: {{ st.color }};">{{ st.label }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- Loyalty points card -->
+  <div style="padding: 0 var(--space-base) var(--space-base); position: relative;">
     <x-import component-from-global-scope="GastroDesignSystem_472aed.LoyaltyPointsCard" points="{{ 1240 }}" membership="Master" discount-label="10%" qr-value="CH-ARAM-1240" background-image="uploads/ch_loyalty_bg-19967daa.png" hint-size="328px,116px"></x-import>
+    <div onClick="{{ openLoyalty }}" aria-label="Show loyalty card" style="position: absolute; top: 0; bottom: var(--space-base); left: var(--space-base); right: var(--space-base); cursor: pointer;"></div>
   </div>
 
   <!-- Wallet -->
-  <div style="padding: 0 var(--space-base) var(--space-base);">
-    <x-import component-from-global-scope="GastroDesignSystem_472aed.Wallet" balance="֏5,680" icon="uploads/ch_wallet.png" on-top-up="{{ openTopup }}" hint-size="328px,80px"></x-import>
+  <div onClick="{{ openWalletBalance }}" style="padding: 0 var(--space-base) var(--space-base); cursor: pointer;">
+    <x-import component-from-global-scope="GastroDesignSystem_472aed.Wallet" balance="֏5,680" icon="uploads/wallet_icon.png" on-top-up="{{ openTopupStop }}" hint-size="328px,80px"></x-import>
   </div>
 
   <!-- Vouchers -->
@@ -76,7 +111,7 @@
   <sc-if value="{{ showBuyAgain }}" hint-placeholder-val="{{ true }}">
   <div style="display: flex; gap: var(--space-sm); overflow-x: auto; padding: 0 var(--space-base) var(--space-lg); scrollbar-width: none;">
     <div style="flex:0 0 128px; cursor: pointer;" onClick="{{ openBuyMatcha }}"><x-import component-from-global-scope="GastroDesignSystem_472aed.BuyAgainCard" name="Hot Salted Caramel Matcha Latte" location="Northern Ave" image-url="uploads/ch_prod_hot_salted_caramel_matcha_latte.png" style="flex:0 0 128px" hint-size="128px,180px"></x-import></div>
-    <div style="flex:0 0 128px; cursor: pointer;" onClick="{{ openBuyCheesecake }}"><x-import component-from-global-scope="GastroDesignSystem_472aed.BuyAgainCard" name="Dubai Cheesecake" location="Cascade" image-url="uploads/ch_prod_dubai_cheesecake.png" style="flex:0 0 128px" hint-size="128px,180px"></x-import></div>
+    <div style="flex:0 0 128px; cursor: pointer; position: relative;" onClick="{{ openBuyCheesecake }}"><x-import component-from-global-scope="GastroDesignSystem_472aed.BuyAgainCard" name="Dubai Cheesecake" location="Cascade" image-url="uploads/ch_prod_dubai_cheesecake.png" style="flex:0 0 128px" hint-size="128px,180px"></x-import><div style="position: absolute; top: calc(128px - var(--space-sm)); right: var(--space-sm); transform: translateY(-100%); display: flex; pointer-events: none;"><x-import component-from-global-scope="GastroDesignSystem_472aed.BadgeCounter" label="+3" hint-size="24px,20px"></x-import></div></div>
     <div style="flex:0 0 128px; cursor: pointer;" onClick="{{ openBuyMuffin }}"><x-import component-from-global-scope="GastroDesignSystem_472aed.BuyAgainCard" name="Muffin Chocolate" location="Republic Sq" image-url="uploads/ch_prod_muffin_chocolate.png" style="flex:0 0 128px" hint-size="128px,180px"></x-import></div>
   </div>
   </sc-if>
@@ -84,9 +119,9 @@
   <!-- Favourites rail -->
   <sc-if value="{{ showFavourites }}" hint-placeholder-val="{{ true }}">
   <div style="display: flex; gap: var(--space-sm); overflow-x: auto; padding: 0 var(--space-base) var(--space-lg); scrollbar-width: none;">
-    <div style="flex:0 0 128px"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="Iced Fantasy Coffee" price="֏1,450" image-url="uploads/ch_fav_iced_fantasy_coffee.png" hint-size="128px,180px"></x-import></div>
-    <div style="flex:0 0 128px"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="Iced Cream Cheese Latte Aroma" price="֏1,850" image-url="uploads/ch_fav_iced_cream_cheese_latte_aroma.png" hint-size="128px,180px"></x-import></div>
-    <div style="flex:0 0 128px"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="Hot Raf Strawberry" price="֏1,650" image-url="uploads/ch_fav_hot_raf_strawberry.png" hint-size="128px,180px"></x-import></div>
+    <div style="flex:0 0 128px"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="Iced Fantasy Coffee" price="֏1,450" image-url="uploads/ch_fav_iced_fantasy_coffee.png" on-click="{{ favFantasy }}" hint-size="128px,180px"></x-import></div>
+    <div style="flex:0 0 128px"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="Iced Cream Cheese Latte Aroma" price="֏1,850" image-url="uploads/ch_fav_iced_cream_cheese_latte_aroma.png" on-click="{{ favCreamCheese }}" hint-size="128px,180px"></x-import></div>
+    <div style="flex:0 0 128px"><x-import component-from-global-scope="GastroDesignSystem_472aed.ProductVerticalCard" name="Hot Raf Strawberry" price="֏1,650" image-url="uploads/ch_fav_hot_raf_strawberry.png" on-click="{{ favRaf }}" hint-size="128px,180px"></x-import></div>
   </div>
   </sc-if>
 
@@ -118,6 +153,9 @@
   <dc-import name="WalletTopupBottomSheet" open="{{ topupOpen }}" on-close="{{ closeTopup }}" on-top-up="{{ doTopup }}" on-open-payment="{{ openPaymentSheet }}" hint-size="100%,100%"></dc-import>
   <dc-import name="PaymentBottomSheet" open="{{ paymentSheetOpen }}" on-close="{{ closePaymentSheet }}" on-select="{{ closePaymentSheet }}" hint-size="100%,100%"></dc-import>
   <dc-import name="WalletTopupSuccess" visible="{{ topupDone }}" amount="{{ topupAmount }}" on-continue="{{ finishTopup }}" hint-size="360px,800px"></dc-import>
+  <dc-import name="BranchSelectBottomSheet" open="{{ branchOpen }}" selected="{{ branchName }}" on-close="{{ closeBranch }}" on-choose="{{ chooseBranch }}" hint-size="100%,100%"></dc-import>
+  <dc-import name="WalletBalanceSheet" open="{{ walletBalanceOpen }}" on-close="{{ closeWalletBalance }}" on-top-up="{{ walletBalanceTopup }}" hint-size="100%,100%"></dc-import>
+  <dc-import name="LoyaltyCardSheet" open="{{ loyaltyOpen }}" on-close="{{ closeLoyalty }}" hint-size="100%,100%"></dc-import>
   <dc-import name="BasketOverlay" visible="{{ basketVisible }}" items="{{ basketItems }}" on-close="{{ closeBasket }}" hint-size="360px,800px"></dc-import>
 
 
@@ -125,19 +163,54 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { tab: 'buy-again', nav: 'home', basketItem: null };
+  state = { tab: 'buy-again', nav: 'home', basketItem: null, orderStep: new URLSearchParams(window.location.search).get('order') ? 2 : -1 };
+  componentDidMount() {
+  }
+  componentWillUnmount() { clearInterval(this.orderTimer); }
+  orderStepsList() {
+    const cur = this.state.orderStep;
+    return ['Placed', 'Accepted', 'In process', 'Ready'].map((label, i) => {
+      const done = i < cur, active = i === cur;
+      return {
+        label,
+        icon: ['ph-receipt', 'ph-thumbs-up', 'ph-cooking-pot', 'ph-check-circle'][i],
+        color: active ? 'var(--color-text-accent)' : done ? 'var(--color-text-primary)' : 'var(--color-text-tertiary)',
+        bar: active ? 'var(--accent-500)' : done ? 'var(--color-text-primary)' : 'var(--color-border-muted)',
+        opacity: done ? 'var(--state-disabled-opacity)' : 1,
+      };
+    });
+  }
   buyAgain = {
     matcha: { name: 'Hot Salted Caramel Matcha Latte', info: 'Regular · 300ml', price: '֏1,950', image: 'uploads/ch_prod_hot_salted_caramel_matcha_latte.png', qty: 1 },
     cheesecake: { name: 'Dubai Cheesecake', info: '1 slice', price: '֏2,200', image: 'uploads/ch_prod_dubai_cheesecake.png', qty: 1 },
     muffin: { name: 'Muffin Chocolate', info: '1 pc', price: '֏900', image: 'uploads/ch_prod_muffin_chocolate.png', qty: 1 },
   };
   renderVals() {
+    const os = this.state.orderStep;
+    const br = this.state.branch || { name: 'Northern Avenue', address: '12 Northern Ave, Yerevan' };
     return {
+      openNotifications: () => { window.location.href = 'Notifications.dc.html'; },
+      branchName: br.name,
+      branchAddress: br.address,
+      branchOpen: !!this.state.branchOpen,
+      openBranch: () => this.setState({ branchOpen: true }),
+      closeBranch: () => this.setState({ branchOpen: false }),
+      chooseBranch: (b) => this.setState({ branch: { name: b.name, address: b.address }, branchOpen: false }),
+      orderActive: os >= 0,
+      orderSteps: this.orderStepsList(),
       topupOpen: !!this.state.topupOpen && !this.state.paymentSheetOpen,
       paymentSheetOpen: !!this.state.paymentSheetOpen,
       openPaymentSheet: () => this.setState({ paymentSheetOpen: true }),
       closePaymentSheet: () => this.setState({ paymentSheetOpen: false }),
       openTopup: () => this.setState({ topupOpen: true }),
+      openTopupStop: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState({ topupOpen: true }); },
+      walletBalanceOpen: !!this.state.walletBalanceOpen,
+      openWalletBalance: (e) => { if (e && e.target && e.target.closest && e.target.closest('button')) return; this.setState({ walletBalanceOpen: true }); },
+      closeWalletBalance: () => this.setState({ walletBalanceOpen: false }),
+      walletBalanceTopup: () => this.setState({ walletBalanceOpen: false, topupOpen: true }),
+      loyaltyOpen: !!this.state.loyaltyOpen,
+      openLoyalty: () => this.setState({ loyaltyOpen: true }),
+      closeLoyalty: () => this.setState({ loyaltyOpen: false }),
       closeTopup: () => this.setState({ topupOpen: false }),
       doTopup: (a) => this.setState({ topupOpen: false, topupDone: true, topupAmount: a }),
       topupDone: !!this.state.topupDone,
@@ -164,6 +237,9 @@ class Component extends DCLogic {
       openBuyMatcha: () => this.setState({ basketItem: this.buyAgain.matcha }),
       openBuyCheesecake: () => this.setState({ basketItem: this.buyAgain.cheesecake }),
       openBuyMuffin: () => this.setState({ basketItem: this.buyAgain.muffin }),
+      favFantasy: () => this.setState({ basketItem: { name: 'Iced Fantasy Coffee', info: 'Regular · 400ml', price: '֏1,450', image: 'uploads/ch_fav_iced_fantasy_coffee.png', qty: 1 } }),
+      favCreamCheese: () => this.setState({ basketItem: { name: 'Iced Cream Cheese Latte Aroma', info: 'Regular · 400ml', price: '֏1,850', image: 'uploads/ch_fav_iced_cream_cheese_latte_aroma.png', qty: 1 } }),
+      favRaf: () => this.setState({ basketItem: { name: 'Hot Raf Strawberry', info: 'Regular · 300ml', price: '֏1,650', image: 'uploads/ch_fav_hot_raf_strawberry.png', qty: 1 } }),
       basketVisible: !!this.state.basketItem,
       basketItems: this.state.basketItem ? [this.state.basketItem] : null,
       closeBasket: () => this.setState({ basketItem: null }),
