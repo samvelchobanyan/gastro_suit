@@ -105,7 +105,8 @@ domain/
 
 - Entities are immutable and know nothing about JSON or the API.
 - A repository interface describes what the domain needs, in domain terms. It returns
-  entities and throws only `AppException`.
+  models — entities, or configuration models in `core/config/` (`ServerConfig`) — and
+  throws only `AppException`.
 - The entity inventory and its meaning are defined in `DOMAIN_SPEC.md`; fields are defined
   in code.
 

@@ -46,4 +46,24 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get errorGeneric => 'Что-то пошло не так. Попробуйте ещё раз.';
+
+  @override
+  String get retry => 'Повторить';
+
+  @override
+  String get nearestBranches => 'Ближайшие филиалы';
+
+  @override
+  String get branchOpen => 'Открыто';
+
+  @override
+  String get branchClosed => 'Закрыто';
+
+  @override
+  String get branchClosedToday => 'Сегодня закрыто';
+
+  @override
+  String distanceKm(String km) {
+    return '$km км';
+  }
 }

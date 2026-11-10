@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../domain/entities/server_config.dart';
+import '../../core/config/server_config.dart';
 
 part 'server_config_dto.g.dart';
 

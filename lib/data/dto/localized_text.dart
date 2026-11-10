@@ -1,7 +1,7 @@
 import '../../core/locale/content_language.dart';
 
 /// Picks one string from an API translation map (`{en: …, ru: …, hy: …}`):
-/// the current language, then the instance's default language, then
+/// the current language, then the instance's default language (if known), then
 /// [internalName], then an empty string. An empty translation counts as
 /// missing.
 String localized(
@@ -13,7 +13,7 @@ String localized(
       value == null || value.trim().isEmpty ? null : value;
 
   return pick(text?[language.current]) ??
-      pick(text?[language.fallback]) ??
+      pick(language.fallback == null ? null : text?[language.fallback]) ??
       pick(internalName) ??
       '';
 }

@@ -567,6 +567,24 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "cityId",
+            "required": false,
+            "in": "query",
+            "description": "A city’s `id` from GET /branches/cities: only the locations in it.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "districtId",
+            "required": false,
+            "in": "query",
+            "description": "A district’s `id` from GET /branches/cities: only the locations in it.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -595,6 +613,51 @@
           }
         },
         "summary": "List locations with optional search and geolocation sorting",
+        "tags": [
+          "Locations"
+        ]
+      }
+    },
+    "/api/v1/branches/cities": {
+      "get": {
+        "operationId": "BranchesController_cities",
+        "parameters": [
+          {
+            "name": "restaurantId",
+            "required": false,
+            "in": "query",
+            "description": "Narrows the list to one organisation. Every served location when omitted.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "In the merchant’s order. Each `id` is what GET /branches?cityId= / ?districtId= takes. Only cities and districts a served location stands in; empty when none has a city.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CityResponse"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Any other refusal: a `code` to act on and a `message` to show",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          }
+        },
+        "summary": "The cities the locations stand in, each with its districts — for a city picker and district tabs",
         "tags": [
           "Locations"
         ]
@@ -1827,6 +1890,85 @@
           }
         ],
         "summary": "Payment gateway callback (redirect from bank, no auth required)",
+        "tags": [
+          "Orders"
+        ]
+      }
+    },
+    "/api/v1/orders/buy-again": {
+      "get": {
+        "operationId": "OrdersController_buyAgain",
+        "parameters": [
+          {
+            "name": "branchId",
+            "required": false,
+            "in": "query",
+            "description": "Only dishes ordered at this branch. Every served branch when omitted.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "How many, 1 to 50; 20 when not given",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Newest first",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuyAgainResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "location_not_found — the branch named is not served",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Any other refusal: a `code` to act on and a `message` to show",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "The dishes of the guest’s recent orders, each once, ready to order again",
         "tags": [
           "Orders"
         ]
@@ -3265,6 +3407,76 @@
         ]
       }
     },
+    "/api/v1/favorites/items": {
+      "get": {
+        "operationId": "FavoritesController_items",
+        "parameters": [
+          {
+            "name": "branchId",
+            "required": false,
+            "in": "query",
+            "description": "Only this branch: its price and stock. Every served branch when omitted.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FavouriteItemResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "location_not_found — the branch named is not served",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Any other refusal: a `code` to act on and a `message` to show",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "The guest’s favourites as menu items, with the branches that sell them",
+        "tags": [
+          "Favorites"
+        ]
+      }
+    },
     "/api/v1/favorites": {
       "get": {
         "operationId": "FavoritesController_list",
@@ -4083,7 +4295,7 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "{ siteName, modules: { loyalty, wallet }, ordering: { enabled }, checkout: { redemption }, payment: { providers, default, instant, savedCards }, wallet: { minTopUp, maxTopUp }, currency, languages: { default, supported } }",
+            "description": "{ siteName, defaultBranchId, modules: { loyalty, wallet }, ordering: { enabled }, checkout: { redemption }, payment: { providers, default, instant, savedCards }, wallet: { minTopUp, maxTopUp }, currency, languages: { default, supported } }",
             "content": {
               "application/json": {
                 "schema": {
@@ -5409,9 +5621,23 @@
             "description": "Its street address."
           },
           "city": {
-            "type": "string",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
             "nullable": true,
-            "description": "The city."
+            "example": {
+              "en": "Cappuccino",
+              "ru": "Капучино",
+              "hy": "Կապուչինո"
+            },
+            "description": "The city it is in."
+          },
+          "cityId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "description": "The city’s id, as `GET /branches/cities` lists it and `?cityId=` takes it."
           },
           "district": {
             "type": "object",
@@ -5425,6 +5651,12 @@
               "hy": "Կապուչինո"
             },
             "description": "The part of the city it is in — for grouping and filtering branch lists."
+          },
+          "districtId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "description": "The district’s id, as `GET /branches/cities` lists it and `?districtId=` takes it."
           },
           "description": {
             "type": "object",
@@ -5556,7 +5788,9 @@
           "name",
           "address",
           "city",
+          "cityId",
           "district",
+          "districtId",
           "description",
           "acceptsTips",
           "rating",
@@ -5576,6 +5810,66 @@
           "organisationId",
           "organisation",
           "brand"
+        ]
+      },
+      "DistrictResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "What `GET /branches?districtId=` takes."
+          },
+          "name": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "example": {
+              "en": "Kentron",
+              "hy": "Կենտրոն",
+              "ru": "Кентрон"
+            },
+            "description": "The district’s name, a map of languages."
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "CityResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "What `GET /branches?cityId=` takes."
+          },
+          "name": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "example": {
+              "en": "Yerevan",
+              "hy": "Երևան",
+              "ru": "Ереван"
+            },
+            "description": "The city’s name, a map of languages."
+          },
+          "districts": {
+            "description": "The districts its branches stand in, in the merchant’s order; empty when the city has none (Gyumri, Vanadzor).",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DistrictResponse"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "districts"
         ]
       },
       "RateLocationDto": {
@@ -6767,6 +7061,93 @@
           "totalPages"
         ]
       },
+      "BuyAgainOptionResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "What `POST /cart/items` takes in `modifiers[].id`."
+          },
+          "groupId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Its group."
+          },
+          "name": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "example": {
+              "en": "Regular",
+              "hy": "Միջին",
+              "ru": "Стандартный"
+            },
+            "description": "Its name, a map of languages."
+          },
+          "price": {
+            "type": "number",
+            "example": 0,
+            "description": "What it adds today. A whole number of the currency."
+          }
+        },
+        "required": [
+          "id",
+          "groupId",
+          "name",
+          "price"
+        ]
+      },
+      "BuyAgainResponse": {
+        "type": "object",
+        "properties": {
+          "item": {
+            "description": "The dish as the menu answers it at `branch` today.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ItemResponse"
+              }
+            ]
+          },
+          "branch": {
+            "description": "The branch it was ordered at — where it is ordered again (`branchId` of `POST /cart/items`).",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OrderLocationResponse"
+              }
+            ]
+          },
+          "options": {
+            "description": "The options chosen with it; may be empty.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BuyAgainOptionResponse"
+            }
+          },
+          "unitPrice": {
+            "type": "number",
+            "example": 1950,
+            "description": "One, with these options, at today’s price there — a display; the basket prices it again."
+          },
+          "available": {
+            "type": "boolean",
+            "description": "`false`: it cannot be ordered there now — stopped, an option run out, or the branch takes no app orders. Show it greyed."
+          },
+          "lastOrderedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the guest last ordered it so."
+          }
+        },
+        "required": [
+          "item",
+          "branch",
+          "options",
+          "unitPrice",
+          "available",
+          "lastOrderedAt"
+        ]
+      },
       "OrderStatusResponse": {
         "type": "object",
         "properties": {
@@ -7578,6 +7959,62 @@
           "confirm"
         ]
       },
+      "FavouriteOfferResponse": {
+        "type": "object",
+        "properties": {
+          "branchId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "price": {
+            "type": "number",
+            "example": 1450,
+            "description": "Its price there. A whole number of the currency."
+          },
+          "isAvailable": {
+            "type": "boolean",
+            "description": "Whether that branch has it in stock now."
+          }
+        },
+        "required": [
+          "branchId",
+          "price",
+          "isAvailable"
+        ]
+      },
+      "FavouriteItemResponse": {
+        "type": "object",
+        "properties": {
+          "item": {
+            "description": "The dish as the menu answers it, priced at `branch`.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ItemResponse"
+              }
+            ]
+          },
+          "branch": {
+            "description": "The branch `item` is priced at: the one asked for, else the first that has it in stock.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OrderLocationResponse"
+              }
+            ]
+          },
+          "offers": {
+            "description": "Every branch that sells it.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FavouriteOfferResponse"
+            }
+          }
+        },
+        "required": [
+          "item",
+          "branch",
+          "offers"
+        ]
+      },
       "FavouritesResponse": {
         "type": "object",
         "properties": {
@@ -7894,6 +8331,12 @@
             "example": "Coffee House",
             "description": "The merchant’s name, set in Super Admin — the website’s header"
           },
+          "defaultBranchId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "description": "The branch to open on when the app knows no better — no preferred branch on the account, no location from the phone. The merchant’s choice, else their first branch; `null` only when no branch is served."
+          },
           "modules": {
             "$ref": "#/components/schemas/ConfigModulesResponse"
           },
@@ -7919,6 +8362,7 @@
         },
         "required": [
           "siteName",
+          "defaultBranchId",
           "modules",
           "ordering",
           "checkout",
@@ -8478,6 +8922,10 @@
         "properties": {}
       },
       "SaveVoucherDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "SaveCityDto": {
         "type": "object",
         "properties": {}
       },

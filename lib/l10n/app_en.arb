@@ -51,5 +51,35 @@
   "errorGeneric": "Something went wrong. Please try again.",
   "@errorGeneric": {
     "description": "Error shown when nothing more specific is known"
+  },
+  "retry": "Try again",
+  "@retry": {
+    "description": "Button that repeats a failed load"
+  },
+  "nearestBranches": "Nearest branches",
+  "@nearestBranches": {
+    "description": "Home: title of the nearest branches section"
+  },
+  "branchOpen": "Open",
+  "@branchOpen": {
+    "description": "Branch card: the branch is open now"
+  },
+  "branchClosed": "Closed",
+  "@branchClosed": {
+    "description": "Branch card: the branch is closed now"
+  },
+  "branchClosedToday": "Closed today",
+  "@branchClosedToday": {
+    "description": "Branch card: today is a day off, shown instead of the hours"
+  },
+  "distanceKm": "{km} km",
+  "@distanceKm": {
+    "description": "Distance to a branch, e.g. 1.2 km",
+    "placeholders": {
+      "km": {
+        "type": "String",
+        "example": "1.2"
+      }
+    }
   }
 }

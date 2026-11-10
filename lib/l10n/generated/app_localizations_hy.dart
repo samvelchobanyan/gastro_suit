@@ -46,4 +46,24 @@ class AppLocalizationsHy extends AppLocalizations {
 
   @override
   String get errorGeneric => 'Ինչ-որ բան սխալ է։ Խնդրում ենք կրկին փորձել։';
+
+  @override
+  String get retry => 'Կրկին փորձել';
+
+  @override
+  String get nearestBranches => 'Մոտակա մասնաճյուղեր';
+
+  @override
+  String get branchOpen => 'Բաց է';
+
+  @override
+  String get branchClosed => 'Փակ է';
+
+  @override
+  String get branchClosedToday => 'Այսօր փակ է';
+
+  @override
+  String distanceKm(String km) {
+    return '$km կմ';
+  }
 }

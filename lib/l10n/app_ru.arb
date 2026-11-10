@@ -12,5 +12,11 @@
   "signIn": "Войти",
   "signOut": "Выйти",
   "errorNoConnection": "Нет подключения к интернету",
-  "errorGeneric": "Что-то пошло не так. Попробуйте ещё раз."
+  "errorGeneric": "Что-то пошло не так. Попробуйте ещё раз.",
+  "retry": "Повторить",
+  "nearestBranches": "Ближайшие филиалы",
+  "branchOpen": "Открыто",
+  "branchClosed": "Закрыто",
+  "branchClosedToday": "Сегодня закрыто",
+  "distanceKm": "{km} км"
 }

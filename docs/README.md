@@ -11,5 +11,9 @@
 | `guestpilot-api.swagger.json` | Backend OpenAPI export | Reference |
 | `guestpilot-mobile.postman_collection.json` | Backend Postman collection | Reference |
 
+Refresh the Swagger export from the dev server:
+`curl -s http://37.157.212.21:3000/api/docs-json | python -m json.tool --no-ensure-ascii > docs/guestpilot-api.swagger.json`
+(formatted, so a refresh shows a readable diff).
+
 Precedence on conflict: `CLAUDE.md` → these docs → the Flutter knowledge base.
 Deviations from the knowledge base are listed in `ARCHITECTURE_SPEC.md` §14.

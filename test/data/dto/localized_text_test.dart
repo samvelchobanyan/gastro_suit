@@ -14,6 +14,14 @@ void main() {
       expect(localized({'en': 'Davtashen', 'hy': 'Դավթաշեն'}, ru), 'Davtashen');
     });
 
+    test('without a default language goes from current to internal name', () {
+      const noConfig = ContentLanguage(current: 'ru');
+      expect(
+        localized({'en': 'Davtashen'}, noConfig, internalName: 'CH Davtashen'),
+        'CH Davtashen',
+      );
+    });
+
     test('treats an empty translation as missing', () {
       expect(localized({'en': 'Davtashen', 'ru': '  '}, ru), 'Davtashen');
     });

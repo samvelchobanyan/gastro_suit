@@ -1,6 +1,6 @@
 import '../../core/network/api_client.dart';
 import '../../core/network/app_exception.dart';
-import '../../domain/entities/server_config.dart';
+import '../../core/config/server_config.dart';
 import '../../domain/repositories/server_config_repository.dart';
 import '../dto/server_config_dto.dart';
 

@@ -46,4 +46,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorGeneric => 'Something went wrong. Please try again.';
+
+  @override
+  String get retry => 'Try again';
+
+  @override
+  String get nearestBranches => 'Nearest branches';
+
+  @override
+  String get branchOpen => 'Open';
+
+  @override
+  String get branchClosed => 'Closed';
+
+  @override
+  String get branchClosedToday => 'Closed today';
+
+  @override
+  String distanceKm(String km) {
+    return '$km km';
+  }
 }

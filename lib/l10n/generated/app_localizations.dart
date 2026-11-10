@@ -177,6 +177,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong. Please try again.'**
   String get errorGeneric;
+
+  /// Button that repeats a failed load
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get retry;
+
+  /// Home: title of the nearest branches section
+  ///
+  /// In en, this message translates to:
+  /// **'Nearest branches'**
+  String get nearestBranches;
+
+  /// Branch card: the branch is open now
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get branchOpen;
+
+  /// Branch card: the branch is closed now
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get branchClosed;
+
+  /// Branch card: today is a day off, shown instead of the hours
+  ///
+  /// In en, this message translates to:
+  /// **'Closed today'**
+  String get branchClosedToday;
+
+  /// Distance to a branch, e.g. 1.2 km
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km'**
+  String distanceKm(String km);
 }
 
 class _AppLocalizationsDelegate

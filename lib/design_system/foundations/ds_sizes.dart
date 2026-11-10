@@ -37,6 +37,9 @@ abstract final class DSSizes {
   static const double storyItemWidth = 72;
   static const double bannerWidth = 280;
 
+  /// The photo on a branch card (`BranchCard`).
+  static const double branchImage = 72;
+
   // Rows and list items
   static const double rowHeightCompact = 48;
   static const double rowHeightIcon = 56;

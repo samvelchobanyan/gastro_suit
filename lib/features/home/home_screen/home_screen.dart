@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../design_system/ds_extensions.dart';
+import '../../../domain/state/branches_state.dart';
 import 'banners_controller.dart';
 import 'stories_controller.dart';
 import 'widgets/banners_block.dart';
 import 'widgets/home_header.dart';
+import 'widgets/nearest_branches_block.dart';
 import 'widgets/stories_block.dart';
 
 /// The Home tab: one vertical scroll of blocks, top to bottom — header,
-/// stories, banners (nearest branches next; loyalty, wallet, vouchers and the
+/// stories, banners, nearest branches (loyalty, wallet, vouchers and the
 /// buy-again / favourites rails later).
 ///
 /// Each block loads, fails and refreshes on its own; this screen only places
@@ -24,6 +26,8 @@ class HomeScreen extends ConsumerWidget {
       await Future.wait<Object>([
         ref.refresh(storiesControllerProvider.future),
         ref.refresh(bannersControllerProvider.future),
+        // Also reads the position again.
+        ref.refresh(branchesControllerProvider.future),
       ]);
     } catch (_) {
       // Each block shows its own outcome; the spinner only needs to stop.
@@ -47,6 +51,7 @@ class HomeScreen extends ConsumerWidget {
               SliverToBoxAdapter(child: HomeHeader()),
               SliverToBoxAdapter(child: StoriesBlock()),
               SliverToBoxAdapter(child: BannersBlock()),
+              SliverToBoxAdapter(child: NearestBranchesBlock()),
             ],
           ),
         ),

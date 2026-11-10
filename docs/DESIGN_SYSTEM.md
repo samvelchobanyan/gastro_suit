@@ -132,7 +132,8 @@ with real content (see §7).
   stroke widths; minimum touch target 48. Component sizes the handoff hard-codes inside a
   component, not in its tokens, are added here by name when the component is built:
   `headerLogo` and `headerAction` 44, `notificationDot` 9 (`Greeting`); `storyCircle` 64
-  and `storyItemWidth` 72 (`Stories`); `bannerWidth` 280 (Home's promo row).
+  and `storyItemWidth` 72 (`Stories`); `bannerWidth` 280 (Home's promo row);
+  `branchImage` 72 (`BranchCard`).
 - `DSElevation`: `card`, `raised`, `overlay`, `sheet` — lists of `BoxShadow`.
 
 ---
@@ -158,6 +159,8 @@ with real content (see §7).
 | `DSBottomNavigation` | `BottomNavigation` | Flat bar, hairline on top, 48 high; the active item is the brand colour with a filled icon |
 | `DSSkeleton` | `Skeleton` | A loading shape (box or circle) with a sweeping band; blocks compose their own skeletons from it |
 | `DSNetworkImage` | — | A cached network picture; a recessed fill while loading, with an image icon on error or without an address |
+| `DSStatusPill` | `StatusPill` | A short state label on a tonal capsule (Open / Closed); tones `success`, `error` so far — the handoff's `warning` and `neutral` are added when used |
+| `DSSectionHeader` | `SectionHeader` | A section title (`h3`); the handoff's optional action button is used by no page, so it is not built |
 
 ---
 

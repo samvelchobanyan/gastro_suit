@@ -12,5 +12,11 @@
   "signIn": "Մուտք գործել",
   "signOut": "Դուրս գալ",
   "errorNoConnection": "Ինտերնետ կապ չկա",
-  "errorGeneric": "Ինչ-որ բան սխալ է։ Խնդրում ենք կրկին փորձել։"
+  "errorGeneric": "Ինչ-որ բան սխալ է։ Խնդրում ենք կրկին փորձել։",
+  "retry": "Կրկին փորձել",
+  "nearestBranches": "Մոտակա մասնաճյուղեր",
+  "branchOpen": "Բաց է",
+  "branchClosed": "Փակ է",
+  "branchClosedToday": "Այսօր փակ է",
+  "distanceKm": "{km} կմ"
 }

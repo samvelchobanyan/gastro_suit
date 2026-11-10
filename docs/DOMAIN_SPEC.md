@@ -105,9 +105,10 @@ Each branch has its own menu (prices and availability).
 
 ### 3.3 Rules
 
-- Working hours for a day and whether the branch is open are computed for a given moment
-  on the branch's own clock. A window whose closing time is earlier than its opening time
-  runs past midnight, so the previous day's window counts in the early hours.
+- Today's hours and whether the branch is open are taken from the server as of the moment
+  the list was loaded (`today`): hours with an open-now flag, a day off, or unknown when
+  no hours are entered. A closing time earlier than the opening time runs past midnight.
+  A temporarily closed branch is closed whatever its hours.
 - Distance is not part of the branch: it depends on where the user is.
 - Ordering availability (taking orders, from the app, temporarily closed, ordering hours)
   is pending the design (`DESIGN_PRODUCT_QUESTIONS.md`).

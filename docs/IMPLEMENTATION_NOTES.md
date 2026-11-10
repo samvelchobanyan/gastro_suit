@@ -41,7 +41,10 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   - group and option names: `optionNames[id][lang]` → the POS `name`.
 - One function does it for every DTO: `localized()` in `data/dto/localized_text.dart`.
   Repositories receive a `ContentLanguage` (current + default) from
-  `contentLanguageProvider`, which waits for `GET /config`.
+  `contentLanguageProvider`, which waits for `GET /config`. If `/config` fails, content
+  still loads without the default-language step (current → `internalName`); the config is
+  not retried until the app restarts. Revisit when `/config` carries something content
+  cannot do without (currency, modules).
 - The current language is the device's for now (`core/locale/app_language.dart`). With
   the profile's language switch it becomes the user's choice, stored on the device, and
   the one source for the UI, the `Accept-Language` header and content mapping; signed-in
@@ -97,8 +100,8 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - On start (guest or signed in) the active branch is:
   1. the nearest branch, when the device position is known;
   2. otherwise the default branch.
-- Until the API serves the default branch (questions for the backend), the first branch
-  in the API order stands in for it; that order is also set by the admins.
+- The default branch is `defaultBranchId` from `GET /config` (the merchant's choice, else
+  their first branch).
 - The user's choice is not kept across restarts: every start picks again as above.
 - Proposed: on start, wait for the position with a short timeout (about 3 s) before
   choosing, so the menu does not switch to another branch in front of the user. No
@@ -156,28 +159,25 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - go_sport precedent for a shared parametrised provider: `scheduleControllerProvider`
   (family by date, three consumers).
 
-## 10. Branches: hours, distance, order — agreed (sorting open)
+## 10. Branches: hours, distance, order — agreed (revised 2026-11-10)
 
 - Branches are loaded once (all of them) and refreshed on resume (§11) and by
   pull-to-refresh. Filters (city, district) work on the loaded list.
-- "Open now" and today's working hours are computed in the app from `openingHours` and
-  the branch `timezone`; the API's `today` / `openNow` are not used.
-  - `openingHours` shape (backend `src/shared/utils/opening-hours.util.ts`):
-    `{ mon: { open: "08:00", close: "22:00" }, … }`; a missing day is a day off; `null`
-    means unknown hours. The legacy form `"08:00-22:00"` per day may still occur.
-  - "Now" is converted to the branch's time zone (`timezone` package; load the time zone
-    database once at start). No `timezone` → the device's time.
-  - A window with `close` earlier than `open` runs past midnight: at 01:10 on Tuesday the
-    branch is open on Monday's window. Check today's window and yesterday's. Reference:
-    backend `todayHoursOf` in `src/shared/utils/location-card.util.ts`.
-  - Branch methods take `now` explicitly: `workingHoursOn(now)`, `isOpenAt(now)`.
-  - The value is computed when a screen builds; no ticker, it does not change on screen
-    by itself.
-- Distance and sorting by distance: decide during implementation — in the app (from the
-  branch coordinates and the user's position; the list has no pagination, all branches
-  come at once) or by the API (`lat`/`lng`, `distanceKm`). Either way distance lives in
-  the list state, not in `Branch`. Without a position: the API order (the admin's
-  order).
+- Today's hours and "open now" come from the API's `today` (`hours` with `open`, `close`,
+  `openNow`; `closed` for a day off; `null` when no hours are entered). They are true at
+  the moment of the response; refresh on resume and pull-to-refresh keep them current
+  enough. Computing them in the app (`openingHours` + `timezone`, overnight windows) is
+  deferred until stale status becomes a real problem.
+- The branch card: `hours` → "08:00 – 23:00" and an Open / Closed pill; `closed` → "Closed
+  today"; `null` → no hours and no pill (unknown is not closed). `isTemporarilyClosed` →
+  a Closed pill whatever the hours.
+- Distance is computed in the app (`Geolocator.distanceBetween`) from the branch
+  coordinates and the user's position; the list is sorted by it, branches without
+  coordinates last. One controller (`BranchesController`, `domain/state/`) fetches the
+  branches and the position together. Distance lives in the list state (`NearbyBranch`),
+  not in `Branch`. Without a position: the API order (the admin's order), no distance.
+- The position: asked for on the first load (Home is first), read once per load; up to 3 s
+  for a fix after permission, then the last known one, else none.
 
 ## 11. Refresh on resume — agreed, details with the implementation agent
 
@@ -258,8 +258,6 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - Expiry of loyalty points (the PRD shows expiry dates and "expiring soon"; the API has
   nothing for points).
 - Voucher validity date (the API has none).
-- Cities and districts as reference lists with ids (agreed 2026-11-09, the backend will
-  add them). Today a branch's `city` is a plain untranslated string and `district` a
-  translated map, so filters can only group branches by matching text.
-- The default branch for all users, set by the admins (e.g. in `GET /config`). Today the
-  API has only the per-user `preferredLocationId`, which the app no longer uses.
+- ~~Cities and districts as reference lists with ids~~ — done: `GET /branches/cities`,
+  `cityId` / `districtId` on a branch and as `/branches` filters.
+- ~~The default branch for all users~~ — done: `defaultBranchId` in `GET /config`.

@@ -46,3 +46,6 @@ app.*.map.json
 
 # Personal build configs (your own API address etc.)
 config/*.local.json
+
+# Raw design exports before they are merged into coffee-house-ui/
+design-update/

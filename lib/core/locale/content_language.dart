@@ -2,10 +2,11 @@
 ///
 /// [current] is the app's language; [fallback] is the instance's default
 /// language from `GET /config`, used when a text has no translation in
-/// [current].
+/// [current]. It is null when `/config` failed to load: content is then
+/// mapped without that step.
 class ContentLanguage {
-  const ContentLanguage({required this.current, required this.fallback});
+  const ContentLanguage({required this.current, this.fallback});
 
   final String current;
-  final String fallback;
+  final String? fallback;
 }

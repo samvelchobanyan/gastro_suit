@@ -1,10 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/repositories/auth_repository_impl.dart';
+import '../../data/repositories/branch_repository_impl.dart';
 import '../../data/repositories/promo_banner_repository_impl.dart';
 import '../../data/repositories/server_config_repository_impl.dart';
 import '../../data/repositories/story_repository_impl.dart';
 import '../../domain/repositories/auth_repository.dart';
+import '../../domain/repositories/branch_repository.dart';
 import '../../domain/repositories/promo_banner_repository.dart';
 import '../../domain/repositories/server_config_repository.dart';
 import '../../domain/repositories/story_repository.dart';
@@ -26,6 +28,10 @@ final serverConfigRepositoryProvider = Provider<ServerConfigRepository>(
 
 final storyRepositoryProvider = Provider<StoryRepository>(
   (ref) => StoryRepositoryImpl(ref.watch(apiClientProvider)),
+);
+
+final branchRepositoryProvider = Provider<BranchRepository>(
+  (ref) => BranchRepositoryImpl(ref.watch(apiClientProvider)),
 );
 
 final promoBannerRepositoryProvider = Provider<PromoBannerRepository>(
