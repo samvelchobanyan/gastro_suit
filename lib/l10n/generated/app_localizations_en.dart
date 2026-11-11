@@ -27,6 +27,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get choose => 'Choose';
 
   @override
+  String get otherDistrict => 'Other';
+
+  @override
   String get notifications => 'Notifications';
 
   @override

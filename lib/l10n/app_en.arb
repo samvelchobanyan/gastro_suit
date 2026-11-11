@@ -24,6 +24,10 @@
   "@choose": {
     "description": "Branch sheet: the button that applies the picked branch"
   },
+  "otherDistrict": "Other",
+  "@otherDistrict": {
+    "description": "Branch sheet: the district tab for branches that name no district of their city"
+  },
   "notifications": "Notifications",
   "@notifications": {
     "description": "Accessibility label of the notifications bell"

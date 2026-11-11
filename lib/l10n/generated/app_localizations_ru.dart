@@ -27,6 +27,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get choose => 'Выбрать';
 
   @override
+  String get otherDistrict => 'Другие';
+
+  @override
   String get notifications => 'Уведомления';
 
   @override

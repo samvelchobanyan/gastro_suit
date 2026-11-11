@@ -136,6 +136,12 @@ abstract class AppLocalizations {
   /// **'Choose'**
   String get choose;
 
+  /// Branch sheet: the district tab for branches that name no district of their city
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get otherDistrict;
+
   /// Accessibility label of the notifications bell
   ///
   /// In en, this message translates to:

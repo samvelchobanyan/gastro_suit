@@ -27,6 +27,9 @@ class AppLocalizationsHy extends AppLocalizations {
   String get choose => 'Ընտրել';
 
   @override
+  String get otherDistrict => 'Այլ';
+
+  @override
   String get notifications => 'Ծանուցումներ';
 
   @override

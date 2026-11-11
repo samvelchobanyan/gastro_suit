@@ -7,6 +7,7 @@ import '../../../design_system/components/inputs/ds_dropdown.dart';
 import '../../../design_system/components/inputs/ds_option.dart';
 import '../../../design_system/components/overlays/ds_bottom_sheet.dart';
 import '../../../design_system/ds_extensions.dart';
+import '../../../domain/entities/branch.dart';
 import '../../../domain/entities/city.dart';
 import '../../../domain/state/active_branch_state.dart';
 import '../../../domain/state/branches_state.dart';
@@ -35,6 +36,10 @@ class BranchPickerSheet extends ConsumerStatefulWidget {
 }
 
 class _BranchPickerSheetState extends ConsumerState<BranchPickerSheet> {
+  /// The "Other" district tab's value; district ids are UUIDs, so it never
+  /// clashes with one.
+  static const _otherTab = '';
+
   // Null until the user changes them; the active branch's are used till then.
   String? _cityId;
   String? _districtId;
@@ -70,19 +75,45 @@ class _BranchPickerSheetState extends ConsumerState<BranchPickerSheet> {
     final cityId = _cityId ?? active?.cityId;
     final city =
         cities.where((c) => c.id == cityId).firstOrNull ?? cities.firstOrNull;
-    final districts = city?.districts ?? const <District>[];
-    final districtId = _districtId ?? active?.districtId;
-    final district =
-        districts.where((d) => d.id == districtId).firstOrNull ??
-        districts.firstOrNull;
     final markedId = _markedId ?? active?.id;
 
     // Without cities from the server every branch is listed.
-    final shown = [
+    final inCity = [
       for (final item in branches)
-        if (city == null ||
-            (item.branch.cityId == city.id &&
-                (district == null || item.branch.districtId == district.id)))
+        if (city == null || item.branch.cityId == city.id) item,
+    ];
+
+    // A city split into districts gets a tab per district, and an "Other"
+    // tab for its branches that name no district of it.
+    final districts = city?.districts ?? const <District>[];
+    final districtIds = {for (final d in districts) d.id};
+    bool isOther(Branch b) => !districtIds.contains(b.districtId);
+    final tabs = [
+      for (final d in districts) DSOption(value: d.id, label: d.name),
+      if (districts.isNotEmpty && inCity.any((b) => isOther(b.branch)))
+        DSOption(
+          value: _otherTab,
+          label: AppLocalizations.of(context).otherDistrict,
+        ),
+    ];
+
+    // The active branch's tab, while the sheet shows its city.
+    final activeTab = active == null || active.cityId != city?.id
+        ? null
+        : isOther(active)
+        ? _otherTab
+        : active.districtId;
+    final wanted = _districtId ?? activeTab;
+    final tab = tabs.any((t) => t.value == wanted)
+        ? wanted
+        : tabs.firstOrNull?.value;
+
+    final shown = [
+      for (final item in inCity)
+        if (tab == null ||
+            (tab == _otherTab
+                ? isOther(item.branch)
+                : item.branch.districtId == tab))
           item,
     ];
 
@@ -104,12 +135,10 @@ class _BranchPickerSheetState extends ConsumerState<BranchPickerSheet> {
           ),
           const SizedBox(height: DSSpacing.base),
         ],
-        if (district != null) ...[
+        if (tab != null) ...[
           DSChipTabs<String>(
-            options: [
-              for (final d in districts) DSOption(value: d.id, label: d.name),
-            ],
-            value: district.id,
+            options: tabs,
+            value: tab,
             onChanged: (id) => setState(() => _districtId = id),
           ),
           const SizedBox(height: DSSpacing.base),
