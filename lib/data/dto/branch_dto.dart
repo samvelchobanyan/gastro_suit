@@ -6,8 +6,7 @@ import 'localized_text.dart';
 
 part 'branch_dto.g.dart';
 
-/// `LocationResponse` from `GET /branches`. Only what the branch card uses is
-/// read.
+/// `LocationResponse` from `GET /branches`. Only what the app uses is read.
 @JsonSerializable(createToJson: false)
 class BranchDto {
   const BranchDto({
@@ -16,6 +15,8 @@ class BranchDto {
     this.name,
     this.address,
     this.photoUrl,
+    this.cityId,
+    this.districtId,
     this.latitude,
     this.longitude,
     this.today,
@@ -35,6 +36,8 @@ class BranchDto {
   final Map<String, String>? address;
 
   final String? photoUrl;
+  final String? cityId;
+  final String? districtId;
   final double? latitude;
   final double? longitude;
   final TodayHoursDto? today;
@@ -47,6 +50,8 @@ class BranchDto {
       name: localized(name, language, internalName: internalName),
       address: localized(address, language),
       photoUrl: photoUrl == null || photoUrl!.isEmpty ? null : photoUrl,
+      cityId: cityId,
+      districtId: districtId,
       latitude: hasCoordinates ? latitude : null,
       longitude: hasCoordinates ? longitude : null,
       today: today?.toDomain(),

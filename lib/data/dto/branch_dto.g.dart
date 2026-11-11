@@ -12,6 +12,8 @@ BranchDto _$BranchDtoFromJson(Map<String, dynamic> json) => BranchDto(
   name: translationsFromJson(json['name']),
   address: translationsFromJson(json['address']),
   photoUrl: json['photoUrl'] as String?,
+  cityId: json['cityId'] as String?,
+  districtId: json['districtId'] as String?,
   latitude: (json['latitude'] as num?)?.toDouble(),
   longitude: (json['longitude'] as num?)?.toDouble(),
   today: json['today'] == null

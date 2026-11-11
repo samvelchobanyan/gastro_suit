@@ -21,7 +21,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tabProfile => 'Profile';
 
   @override
-  String get homeGreeting => 'Let\'s enjoy some coffee';
+  String get chooseBranch => 'Choose branch';
+
+  @override
+  String get choose => 'Choose';
 
   @override
   String get notifications => 'Notifications';

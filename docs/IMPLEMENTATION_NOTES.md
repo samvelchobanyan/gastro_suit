@@ -103,6 +103,11 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - The default branch is `defaultBranchId` from `GET /config` (the merchant's choice, else
   their first branch).
 - The user's choice is not kept across restarts: every start picks again as above.
+- Within a session the user's choice wins: pull-to-refresh recomputes the nearest branch
+  but keeps the chosen one (with its fresh data). If the chosen branch leaves the list,
+  the rule above applies again. Without a position and a known default, the first branch
+  in the list is used. In code: `branchPickProvider` holds the chosen id,
+  `activeBranchProvider` computes the active branch.
 - Proposed: on start, wait for the position with a short timeout (about 3 s) before
   choosing, so the menu does not switch to another branch in front of the user. No
   permission, a refusal or the timeout → the default branch.

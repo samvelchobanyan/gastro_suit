@@ -10,5 +10,9 @@ abstract class ServerConfig with _$ServerConfig {
     /// The language content falls back to when a text has no translation in
     /// the app's language.
     required String defaultLanguage,
+
+    /// The branch to open on when the user's position is unknown. Null only
+    /// when the instance serves no branch.
+    String? defaultBranchId,
   }) = _ServerConfig;
 }

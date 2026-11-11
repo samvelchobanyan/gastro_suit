@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../design_system/components/feedback/ds_status_pill.dart';
@@ -7,6 +6,7 @@ import '../../design_system/components/image/ds_network_image.dart';
 import '../../design_system/ds_extensions.dart';
 import '../../domain/entities/branch.dart';
 import '../../l10n/generated/app_localizations.dart';
+import 'branch_distance.dart';
 
 /// One branch in a list (handoff `BranchCard`): photo, name, distance,
 /// address, today's hours and whether it is open. Home's nearest branches
@@ -64,7 +64,7 @@ class BranchTile extends StatelessWidget {
                   if (distanceKm != null) ...[
                     const SizedBox(width: DSSpacing.sm),
                     Text(
-                      _distance(context, distanceKm),
+                      formatBranchDistance(context, distanceKm),
                       style: DSTypography.caption.copyWith(
                         color: colors.textTertiary,
                       ),
@@ -157,11 +157,5 @@ class BranchTile extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  static String _distance(BuildContext context, double km) {
-    final locale = Localizations.localeOf(context).toLanguageTag();
-    final number = NumberFormat('0.0', locale).format(km);
-    return AppLocalizations.of(context).distanceKm(number);
   }
 }

@@ -124,11 +124,17 @@ abstract class AppLocalizations {
   /// **'Profile'**
   String get tabProfile;
 
-  /// Home header: the small line above the user's name
+  /// Home header tap target and the branch sheet title
   ///
   /// In en, this message translates to:
-  /// **'Let\'s enjoy some coffee'**
-  String get homeGreeting;
+  /// **'Choose branch'**
+  String get chooseBranch;
+
+  /// Branch sheet: the button that applies the picked branch
+  ///
+  /// In en, this message translates to:
+  /// **'Choose'**
+  String get choose;
 
   /// Accessibility label of the notifications bell
   ///

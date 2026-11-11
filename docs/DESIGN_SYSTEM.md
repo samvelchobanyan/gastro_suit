@@ -147,6 +147,9 @@ with real content (see §7).
   components that use them.
 - `--color-bg-muted`: referenced by the handoff but never defined; it is
   `context.colors.bgSurfaceSunken`.
+- `TabBar` size `xs` paints with palette greys: `gray-0` is `bgMain`, `gray-100` is
+  `bgSurfaceSunken`; the unselected label's `gray-500` (the value of `textDisabled`) is
+  `textTertiary`, since the chip is not disabled.
 - `--alpha-white-40`: referenced by the handoff (ProductOverlay) but missing from its
   tokens; added as `DSPalette.alphaWhite40`.
 
@@ -161,6 +164,11 @@ with real content (see §7).
 | `DSNetworkImage` | — | A cached network picture; a recessed fill while loading, with an image icon on error or without an address |
 | `DSStatusPill` | `StatusPill` | A short state label on a tonal capsule (Open / Closed); tones `success`, `error` so far — the handoff's `warning` and `neutral` are added when used |
 | `DSSectionHeader` | `SectionHeader` | A section title (`h3`); the handoff's optional action button is used by no page, so it is not built |
+| `DSBottomSheet` | `BottomSheet` | The frame every sheet shares: handle, title with a close button, scrolling content; up to 88% of the screen; opened with `showDSBottomSheet` |
+| `DSDropdown` | `Dropdown` | A 40-high select box; the list opens under the field. Drawn here, placed and closed by Flutter's `RawMenuAnchor` |
+| `DSChipTabs` | `TabBar`, size `xs` | A sideways-scrolling row of chips, one selected. The handoff's `big` tabs (a segmented switch with a sliding indicator) look and behave differently and become a separate component |
+| `DSRadio` | `RadioButton` | The radio mark only; the row it sits in takes the tap |
+| `DSButton` | `Button` | `primary`, size `sm` so far; other variants and sizes are added when used |
 
 ---
 

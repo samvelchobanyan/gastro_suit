@@ -16,7 +16,9 @@ mixin _$ServerConfig {
 
 /// The language content falls back to when a text has no translation in
 /// the app's language.
- String get defaultLanguage;
+ String get defaultLanguage;/// The branch to open on when the user's position is unknown. Null only
+/// when the instance serves no branch.
+ String? get defaultBranchId;
 /// Create a copy of ServerConfig
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,16 +29,16 @@ $ServerConfigCopyWith<ServerConfig> get copyWith => _$ServerConfigCopyWithImpl<S
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ServerConfig&&(identical(other.defaultLanguage, defaultLanguage) || other.defaultLanguage == defaultLanguage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ServerConfig&&(identical(other.defaultLanguage, defaultLanguage) || other.defaultLanguage == defaultLanguage)&&(identical(other.defaultBranchId, defaultBranchId) || other.defaultBranchId == defaultBranchId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,defaultLanguage);
+int get hashCode => Object.hash(runtimeType,defaultLanguage,defaultBranchId);
 
 @override
 String toString() {
-  return 'ServerConfig(defaultLanguage: $defaultLanguage)';
+  return 'ServerConfig(defaultLanguage: $defaultLanguage, defaultBranchId: $defaultBranchId)';
 }
 
 
@@ -47,7 +49,7 @@ abstract mixin class $ServerConfigCopyWith<$Res>  {
   factory $ServerConfigCopyWith(ServerConfig value, $Res Function(ServerConfig) _then) = _$ServerConfigCopyWithImpl;
 @useResult
 $Res call({
- String defaultLanguage
+ String defaultLanguage, String? defaultBranchId
 });
 
 
@@ -64,10 +66,11 @@ class _$ServerConfigCopyWithImpl<$Res>
 
 /// Create a copy of ServerConfig
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? defaultLanguage = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? defaultLanguage = null,Object? defaultBranchId = freezed,}) {
   return _then(_self.copyWith(
 defaultLanguage: null == defaultLanguage ? _self.defaultLanguage : defaultLanguage // ignore: cast_nullable_to_non_nullable
-as String,
+as String,defaultBranchId: freezed == defaultBranchId ? _self.defaultBranchId : defaultBranchId // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -152,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String defaultLanguage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String defaultLanguage,  String? defaultBranchId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ServerConfig() when $default != null:
-return $default(_that.defaultLanguage);case _:
+return $default(_that.defaultLanguage,_that.defaultBranchId);case _:
   return orElse();
 
 }
@@ -173,10 +176,10 @@ return $default(_that.defaultLanguage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String defaultLanguage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String defaultLanguage,  String? defaultBranchId)  $default,) {final _that = this;
 switch (_that) {
 case _ServerConfig():
-return $default(_that.defaultLanguage);case _:
+return $default(_that.defaultLanguage,_that.defaultBranchId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +196,10 @@ return $default(_that.defaultLanguage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String defaultLanguage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String defaultLanguage,  String? defaultBranchId)?  $default,) {final _that = this;
 switch (_that) {
 case _ServerConfig() when $default != null:
-return $default(_that.defaultLanguage);case _:
+return $default(_that.defaultLanguage,_that.defaultBranchId);case _:
   return null;
 
 }
@@ -208,12 +211,15 @@ return $default(_that.defaultLanguage);case _:
 
 
 class _ServerConfig implements ServerConfig {
-  const _ServerConfig({required this.defaultLanguage});
+  const _ServerConfig({required this.defaultLanguage, this.defaultBranchId});
   
 
 /// The language content falls back to when a text has no translation in
 /// the app's language.
 @override final  String defaultLanguage;
+/// The branch to open on when the user's position is unknown. Null only
+/// when the instance serves no branch.
+@override final  String? defaultBranchId;
 
 /// Create a copy of ServerConfig
 /// with the given fields replaced by the non-null parameter values.
@@ -225,16 +231,16 @@ _$ServerConfigCopyWith<_ServerConfig> get copyWith => __$ServerConfigCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ServerConfig&&(identical(other.defaultLanguage, defaultLanguage) || other.defaultLanguage == defaultLanguage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ServerConfig&&(identical(other.defaultLanguage, defaultLanguage) || other.defaultLanguage == defaultLanguage)&&(identical(other.defaultBranchId, defaultBranchId) || other.defaultBranchId == defaultBranchId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,defaultLanguage);
+int get hashCode => Object.hash(runtimeType,defaultLanguage,defaultBranchId);
 
 @override
 String toString() {
-  return 'ServerConfig(defaultLanguage: $defaultLanguage)';
+  return 'ServerConfig(defaultLanguage: $defaultLanguage, defaultBranchId: $defaultBranchId)';
 }
 
 
@@ -245,7 +251,7 @@ abstract mixin class _$ServerConfigCopyWith<$Res> implements $ServerConfigCopyWi
   factory _$ServerConfigCopyWith(_ServerConfig value, $Res Function(_ServerConfig) _then) = __$ServerConfigCopyWithImpl;
 @override @useResult
 $Res call({
- String defaultLanguage
+ String defaultLanguage, String? defaultBranchId
 });
 
 
@@ -262,10 +268,11 @@ class __$ServerConfigCopyWithImpl<$Res>
 
 /// Create a copy of ServerConfig
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? defaultLanguage = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? defaultLanguage = null,Object? defaultBranchId = freezed,}) {
   return _then(_ServerConfig(
 defaultLanguage: null == defaultLanguage ? _self.defaultLanguage : defaultLanguage // ignore: cast_nullable_to_non_nullable
-as String,
+as String,defaultBranchId: freezed == defaultBranchId ? _self.defaultBranchId : defaultBranchId // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

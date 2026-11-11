@@ -179,15 +179,19 @@ features/<feature>/
 - A feature groups the screens of one user task. A multi-step flow (sign-up, checkout) is
   one feature with one folder per step. A feature holds only interface: entities, state
   and data access live in `domain/` and `data/`.
-- A screen is a navigation target (a page, a sheet, a dialog) and is a `*Screen` widget.
-  Its folder carries the `_screen` suffix, so a feature and its main screen do not share a
-  name (`home/home_screen/`).
+- A screen is a navigation target. Its widget and folder are named by how it opens: a
+  page is `*Screen` in `<name>_screen/`, a bottom sheet `*Sheet` in `<name>_sheet/`, a
+  dialog `*Dialog` in `<name>_dialog/`. The suffix also keeps a feature and its main
+  screen from sharing a name (`home/home_screen/`).
 - In `widgets/` a widget is a file. It gets a folder only when it has more than one file
   (its own sub-widgets).
 - Data belongs to a screen (its controllers) or is domain state; widgets own none. A part
   of a screen may read providers itself (a block that loads and fails on its own) or get
   its data from the screen; this is decided per case. Reusable widgets never read
   providers (§8).
+- A feature may open another feature's screens and embed its blocks (the Order tab shows
+  the branch list of `branches`). Data two features read is domain state, not a
+  controller of either.
 
 ---
 

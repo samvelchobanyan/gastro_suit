@@ -12,6 +12,11 @@ abstract class Branch with _$Branch {
     required String address,
     String? photoUrl,
 
+    /// Where it stands, for the branch picker's city and district filters.
+    /// No district when its city is not split into districts.
+    String? cityId,
+    String? districtId,
+
     /// For the distance to the user; both or neither.
     double? latitude,
     double? longitude,

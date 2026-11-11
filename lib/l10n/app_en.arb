@@ -16,9 +16,13 @@
   "@tabProfile": {
     "description": "Bottom navigation: Profile tab"
   },
-  "homeGreeting": "Let's enjoy some coffee",
-  "@homeGreeting": {
-    "description": "Home header: the small line above the user's name"
+  "chooseBranch": "Choose branch",
+  "@chooseBranch": {
+    "description": "Home header tap target and the branch sheet title"
+  },
+  "choose": "Choose",
+  "@choose": {
+    "description": "Branch sheet: the button that applies the picked branch"
   },
   "notifications": "Notifications",
   "@notifications": {

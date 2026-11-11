@@ -46,8 +46,6 @@ class HomeScreen extends ConsumerWidget {
           child: const CustomScrollView(
             physics: AlwaysScrollableScrollPhysics(),
             slivers: [
-              // Guest version: the name and the unread dot arrive with the
-              // profile; there is no notifications screen yet.
               SliverToBoxAdapter(child: HomeHeader()),
               SliverToBoxAdapter(child: StoriesBlock()),
               SliverToBoxAdapter(child: BannersBlock()),

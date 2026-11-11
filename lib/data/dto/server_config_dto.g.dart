@@ -8,6 +8,7 @@ part of 'server_config_dto.dart';
 
 ServerConfigDto _$ServerConfigDtoFromJson(Map<String, dynamic> json) =>
     ServerConfigDto(
+      defaultBranchId: json['defaultBranchId'] as String?,
       languages: json['languages'] == null
           ? null
           : ConfigLanguagesDto.fromJson(

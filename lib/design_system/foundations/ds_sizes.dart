@@ -40,6 +40,28 @@ abstract final class DSSizes {
   /// The photo on a branch card (`BranchCard`).
   static const double branchImage = 72;
 
+  /// The photo on a branch row in the branch picker (`BranchSelectorCard`).
+  static const double branchImageSm = 44;
+
+  /// The branch picker's list grows up to this, then scrolls.
+  static const double branchPickerListMaxHeight = 320;
+
+  // Dropdown (handoff `Dropdown`)
+  static const double inputHeightCompact = 40;
+  static const double menuItemHeight = 44;
+  static const double menuMaxHeight = 240;
+
+  // Radio (handoff `RadioButton`)
+  static const double radio = 20;
+  static const double radioDot = 10;
+
+  // Bottom sheet (handoff `BottomSheet`)
+  static const double sheetHandleWidth = 36;
+  static const double sheetHandleHeight = 4;
+
+  /// The most of the screen's height a sheet takes.
+  static const double sheetMaxHeightFraction = 0.88;
+
   // Rows and list items
   static const double rowHeightCompact = 48;
   static const double rowHeightIcon = 56;
