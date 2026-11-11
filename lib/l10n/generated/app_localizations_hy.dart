@@ -15,6 +15,12 @@ class AppLocalizationsHy extends AppLocalizations {
   String get tabOrder => 'Պատվեր';
 
   @override
+  String get orderTabProducts => 'Ապրանքներ';
+
+  @override
+  String get orderTabBranches => 'Մասնաճյուղեր';
+
+  @override
   String get tabGifts => 'Նվերներ';
 
   @override

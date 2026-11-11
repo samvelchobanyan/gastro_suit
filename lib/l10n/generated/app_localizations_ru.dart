@@ -15,6 +15,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tabOrder => 'Заказ';
 
   @override
+  String get orderTabProducts => 'Продукты';
+
+  @override
+  String get orderTabBranches => 'Филиалы';
+
+  @override
   String get tabGifts => 'Подарки';
 
   @override

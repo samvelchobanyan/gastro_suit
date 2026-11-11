@@ -15,6 +15,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tabOrder => 'Order';
 
   @override
+  String get orderTabProducts => 'Products';
+
+  @override
+  String get orderTabBranches => 'Branches';
+
+  @override
   String get tabGifts => 'Gifts';
 
   @override

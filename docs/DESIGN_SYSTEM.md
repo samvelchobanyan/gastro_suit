@@ -32,6 +32,7 @@ and `context.colors`.
 | Radii | `DSRadius` | Constant |
 | Sizes, icons, strokes | `DSSizes` | Constant |
 | Shadows | `DSElevation` | Constant |
+| Motion | `DSMotion` | Constant |
 
 Rules:
 - Colours are read only through `context.colors`. A colour taken from `DSPalette` or
@@ -142,7 +143,9 @@ with real content (see §7).
 
 - Web layout tokens: screen width 360, column widths 76 / 160 / 244, safe areas. Screen
   size and insets come from `MediaQuery`.
-- Motion tokens: the handoff's animations are not the app's; motion is decided later.
+- Motion tokens as a set: the handoff's animations are not the app's. `DSMotion` holds
+  only the durations and curves a component uses (`base`, `standard` so far — the
+  sliding indicator of `DSSegmentedTabs`).
 - Component tokens (`--button-primary-bg`, `--input-border-focus`, …): added with the
   components that use them.
 - `--color-bg-muted`: referenced by the handoff but never defined; it is
@@ -166,9 +169,16 @@ with real content (see §7).
 | `DSSectionHeader` | `SectionHeader` | A section title (`h3`); the handoff's optional action button is used by no page, so it is not built |
 | `DSBottomSheet` | `BottomSheet` | The frame every sheet shares: handle, title with a close button, scrolling content; up to 88% of the screen; opened with `showDSBottomSheet` |
 | `DSDropdown` | `Dropdown` | A 40-high select box; the list opens under the field. Drawn here, placed and closed by Flutter's `RawMenuAnchor` |
-| `DSChipTabs` | `TabBar`, size `xs` | A sideways-scrolling row of chips, one selected. The handoff's `big` tabs (a segmented switch with a sliding indicator) look and behave differently and become a separate component |
+| `DSChipTabs` | `TabBar`, size `xs` | A sideways-scrolling row of chips, one selected |
+| `DSSegmentedTabs` | `TabBar`, size `big` | A full-width switch between views of a screen: equal segments with an icon and a label on a recessed track, and an indicator that slides under the selected one. A separate component from `DSChipTabs`: it looks and behaves differently |
+| `DSScreenHeader` | `ScreenHeader` | A screen's title (`h1`); the handoff's back button and trailing action are added when a screen needs them |
 | `DSRadio` | `RadioButton` | The radio mark only; the row it sits in takes the tap |
 | `DSButton` | `Button` | `primary`, size `sm` so far; other variants and sizes are added when used |
+
+A component that shows a list of choices takes them as a list of its own small class,
+declared in the component's file: `DSDropdownOption` (value, label), `DSChipTab` (value,
+label), `DSSegment` (value, label, icon). The class says what the component can show for
+a choice; the components do not share one.
 
 ---
 

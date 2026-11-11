@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../ds_extensions.dart';
-import 'ds_option.dart';
+
+/// One chip of a [DSChipTabs]: the value it stands for and its text.
+class DSChipTab<T> {
+  const DSChipTab({required this.value, required this.label});
+
+  final T value;
+  final String label;
+}
 
 /// A row of compact chips, one of them selected (handoff `TabBar`, size
 /// `xs`). Scrolls sideways when the chips do not fit.
@@ -11,18 +18,24 @@ class DSChipTabs<T> extends StatelessWidget {
     required this.options,
     required this.value,
     required this.onChanged,
+    this.padding = EdgeInsets.zero,
   });
 
-  final List<DSOption<T>> options;
+  final List<DSChipTab<T>> options;
 
   /// The selected option's value; none is selected when no option has it.
   final T? value;
   final ValueChanged<T> onChanged;
 
+  /// Space around the chips inside the scrolling row, so that the row can
+  /// run edge to edge while the chips start at the screen margin.
+  final EdgeInsets padding;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
+      padding: padding,
       child: Row(
         children: [
           for (var i = 0; i < options.length; i++) ...[

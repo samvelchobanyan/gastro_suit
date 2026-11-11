@@ -6,7 +6,15 @@
   },
   "tabOrder": "Order",
   "@tabOrder": {
-    "description": "Bottom navigation: Order tab"
+    "description": "Order tab: its label in the bottom navigation and the screen title"
+  },
+  "orderTabProducts": "Products",
+  "@orderTabProducts": {
+    "description": "Order screen: the tab with the menu"
+  },
+  "orderTabBranches": "Branches",
+  "@orderTabBranches": {
+    "description": "Order screen: the tab with the branch list"
   },
   "tabGifts": "Gifts",
   "@tabGifts": {
@@ -26,7 +34,7 @@
   },
   "otherDistrict": "Other",
   "@otherDistrict": {
-    "description": "Branch sheet: the district tab for branches that name no district of their city"
+    "description": "Branch filter: the district chip for branches that name no district of their city"
   },
   "notifications": "Notifications",
   "@notifications": {

@@ -4,7 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../ds_extensions.dart';
-import 'ds_option.dart';
+
+/// One option of a [DSDropdown]: the value it stands for and its text.
+class DSDropdownOption<T> {
+  const DSDropdownOption({required this.value, required this.label});
+
+  final T value;
+  final String label;
+}
 
 /// A select box: a field showing the chosen option that opens a list of the
 /// options below it (handoff `Dropdown`, 40 high).
@@ -20,7 +27,7 @@ class DSDropdown<T> extends StatefulWidget {
     this.placeholder,
   });
 
-  final List<DSOption<T>> options;
+  final List<DSDropdownOption<T>> options;
 
   /// The chosen option's value: shown in the field and marked in the list.
   final T? value;
@@ -47,7 +54,7 @@ class _DSDropdownState<T> extends State<DSDropdown<T>> {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    DSOption<T>? selected;
+    DSDropdownOption<T>? selected;
     for (final option in widget.options) {
       if (option.value == widget.value) selected = option;
     }
@@ -125,7 +132,7 @@ class _Menu<T> extends StatelessWidget {
   });
 
   final RawMenuOverlayInfo info;
-  final List<DSOption<T>> options;
+  final List<DSDropdownOption<T>> options;
   final T? value;
   final ValueChanged<T> onSelect;
 

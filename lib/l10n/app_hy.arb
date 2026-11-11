@@ -2,6 +2,8 @@
   "@@locale": "hy",
   "tabHome": "Գլխավոր",
   "tabOrder": "Պատվեր",
+  "orderTabProducts": "Ապրանքներ",
+  "orderTabBranches": "Մասնաճյուղեր",
   "tabGifts": "Նվերներ",
   "tabProfile": "Պրոֆիլ",
   "chooseBranch": "Ընտրել մասնաճյուղ",

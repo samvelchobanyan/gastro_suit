@@ -173,6 +173,8 @@ features/<feature>/
     <screen>_screen.dart
     <source>_controller.dart      the screen's data, one per source; none if it has no data
     widgets/                      parts of this screen
+  <name>_block/                   a block other features embed
+    <name>_block.dart
   widgets/                        parts shared by several screens of this feature
 ```
 
@@ -189,6 +191,9 @@ features/<feature>/
   of a screen may read providers itself (a block that loads and fails on its own) or get
   its data from the screen; this is decided per case. Reusable widgets never read
   providers (§8).
+- A block is a part of a screen that loads, fails and refreshes on its own (`*Block`). A
+  block of one screen is a file in that screen's `widgets/`. A block other features embed
+  lives next to the feature's screens, in `<name>_block/`.
 - A feature may open another feature's screens and embed its blocks (the Order tab shows
   the branch list of `branches`). Data two features read is domain state, not a
   controller of either.

@@ -2,6 +2,8 @@
   "@@locale": "ru",
   "tabHome": "Главная",
   "tabOrder": "Заказ",
+  "orderTabProducts": "Продукты",
+  "orderTabBranches": "Филиалы",
   "tabGifts": "Подарки",
   "tabProfile": "Профиль",
   "chooseBranch": "Выбрать филиал",

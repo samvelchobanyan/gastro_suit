@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../design_system/components/feedback/ds_skeleton.dart';
 import '../../../../design_system/components/layout/ds_section_header.dart';
 import '../../../../design_system/ds_extensions.dart';
 import '../../../../domain/state/branches_state.dart';
 import '../../../../l10n/generated/app_localizations.dart';
 import '../../../shared_widgets/branch_tile.dart';
+import '../../../shared_widgets/branch_tile_skeleton.dart';
 
 /// Home's three nearest branches. Unlike the promotion rows, a failed load
 /// shows an error with a retry: branches are what the user orders from.
@@ -108,47 +108,8 @@ class _Skeleton extends StatelessWidget {
     return _Rows(
       children: [
         for (var i = 0; i < NearestBranchesBlock._count; i++)
-          const Row(
-            children: [
-              DSSkeleton.box(
-                width: DSSizes.branchImage,
-                height: DSSizes.branchImage,
-              ),
-              SizedBox(width: DSSpacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Name, address and hours lines, as parts of the width.
-                    _Line(widthFactor: 0.5),
-                    SizedBox(height: DSSpacing.sm),
-                    _Line(widthFactor: 0.8),
-                    SizedBox(height: DSSpacing.sm),
-                    _Line(widthFactor: 0.4),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          const BranchTileSkeleton(),
       ],
-    );
-  }
-}
-
-class _Line extends StatelessWidget {
-  const _Line({required this.widthFactor});
-
-  final double widthFactor;
-
-  @override
-  Widget build(BuildContext context) {
-    return FractionallySizedBox(
-      widthFactor: widthFactor,
-      child: const DSSkeleton.box(
-        width: double.infinity,
-        height: DSSpacing.md,
-        radius: DSRadius.xs,
-      ),
     );
   }
 }

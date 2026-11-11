@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../design_system/components/buttons/ds_button.dart';
-import '../../../design_system/components/inputs/ds_chip_tabs.dart';
-import '../../../design_system/components/inputs/ds_dropdown.dart';
-import '../../../design_system/components/inputs/ds_option.dart';
 import '../../../design_system/components/overlays/ds_bottom_sheet.dart';
 import '../../../design_system/ds_extensions.dart';
-import '../../../domain/entities/branch.dart';
-import '../../../domain/entities/city.dart';
 import '../../../domain/state/active_branch_state.dart';
 import '../../../domain/state/branches_state.dart';
 import '../../../domain/state/cities_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../shared_widgets/branch_select_tile.dart';
+import '../branch_filter.dart';
+import '../widgets/branch_area_filter.dart';
 
 /// Opens the branch picker in a sheet. Choosing a branch makes it the active
 /// branch for the session.
@@ -36,10 +33,6 @@ class BranchPickerSheet extends ConsumerStatefulWidget {
 }
 
 class _BranchPickerSheetState extends ConsumerState<BranchPickerSheet> {
-  /// The "Other" district tab's value; district ids are UUIDs, so it never
-  /// clashes with one.
-  static const _otherTab = '';
-
   // Null until the user changes them; the active branch's are used till then.
   String? _cityId;
   String? _districtId;
@@ -72,81 +65,36 @@ class _BranchPickerSheetState extends ConsumerState<BranchPickerSheet> {
       return const _Loading();
     }
 
-    final cityId = _cityId ?? active?.cityId;
-    final city =
-        cities.where((c) => c.id == cityId).firstOrNull ?? cities.firstOrNull;
+    final filter = filterBranches(
+      cities: cities,
+      branches: branches,
+      otherLabel: AppLocalizations.of(context).otherDistrict,
+      cityId: _cityId,
+      districtId: _districtId,
+      active: active,
+    );
     final markedId = _markedId ?? active?.id;
-
-    // Without cities from the server every branch is listed.
-    final inCity = [
-      for (final item in branches)
-        if (city == null || item.branch.cityId == city.id) item,
-    ];
-
-    // A city split into districts gets a tab per district, and an "Other"
-    // tab for its branches that name no district of it.
-    final districts = city?.districts ?? const <District>[];
-    final districtIds = {for (final d in districts) d.id};
-    bool isOther(Branch b) => !districtIds.contains(b.districtId);
-    final tabs = [
-      for (final d in districts) DSOption(value: d.id, label: d.name),
-      if (districts.isNotEmpty && inCity.any((b) => isOther(b.branch)))
-        DSOption(
-          value: _otherTab,
-          label: AppLocalizations.of(context).otherDistrict,
-        ),
-    ];
-
-    // The active branch's tab, while the sheet shows its city.
-    final activeTab = active == null || active.cityId != city?.id
-        ? null
-        : isOther(active)
-        ? _otherTab
-        : active.districtId;
-    final wanted = _districtId ?? activeTab;
-    final tab = tabs.any((t) => t.value == wanted)
-        ? wanted
-        : tabs.firstOrNull?.value;
-
-    final shown = [
-      for (final item in inCity)
-        if (tab == null ||
-            (tab == _otherTab
-                ? isOther(item.branch)
-                : item.branch.districtId == tab))
-          item,
-    ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (city != null) ...[
-          DSDropdown<String>(
-            options: [
-              for (final c in cities) DSOption(value: c.id, label: c.name),
-            ],
-            value: city.id,
-            onChanged: (id) => setState(() {
+        if (filter.city != null) ...[
+          BranchAreaFilter(
+            filter: filter,
+            onCityChanged: (id) => setState(() {
               _cityId = id;
               // The new city opens on its first district.
               _districtId = null;
             }),
-          ),
-          const SizedBox(height: DSSpacing.base),
-        ],
-        if (tab != null) ...[
-          DSChipTabs<String>(
-            options: tabs,
-            value: tab,
-            onChanged: (id) => setState(() => _districtId = id),
+            onDistrictChanged: (id) => setState(() => _districtId = id),
           ),
           const SizedBox(height: DSSpacing.base),
         ],
         // Gives up height first when the sheet does not fit the screen.
         Flexible(
           child: _List(
-            branches: shown,
+            branches: filter.branches,
             markedId: markedId,
             onMark: (id) => setState(() => _markedId = id),
           ),

@@ -106,11 +106,23 @@ abstract class AppLocalizations {
   /// **'Home'**
   String get tabHome;
 
-  /// Bottom navigation: Order tab
+  /// Order tab: its label in the bottom navigation and the screen title
   ///
   /// In en, this message translates to:
   /// **'Order'**
   String get tabOrder;
+
+  /// Order screen: the tab with the menu
+  ///
+  /// In en, this message translates to:
+  /// **'Products'**
+  String get orderTabProducts;
+
+  /// Order screen: the tab with the branch list
+  ///
+  /// In en, this message translates to:
+  /// **'Branches'**
+  String get orderTabBranches;
 
   /// Bottom navigation: Gifts tab
   ///
@@ -136,7 +148,7 @@ abstract class AppLocalizations {
   /// **'Choose'**
   String get choose;
 
-  /// Branch sheet: the district tab for branches that name no district of their city
+  /// Branch filter: the district chip for branches that name no district of their city
   ///
   /// In en, this message translates to:
   /// **'Other'**
