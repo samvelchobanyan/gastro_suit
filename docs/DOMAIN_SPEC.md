@@ -40,7 +40,7 @@ A product exists only within a branch menu; buying is always a product at a bran
 - option groups — a list of `ProductOptionGroup`, empty when the product has no add-ons
 
 **ProductSize** (value, part of a product)
-- identity, name, final price of that size, whether it is the default
+- identity, name, final price of that size, availability, whether it is the default
 
 **ProductOptionGroup** (value, part of a product) — one question asked when ordering
 ("Which milk?", "Any syrup?")
