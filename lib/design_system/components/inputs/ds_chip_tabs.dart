@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import '../../ds_extensions.dart';
 
@@ -12,7 +13,11 @@ class DSChipTab<T> {
 
 /// A row of compact chips, one of them selected (handoff `TabBar`, size
 /// `xs`). Scrolls sideways when the chips do not fit.
-class DSChipTabs<T> extends StatelessWidget {
+///
+/// The selected chip is kept in view: when the selection changes to a chip
+/// that is off the row's edge, wholly or in part, the row scrolls just far
+/// enough to show it. A chip already in view does not move the row.
+class DSChipTabs<T> extends StatefulWidget {
   const DSChipTabs({
     super.key,
     required this.options,
@@ -32,18 +37,92 @@ class DSChipTabs<T> extends StatelessWidget {
   final EdgeInsets padding;
 
   @override
+  State<DSChipTabs<T>> createState() => _DSChipTabsState<T>();
+}
+
+class _DSChipTabsState<T> extends State<DSChipTabs<T>> {
+  final _controller = ScrollController();
+  final _selectedKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    _showSelectedAfterFrame(animate: false);
+  }
+
+  @override
+  void didUpdateWidget(DSChipTabs<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.value != widget.value) _showSelectedAfterFrame(animate: true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  /// The chips are measured once the frame with the new selection is laid
+  /// out.
+  void _showSelectedAfterFrame({required bool animate}) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _showSelected(animate: animate);
+    });
+  }
+
+  /// Scrolls the row, and only the row, until the selected chip is wholly
+  /// in view with the row's padding beside it.
+  void _showSelected({required bool animate}) {
+    final chip = _selectedKey.currentContext?.findRenderObject();
+    if (chip == null || !_controller.hasClients) return;
+    final position = _controller.position;
+    final viewport = RenderAbstractViewport.of(chip);
+
+    // The chip is in view while the row is scrolled between these two.
+    final atStart =
+        viewport.getOffsetToReveal(chip, 0).offset - widget.padding.left;
+    final atEnd =
+        viewport.getOffsetToReveal(chip, 1).offset + widget.padding.right;
+    final double target;
+    if (position.pixels > atStart) {
+      target = atStart;
+    } else if (position.pixels < atEnd) {
+      target = atEnd;
+    } else {
+      return;
+    }
+
+    final clamped = target.clamp(
+      position.minScrollExtent,
+      position.maxScrollExtent,
+    );
+    if (!animate || MediaQuery.disableAnimationsOf(context)) {
+      position.jumpTo(clamped);
+    } else {
+      position.animateTo(
+        clamped,
+        duration: DSMotion.base,
+        curve: DSMotion.standard,
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final options = widget.options;
     return SingleChildScrollView(
+      controller: _controller,
       scrollDirection: Axis.horizontal,
-      padding: padding,
+      padding: widget.padding,
       child: Row(
         children: [
           for (var i = 0; i < options.length; i++) ...[
             if (i > 0) const SizedBox(width: DSSpacing.sm),
             _Chip(
+              key: options[i].value == widget.value ? _selectedKey : null,
               label: options[i].label,
-              selected: options[i].value == value,
-              onTap: () => onChanged(options[i].value),
+              selected: options[i].value == widget.value,
+              onTap: () => widget.onChanged(options[i].value),
             ),
           ],
         ],
@@ -54,6 +133,7 @@ class DSChipTabs<T> extends StatelessWidget {
 
 class _Chip extends StatelessWidget {
   const _Chip({
+    super.key,
     required this.label,
     required this.selected,
     required this.onTap,
