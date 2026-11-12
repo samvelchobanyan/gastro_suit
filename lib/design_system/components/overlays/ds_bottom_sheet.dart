@@ -33,6 +33,9 @@ Future<T?> showDSBottomSheet<T>({
 /// title and decides itself what scrolls, so a list can shrink to fit a
 /// small screen instead of scrolling inside a scrolling sheet. Content that
 /// may be taller than that wraps itself in a scroll view.
+///
+/// The content stays above the keyboard: the sheet's surface runs down
+/// under it, and the height left for the content shrinks by it.
 class DSBottomSheet extends StatelessWidget {
   const DSBottomSheet({super.key, required this.title, required this.child});
 
@@ -42,7 +45,11 @@ class DSBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final bottomInset = MediaQuery.paddingOf(context).bottom;
+    // The system's bottom inset is zero while the keyboard is open, so the
+    // two do not add up.
+    final bottomInset =
+        MediaQuery.paddingOf(context).bottom +
+        MediaQuery.viewInsetsOf(context).bottom;
 
     return DecoratedBox(
       decoration: BoxDecoration(

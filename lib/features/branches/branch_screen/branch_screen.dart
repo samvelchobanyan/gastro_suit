@@ -21,6 +21,7 @@ import '../../shared_widgets/branch_hours_row.dart';
 import '../../shared_widgets/load_error_row.dart';
 import '../../shared_widgets/price_text.dart';
 import '../branch_map_sheet/branch_map_sheet.dart';
+import '../branch_review_sheet/branch_review_sheet.dart';
 import 'widgets/branch_header.dart';
 
 /// One branch: its photo header, address and hours, and its menu, in one
@@ -48,12 +49,16 @@ class BranchScreen extends ConsumerWidget {
     }
   }
 
-  /// Rating needs an account: a guest is sent to sign in and comes back to
-  /// this screen. The feedback sheet is not built yet.
-  void _rate(BuildContext context, WidgetRef ref) {
+  /// Opens the review sheet. Rating needs an account: a guest is sent to
+  /// sign in first, and gets the sheet on coming back signed in.
+  Future<void> _rate(BuildContext context, WidgetRef ref) async {
     if (ref.read(authStatusProvider) == AuthStatus.signedOut) {
-      context.push(AppRoutes.login);
+      await context.push(AppRoutes.login);
+      if (!context.mounted) return;
+      // Came back without signing in.
+      if (ref.read(authStatusProvider) == AuthStatus.signedOut) return;
     }
+    await showBranchReview(context, branchId);
   }
 
   @override

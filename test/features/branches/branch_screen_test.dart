@@ -3,7 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gastro_suit/core/auth/auth_status.dart';
 import 'package:gastro_suit/core/config/app_config.dart';
+import 'package:gastro_suit/core/di/repositories.dart';
+import 'package:gastro_suit/design_system/components/inputs/ds_rating_input.dart';
+import 'package:gastro_suit/domain/entities/branch_review.dart';
+import 'package:gastro_suit/domain/repositories/branch_repository.dart';
 import 'package:gastro_suit/design_system/components/feedback/ds_rating_stars.dart';
 import 'package:gastro_suit/design_system/theme/app_theme.dart';
 import 'package:gastro_suit/design_system/theme/ds_colors.dart';
@@ -18,6 +23,15 @@ import 'package:gastro_suit/features/branches/branch_screen/branch_screen.dart';
 import 'package:gastro_suit/features/branches/branch_screen/widgets/branch_header.dart';
 import 'package:gastro_suit/features/menu/widgets/menu_product_card.dart';
 import 'package:gastro_suit/l10n/generated/app_localizations.dart';
+
+/// The user has rated nothing; the branch lists are not asked for.
+class _NoReviewRepository implements BranchRepository {
+  @override
+  Future<BranchReview?> getReview(String branchId) async => null;
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
 
 class _FakeBranches extends BranchesController {
   _FakeBranches(this.branches);
@@ -70,6 +84,7 @@ void main() {
     WidgetTester tester, {
     required List<Branch> branches,
     double screenHeight = 640,
+    AuthStatus auth = AuthStatus.signedOut,
   }) async {
     tester.view.physicalSize = Size(360, screenHeight);
     tester.view.devicePixelRatio = 1;
@@ -90,6 +105,8 @@ void main() {
             () => _FakeBranches(branches),
           ),
           menuProvider('b1').overrideWith(() => _FakeMenu(menu)),
+          authStatusProvider.overrideWithValue(auth),
+          branchRepositoryProvider.overrideWithValue(_NoReviewRepository()),
         ],
         child: MaterialApp(
           theme: buildAppTheme(lightColors),
@@ -171,6 +188,17 @@ void main() {
     await pumpScreen(tester, branches: [branch]);
 
     expect(find.bySemanticsLabel('Show on map'), findsNothing);
+  });
+
+  testWidgets('the rate button opens the feedback sheet for a signed-in '
+      'user', (tester) async {
+    await pumpScreen(tester, branches: [branch], auth: AuthStatus.signedIn);
+
+    await tester.tap(find.bySemanticsLabel('Rate the branch'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Leave a feedback'), findsOneWidget);
+    expect(find.byType(DSRatingInput), findsOneWidget);
   });
 
   testWidgets('a branch nobody has rated shows empty stars and no number', (

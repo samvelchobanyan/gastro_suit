@@ -103,6 +103,13 @@ Each branch has its own menu (prices and availability).
 - rating: average and number of ratings, optional
 - whether it accepts tips
 
+**Branch review** (entity)
+- the signed-in user's own rating of a branch: whole stars, 1 to 5, and optional words
+  read by the merchant only
+- one per user and branch; rating again replaces it
+- after a rating is accepted, that branch alone is loaded again for its average and
+  number of ratings to follow
+
 ### 3.3 Rules
 
 - Today's hours and whether the branch is open are taken from the server as of the moment

@@ -110,4 +110,18 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get showOnMap => 'Показать на карте';
+
+  @override
+  String get leaveFeedback => 'Оставить отзыв';
+
+  @override
+  String get feedbackHint => 'Расскажите о вашем визите';
+
+  @override
+  String get send => 'Отправить';
+
+  @override
+  String ratingStar(int star) {
+    return '$star из 5';
+  }
 }

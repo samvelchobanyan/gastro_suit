@@ -16,6 +16,10 @@ enum DSButtonVariant {
 }
 
 /// A button with a label and an optional icon before it (handoff `Button`).
+///
+/// Without [onPressed] it is disabled: dimmed, and takes no taps. While
+/// [loading] it shows a spinner in place of the label and takes no taps
+/// either.
 class DSButton extends StatelessWidget {
   const DSButton({
     super.key,
@@ -25,16 +29,22 @@ class DSButton extends StatelessWidget {
     this.variant = DSButtonVariant.primary,
     this.icon,
     this.fullWidth = false,
+    this.loading = false,
   });
 
   final String label;
-  final VoidCallback onPressed;
+
+  /// Null when the action is not available now.
+  final VoidCallback? onPressed;
   final DSButtonSize size;
   final DSButtonVariant variant;
 
   /// Shown before the label.
   final IconData? icon;
   final bool fullWidth;
+
+  /// The action is under way.
+  final bool loading;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +81,7 @@ class DSButton extends StatelessWidget {
     };
 
     final button = FilledButton(
-      onPressed: onPressed,
+      onPressed: loading ? null : onPressed,
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.resolveWith(
           (states) => states.contains(WidgetState.pressed)
@@ -95,20 +105,41 @@ class DSButton extends StatelessWidget {
         ),
         textStyle: WidgetStatePropertyAll(textStyle),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (icon != null) ...[
-            Icon(icon, size: DSSizes.iconSm),
-            const SizedBox(width: DSSpacing.sm),
-          ],
-          Flexible(
-            child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
-          ),
-        ],
-      ),
+      child: loading
+          ? Semantics(
+              label: label,
+              child: SizedBox.square(
+                dimension: DSSizes.iconSm - DSSpacing.xxs,
+                child: CircularProgressIndicator(
+                  strokeWidth: DSSizes.borderWidthThick,
+                  color: foreground,
+                ),
+              ),
+            )
+          : Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (icon != null) ...[
+                  Icon(icon, size: DSSizes.iconSm),
+                  const SizedBox(width: DSSpacing.sm),
+                ],
+                Flexible(
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
     );
 
-    return fullWidth ? SizedBox(width: double.infinity, child: button) : button;
+    final sized = fullWidth
+        ? SizedBox(width: double.infinity, child: button)
+        : button;
+    // A loading button is not dimmed: its action is running.
+    return onPressed == null && !loading
+        ? Opacity(opacity: DSOpacity.disabled, child: sized)
+        : sized;
   }
 }

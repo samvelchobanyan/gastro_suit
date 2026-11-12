@@ -139,6 +139,7 @@ with real content (see §7).
   `menuCategoryImage` 56 and `menuCategoryItemWidth` 64 (`MenuTabsVertical`);
   `productRailCardWidth` 128 (`ProductVerticalCard`); `badge` 18 (`Badge`).
 - `DSElevation`: `card`, `raised`, `overlay`, `sheet` — lists of `BoxShadow`.
+- `DSOpacity`: `disabled` 0.35 — a control that cannot be used now.
 
 ---
 
@@ -177,16 +178,18 @@ with real content (see §7).
 | `DSNetworkImage` | — | A cached network picture; a recessed fill while loading, with an image icon on error or without an address |
 | `DSStatusPill` | `StatusPill` | A short state label on a tonal capsule (Open / Closed); tones `success`, `error` so far — the handoff's `warning` and `neutral` are added when used |
 | `DSSectionHeader` | `SectionHeader` | A section title (`h3`); the handoff's optional action button is used by no page, so it is not built |
-| `DSBottomSheet` | `BottomSheet` | The frame every sheet shares: handle, title with a close button, scrolling content; up to 88% of the screen; opened with `showDSBottomSheet` |
+| `DSBottomSheet` | `BottomSheet` | The frame every sheet shares: handle, title with a close button, scrolling content; up to 88% of the screen; opened with `showDSBottomSheet`. The content stays above the keyboard |
 | `DSDropdown` | `Dropdown` | A 40-high select box; the list opens under the field. Drawn here, placed and closed by Flutter's `RawMenuAnchor` |
 | `DSChipTabs` | `TabBar`, size `xs` | A sideways-scrolling row of chips, one selected. When the selection moves to a chip off the row's edge, the row scrolls just far enough to show it |
 | `DSSegmentedTabs` | `TabBar`, size `big` | A full-width switch between views of a screen: equal segments with an icon and a label on a recessed track, and an indicator that slides under the selected one. A separate component from `DSChipTabs`: it looks and behaves differently |
 | `DSScreenHeader` | `ScreenHeader` | A screen's title (`h1`); the handoff's back button and trailing action are added when a screen needs them |
 | `DSRadio` | `RadioButton` | The radio mark only; the row it sits in takes the tap |
-| `DSButton` | `Button` | `primary` and `secondary` (outline), size `sm`, an optional icon before the label; other variants and sizes are added when used |
+| `DSButton` | `Button` | `primary` and `secondary` (outline), size `sm`, an optional icon before the label; other variants and sizes are added when used. Disabled (no `onPressed`) it is dimmed; `loading` shows a spinner in place of the label; neither takes taps |
 | `DSIconButton` | `IconButton` | A round button with only an icon; `filled` and `tonal`, sizes `xs` 36 and `sm` 40 so far |
 | `DSStepper` | `Stepper`, size `sm` | A quantity between a minus and a plus, 32 high. Keeps no number of its own: it shows the value it is given and reports the one asked for |
 | `DSRatingStars` | `RatingStars`, display only | Five stars to the half star; zero is five empty stars |
+| `DSTextArea` | `Textarea` | A four-line text field on the main background: a hairline border, 2 thick in the interactive colour when focused. Can limit the length; the handoff's label, helper text, error state and counter are added when used |
+| `DSRatingInput` | `RatingStars`, not read-only | Five 32 stars to give a rating with: a tap on a star gives that many, whole stars only. Keeps no rating of its own. A separate component from `DSRatingStars`: it takes taps and has no half stars |
 | `DSBadge` | `Badge`, variant `empty` | A count on a brand-tinted capsule; the red variant is added when used |
 
 A component that shows a list of choices takes them as a list of its own small class,

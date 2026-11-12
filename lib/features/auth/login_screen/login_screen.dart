@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/network/app_exception.dart';
 import '../../../design_system/ds_extensions.dart';
 import '../../../l10n/generated/app_localizations.dart';
+import '../../shared_widgets/error_text.dart';
 import 'login_controller.dart';
 
 /// Temporary sign-in screen built from stock widgets until the design has one.
@@ -66,7 +66,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             if (state.error case final error?) ...[
               const SizedBox(height: DSSpacing.md),
               Text(
-                _errorText(error, l10n),
+                errorText(context, error),
                 style: DSTypography.bodySm.copyWith(
                   color: context.colors.statusError,
                 ),
@@ -89,17 +89,5 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         ),
       ),
     );
-  }
-
-  /// The server's own sentence when there is one (it is already in the user's
-  /// language); otherwise ours.
-  static String _errorText(Object error, AppLocalizations l10n) {
-    if (error is AppException) {
-      if (error.message case final message?) return message;
-      if (error.kind == AppExceptionKind.noConnection) {
-        return l10n.errorNoConnection;
-      }
-    }
-    return l10n.errorGeneric;
   }
 }

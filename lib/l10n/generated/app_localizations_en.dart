@@ -110,4 +110,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get showOnMap => 'Show on map';
+
+  @override
+  String get leaveFeedback => 'Leave a feedback';
+
+  @override
+  String get feedbackHint => 'Tell us about your visit';
+
+  @override
+  String get send => 'Send';
+
+  @override
+  String ratingStar(int star) {
+    return '$star of 5';
+  }
 }

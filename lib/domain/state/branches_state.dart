@@ -35,6 +35,33 @@ class BranchesController extends AsyncNotifier<List<NearbyBranch>> {
         );
     return byDistance(branches, await positionFuture);
   }
+
+  /// Loads the branch [branchId] again and puts it in its place in the
+  /// list, for a change made to one branch (the user rated it) to show
+  /// without loading them all. Its distance and the order stay.
+  ///
+  /// Never fails: when the branch cannot be loaded, or the list is not
+  /// loaded, the list stays as it is.
+  Future<void> refreshBranch(String branchId) async {
+    final Branch fresh;
+    try {
+      final language = await ref.read(contentLanguageProvider.future);
+      fresh = await ref
+          .read(branchRepositoryProvider)
+          .getBranch(branchId, language: language);
+    } catch (_) {
+      return;
+    }
+    // Read after the request: the list may have been loaded again meanwhile.
+    final current = state.value;
+    if (current == null) return;
+    state = AsyncData([
+      for (final item in current)
+        item.branch.id == branchId
+            ? NearbyBranch(fresh, item.distanceKm)
+            : item,
+    ]);
+  }
 }
 
 /// Pairs each branch with its distance from [position] and sorts nearest

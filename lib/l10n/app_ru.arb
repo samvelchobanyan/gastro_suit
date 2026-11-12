@@ -32,5 +32,9 @@
   "quantityIncrease": "Увеличить количество",
   "back": "Назад",
   "rateBranch": "Оценить филиал",
-  "showOnMap": "Показать на карте"
+  "showOnMap": "Показать на карте",
+  "leaveFeedback": "Оставить отзыв",
+  "feedbackHint": "Расскажите о вашем визите",
+  "send": "Отправить",
+  "ratingStar": "{star} из 5"
 }

@@ -32,5 +32,9 @@
   "quantityIncrease": "Ավելացնել քանակը",
   "back": "Հետ",
   "rateBranch": "Գնահատել մասնաճյուղը",
-  "showOnMap": "Ցույց տալ քարտեզի վրա"
+  "showOnMap": "Ցույց տալ քարտեզի վրա",
+  "leaveFeedback": "Թողնել կարծիք",
+  "feedbackHint": "Պատմեք ձեր այցի մասին",
+  "send": "Ուղարկել",
+  "ratingStar": "{star}՝ 5-ից"
 }

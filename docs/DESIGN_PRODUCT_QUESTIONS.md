@@ -100,3 +100,18 @@ for when the guest reaches them.
 Still open: how the sign-in and registration screens look, and where exactly the guest is
 asked to sign in. Until there is a design: a temporary sign-in screen opened from the
 Profile tab.
+
+### 18. Feedback sheet: states the design does not draw
+The design shows only the empty form (stars, text, "Send"). Built by default until the
+designer answers:
+- The sheet opens on the rating the user gave earlier, since sending again replaces it;
+  while that loads, the form's shapes are shown as a skeleton, and a failed load shows
+  the generic error with "Try again".
+- "Send" is dimmed until a star is chosen; while sending it shows a spinner and the form
+  takes no input.
+- A rating that was not accepted leaves the sheet open with what was entered and one
+  line of error text above the button.
+- An accepted rating closes the sheet with no confirmation.
+- The words are limited to the API's 1000 characters with no counter.
+- A guest who taps the rate button signs in and then gets the sheet without tapping
+  again.

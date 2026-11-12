@@ -143,5 +143,27 @@
   "showOnMap": "Show on map",
   "@showOnMap": {
     "description": "Branch screen: accessibility label of the button that opens the map"
+  },
+  "leaveFeedback": "Leave a feedback",
+  "@leaveFeedback": {
+    "description": "Title of the sheet where the user rates a branch"
+  },
+  "feedbackHint": "Tell us about your visit",
+  "@feedbackHint": {
+    "description": "Feedback sheet: placeholder of the text field"
+  },
+  "send": "Send",
+  "@send": {
+    "description": "Button that sends what the user entered"
+  },
+  "ratingStar": "{star} of 5",
+  "@ratingStar": {
+    "description": "Accessibility label of one star of a rating input, e.g. 3 of 5",
+    "placeholders": {
+      "star": {
+        "type": "int",
+        "example": "3"
+      }
+    }
   }
 }

@@ -297,6 +297,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show on map'**
   String get showOnMap;
+
+  /// Title of the sheet where the user rates a branch
+  ///
+  /// In en, this message translates to:
+  /// **'Leave a feedback'**
+  String get leaveFeedback;
+
+  /// Feedback sheet: placeholder of the text field
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us about your visit'**
+  String get feedbackHint;
+
+  /// Button that sends what the user entered
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get send;
+
+  /// Accessibility label of one star of a rating input, e.g. 3 of 5
+  ///
+  /// In en, this message translates to:
+  /// **'{star} of 5'**
+  String ratingStar(int star);
 }
 
 class _AppLocalizationsDelegate

@@ -110,4 +110,18 @@ class AppLocalizationsHy extends AppLocalizations {
 
   @override
   String get showOnMap => 'Ցույց տալ քարտեզի վրա';
+
+  @override
+  String get leaveFeedback => 'Թողնել կարծիք';
+
+  @override
+  String get feedbackHint => 'Պատմեք ձեր այցի մասին';
+
+  @override
+  String get send => 'Ուղարկել';
+
+  @override
+  String ratingStar(int star) {
+    return '$star՝ 5-ից';
+  }
 }

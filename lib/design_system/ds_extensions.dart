@@ -4,6 +4,7 @@ import 'theme/ds_colors.dart';
 
 export 'foundations/ds_elevation.dart';
 export 'foundations/ds_motion.dart';
+export 'foundations/ds_opacity.dart';
 export 'foundations/ds_radius.dart';
 export 'foundations/ds_sizes.dart';
 export 'foundations/ds_spacing.dart';
