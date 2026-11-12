@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -6,6 +7,7 @@ import 'package:gastro_suit/core/config/app_config.dart';
 import 'package:gastro_suit/design_system/components/feedback/ds_rating_stars.dart';
 import 'package:gastro_suit/design_system/theme/app_theme.dart';
 import 'package:gastro_suit/design_system/theme/ds_colors.dart';
+import 'package:gastro_suit/design_system/theme/ds_status_bar.dart';
 import 'package:gastro_suit/domain/entities/branch.dart';
 import 'package:gastro_suit/domain/entities/menu.dart';
 import 'package:gastro_suit/domain/entities/menu_category.dart';
@@ -81,6 +83,7 @@ void main() {
               apiBaseUrl: 'http://api.test',
               restaurantId: 'r1',
               mapTileUrl: 'http://tiles.test/{z}/{x}/{y}.png',
+              mapAttribution: '© Test Maps',
             ),
           ),
           branchesControllerProvider.overrideWith(
@@ -90,6 +93,7 @@ void main() {
         ],
         child: MaterialApp(
           theme: buildAppTheme(lightColors),
+          builder: (context, child) => DSDefaultStatusBar(child: child!),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           home: const BranchScreen(branchId: 'b1'),
@@ -126,6 +130,9 @@ void main() {
     // The back button sits below the status bar.
     expect(tester.getRect(find.bySemanticsLabel('Back')).top, 52);
 
+    // Over the photo the status bar's icons are light.
+    expect(SystemChrome.latestStyle, DSStatusBar.lightIcons);
+
     await tester.drag(find.byType(CustomScrollView), const Offset(0, -320));
     await tester.pumpAndSettle();
 
@@ -140,6 +147,7 @@ void main() {
       ),
       const Rect.fromLTWH(0, 0, 360, 40),
     );
+    expect(SystemChrome.latestStyle, DSStatusBar.darkIcons);
   });
 
   testWidgets('the map button opens the map under the branch name', (
@@ -156,7 +164,7 @@ void main() {
     expect(find.byType(FlutterMap), findsOneWidget);
     // The header's name and the sheet's title.
     expect(find.text('Northern Avenue'), findsNWidgets(2));
-    expect(find.text('© OpenStreetMap'), findsOneWidget);
+    expect(find.text('© Test Maps'), findsOneWidget);
   });
 
   testWidgets('a branch without coordinates has no map button', (tester) async {
@@ -190,6 +198,9 @@ void main() {
     tester,
   ) async {
     await pumpScreen(tester, branches: const []);
+
+    // No photo: the app's own status bar style.
+    expect(SystemChrome.latestStyle, DSStatusBar.darkIcons);
 
     expect(find.text('Try again'), findsOneWidget);
     expect(find.text('Menu'), findsNothing);

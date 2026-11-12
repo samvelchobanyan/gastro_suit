@@ -10,6 +10,7 @@ class AppConfig {
     required this.apiBaseUrl,
     required this.restaurantId,
     required this.mapTileUrl,
+    required this.mapAttribution,
   });
 
   /// Reads the values the build was started with. Fails at startup, not on the
@@ -27,6 +28,10 @@ class AppConfig {
       mapTileUrl: _require(
         'MAP_TILE_URL',
         const String.fromEnvironment('MAP_TILE_URL'),
+      ),
+      mapAttribution: _require(
+        'MAP_ATTRIBUTION',
+        const String.fromEnvironment('MAP_ATTRIBUTION'),
       ),
     );
   }
@@ -52,6 +57,10 @@ class AppConfig {
   /// `{y}`, e.g. `https://tile.openstreetmap.org/{z}/{x}/{y}.png`. A
   /// provider's key, when it needs one, is part of the address.
   final String mapTileUrl;
+
+  /// The credit the tile provider's licence requires on the map, e.g.
+  /// `© OpenStreetMap`. Changes together with [mapTileUrl].
+  final String mapAttribution;
 }
 
 /// Built in `main` and injected through `ProviderScope.overrides`.

@@ -10,6 +10,7 @@ import '../../../design_system/components/buttons/ds_button.dart';
 import '../../../design_system/components/buttons/ds_icon_button.dart';
 import '../../../design_system/components/feedback/ds_badge.dart';
 import '../../../design_system/ds_extensions.dart';
+import '../../../design_system/theme/ds_status_bar.dart';
 import '../../../domain/entities/branch.dart';
 import '../../../domain/state/branches_state.dart';
 import '../../../domain/state/menu_state.dart';
@@ -157,12 +158,8 @@ class _HeaderDelegate extends SliverPersistentHeaderDelegate {
     // The status bar's icons are light over the photo and follow the
     // surface once the photo has left them.
     final overPhoto = shrinkOffset < maxExtent - topInset / 2;
-    final onSurface =
-        ThemeData.estimateBrightnessForColor(surface) == Brightness.light
-        ? SystemUiOverlayStyle.dark
-        : SystemUiOverlayStyle.light;
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: overPhoto ? SystemUiOverlayStyle.light : onSurface,
+      value: overPhoto ? DSStatusBar.lightIcons : DSStatusBar.on(surface),
       child: ColoredBox(
         color: surface,
         child: ClipRect(

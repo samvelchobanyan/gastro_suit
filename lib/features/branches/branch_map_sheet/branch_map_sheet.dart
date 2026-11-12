@@ -43,15 +43,15 @@ class BranchMapSheet extends ConsumerWidget {
   /// Shows a few streets around the point, as the handoff's map does.
   static const _zoom = 15.0;
 
-  /// How the app names itself to the tile server; follows the application
-  /// id.
+  /// How the app names itself to the tile server.
+  // TODO: read the application id of the build (package_info_plus) instead
+  // of this copy of it; it differs per white-label client.
   static const _userAgent = 'com.example.gastro_suit';
-
-  static const _credit = '© OpenStreetMap';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = context.colors;
+    final config = ref.watch(appConfigProvider);
     final point = LatLng(latitude, longitude);
 
     return ClipRRect(
@@ -70,7 +70,7 @@ class BranchMapSheet extends ConsumerWidget {
           ),
           children: [
             TileLayer(
-              urlTemplate: ref.watch(appConfigProvider).mapTileUrl,
+              urlTemplate: config.mapTileUrl,
               userAgentPackageName: _userAgent,
             ),
             MarkerLayer(
@@ -89,7 +89,7 @@ class BranchMapSheet extends ConsumerWidget {
                 ),
               ],
             ),
-            // The map data's licence requires the credit.
+            // The tile provider's licence requires its credit on the map.
             Align(
               alignment: AlignmentDirectional.bottomEnd,
               child: ColoredBox(
@@ -97,7 +97,7 @@ class BranchMapSheet extends ConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: DSSpacing.xs),
                   child: Text(
-                    _credit,
+                    config.mapAttribution,
                     style: DSTypography.caption.copyWith(
                       color: colors.textSecondary,
                     ),

@@ -12,6 +12,7 @@ import 'core/network/interceptors/auth_interceptor.dart';
 import 'core/network/interceptors/locale_interceptor.dart';
 import 'design_system/theme/app_theme.dart';
 import 'design_system/theme/ds_colors.dart';
+import 'design_system/theme/ds_status_bar.dart';
 import 'l10n/generated/app_localizations.dart';
 
 Future<void> main() async {
@@ -83,6 +84,7 @@ class App extends ConsumerWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
+      builder: (context, child) => DSDefaultStatusBar(child: child!),
     );
   }
 }
