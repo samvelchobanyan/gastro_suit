@@ -135,6 +135,7 @@ with real content (see §7).
   `headerLogo` and `headerAction` 44, `notificationDot` 9 (`Greeting`); `storyCircle` 64
   and `storyItemWidth` 72 (`Stories`); `bannerWidth` 280 (Home's promo row);
   `branchImage` 72 (`BranchCard`); `branchHeaderHeight` 260 (`RestaurantHeader`);
+  `branchMapHeight` 320 (`MapBottomSheet`);
   `menuCategoryImage` 56 and `menuCategoryItemWidth` 64 (`MenuTabsVertical`);
   `productRailCardWidth` 128 (`ProductVerticalCard`); `badge` 18 (`Badge`).
 - `DSElevation`: `card`, `raised`, `overlay`, `sheet` — lists of `BoxShadow`.

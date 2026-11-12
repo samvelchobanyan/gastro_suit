@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../../core/auth/auth_status.dart';
+import '../../../core/navigation/app_routes.dart';
 import '../../../design_system/components/buttons/ds_button.dart';
 import '../../../design_system/components/buttons/ds_icon_button.dart';
 import '../../../design_system/components/feedback/ds_badge.dart';
@@ -16,11 +19,12 @@ import '../../menu/menu_block/menu_block_skeleton.dart';
 import '../../shared_widgets/branch_hours_row.dart';
 import '../../shared_widgets/load_error_row.dart';
 import '../../shared_widgets/price_text.dart';
+import '../branch_map_sheet/branch_map_sheet.dart';
 import 'widgets/branch_header.dart';
 
 /// One branch: its photo header, address and hours, and its menu, in one
 /// scroll over the checkout bar. Opened from a branch list; covers the tab
-/// bar.
+/// bar. The header's photo runs under the status bar.
 ///
 /// Takes the branch out of the loaded branch list by its id.
 class BranchScreen extends ConsumerWidget {
@@ -43,6 +47,14 @@ class BranchScreen extends ConsumerWidget {
     }
   }
 
+  /// Rating needs an account: a guest is sent to sign in and comes back to
+  /// this screen. The feedback sheet is not built yet.
+  void _rate(BuildContext context, WidgetRef ref) {
+    if (ref.read(authStatusProvider) == AuthStatus.signedOut) {
+      context.push(AppRoutes.login);
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = context.colors;
@@ -52,6 +64,8 @@ class BranchScreen extends ConsumerWidget {
         ?.where((item) => item.branch.id == branchId)
         .firstOrNull
         ?.branch;
+
+    final topInset = MediaQuery.paddingOf(context).top;
 
     final Widget body;
     if (branch != null) {
@@ -64,13 +78,17 @@ class BranchScreen extends ConsumerWidget {
               child: CustomScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
                 slivers: [
-                  SliverToBoxAdapter(
-                    child: BranchHeader(
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: _HeaderDelegate(
                       branch: branch,
+                      topInset: topInset,
+                      surface: colors.bgSurface,
                       onBack: () => context.pop(),
-                      // The feedback and map sheets are not built yet.
-                      onRate: () {},
-                      onMap: () {},
+                      onRate: () => _rate(context, ref),
+                      onMap: BranchMapSheet.canShow(branch)
+                          ? () => showBranchMap(context, branch)
+                          : null,
                     ),
                   ),
                   SliverToBoxAdapter(child: _Info(branch: branch)),
@@ -83,20 +101,98 @@ class BranchScreen extends ConsumerWidget {
         ],
       );
     } else if (branches == null && !state.hasError) {
-      body = const _Loading();
+      body = const SafeArea(bottom: false, child: _Loading());
     } else {
       // The list failed to load, or it no longer has this branch.
-      body = _Failed(
-        onBack: () => context.pop(),
-        onRetry: () => ref.invalidate(branchesControllerProvider),
+      body = SafeArea(
+        bottom: false,
+        child: _Failed(
+          onBack: () => context.pop(),
+          onRetry: () => ref.invalidate(branchesControllerProvider),
+        ),
       );
     }
 
     return Scaffold(
       backgroundColor: colors.bgSurface,
-      body: SafeArea(child: body),
+      // The top is left to the body: the header's photo goes under the
+      // status bar.
+      body: SafeArea(top: false, child: body),
     );
   }
+}
+
+/// The header as it scrolls away: it leaves with the page, and a strip of
+/// the surface as high as the status bar stays in its place, so that the
+/// menu's chips stop under the status bar and not behind it.
+class _HeaderDelegate extends SliverPersistentHeaderDelegate {
+  const _HeaderDelegate({
+    required this.branch,
+    required this.topInset,
+    required this.surface,
+    required this.onBack,
+    required this.onRate,
+    required this.onMap,
+  });
+
+  final Branch branch;
+  final double topInset;
+  final Color surface;
+  final VoidCallback onBack;
+  final VoidCallback onRate;
+  final VoidCallback? onMap;
+
+  @override
+  double get maxExtent => BranchHeader.heightFor(topInset);
+
+  @override
+  double get minExtent => topInset;
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    // The status bar's icons are light over the photo and follow the
+    // surface once the photo has left them.
+    final overPhoto = shrinkOffset < maxExtent - topInset / 2;
+    final onSurface =
+        ThemeData.estimateBrightnessForColor(surface) == Brightness.light
+        ? SystemUiOverlayStyle.dark
+        : SystemUiOverlayStyle.light;
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: overPhoto ? SystemUiOverlayStyle.light : onSurface,
+      child: ColoredBox(
+        color: surface,
+        child: ClipRect(
+          child: Stack(
+            children: [
+              Positioned(
+                top: -shrinkOffset,
+                left: 0,
+                right: 0,
+                height: maxExtent,
+                child: BranchHeader(
+                  branch: branch,
+                  topInset: topInset,
+                  onBack: onBack,
+                  onRate: onRate,
+                  onMap: onMap,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  bool shouldRebuild(_HeaderDelegate oldDelegate) =>
+      oldDelegate.branch != branch ||
+      oldDelegate.topInset != topInset ||
+      oldDelegate.surface != surface;
 }
 
 /// The address, and today's hours with the open / closed pill.

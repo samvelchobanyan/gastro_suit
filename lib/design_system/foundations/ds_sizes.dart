@@ -49,6 +49,9 @@ abstract final class DSSizes {
   /// The photo header of a branch's screen (`RestaurantHeader`).
   static const double branchHeaderHeight = 260;
 
+  /// The map in a branch's map sheet (`MapBottomSheet`).
+  static const double branchMapHeight = 320;
+
   // Menu (handoff `MenuTabsVertical`, `ProductVerticalCard`)
   static const double menuCategoryImage = 56;
 

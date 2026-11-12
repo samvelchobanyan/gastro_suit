@@ -41,8 +41,7 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  Rect chip(WidgetTester tester, int i) =>
-      tester.getRect(find.text('Sub $i'));
+  Rect chip(WidgetTester tester, int i) => tester.getRect(find.text('Sub $i'));
 
   double rowOffset(WidgetTester tester) => tester
       .state<ScrollableState>(

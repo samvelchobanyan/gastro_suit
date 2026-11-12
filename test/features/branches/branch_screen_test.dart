@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gastro_suit/core/config/app_config.dart';
 import 'package:gastro_suit/design_system/components/feedback/ds_rating_stars.dart';
 import 'package:gastro_suit/design_system/theme/app_theme.dart';
 import 'package:gastro_suit/design_system/theme/ds_colors.dart';
@@ -11,6 +13,7 @@ import 'package:gastro_suit/domain/entities/product.dart';
 import 'package:gastro_suit/domain/state/branches_state.dart';
 import 'package:gastro_suit/domain/state/menu_state.dart';
 import 'package:gastro_suit/features/branches/branch_screen/branch_screen.dart';
+import 'package:gastro_suit/features/branches/branch_screen/widgets/branch_header.dart';
 import 'package:gastro_suit/features/menu/widgets/menu_product_card.dart';
 import 'package:gastro_suit/l10n/generated/app_localizations.dart';
 
@@ -64,14 +67,22 @@ void main() {
   Future<void> pumpScreen(
     WidgetTester tester, {
     required List<Branch> branches,
+    double screenHeight = 640,
   }) async {
-    tester.view.physicalSize = const Size(360, 640);
+    tester.view.physicalSize = Size(360, screenHeight);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          appConfigProvider.overrideWithValue(
+            const AppConfig(
+              apiBaseUrl: 'http://api.test',
+              restaurantId: 'r1',
+              mapTileUrl: 'http://tiles.test/{z}/{x}/{y}.png',
+            ),
+          ),
           branchesControllerProvider.overrideWith(
             () => _FakeBranches(branches),
           ),
@@ -102,6 +113,56 @@ void main() {
     expect(find.byType(MenuProductCard), findsOneWidget);
     expect(find.text('֏1,250'), findsOneWidget);
     expect(find.text('Checkout · ֏0'), findsOneWidget);
+  });
+
+  testWidgets('the photo runs under the status bar and leaves a strip of '
+      'its height when scrolled away', (tester) async {
+    tester.view.padding = const FakeViewPadding(top: 40);
+    // A short screen, for the page to have room to scroll.
+    await pumpScreen(tester, branches: [branch], screenHeight: 400);
+
+    final header = find.byType(BranchHeader);
+    expect(tester.getRect(header), const Rect.fromLTWH(0, 0, 360, 300));
+    // The back button sits below the status bar.
+    expect(tester.getRect(find.bySemanticsLabel('Back')).top, 52);
+
+    await tester.drag(find.byType(CustomScrollView), const Offset(0, -320));
+    await tester.pumpAndSettle();
+
+    // The photo is gone; the strip under the status bar stays.
+    expect(tester.getRect(header).bottom, lessThanOrEqualTo(0));
+    expect(
+      tester.getRect(
+        find.descendant(
+          of: find.byType(SliverPersistentHeader),
+          matching: find.byType(ClipRect),
+        ),
+      ),
+      const Rect.fromLTWH(0, 0, 360, 40),
+    );
+  });
+
+  testWidgets('the map button opens the map under the branch name', (
+    tester,
+  ) async {
+    await pumpScreen(
+      tester,
+      branches: [branch.copyWith(latitude: 40.18, longitude: 44.51)],
+    );
+
+    await tester.tap(find.bySemanticsLabel('Show on map'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(FlutterMap), findsOneWidget);
+    // The header's name and the sheet's title.
+    expect(find.text('Northern Avenue'), findsNWidgets(2));
+    expect(find.text('© OpenStreetMap'), findsOneWidget);
+  });
+
+  testWidgets('a branch without coordinates has no map button', (tester) async {
+    await pumpScreen(tester, branches: [branch]);
+
+    expect(find.bySemanticsLabel('Show on map'), findsNothing);
   });
 
   testWidgets('a branch nobody has rated shows empty stars and no number', (

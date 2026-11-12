@@ -5,15 +5,20 @@ import '../../ds_extensions.dart';
 
 /// Opens [child] in a [DSBottomSheet] over the whole app, tab bar included.
 /// Completes with what the sheet is closed with (`Navigator.pop(context, x)`).
+///
+/// [enableDrag] is turned off for content that takes drags itself (a map):
+/// the sheet then closes with its close button or a tap outside.
 Future<T?> showDSBottomSheet<T>({
   required BuildContext context,
   required String title,
   required Widget child,
+  bool enableDrag = true,
 }) {
   return showModalBottomSheet<T>(
     context: context,
     useRootNavigator: true,
     isScrollControlled: true,
+    enableDrag: enableDrag,
     useSafeArea: true,
     backgroundColor: Colors.transparent,
     elevation: 0,

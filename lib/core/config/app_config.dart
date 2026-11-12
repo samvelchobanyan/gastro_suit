@@ -6,7 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// `flutter run --dart-define-from-file=config/dev.json`. Each environment (and
 /// later each client) is its own file; this class holds no addresses.
 class AppConfig {
-  const AppConfig({required this.apiBaseUrl, required this.restaurantId});
+  const AppConfig({
+    required this.apiBaseUrl,
+    required this.restaurantId,
+    required this.mapTileUrl,
+  });
 
   /// Reads the values the build was started with. Fails at startup, not on the
   /// first request, when a value is missing.
@@ -19,6 +23,10 @@ class AppConfig {
       restaurantId: _require(
         'RESTAURANT_ID',
         const String.fromEnvironment('RESTAURANT_ID'),
+      ),
+      mapTileUrl: _require(
+        'MAP_TILE_URL',
+        const String.fromEnvironment('MAP_TILE_URL'),
       ),
     );
   }
@@ -39,6 +47,11 @@ class AppConfig {
   /// The organisation this build serves. One per build: its branches, menu,
   /// loyalty and wallet.
   final String restaurantId;
+
+  /// Where the map's tiles come from: a template with `{z}`, `{x}` and
+  /// `{y}`, e.g. `https://tile.openstreetmap.org/{z}/{x}/{y}.png`. A
+  /// provider's key, when it needs one, is part of the address.
+  final String mapTileUrl;
 }
 
 /// Built in `main` and injected through `ProviderScope.overrides`.

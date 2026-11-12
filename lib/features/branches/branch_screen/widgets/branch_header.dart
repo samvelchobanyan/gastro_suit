@@ -12,19 +12,31 @@ import '../../../../l10n/generated/app_localizations.dart';
 /// The top of a branch's screen (handoff `RestaurantHeader`): its photo
 /// with the name, the description and the rating over it, and the buttons
 /// to go back, rate the branch and see it on the map.
+///
+/// The photo runs under the status bar: the header is [heightFor] high, the
+/// handoff's height below the status bar and [topInset] more under it.
 class BranchHeader extends StatelessWidget {
   const BranchHeader({
     super.key,
     required this.branch,
+    required this.topInset,
     required this.onBack,
     required this.onRate,
     required this.onMap,
   });
 
   final Branch branch;
+
+  /// The height of the status bar over the photo.
+  final double topInset;
   final VoidCallback onBack;
   final VoidCallback onRate;
-  final VoidCallback onMap;
+
+  /// Null when the branch cannot be shown on the map: no button then.
+  final VoidCallback? onMap;
+
+  static double heightFor(double topInset) =>
+      DSSizes.branchHeaderHeight + topInset;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +47,7 @@ class BranchHeader extends StatelessWidget {
     final quiet = colors.textInverse.withValues(alpha: 0.8);
 
     return SizedBox(
-      height: DSSizes.branchHeaderHeight,
+      height: heightFor(topInset),
       child: Stack(
         fit: StackFit.expand,
         children: [
@@ -49,7 +61,7 @@ class BranchHeader extends StatelessWidget {
           // Keeps the text readable on any photo.
           DecoratedBox(decoration: BoxDecoration(gradient: colors.scrimHero)),
           PositionedDirectional(
-            top: DSSpacing.md,
+            top: topInset + DSSpacing.md,
             start: DSSpacing.md,
             child: DSIconButton(
               icon: PhosphorIcons.arrowLeft(),
@@ -100,13 +112,17 @@ class BranchHeader extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: DSSpacing.sm),
-                  DSIconButton(
-                    icon: PhosphorIcons.mapPin(),
-                    semanticLabel: l10n.showOnMap,
-                    variant: DSIconButtonVariant.tonal,
-                    size: DSIconButtonSize.xs,
-                    onPressed: onMap,
-                  ),
+                  if (onMap case final onMap?)
+                    DSIconButton(
+                      icon: PhosphorIcons.mapPin(),
+                      semanticLabel: l10n.showOnMap,
+                      variant: DSIconButtonVariant.tonal,
+                      size: DSIconButtonSize.xs,
+                      onPressed: onMap,
+                    )
+                  else
+                    // Keeps the name centred.
+                    const SizedBox(width: DSSizes.buttonHeightXs),
                 ],
               ),
             ),
