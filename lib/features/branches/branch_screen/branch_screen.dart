@@ -34,15 +34,15 @@ class BranchScreen extends ConsumerWidget {
 
   final String branchId;
 
-  /// The branch and its menu already on screen stay until the new ones
-  /// arrive; a failed refresh keeps them.
+  /// Loads this branch and its menu again; the other branches of the list
+  /// are left alone. What is on screen stays until the new arrives; a
+  /// failed refresh keeps it.
   Future<void> _refresh(WidgetRef ref) async {
     ref.invalidate(menuProvider(branchId));
-    ref.invalidate(branchesControllerProvider);
     try {
-      await Future.wait<Object>([
+      await Future.wait<void>([
         ref.read(menuProvider(branchId).future),
-        ref.read(branchesControllerProvider.future),
+        ref.read(branchesControllerProvider.notifier).refreshBranch(branchId),
       ]);
     } catch (_) {
       // The menu block shows its own outcome; the spinner only needs to stop.

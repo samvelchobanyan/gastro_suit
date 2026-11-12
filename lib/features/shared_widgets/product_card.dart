@@ -88,7 +88,7 @@ class ProductCard extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Opacity(
-        opacity: product.isAvailable ? 1 : DSColors.disabledOpacity,
+        opacity: product.isAvailable ? 1 : DSOpacity.disabled,
         child: card,
       ),
     );

@@ -145,9 +145,6 @@ class DSColors extends ThemeExtension<DSColors> {
   /// Bottom-up scrim over hero photos.
   final LinearGradient scrimHero;
 
-  /// Opacity of a disabled element. Not a colour: the same in every set.
-  static const double disabledOpacity = 0.35;
-
   @override
   DSColors copyWith({
     Color? bgCanvas,

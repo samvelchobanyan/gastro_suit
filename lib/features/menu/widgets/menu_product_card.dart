@@ -92,7 +92,7 @@ class MenuProductCard extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Opacity(
-        opacity: product.isAvailable ? 1 : DSColors.disabledOpacity,
+        opacity: product.isAvailable ? 1 : DSOpacity.disabled,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(DSRadius.md),
           child: ColoredBox(color: colors.bgInverse, child: card),

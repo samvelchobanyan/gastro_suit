@@ -68,7 +68,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               Text(
                 errorText(context, error),
                 style: DSTypography.bodySm.copyWith(
-                  color: context.colors.statusError,
+                  color: context.colors.textError,
                 ),
               ),
             ],

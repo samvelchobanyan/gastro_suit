@@ -38,10 +38,33 @@ class _FakeBranches extends BranchesController {
 
   final List<Branch> branches;
 
+  /// How many times the whole list was loaded, and which branches were
+  /// loaded again on their own.
+  static int listLoads = 0;
+  static final refreshed = <String>[];
+
   @override
-  Future<List<NearbyBranch>> build() async => [
-    for (final branch in branches) NearbyBranch(branch, null),
-  ];
+  Future<List<NearbyBranch>> build() async {
+    listLoads++;
+    return [for (final branch in branches) NearbyBranch(branch, null)];
+  }
+
+  /// The server now has a rating for the branch.
+  @override
+  Future<void> refreshBranch(String branchId) async {
+    refreshed.add(branchId);
+    state = AsyncData([
+      for (final item in state.value!)
+        item.branch.id == branchId
+            ? NearbyBranch(
+                item.branch.copyWith(
+                  rating: const BranchRating(average: 4.2, count: 7),
+                ),
+                item.distanceKm,
+              )
+            : item,
+    ]);
+  }
 }
 
 class _FakeMenu extends BranchMenuController {
@@ -199,6 +222,22 @@ void main() {
 
     expect(find.text('Leave a feedback'), findsOneWidget);
     expect(find.byType(DSRatingInput), findsOneWidget);
+  });
+
+  testWidgets('pulling down loads this branch again, not the whole list', (
+    tester,
+  ) async {
+    _FakeBranches.listLoads = 0;
+    _FakeBranches.refreshed.clear();
+    await pumpScreen(tester, branches: [branch]);
+    expect(find.text('4.2'), findsNothing);
+
+    await tester.drag(find.byType(CustomScrollView), const Offset(0, 300));
+    await tester.pumpAndSettle();
+
+    expect(_FakeBranches.refreshed, ['b1']);
+    expect(_FakeBranches.listLoads, 1);
+    expect(find.text('4.2'), findsOneWidget);
   });
 
   testWidgets('a branch nobody has rated shows empty stars and no number', (
