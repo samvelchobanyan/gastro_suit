@@ -1,6 +1,6 @@
 # GastroSuit — Questions for Design and Product
 
-Status: open list · 2026-10-30
+Status: open list · 2026-11-12
 
 Behaviour the design or the PRD leaves open, to settle with the designer and the product
 owner. Questions for the backend are in `IMPLEMENTATION_NOTES.md` (questions for the
@@ -11,17 +11,19 @@ one.
 
 ---
 
-### 1. Quick "+" on a product that needs a choice
-The menu card's "+" adds without opening the product. A product may require a choice
-(size, milk).
-Proposal: "+" adds the default choice (default size, pre-selected options) when every
-required group can be filled by defaults; otherwise "+" opens the product screen.
+### 1. Quick "+" on a product that needs a choice — decided
+Decided (2026-11-12): the card's "+" adds the default choice (default size, pre-selected
+options) without opening the product. When a required group cannot be filled by defaults
+(none is marked, or the marked one has run out), "+" opens the product screen instead.
+Tapping the card itself always opens the product screen.
 
-### 2. "+" turning into "×" after adding
-After "+" the card's icon becomes "×" (remove from the cart). The cart may hold several
-lines of one product (a small and a large latte), so "×" has no single line to remove.
-Proposal: show the quantity of that product in the cart instead of "×"; remove only in
-the cart.
+### 2. The card's stepper with several lines of one product
+After "+" the card shows a stepper ("−", quantity, "+") in its place. The cart may hold
+several lines of one product (a small and a large latte), so "−" has no single line to
+take from, and it is unclear which quantity the stepper shows.
+Waiting for the product owners' answer. Options: the stepper shows the product's total
+across its lines and "−" takes from the line added last; or the stepper counts only the
+default-choice line; or "−" opens the cart when there is more than one line.
 
 ### 3. Unavailable cart lines
 A line becomes unavailable (stop-list, an option ran out, another branch). An order is

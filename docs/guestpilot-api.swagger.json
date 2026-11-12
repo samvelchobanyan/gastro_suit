@@ -5483,31 +5483,27 @@
       "TodayHoursResponse": {
         "type": "object",
         "properties": {
-          "state": {
-            "type": "string",
-            "enum": [
-              "hours",
-              "closed"
-            ],
-            "description": "`closed`: the week is stored and today has no hours."
-          },
           "open": {
             "type": "string",
-            "example": "08:00",
-            "description": "With `hours`: when it opens today, `HH:mm`."
+            "nullable": true,
+            "description": "When it opens today, `HH:mm`; `null`: closed today.",
+            "example": "08:00"
           },
           "close": {
             "type": "string",
-            "example": "22:00",
-            "description": "With `hours`: when it closes; earlier than `open` runs past midnight."
+            "nullable": true,
+            "description": "When it closes, `HH:mm`; earlier than `open` runs past midnight. `null`: closed today.",
+            "example": "22:00"
           },
           "openNow": {
             "type": "boolean",
-            "description": "With `hours`: whether it is open at the moment of the answer."
+            "description": "Whether it is open at the moment of the answer; `false` on a closed day."
           }
         },
         "required": [
-          "state"
+          "open",
+          "close",
+          "openNow"
         ]
       },
       "LocationOrganisationResponse": {
@@ -5729,12 +5725,12 @@
           },
           "orderingEnabled": {
             "type": "boolean",
-            "description": "Whether it takes orders at all."
+            "description": "The merchant has switched ordering on for this location. False: checkout refuses `ordering_disabled`."
           },
           "orderingHoursStart": {
             "type": "string",
             "nullable": true,
-            "description": "When ordering opens, `HH:mm` in `timezone`.",
+            "description": "When ordering opens each day, `HH:mm` in `timezone` — not the doors (`openingHours`). Both null: any time.",
             "example": "10:00"
           },
           "orderingHoursEnd": {
@@ -5744,21 +5740,25 @@
             "example": "23:00"
           },
           "isTemporarilyClosed": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "The merchant’s short-lived *closed for now* switch. True: checkout refuses `location_temporarily_closed`."
           },
           "takesAppOrders": {
             "type": "boolean",
             "description": "False: this location does not take orders from the app. Show its menu; offer no basket."
           },
           "sortOrder": {
-            "type": "number"
+            "type": "number",
+            "description": "The merchant’s order; the list already comes sorted by it (by distance with `lat`/`lng`)."
           },
           "organisationId": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The same as `organisation.id`."
           },
           "organisation": {
             "nullable": true,
+            "description": "The business behind it at the POS — for `?restaurantId=`, not a name to show (that is `brand`).",
             "type": "object",
             "allOf": [
               {

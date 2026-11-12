@@ -191,7 +191,8 @@ features/<feature>/
   of a screen may read providers itself (a block that loads and fails on its own) or get
   its data from the screen; this is decided per case. Reusable widgets never read
   providers (§8).
-- A block is a part of a screen that loads, fails and refreshes on its own (`*Block`). A
+- A block is a part of a screen that loads and fails on its own (`*Block`); pull-to-refresh
+  belongs to whoever owns the scroll. A
   block of one screen is a file in that screen's `widgets/`. A block other features embed
   lives next to the feature's screens, in `<name>_block/`.
 - A feature may open another feature's screens and embed its blocks (the Order tab shows
