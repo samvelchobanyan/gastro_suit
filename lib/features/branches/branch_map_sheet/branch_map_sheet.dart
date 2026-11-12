@@ -13,13 +13,12 @@ import '../../../domain/entities/branch.dart';
 /// name. Only for a branch whose coordinates are known
 /// ([BranchMapSheet.canShow]).
 ///
-/// The sheet is not dragged down: a drag over the map moves the map. It
-/// closes with its close button or a tap outside.
+/// A drag over the map moves the map; the sheet is dragged down by its
+/// handle and title.
 Future<void> showBranchMap(BuildContext context, Branch branch) =>
     showDSBottomSheet<void>(
       context: context,
       title: branch.name,
-      enableDrag: false,
       child: BranchMapSheet(
         latitude: branch.latitude!,
         longitude: branch.longitude!,
