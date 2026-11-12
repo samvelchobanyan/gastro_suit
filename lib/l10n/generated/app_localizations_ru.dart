@@ -78,4 +78,36 @@ class AppLocalizationsRu extends AppLocalizations {
   String distanceKm(String km) {
     return '$km км';
   }
+
+  @override
+  String get featuredProducts => 'Рекомендуем';
+
+  @override
+  String get menuTitle => 'Меню';
+
+  @override
+  String get menuEmpty => 'Меню пусто';
+
+  @override
+  String checkoutWithTotal(String total) {
+    return 'Оформить · $total';
+  }
+
+  @override
+  String get addToCart => 'Добавить в корзину';
+
+  @override
+  String get quantityDecrease => 'Уменьшить количество';
+
+  @override
+  String get quantityIncrease => 'Увеличить количество';
+
+  @override
+  String get back => 'Назад';
+
+  @override
+  String get rateBranch => 'Оценить филиал';
+
+  @override
+  String get showOnMap => 'Показать на карте';
 }

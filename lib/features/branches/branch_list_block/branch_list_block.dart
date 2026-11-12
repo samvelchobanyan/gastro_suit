@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../core/navigation/app_routes.dart';
 
 import '../../../design_system/components/feedback/ds_skeleton.dart';
 import '../../../design_system/ds_extensions.dart';
@@ -9,6 +12,7 @@ import '../../../domain/state/cities_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../shared_widgets/branch_tile.dart';
 import '../../shared_widgets/branch_tile_skeleton.dart';
+import '../../shared_widgets/load_error_row.dart';
 import '../branch_filter.dart';
 import '../widgets/branch_area_filter.dart';
 
@@ -111,8 +115,8 @@ class _BranchListBlockState extends ConsumerState<BranchListBlock> {
               itemBuilder: (context, i) => BranchTile(
                 branch: shown[i].branch,
                 distanceKm: shown[i].distanceKm,
-                // The branch screen is not built yet.
-                onTap: () {},
+                onTap: () =>
+                    context.push(AppRoutes.branchOf(shown[i].branch.id)),
               ),
             ),
           ),
@@ -175,31 +179,11 @@ class _Error extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final colors = context.colors;
     return Align(
       alignment: Alignment.topCenter,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: DSLayout.margin),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                l10n.errorGeneric,
-                style: DSTypography.body.copyWith(color: colors.textSecondary),
-              ),
-            ),
-            const SizedBox(width: DSSpacing.sm),
-            TextButton(
-              onPressed: onRetry,
-              style: TextButton.styleFrom(
-                foregroundColor: colors.brandPrimary,
-                textStyle: DSTypography.bodySemibold,
-              ),
-              child: Text(l10n.retry),
-            ),
-          ],
-        ),
+        child: LoadErrorRow(onRetry: onRetry),
       ),
     );
   }

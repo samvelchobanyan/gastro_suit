@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-import '../../design_system/components/feedback/ds_status_pill.dart';
 import '../../design_system/components/image/ds_network_image.dart';
 import '../../design_system/ds_extensions.dart';
 import '../../domain/entities/branch.dart';
-import '../../l10n/generated/app_localizations.dart';
 import 'branch_distance.dart';
+import 'branch_hours_row.dart';
 
 /// One branch in a list (handoff `BranchCard`): photo, name, distance,
 /// address, today's hours and whether it is open. Home's nearest branches
@@ -93,7 +92,11 @@ class BranchTile extends StatelessWidget {
                   ),
                 ],
               ),
-              ?_hoursRow(context),
+              if (BranchHoursRow.hasContentFor(branch))
+                Padding(
+                  padding: const EdgeInsets.only(top: DSSpacing.xs),
+                  child: BranchHoursRow(branch: branch),
+                ),
             ],
           ),
         ),
@@ -113,49 +116,6 @@ class BranchTile extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: card,
-    );
-  }
-
-  /// Today's hours and the open / closed pill. Nothing when the branch has
-  /// no hours entered and is not closed for now: its state is unknown.
-  Widget? _hoursRow(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final colors = context.colors;
-
-    final hours = switch (branch.today) {
-      TodayOpen(:final opens, :final closes) => '$opens – $closes',
-      TodayClosed() => l10n.branchClosedToday,
-      null => null,
-    };
-    // A day off already says "closed" in the hours text.
-    final showPill = branch.isTemporarilyClosed || branch.today is TodayOpen;
-    if (hours == null && !showPill) return null;
-
-    final isOpen = branch.isOpenNow ?? false;
-    return Padding(
-      padding: const EdgeInsets.only(top: DSSpacing.xs),
-      child: Row(
-        children: [
-          if (hours != null) ...[
-            Icon(
-              PhosphorIcons.clock(),
-              size: DSSizes.iconXs,
-              color: colors.textTertiary,
-            ),
-            const SizedBox(width: DSSpacing.xs),
-            Text(
-              hours,
-              style: DSTypography.bodyXs.copyWith(color: colors.textTertiary),
-            ),
-            const SizedBox(width: DSSpacing.sm),
-          ],
-          if (showPill)
-            DSStatusPill(
-              label: isOpen ? l10n.branchOpen : l10n.branchClosed,
-              tone: isOpen ? DSStatusTone.success : DSStatusTone.error,
-            ),
-        ],
-      ),
     );
   }
 }

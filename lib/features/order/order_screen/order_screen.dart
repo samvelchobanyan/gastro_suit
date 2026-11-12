@@ -6,6 +6,7 @@ import '../../../design_system/components/layout/ds_screen_header.dart';
 import '../../../design_system/ds_extensions.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../branches/branch_list_block/branch_list_block.dart';
+import 'widgets/products_tab.dart';
 
 enum _OrderTab { products, branches }
 
@@ -60,26 +61,11 @@ class _OrderScreenState extends State<OrderScreen> {
             Expanded(
               child: IndexedStack(
                 index: _tab.index,
-                children: const [_ProductsPlaceholder(), BranchListBlock()],
+                children: const [ProductsTab(), BranchListBlock()],
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-/// Stands in until the menu is built.
-class _ProductsPlaceholder extends StatelessWidget {
-  const _ProductsPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        AppLocalizations.of(context).orderTabProducts,
-        style: DSTypography.body.copyWith(color: context.colors.textTertiary),
       ),
     );
   }

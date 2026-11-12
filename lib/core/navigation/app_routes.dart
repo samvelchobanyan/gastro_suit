@@ -6,4 +6,9 @@ abstract final class AppRoutes {
   static const profile = '/profile';
 
   static const login = '/login';
+
+  /// One branch's screen; open it with [branchOf].
+  static const branch = '/branch/:id';
+
+  static String branchOf(String branchId) => '/branch/$branchId';
 }

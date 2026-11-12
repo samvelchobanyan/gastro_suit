@@ -237,6 +237,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{km} km'**
   String distanceKm(String km);
+
+  /// Order tab: title of the featured products row
+  ///
+  /// In en, this message translates to:
+  /// **'Featured products'**
+  String get featuredProducts;
+
+  /// Title over a branch's menu
+  ///
+  /// In en, this message translates to:
+  /// **'Menu'**
+  String get menuTitle;
+
+  /// Shown instead of the menu when the branch offers nothing
+  ///
+  /// In en, this message translates to:
+  /// **'The menu is empty'**
+  String get menuEmpty;
+
+  /// Branch screen: the button that opens the cart, with its total, e.g. Checkout · ֏1,450
+  ///
+  /// In en, this message translates to:
+  /// **'Checkout · {total}'**
+  String checkoutWithTotal(String total);
+
+  /// Accessibility label of the plus on a product card
+  ///
+  /// In en, this message translates to:
+  /// **'Add to cart'**
+  String get addToCart;
+
+  /// Accessibility label of the minus of a quantity stepper
+  ///
+  /// In en, this message translates to:
+  /// **'Decrease quantity'**
+  String get quantityDecrease;
+
+  /// Accessibility label of the plus of a quantity stepper
+  ///
+  /// In en, this message translates to:
+  /// **'Increase quantity'**
+  String get quantityIncrease;
+
+  /// Accessibility label of a back button
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get back;
+
+  /// Branch screen: accessibility label of the button that opens the feedback sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Rate the branch'**
+  String get rateBranch;
+
+  /// Branch screen: accessibility label of the button that opens the map
+  ///
+  /// In en, this message translates to:
+  /// **'Show on map'**
+  String get showOnMap;
 }
 
 class _AppLocalizationsDelegate

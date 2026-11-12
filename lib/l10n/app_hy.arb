@@ -22,5 +22,15 @@
   "branchOpen": "Բաց է",
   "branchClosed": "Փակ է",
   "branchClosedToday": "Այսօր փակ է",
-  "distanceKm": "{km} կմ"
+  "distanceKm": "{km} կմ",
+  "featuredProducts": "Առաջարկում ենք",
+  "menuTitle": "Մենյու",
+  "menuEmpty": "Մենյուն դատարկ է",
+  "checkoutWithTotal": "Պատվիրել · {total}",
+  "addToCart": "Ավելացնել զամբյուղ",
+  "quantityDecrease": "Պակասեցնել քանակը",
+  "quantityIncrease": "Ավելացնել քանակը",
+  "back": "Հետ",
+  "rateBranch": "Գնահատել մասնաճյուղը",
+  "showOnMap": "Ցույց տալ քարտեզի վրա"
 }

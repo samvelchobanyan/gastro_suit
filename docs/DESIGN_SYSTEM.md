@@ -1,6 +1,6 @@
 # GastroSuit — Design System
 
-Status: tokens done · components added as they are reused · 2026-11-07
+Status: tokens done · components added as they are reused · 2026-11-12
 
 ## 0. About this document
 
@@ -134,7 +134,9 @@ with real content (see §7).
   component, not in its tokens, are added here by name when the component is built:
   `headerLogo` and `headerAction` 44, `notificationDot` 9 (`Greeting`); `storyCircle` 64
   and `storyItemWidth` 72 (`Stories`); `bannerWidth` 280 (Home's promo row);
-  `branchImage` 72 (`BranchCard`).
+  `branchImage` 72 (`BranchCard`); `branchHeaderHeight` 260 (`RestaurantHeader`);
+  `menuCategoryImage` 56 and `menuCategoryItemWidth` 64 (`MenuTabsVertical`);
+  `productRailCardWidth` 128 (`ProductVerticalCard`); `badge` 18 (`Badge`).
 - `DSElevation`: `card`, `raised`, `overlay`, `sheet` — lists of `BoxShadow`.
 
 ---
@@ -155,6 +157,13 @@ with real content (see §7).
   `textTertiary`, since the chip is not disabled.
 - `--alpha-white-40`: referenced by the handoff (ProductOverlay) but missing from its
   tokens; added as `DSPalette.alphaWhite40`.
+- Components that paint with palette greys take the role of the same value:
+  `ProductMenuCard`'s `gray-900` and `gray-0` are `bgInverse` and `textInverse`;
+  `Stepper`'s `gray-50` is `bgCanvas`.
+- `IconButton` `tonal` pressed (`accent-100`) has no role: the pressed fill is
+  `brandSubtle` under `overlayPressDark`.
+- `--alpha-white-80` (the quieter text over `RestaurantHeader`'s photo) is `textInverse`
+  at 80%.
 
 ---
 
@@ -173,7 +182,11 @@ with real content (see §7).
 | `DSSegmentedTabs` | `TabBar`, size `big` | A full-width switch between views of a screen: equal segments with an icon and a label on a recessed track, and an indicator that slides under the selected one. A separate component from `DSChipTabs`: it looks and behaves differently |
 | `DSScreenHeader` | `ScreenHeader` | A screen's title (`h1`); the handoff's back button and trailing action are added when a screen needs them |
 | `DSRadio` | `RadioButton` | The radio mark only; the row it sits in takes the tap |
-| `DSButton` | `Button` | `primary`, size `sm` so far; other variants and sizes are added when used |
+| `DSButton` | `Button` | `primary` and `secondary` (outline), size `sm`, an optional icon before the label; other variants and sizes are added when used |
+| `DSIconButton` | `IconButton` | A round button with only an icon; `filled` and `tonal`, sizes `xs` 36 and `sm` 40 so far |
+| `DSStepper` | `Stepper`, size `sm` | A quantity between a minus and a plus, 32 high. Keeps no number of its own: it shows the value it is given and reports the one asked for |
+| `DSRatingStars` | `RatingStars`, display only | Five stars to the half star; zero is five empty stars |
+| `DSBadge` | `Badge`, variant `empty` | A count on a brand-tinted capsule; the red variant is added when used |
 
 A component that shows a list of choices takes them as a list of its own small class,
 declared in the component's file: `DSDropdownOption` (value, label), `DSChipTab` (value,

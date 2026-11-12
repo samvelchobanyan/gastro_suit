@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/auth/login_screen/login_screen.dart';
+import '../../features/branches/branch_screen/branch_screen.dart';
 import '../../features/gifts/gifts_screen/gifts_screen.dart';
 import '../../features/home/home_screen/home_screen.dart';
 import '../../features/order/order_screen/order_screen.dart';
@@ -56,6 +57,13 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.login,
         builder: (context, state) => const LoginScreen(),
+      ),
+      // Outside the shell: a branch's screen covers the tab bar and has its
+      // own checkout bar in its place.
+      GoRoute(
+        path: AppRoutes.branch,
+        builder: (context, state) =>
+            BranchScreen(branchId: state.pathParameters['id']!),
       ),
     ],
   );

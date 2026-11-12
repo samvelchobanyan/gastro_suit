@@ -22,5 +22,15 @@
   "branchOpen": "Открыто",
   "branchClosed": "Закрыто",
   "branchClosedToday": "Сегодня закрыто",
-  "distanceKm": "{km} км"
+  "distanceKm": "{km} км",
+  "featuredProducts": "Рекомендуем",
+  "menuTitle": "Меню",
+  "menuEmpty": "Меню пусто",
+  "checkoutWithTotal": "Оформить · {total}",
+  "addToCart": "Добавить в корзину",
+  "quantityDecrease": "Уменьшить количество",
+  "quantityIncrease": "Увеличить количество",
+  "back": "Назад",
+  "rateBranch": "Оценить филиал",
+  "showOnMap": "Показать на карте"
 }

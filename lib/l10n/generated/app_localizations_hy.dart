@@ -78,4 +78,36 @@ class AppLocalizationsHy extends AppLocalizations {
   String distanceKm(String km) {
     return '$km կմ';
   }
+
+  @override
+  String get featuredProducts => 'Առաջարկում ենք';
+
+  @override
+  String get menuTitle => 'Մենյու';
+
+  @override
+  String get menuEmpty => 'Մենյուն դատարկ է';
+
+  @override
+  String checkoutWithTotal(String total) {
+    return 'Պատվիրել · $total';
+  }
+
+  @override
+  String get addToCart => 'Ավելացնել զամբյուղ';
+
+  @override
+  String get quantityDecrease => 'Պակասեցնել քանակը';
+
+  @override
+  String get quantityIncrease => 'Ավելացնել քանակը';
+
+  @override
+  String get back => 'Հետ';
+
+  @override
+  String get rateBranch => 'Գնահատել մասնաճյուղը';
+
+  @override
+  String get showOnMap => 'Ցույց տալ քարտեզի վրա';
 }

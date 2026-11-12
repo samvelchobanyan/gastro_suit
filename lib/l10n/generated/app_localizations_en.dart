@@ -78,4 +78,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String distanceKm(String km) {
     return '$km km';
   }
+
+  @override
+  String get featuredProducts => 'Featured products';
+
+  @override
+  String get menuTitle => 'Menu';
+
+  @override
+  String get menuEmpty => 'The menu is empty';
+
+  @override
+  String checkoutWithTotal(String total) {
+    return 'Checkout · $total';
+  }
+
+  @override
+  String get addToCart => 'Add to cart';
+
+  @override
+  String get quantityDecrease => 'Decrease quantity';
+
+  @override
+  String get quantityIncrease => 'Increase quantity';
+
+  @override
+  String get back => 'Back';
+
+  @override
+  String get rateBranch => 'Rate the branch';
+
+  @override
+  String get showOnMap => 'Show on map';
 }

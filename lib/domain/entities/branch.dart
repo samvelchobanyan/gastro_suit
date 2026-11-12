@@ -3,14 +3,19 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'branch.freezed.dart';
 
 /// A place where the user picks up an order (DOMAIN_SPEC §3). Holds what the
-/// branch card shows; more fields arrive with the screens that use them.
+/// branch card and the branch screen show; more fields arrive with the
+/// screens that use them.
 @freezed
 abstract class Branch with _$Branch {
   const factory Branch({
     required String id,
     required String name,
     required String address,
+    String? description,
     String? photoUrl,
+
+    /// Null while nobody has rated the branch.
+    BranchRating? rating,
 
     /// Where it stands, for the branch picker's city and district filters.
     /// No district when its city is not split into districts.
@@ -55,4 +60,16 @@ sealed class TodayHours with _$TodayHours {
 
   /// The week's hours are entered and today is a day off.
   const factory TodayHours.closed() = TodayClosed;
+}
+
+/// Guests' stars for a branch.
+@freezed
+abstract class BranchRating with _$BranchRating {
+  const factory BranchRating({
+    /// The average of the stars, 0 to 5.
+    required double average,
+
+    /// How many guests have rated it.
+    required int count,
+  }) = _BranchRating;
 }

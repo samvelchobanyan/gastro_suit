@@ -46,6 +46,21 @@ abstract final class DSSizes {
   /// The branch picker's list grows up to this, then scrolls.
   static const double branchPickerListMaxHeight = 320;
 
+  /// The photo header of a branch's screen (`RestaurantHeader`).
+  static const double branchHeaderHeight = 260;
+
+  // Menu (handoff `MenuTabsVertical`, `ProductVerticalCard`)
+  static const double menuCategoryImage = 56;
+
+  /// A category's image plus room for its label.
+  static const double menuCategoryItemWidth = 64;
+
+  /// A product card in a sideways rail.
+  static const double productRailCardWidth = 128;
+
+  /// The height of a count badge (`Badge`).
+  static const double badge = 18;
+
   // Dropdown (handoff `Dropdown`)
   static const double inputHeightCompact = 40;
   static const double menuItemHeight = 44;

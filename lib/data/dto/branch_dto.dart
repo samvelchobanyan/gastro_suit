@@ -14,7 +14,9 @@ class BranchDto {
     this.internalName,
     this.name,
     this.address,
+    this.description,
     this.photoUrl,
+    this.rating,
     this.cityId,
     this.districtId,
     this.latitude,
@@ -35,7 +37,11 @@ class BranchDto {
   @JsonKey(fromJson: translationsFromJson)
   final Map<String, String>? address;
 
+  @JsonKey(fromJson: translationsFromJson)
+  final Map<String, String>? description;
+
   final String? photoUrl;
+  final BranchRatingDto? rating;
   final String? cityId;
   final String? districtId;
   final double? latitude;
@@ -49,7 +55,9 @@ class BranchDto {
       id: id,
       name: localized(name, language, internalName: internalName),
       address: localized(address, language),
+      description: localizedOrNull(description, language),
       photoUrl: photoUrl == null || photoUrl!.isEmpty ? null : photoUrl,
+      rating: rating?.toDomain(),
       cityId: cityId,
       districtId: districtId,
       latitude: hasCoordinates ? latitude : null,
@@ -60,32 +68,52 @@ class BranchDto {
   }
 }
 
-/// `TodayHoursResponse`: `{ state: hours | closed, open?, close?, openNow? }`.
+/// `TodayHoursResponse`: `{ open, close, openNow }`. Both times are null on
+/// a day off.
 @JsonSerializable(createToJson: false)
 class TodayHoursDto {
-  const TodayHoursDto({this.state, this.open, this.close, this.openNow});
+  const TodayHoursDto({this.open, this.close, this.openNow});
 
   factory TodayHoursDto.fromJson(Map<String, dynamic> json) =>
       _$TodayHoursDtoFromJson(json);
 
-  final String? state;
   final String? open;
   final String? close;
   final bool? openNow;
 
-  /// Null for a state the app does not know or `hours` without times: the
-  /// card then shows no hours rather than wrong ones.
+  /// Null with only one of the two times: the card then shows no hours
+  /// rather than wrong ones.
   TodayHours? toDomain() {
     final open = this.open;
     final close = this.close;
-    return switch (state) {
-      'closed' => const TodayHours.closed(),
-      'hours' when open != null && close != null => TodayHours.open(
-        opens: open,
-        closes: close,
-        isOpenNow: openNow ?? false,
-      ),
-      _ => null,
-    };
+    if (open == null && close == null) return const TodayHours.closed();
+    if (open == null || close == null) return null;
+    return TodayHours.open(
+      opens: open,
+      closes: close,
+      isOpenNow: openNow ?? false,
+    );
+  }
+}
+
+/// `RatingResponse`.
+@JsonSerializable(createToJson: false)
+class BranchRatingDto {
+  const BranchRatingDto({this.average, this.count});
+
+  factory BranchRatingDto.fromJson(Map<String, dynamic> json) =>
+      _$BranchRatingDtoFromJson(json);
+
+  final num? average;
+  final num? count;
+
+  /// Null without an average: no rating is shown rather than a zero.
+  BranchRating? toDomain() {
+    final average = this.average;
+    if (average == null) return null;
+    return BranchRating(
+      average: average.toDouble(),
+      count: count?.toInt() ?? 0,
+    );
   }
 }

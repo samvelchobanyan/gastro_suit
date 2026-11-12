@@ -14,7 +14,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Branch {
 
- String get id; String get name; String get address; String? get photoUrl;/// Where it stands, for the branch picker's city and district filters.
+ String get id; String get name; String get address; String? get description; String? get photoUrl;/// Null while nobody has rated the branch.
+ BranchRating? get rating;/// Where it stands, for the branch picker's city and district filters.
 /// No district when its city is not split into districts.
  String? get cityId; String? get districtId;/// For the distance to the user; both or neither.
  double? get latitude; double? get longitude;/// Today's hours as the server reported them when the list was loaded;
@@ -31,16 +32,16 @@ $BranchCopyWith<Branch> get copyWith => _$BranchCopyWithImpl<Branch>(this as Bra
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Branch&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.cityId, cityId) || other.cityId == cityId)&&(identical(other.districtId, districtId) || other.districtId == districtId)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.today, today) || other.today == today)&&(identical(other.isTemporarilyClosed, isTemporarilyClosed) || other.isTemporarilyClosed == isTemporarilyClosed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Branch&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.description, description) || other.description == description)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.cityId, cityId) || other.cityId == cityId)&&(identical(other.districtId, districtId) || other.districtId == districtId)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.today, today) || other.today == today)&&(identical(other.isTemporarilyClosed, isTemporarilyClosed) || other.isTemporarilyClosed == isTemporarilyClosed));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,address,photoUrl,cityId,districtId,latitude,longitude,today,isTemporarilyClosed);
+int get hashCode => Object.hash(runtimeType,id,name,address,description,photoUrl,rating,cityId,districtId,latitude,longitude,today,isTemporarilyClosed);
 
 @override
 String toString() {
-  return 'Branch(id: $id, name: $name, address: $address, photoUrl: $photoUrl, cityId: $cityId, districtId: $districtId, latitude: $latitude, longitude: $longitude, today: $today, isTemporarilyClosed: $isTemporarilyClosed)';
+  return 'Branch(id: $id, name: $name, address: $address, description: $description, photoUrl: $photoUrl, rating: $rating, cityId: $cityId, districtId: $districtId, latitude: $latitude, longitude: $longitude, today: $today, isTemporarilyClosed: $isTemporarilyClosed)';
 }
 
 
@@ -51,11 +52,11 @@ abstract mixin class $BranchCopyWith<$Res>  {
   factory $BranchCopyWith(Branch value, $Res Function(Branch) _then) = _$BranchCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String address, String? photoUrl, String? cityId, String? districtId, double? latitude, double? longitude, TodayHours? today, bool isTemporarilyClosed
+ String id, String name, String address, String? description, String? photoUrl, BranchRating? rating, String? cityId, String? districtId, double? latitude, double? longitude, TodayHours? today, bool isTemporarilyClosed
 });
 
 
-$TodayHoursCopyWith<$Res>? get today;
+$BranchRatingCopyWith<$Res>? get rating;$TodayHoursCopyWith<$Res>? get today;
 
 }
 /// @nodoc
@@ -68,13 +69,15 @@ class _$BranchCopyWithImpl<$Res>
 
 /// Create a copy of Branch
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? address = null,Object? photoUrl = freezed,Object? cityId = freezed,Object? districtId = freezed,Object? latitude = freezed,Object? longitude = freezed,Object? today = freezed,Object? isTemporarilyClosed = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? address = null,Object? description = freezed,Object? photoUrl = freezed,Object? rating = freezed,Object? cityId = freezed,Object? districtId = freezed,Object? latitude = freezed,Object? longitude = freezed,Object? today = freezed,Object? isTemporarilyClosed = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
-as String,photoUrl: freezed == photoUrl ? _self.photoUrl : photoUrl // ignore: cast_nullable_to_non_nullable
-as String?,cityId: freezed == cityId ? _self.cityId : cityId // ignore: cast_nullable_to_non_nullable
+as String,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String?,photoUrl: freezed == photoUrl ? _self.photoUrl : photoUrl // ignore: cast_nullable_to_non_nullable
+as String?,rating: freezed == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
+as BranchRating?,cityId: freezed == cityId ? _self.cityId : cityId // ignore: cast_nullable_to_non_nullable
 as String?,districtId: freezed == districtId ? _self.districtId : districtId // ignore: cast_nullable_to_non_nullable
 as String?,latitude: freezed == latitude ? _self.latitude : latitude // ignore: cast_nullable_to_non_nullable
 as double?,longitude: freezed == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
@@ -84,6 +87,18 @@ as bool,
   ));
 }
 /// Create a copy of Branch
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BranchRatingCopyWith<$Res>? get rating {
+    if (_self.rating == null) {
+    return null;
+  }
+
+  return $BranchRatingCopyWith<$Res>(_self.rating!, (value) {
+    return _then(_self.copyWith(rating: value));
+  });
+}/// Create a copy of Branch
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -177,10 +192,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String address,  String? photoUrl,  String? cityId,  String? districtId,  double? latitude,  double? longitude,  TodayHours? today,  bool isTemporarilyClosed)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String address,  String? description,  String? photoUrl,  BranchRating? rating,  String? cityId,  String? districtId,  double? latitude,  double? longitude,  TodayHours? today,  bool isTemporarilyClosed)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Branch() when $default != null:
-return $default(_that.id,_that.name,_that.address,_that.photoUrl,_that.cityId,_that.districtId,_that.latitude,_that.longitude,_that.today,_that.isTemporarilyClosed);case _:
+return $default(_that.id,_that.name,_that.address,_that.description,_that.photoUrl,_that.rating,_that.cityId,_that.districtId,_that.latitude,_that.longitude,_that.today,_that.isTemporarilyClosed);case _:
   return orElse();
 
 }
@@ -198,10 +213,10 @@ return $default(_that.id,_that.name,_that.address,_that.photoUrl,_that.cityId,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String address,  String? photoUrl,  String? cityId,  String? districtId,  double? latitude,  double? longitude,  TodayHours? today,  bool isTemporarilyClosed)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String address,  String? description,  String? photoUrl,  BranchRating? rating,  String? cityId,  String? districtId,  double? latitude,  double? longitude,  TodayHours? today,  bool isTemporarilyClosed)  $default,) {final _that = this;
 switch (_that) {
 case _Branch():
-return $default(_that.id,_that.name,_that.address,_that.photoUrl,_that.cityId,_that.districtId,_that.latitude,_that.longitude,_that.today,_that.isTemporarilyClosed);case _:
+return $default(_that.id,_that.name,_that.address,_that.description,_that.photoUrl,_that.rating,_that.cityId,_that.districtId,_that.latitude,_that.longitude,_that.today,_that.isTemporarilyClosed);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -218,10 +233,10 @@ return $default(_that.id,_that.name,_that.address,_that.photoUrl,_that.cityId,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String address,  String? photoUrl,  String? cityId,  String? districtId,  double? latitude,  double? longitude,  TodayHours? today,  bool isTemporarilyClosed)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String address,  String? description,  String? photoUrl,  BranchRating? rating,  String? cityId,  String? districtId,  double? latitude,  double? longitude,  TodayHours? today,  bool isTemporarilyClosed)?  $default,) {final _that = this;
 switch (_that) {
 case _Branch() when $default != null:
-return $default(_that.id,_that.name,_that.address,_that.photoUrl,_that.cityId,_that.districtId,_that.latitude,_that.longitude,_that.today,_that.isTemporarilyClosed);case _:
+return $default(_that.id,_that.name,_that.address,_that.description,_that.photoUrl,_that.rating,_that.cityId,_that.districtId,_that.latitude,_that.longitude,_that.today,_that.isTemporarilyClosed);case _:
   return null;
 
 }
@@ -233,13 +248,16 @@ return $default(_that.id,_that.name,_that.address,_that.photoUrl,_that.cityId,_t
 
 
 class _Branch extends Branch {
-  const _Branch({required this.id, required this.name, required this.address, this.photoUrl, this.cityId, this.districtId, this.latitude, this.longitude, this.today, required this.isTemporarilyClosed}): super._();
+  const _Branch({required this.id, required this.name, required this.address, this.description, this.photoUrl, this.rating, this.cityId, this.districtId, this.latitude, this.longitude, this.today, required this.isTemporarilyClosed}): super._();
   
 
 @override final  String id;
 @override final  String name;
 @override final  String address;
+@override final  String? description;
 @override final  String? photoUrl;
+/// Null while nobody has rated the branch.
+@override final  BranchRating? rating;
 /// Where it stands, for the branch picker's city and district filters.
 /// No district when its city is not split into districts.
 @override final  String? cityId;
@@ -263,16 +281,16 @@ _$BranchCopyWith<_Branch> get copyWith => __$BranchCopyWithImpl<_Branch>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Branch&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.cityId, cityId) || other.cityId == cityId)&&(identical(other.districtId, districtId) || other.districtId == districtId)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.today, today) || other.today == today)&&(identical(other.isTemporarilyClosed, isTemporarilyClosed) || other.isTemporarilyClosed == isTemporarilyClosed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Branch&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.description, description) || other.description == description)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.cityId, cityId) || other.cityId == cityId)&&(identical(other.districtId, districtId) || other.districtId == districtId)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.today, today) || other.today == today)&&(identical(other.isTemporarilyClosed, isTemporarilyClosed) || other.isTemporarilyClosed == isTemporarilyClosed));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,address,photoUrl,cityId,districtId,latitude,longitude,today,isTemporarilyClosed);
+int get hashCode => Object.hash(runtimeType,id,name,address,description,photoUrl,rating,cityId,districtId,latitude,longitude,today,isTemporarilyClosed);
 
 @override
 String toString() {
-  return 'Branch(id: $id, name: $name, address: $address, photoUrl: $photoUrl, cityId: $cityId, districtId: $districtId, latitude: $latitude, longitude: $longitude, today: $today, isTemporarilyClosed: $isTemporarilyClosed)';
+  return 'Branch(id: $id, name: $name, address: $address, description: $description, photoUrl: $photoUrl, rating: $rating, cityId: $cityId, districtId: $districtId, latitude: $latitude, longitude: $longitude, today: $today, isTemporarilyClosed: $isTemporarilyClosed)';
 }
 
 
@@ -283,11 +301,11 @@ abstract mixin class _$BranchCopyWith<$Res> implements $BranchCopyWith<$Res> {
   factory _$BranchCopyWith(_Branch value, $Res Function(_Branch) _then) = __$BranchCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String address, String? photoUrl, String? cityId, String? districtId, double? latitude, double? longitude, TodayHours? today, bool isTemporarilyClosed
+ String id, String name, String address, String? description, String? photoUrl, BranchRating? rating, String? cityId, String? districtId, double? latitude, double? longitude, TodayHours? today, bool isTemporarilyClosed
 });
 
 
-@override $TodayHoursCopyWith<$Res>? get today;
+@override $BranchRatingCopyWith<$Res>? get rating;@override $TodayHoursCopyWith<$Res>? get today;
 
 }
 /// @nodoc
@@ -300,13 +318,15 @@ class __$BranchCopyWithImpl<$Res>
 
 /// Create a copy of Branch
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? address = null,Object? photoUrl = freezed,Object? cityId = freezed,Object? districtId = freezed,Object? latitude = freezed,Object? longitude = freezed,Object? today = freezed,Object? isTemporarilyClosed = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? address = null,Object? description = freezed,Object? photoUrl = freezed,Object? rating = freezed,Object? cityId = freezed,Object? districtId = freezed,Object? latitude = freezed,Object? longitude = freezed,Object? today = freezed,Object? isTemporarilyClosed = null,}) {
   return _then(_Branch(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
-as String,photoUrl: freezed == photoUrl ? _self.photoUrl : photoUrl // ignore: cast_nullable_to_non_nullable
-as String?,cityId: freezed == cityId ? _self.cityId : cityId // ignore: cast_nullable_to_non_nullable
+as String,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String?,photoUrl: freezed == photoUrl ? _self.photoUrl : photoUrl // ignore: cast_nullable_to_non_nullable
+as String?,rating: freezed == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
+as BranchRating?,cityId: freezed == cityId ? _self.cityId : cityId // ignore: cast_nullable_to_non_nullable
 as String?,districtId: freezed == districtId ? _self.districtId : districtId // ignore: cast_nullable_to_non_nullable
 as String?,latitude: freezed == latitude ? _self.latitude : latitude // ignore: cast_nullable_to_non_nullable
 as double?,longitude: freezed == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
@@ -317,6 +337,18 @@ as bool,
 }
 
 /// Create a copy of Branch
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BranchRatingCopyWith<$Res>? get rating {
+    if (_self.rating == null) {
+    return null;
+  }
+
+  return $BranchRatingCopyWith<$Res>(_self.rating!, (value) {
+    return _then(_self.copyWith(rating: value));
+  });
+}/// Create a copy of Branch
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -592,5 +624,269 @@ String toString() {
 
 
 
+
+/// @nodoc
+mixin _$BranchRating {
+
+/// The average of the stars, 0 to 5.
+ double get average;/// How many guests have rated it.
+ int get count;
+/// Create a copy of BranchRating
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$BranchRatingCopyWith<BranchRating> get copyWith => _$BranchRatingCopyWithImpl<BranchRating>(this as BranchRating, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BranchRating&&(identical(other.average, average) || other.average == average)&&(identical(other.count, count) || other.count == count));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,average,count);
+
+@override
+String toString() {
+  return 'BranchRating(average: $average, count: $count)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $BranchRatingCopyWith<$Res>  {
+  factory $BranchRatingCopyWith(BranchRating value, $Res Function(BranchRating) _then) = _$BranchRatingCopyWithImpl;
+@useResult
+$Res call({
+ double average, int count
+});
+
+
+
+
+}
+/// @nodoc
+class _$BranchRatingCopyWithImpl<$Res>
+    implements $BranchRatingCopyWith<$Res> {
+  _$BranchRatingCopyWithImpl(this._self, this._then);
+
+  final BranchRating _self;
+  final $Res Function(BranchRating) _then;
+
+/// Create a copy of BranchRating
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? average = null,Object? count = null,}) {
+  return _then(_self.copyWith(
+average: null == average ? _self.average : average // ignore: cast_nullable_to_non_nullable
+as double,count: null == count ? _self.count : count // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [BranchRating].
+extension BranchRatingPatterns on BranchRating {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _BranchRating value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _BranchRating() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _BranchRating value)  $default,){
+final _that = this;
+switch (_that) {
+case _BranchRating():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _BranchRating value)?  $default,){
+final _that = this;
+switch (_that) {
+case _BranchRating() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double average,  int count)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _BranchRating() when $default != null:
+return $default(_that.average,_that.count);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double average,  int count)  $default,) {final _that = this;
+switch (_that) {
+case _BranchRating():
+return $default(_that.average,_that.count);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double average,  int count)?  $default,) {final _that = this;
+switch (_that) {
+case _BranchRating() when $default != null:
+return $default(_that.average,_that.count);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _BranchRating implements BranchRating {
+  const _BranchRating({required this.average, required this.count});
+  
+
+/// The average of the stars, 0 to 5.
+@override final  double average;
+/// How many guests have rated it.
+@override final  int count;
+
+/// Create a copy of BranchRating
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$BranchRatingCopyWith<_BranchRating> get copyWith => __$BranchRatingCopyWithImpl<_BranchRating>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BranchRating&&(identical(other.average, average) || other.average == average)&&(identical(other.count, count) || other.count == count));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,average,count);
+
+@override
+String toString() {
+  return 'BranchRating(average: $average, count: $count)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$BranchRatingCopyWith<$Res> implements $BranchRatingCopyWith<$Res> {
+  factory _$BranchRatingCopyWith(_BranchRating value, $Res Function(_BranchRating) _then) = __$BranchRatingCopyWithImpl;
+@override @useResult
+$Res call({
+ double average, int count
+});
+
+
+
+
+}
+/// @nodoc
+class __$BranchRatingCopyWithImpl<$Res>
+    implements _$BranchRatingCopyWith<$Res> {
+  __$BranchRatingCopyWithImpl(this._self, this._then);
+
+  final _BranchRating _self;
+  final $Res Function(_BranchRating) _then;
+
+/// Create a copy of BranchRating
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? average = null,Object? count = null,}) {
+  return _then(_BranchRating(
+average: null == average ? _self.average : average // ignore: cast_nullable_to_non_nullable
+as double,count: null == count ? _self.count : count // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
 
 // dart format on

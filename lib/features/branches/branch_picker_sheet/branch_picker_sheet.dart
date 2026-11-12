@@ -9,6 +9,7 @@ import '../../../domain/state/branches_state.dart';
 import '../../../domain/state/cities_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../shared_widgets/branch_select_tile.dart';
+import '../../shared_widgets/load_error_row.dart';
 import '../branch_filter.dart';
 import '../widgets/branch_area_filter.dart';
 
@@ -53,7 +54,7 @@ class _BranchPickerSheetState extends ConsumerState<BranchPickerSheet> {
 
     if (cities == null || branches == null) {
       if (citiesState.hasError || branchesState.hasError) {
-        return _Error(
+        return LoadErrorRow(
           onRetry: () {
             if (citiesState.hasError) ref.invalidate(citiesControllerProvider);
             if (branchesState.hasError) {
@@ -179,37 +180,6 @@ class _Loading extends StatelessWidget {
       child: Center(
         child: CircularProgressIndicator(color: context.colors.brandPrimary),
       ),
-    );
-  }
-}
-
-class _Error extends StatelessWidget {
-  const _Error({required this.onRetry});
-
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final colors = context.colors;
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            l10n.errorGeneric,
-            style: DSTypography.body.copyWith(color: colors.textSecondary),
-          ),
-        ),
-        const SizedBox(width: DSSpacing.sm),
-        TextButton(
-          onPressed: onRetry,
-          style: TextButton.styleFrom(
-            foregroundColor: colors.brandPrimary,
-            textStyle: DSTypography.bodySemibold,
-          ),
-          child: Text(l10n.retry),
-        ),
-      ],
     );
   }
 }

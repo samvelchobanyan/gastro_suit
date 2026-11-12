@@ -31,14 +31,7 @@ void main() {
 
     test('a working day', () {
       final branch = BranchDto.fromJson(
-        json(
-          today: {
-            'state': 'hours',
-            'open': '08:00',
-            'close': '23:00',
-            'openNow': true,
-          },
-        ),
+        json(today: {'open': '08:00', 'close': '23:00', 'openNow': true}),
       ).toDomain(ru);
       expect(
         branch.today,
@@ -49,7 +42,7 @@ void main() {
 
     test('a day off is closed', () {
       final branch = BranchDto.fromJson(
-        json(today: {'state': 'closed'}),
+        json(today: {'open': null, 'close': null, 'openNow': false}),
       ).toDomain(ru);
       expect(branch.today, const TodayHours.closed());
       expect(branch.isOpenNow, isFalse);
@@ -58,23 +51,38 @@ void main() {
     test('temporarily closed wins over the hours', () {
       final branch = BranchDto.fromJson(
         json(
-          today: {
-            'state': 'hours',
-            'open': '08:00',
-            'close': '23:00',
-            'openNow': true,
-          },
+          today: {'open': '08:00', 'close': '23:00', 'openNow': true},
           closed: true,
         ),
       ).toDomain(ru);
       expect(branch.isOpenNow, isFalse);
     });
 
-    test('an unknown state shows no hours', () {
+    test('only one of the two times shows no hours', () {
       final branch = BranchDto.fromJson(
-        json(today: {'state': 'holiday'}),
+        json(today: {'open': '08:00', 'close': null, 'openNow': true}),
       ).toDomain(ru);
       expect(branch.today, isNull);
+    });
+
+    test('description and rating', () {
+      final branch = BranchDto.fromJson({
+        ...json(),
+        'description': {'en': 'Open around the clock'},
+        'rating': {'average': 4.7, 'count': 218},
+      }).toDomain(ru);
+      // No Russian text: the instance's default language.
+      expect(branch.description, 'Open around the clock');
+      expect(branch.rating, const BranchRating(average: 4.7, count: 218));
+    });
+
+    test('nobody has rated the branch', () {
+      final branch = BranchDto.fromJson({
+        ...json(),
+        'rating': null,
+      }).toDomain(ru);
+      expect(branch.description, isNull);
+      expect(branch.rating, isNull);
     });
   });
 

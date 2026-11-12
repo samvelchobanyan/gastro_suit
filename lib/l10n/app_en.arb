@@ -97,5 +97,51 @@
         "example": "1.2"
       }
     }
+  },
+  "featuredProducts": "Featured products",
+  "@featuredProducts": {
+    "description": "Order tab: title of the featured products row"
+  },
+  "menuTitle": "Menu",
+  "@menuTitle": {
+    "description": "Title over a branch's menu"
+  },
+  "menuEmpty": "The menu is empty",
+  "@menuEmpty": {
+    "description": "Shown instead of the menu when the branch offers nothing"
+  },
+  "checkoutWithTotal": "Checkout · {total}",
+  "@checkoutWithTotal": {
+    "description": "Branch screen: the button that opens the cart, with its total, e.g. Checkout · ֏1,450",
+    "placeholders": {
+      "total": {
+        "type": "String",
+        "example": "֏1,450"
+      }
+    }
+  },
+  "addToCart": "Add to cart",
+  "@addToCart": {
+    "description": "Accessibility label of the plus on a product card"
+  },
+  "quantityDecrease": "Decrease quantity",
+  "@quantityDecrease": {
+    "description": "Accessibility label of the minus of a quantity stepper"
+  },
+  "quantityIncrease": "Increase quantity",
+  "@quantityIncrease": {
+    "description": "Accessibility label of the plus of a quantity stepper"
+  },
+  "back": "Back",
+  "@back": {
+    "description": "Accessibility label of a back button"
+  },
+  "rateBranch": "Rate the branch",
+  "@rateBranch": {
+    "description": "Branch screen: accessibility label of the button that opens the feedback sheet"
+  },
+  "showOnMap": "Show on map",
+  "@showOnMap": {
+    "description": "Branch screen: accessibility label of the button that opens the map"
   }
 }
