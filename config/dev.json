@@ -1,6 +1,6 @@
 {
   "API_BASE_URL": "http://37.157.212.21:3000/api/v1",
-  "RESTAURANT_ID": "270d6a87-efab-4058-8dfb-a5d84152c108",
+  "RESTAURANT_ID": "69244d9d-58f7-46af-a0fb-b240a19dee87",
   "MAP_TILE_URL": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
   "MAP_ATTRIBUTION": "© OpenStreetMap"
 }
