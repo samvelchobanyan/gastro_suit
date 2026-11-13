@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../ds_extensions.dart';
 
-/// Button sizes; the handoff's others (`lg`, `md`, `xs`) are added when used.
-enum DSButtonSize { sm }
+/// Button sizes: `sm` is 40 high, `md` 48. The handoff's others (`lg`,
+/// `xs`) are added when used.
+enum DSButtonSize { sm, md }
 
 /// How a button is painted. The handoff's `tertiary` and `destructive` are
 /// added when a screen needs them.
@@ -55,6 +56,11 @@ class DSButton extends StatelessWidget {
         DSSizes.buttonHeightSm,
         DSSpacing.base,
         DSTypography.bodySemibold,
+      ),
+      DSButtonSize.md => (
+        DSSizes.buttonHeightMd,
+        DSSpacing.base,
+        DSTypography.bodyLgSemibold,
       ),
     };
     final (

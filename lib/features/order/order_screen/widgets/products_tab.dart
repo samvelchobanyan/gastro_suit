@@ -8,6 +8,7 @@ import '../../../../domain/state/menu_state.dart';
 import '../../../menu/menu_block/menu_block.dart';
 import '../../../menu/menu_block/menu_block_skeleton.dart';
 import '../../../shared_widgets/load_error_row.dart';
+import 'cart_bar.dart';
 import 'featured_products_rail.dart';
 
 /// The Order screen's Products view: the active branch's featured products
@@ -18,6 +19,8 @@ class ProductsTab extends ConsumerWidget {
   /// The menu already on screen stays until the new one arrives; a failed
   /// refresh keeps it.
   Future<void> _refresh(WidgetRef ref, String branchId) async {
+    // Not `ref.refresh`: its result must be used, and here there is no use
+    // for it beyond waiting.
     ref.invalidate(menuProvider(branchId));
     try {
       await ref.read(menuProvider(branchId).future);
@@ -46,16 +49,25 @@ class ProductsTab extends ConsumerWidget {
       );
     }
 
-    return RefreshIndicator(
-      color: context.colors.brandPrimary,
-      onRefresh: () => _refresh(ref, branch.id),
-      child: CustomScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        slivers: [
-          SliverToBoxAdapter(child: FeaturedProductsRail(branchId: branch.id)),
-          MenuBlock(branchId: branch.id),
-        ],
-      ),
+    return Stack(
+      children: [
+        RefreshIndicator(
+          color: context.colors.brandPrimary,
+          onRefresh: () => _refresh(ref, branch.id),
+          child: CustomScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            slivers: [
+              SliverToBoxAdapter(
+                child: FeaturedProductsRail(branchId: branch.id),
+              ),
+              MenuBlock(branchId: branch.id),
+              // Room for the last products to scroll clear of the bar.
+              const SliverToBoxAdapter(child: SizedBox(height: CartBar.height)),
+            ],
+          ),
+        ),
+        const Align(alignment: Alignment.bottomCenter, child: CartBar()),
+      ],
     );
   }
 }

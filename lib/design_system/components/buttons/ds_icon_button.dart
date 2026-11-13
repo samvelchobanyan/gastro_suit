@@ -15,7 +15,17 @@ enum DSIconButtonVariant {
 /// the 48 touch minimum, so leave room around them.
 enum DSIconButtonSize { xs, sm }
 
-/// A round button with only an icon (handoff `IconButton`).
+/// The outline of an icon button.
+enum DSIconButtonShape {
+  circle,
+
+  /// A square with the corners of an input (the handoff's `radius="input"`),
+  /// for a button that stands next to a field.
+  rounded,
+}
+
+/// A button with only an icon, round unless told otherwise (handoff
+/// `IconButton`).
 class DSIconButton extends StatefulWidget {
   const DSIconButton({
     super.key,
@@ -24,6 +34,7 @@ class DSIconButton extends StatefulWidget {
     required this.semanticLabel,
     required this.variant,
     required this.size,
+    this.shape = DSIconButtonShape.circle,
   });
 
   final IconData icon;
@@ -33,6 +44,7 @@ class DSIconButton extends StatefulWidget {
   final String semanticLabel;
   final DSIconButtonVariant variant;
   final DSIconButtonSize size;
+  final DSIconButtonShape shape;
 
   @override
   State<DSIconButton> createState() => _DSIconButtonState();
@@ -76,7 +88,16 @@ class _DSIconButtonState extends State<DSIconButton> {
           width: diameter,
           height: diameter,
           alignment: Alignment.center,
-          decoration: BoxDecoration(color: background, shape: BoxShape.circle),
+          decoration: switch (widget.shape) {
+            DSIconButtonShape.circle => BoxDecoration(
+              color: background,
+              shape: BoxShape.circle,
+            ),
+            DSIconButtonShape.rounded => BoxDecoration(
+              color: background,
+              borderRadius: BorderRadius.circular(DSRadius.input),
+            ),
+          },
           child: Icon(widget.icon, size: iconSize, color: foreground),
         ),
       ),

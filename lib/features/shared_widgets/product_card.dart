@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../design_system/components/buttons/ds_icon_button.dart';
 import '../../design_system/components/image/ds_network_image.dart';
 import '../../design_system/ds_extensions.dart';
 import '../../domain/entities/product.dart';
+import '../../l10n/generated/app_localizations.dart';
 import 'price_text.dart';
-import 'product_quantity_button.dart';
 
 /// A product in a sideways rail (handoff `ProductVerticalCard`): a rounded
 /// photo with the name and the price under it. As wide as its parent makes
@@ -13,24 +14,15 @@ import 'product_quantity_button.dart';
 ///
 /// The menu grid has its own card, `MenuProductCard`.
 class ProductCard extends StatelessWidget {
-  const ProductCard({
-    super.key,
-    required this.product,
-    this.onTap,
-    this.quantity = 0,
-    this.onQuantityChanged,
-  });
+  const ProductCard({super.key, required this.product, this.onTap, this.onAdd});
 
   final Product product;
   final VoidCallback? onTap;
 
-  /// How many of the product the cart holds.
-  final int quantity;
-
-  /// With a handler the photo carries the add control: a plus, or a stepper
-  /// once [quantity] is above zero. A product the branch has stopped never
-  /// shows it.
-  final ValueChanged<int>? onQuantityChanged;
+  /// With a handler the photo carries a plus that adds the product to the
+  /// cart. The plus stays a plus: what the cart holds is seen in the cart.
+  /// A product the branch has stopped never shows it.
+  final VoidCallback? onAdd;
 
   /// The height of a card [width] wide: its square photo and two lines of
   /// text, at the user's text size.
@@ -40,9 +32,8 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final onQuantityChanged = product.isAvailable
-        ? this.onQuantityChanged
-        : null;
+    final l10n = AppLocalizations.of(context);
+    final onAdd = product.isAvailable ? this.onAdd : null;
 
     final card = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,14 +44,16 @@ class ProductCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(DSRadius.card),
               child: ProductPhoto(url: product.imageUrl),
             ),
-            if (onQuantityChanged != null)
+            if (onAdd != null)
               PositionedDirectional(
                 end: DSSpacing.xs,
                 bottom: DSSpacing.xs,
-                child: ProductQuantityButton(
-                  quantity: quantity,
-                  onChanged: onQuantityChanged,
-                  addButtonSize: DSIconButtonSize.sm,
+                child: DSIconButton(
+                  icon: PhosphorIcons.plus(),
+                  semanticLabel: l10n.addToCart,
+                  variant: DSIconButtonVariant.filled,
+                  size: DSIconButtonSize.sm,
+                  onPressed: onAdd,
                 ),
               ),
           ],

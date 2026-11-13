@@ -2,10 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/auth/auth_status.dart';
+import '../../../core/navigation/app_routes.dart';
 import '../../../design_system/ds_extensions.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../shared_widgets/error_text.dart';
 import 'login_controller.dart';
+
+/// For an action that needs an account: a guest is sent to the sign-in
+/// screen. True when the user is signed in, at once or on coming back from
+/// it; false when they came back without signing in.
+Future<bool> ensureSignedIn(BuildContext context, WidgetRef ref) async {
+  if (ref.read(authStatusProvider) == AuthStatus.signedIn) return true;
+  await context.push(AppRoutes.login);
+  if (!context.mounted) return false;
+  return ref.read(authStatusProvider) == AuthStatus.signedIn;
+}
 
 /// Temporary sign-in screen built from stock widgets until the design has one.
 /// The logic behind it (controller, repository, tokens) is the real one.

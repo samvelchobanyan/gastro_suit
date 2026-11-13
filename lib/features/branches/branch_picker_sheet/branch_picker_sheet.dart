@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/network/app_exception.dart';
 import '../../../design_system/components/buttons/ds_button.dart';
 import '../../../design_system/components/overlays/ds_bottom_sheet.dart';
 import '../../../design_system/ds_extensions.dart';
 import '../../../domain/state/active_branch_state.dart';
 import '../../../domain/state/branches_state.dart';
+import '../../../domain/state/cart_state.dart';
 import '../../../domain/state/cities_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
+import '../../cart/replace_cart_dialog/replace_cart_dialog.dart';
 import '../../shared_widgets/branch_select_tile.dart';
+import '../../shared_widgets/error_text.dart';
 import '../../shared_widgets/load_error_row.dart';
 import '../branch_filter.dart';
 import '../widgets/branch_area_filter.dart';
@@ -39,7 +43,32 @@ class _BranchPickerSheetState extends ConsumerState<BranchPickerSheet> {
   String? _districtId;
   String? _markedId;
 
-  void _choose(String branchId) {
+  /// The cart is being cleared for the change of branch.
+  var _clearing = false;
+
+  /// Why the cart could not be cleared; the branch stays as it was.
+  String? _error;
+
+  /// Makes [branchId] the active branch. A cart with products of another
+  /// branch does not go along: the user is asked, and it is cleared first.
+  Future<void> _choose(String branchId) async {
+    setState(() => _error = null);
+    if (!await confirmReplaceCart(context, ref, branchId: branchId)) return;
+    if (!mounted) return;
+    if (cartWouldBeLost(ref.read(cartProvider).value, branchId)) {
+      setState(() => _clearing = true);
+      try {
+        await ref.read(cartProvider.notifier).clear();
+      } on AppException catch (error) {
+        if (!mounted) return;
+        setState(() {
+          _clearing = false;
+          _error = errorText(context, error);
+        });
+        return;
+      }
+      if (!mounted) return;
+    }
     ref.read(branchPickProvider.notifier).pick(branchId);
     Navigator.pop(context);
   }
@@ -101,10 +130,20 @@ class _BranchPickerSheetState extends ConsumerState<BranchPickerSheet> {
           ),
         ),
         const SizedBox(height: DSSpacing.base),
+        if (_error case final error?) ...[
+          Text(
+            error,
+            style: DSTypography.bodySm.copyWith(
+              color: context.colors.textError,
+            ),
+          ),
+          const SizedBox(height: DSSpacing.sm),
+        ],
         DSButton(
           label: AppLocalizations.of(context).choose,
           size: DSButtonSize.sm,
           fullWidth: true,
+          loading: _clearing,
           onPressed: () {
             if (markedId != null) _choose(markedId);
           },

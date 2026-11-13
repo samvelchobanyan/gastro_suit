@@ -321,6 +321,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{star} of 5'**
   String ratingStar(int star);
+
+  /// Product sheet: the button that adds the product to the cart, with what the chosen quantity costs, e.g. Add · ֏1,450
+  ///
+  /// In en, this message translates to:
+  /// **'Add · {total}'**
+  String addWithTotal(String total);
+
+  /// A portion in grams, e.g. 120 g
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} g'**
+  String portionGrams(String amount);
+
+  /// A portion in kilograms, e.g. 1.5 kg
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} kg'**
+  String portionKilograms(String amount);
+
+  /// A portion in millilitres, e.g. 300 ml
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} ml'**
+  String portionMilliliters(String amount);
+
+  /// A portion in litres, e.g. 1 l
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} l'**
+  String portionLiters(String amount);
+
+  /// Button that backs out of a question
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// Title of the question asked before the branch changes while the cart holds products: on choosing another branch, or on adding a product of another branch
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the cart?'**
+  String get cartReplaceTitle;
+
+  /// The sentence under cartReplaceTitle
+  ///
+  /// In en, this message translates to:
+  /// **'The cart holds products of one branch only. Changing the branch will clear it.'**
+  String get cartReplaceMessage;
+
+  /// Button that agrees to clearing the cart
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get cartReplaceConfirm;
+
+  /// Title of the cart sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Basket'**
+  String get cartTitle;
+
+  /// Accessibility label of the cart button
+  ///
+  /// In en, this message translates to:
+  /// **'Open the basket'**
+  String get cartOpen;
+
+  /// Order tab: label over the branch field of the cart bar
+  ///
+  /// In en, this message translates to:
+  /// **'Branch'**
+  String get cartBarBranch;
+
+  /// Cart sheet: title of the part with the branch; shown in capitals
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get cartSectionBranch;
+
+  /// Cart sheet: title of the part with the pickup time; shown in capitals
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get cartSectionTime;
+
+  /// Cart sheet: title of the list of products with how many pieces it holds; shown in capitals
+  ///
+  /// In en, this message translates to:
+  /// **'Your order ({count})'**
+  String cartSectionOrder(int count);
+
+  /// Cart sheet: title of the part with the tip; shown in capitals
+  ///
+  /// In en, this message translates to:
+  /// **'Tip'**
+  String get cartSectionTip;
+
+  /// Cart sheet: shown in place of the products when there are none
+  ///
+  /// In en, this message translates to:
+  /// **'Your basket is empty'**
+  String get cartEmpty;
+
+  /// Cart sheet: the link under the products that goes back to the menu
+  ///
+  /// In en, this message translates to:
+  /// **'Add products'**
+  String get cartAddProducts;
+
+  /// Accessibility label of the button that removes a line of the cart
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from the basket'**
+  String get cartLineRemove;
+
+  /// Cart sheet: under a line the branch cannot make
+  ///
+  /// In en, this message translates to:
+  /// **'Not available at this branch now'**
+  String get cartLineUnavailable;
+
+  /// Cart sheet: the first of the pickup times, as soon as possible
+  ///
+  /// In en, this message translates to:
+  /// **'ASAP'**
+  String get cartTimeAsap;
+
+  /// Cart sheet: the first of the tip amounts
+  ///
+  /// In en, this message translates to:
+  /// **'No tip'**
+  String get cartTipNone;
+
+  /// Cart sheet: the last of the tip amounts, opens a field for an amount of the user's own
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get cartTipOther;
+
+  /// Cart sheet: placeholder of the field for a tip of the user's own
+  ///
+  /// In en, this message translates to:
+  /// **'Enter tip amount'**
+  String get cartTipHint;
+
+  /// Cart sheet: the button that places the order, with the cart's total, e.g. Order · ֏1,450
+  ///
+  /// In en, this message translates to:
+  /// **'Order · {total}'**
+  String orderWithTotal(String total);
 }
 
 class _AppLocalizationsDelegate

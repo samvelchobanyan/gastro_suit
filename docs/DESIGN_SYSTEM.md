@@ -77,7 +77,10 @@ the hero scrim). A role set is an instance with values from the palette; there i
 | `textOnBrand` | `accentContrast` |
 
 Roles added for handoff components that use raw palette values: `skeletonBase` (gray 100)
-and `skeletonHighlight` (gray 200) for `Skeleton`.
+and `skeletonHighlight` (gray 200) for `Skeleton`; `handleOnDark` (white at 40%) for a
+sheet's handle lying over a photo (`ProductOverlay`). `glassBg` (white at 64%) and
+`glassBorder` (white at 24%) are the handoff's `--glass-bg` and `--glass-border`: a
+frosted surface floating over content, blurred by `DSSizes.glassBlur`.
 
 `buildAppTheme(colors)` builds the `ThemeData` from one role set: the set itself as an
 extension (for our widgets), and Material's colour scheme and text theme (for stock
@@ -159,6 +162,9 @@ with real content (see §7).
   `textTertiary`, since the chip is not disabled.
 - `--alpha-white-40`: referenced by the handoff (ProductOverlay) but missing from its
   tokens; added as `DSPalette.alphaWhite40`.
+- `ProductOverlay` paints with palette greys: the fill under the photo (`gray-900`) is
+  `bgInverse`; the description, the portion and an unchosen option's name (`gray-600`)
+  are `textTertiary`.
 - Components that paint with palette greys take the role of the same value:
   `ProductMenuCard`'s `gray-900` and `gray-0` are `bgInverse` and `textInverse`;
   `Stepper`'s `gray-50` is `bgCanvas`.
@@ -178,15 +184,21 @@ with real content (see §7).
 | `DSNetworkImage` | — | A cached network picture; a recessed fill while loading, with an image icon on error or without an address |
 | `DSStatusPill` | `StatusPill` | A short state label on a tonal capsule (Open / Closed); tones `success`, `error` so far — the handoff's `warning` and `neutral` are added when used |
 | `DSSectionHeader` | `SectionHeader` | A section title (`h3`); the handoff's optional action button is used by no page, so it is not built |
+| `showDSTallSheet`, `DSSheetHandle` | the frame of `ProductOverlay` and `BasketOverlay` | A sheet over the whole app that starts 32 under the status bar, with 16 top corners. Its content scrolls with the controller it is given; a drag down from the top of the content, or a fling, closes it. The handle is drawn by the content: on the surface, or over a photo |
+| `DSTimePicker` | `TimePicker` | A row of pills, 40 high, one picked; as wide as its pills, the screen scrolls it sideways. Keeps no time of its own. The handoff's label and disabled slots are added when used |
+| `DSTipSelector` | `TipSelector` | One tile of a row of amounts, at least 80 wide, in the brand colour when chosen |
+| `DSAmountField` | `Input`, 40 high | A one-line field for a whole amount: digits only, the currency sign at its end |
+| `DSDialog` | `Dialog` | A centred card, up to 320 wide, with a question: a title, a sentence, then cancel (outline) and confirm (primary) side by side; opened with `showDSConfirmDialog`, which answers true or false. The handoff's icon and destructive tone are added when used |
 | `DSBottomSheet` | `BottomSheet` | The frame every sheet shares: handle, title with a close button, scrolling content; up to 88% of the screen; opened with `showDSBottomSheet`. The content stays above the keyboard |
 | `DSDropdown` | `Dropdown` | A 40-high select box; the list opens under the field. Drawn here, placed and closed by Flutter's `RawMenuAnchor` |
 | `DSChipTabs` | `TabBar`, size `xs` | A sideways-scrolling row of chips, one selected. When the selection moves to a chip off the row's edge, the row scrolls just far enough to show it |
 | `DSSegmentedTabs` | `TabBar`, size `big` | A full-width switch between views of a screen: equal segments with an icon and a label on a recessed track, and an indicator that slides under the selected one. A separate component from `DSChipTabs`: it looks and behaves differently |
 | `DSScreenHeader` | `ScreenHeader` | A screen's title (`h1`); the handoff's back button and trailing action are added when a screen needs them |
 | `DSRadio` | `RadioButton` | The radio mark only; the row it sits in takes the tap |
-| `DSButton` | `Button` | `primary` and `secondary` (outline), size `sm`, an optional icon before the label; other variants and sizes are added when used. Disabled (no `onPressed`) it is dimmed; `loading` shows a spinner in place of the label; neither takes taps |
-| `DSIconButton` | `IconButton` | A round button with only an icon; `filled` and `tonal`, sizes `xs` 36 and `sm` 40 so far |
-| `DSStepper` | `Stepper`, size `sm` | A quantity between a minus and a plus, 32 high. Keeps no number of its own: it shows the value it is given and reports the one asked for |
+| `DSCheckbox` | `Checkbox` | The checkbox mark only: a 20 square, the brand fill with a tick when checked; the row it sits in takes the tap |
+| `DSButton` | `Button` | `primary` and `secondary` (outline), sizes `sm` 40 and `md` 48, an optional icon before the label; other variants and sizes are added when used. Disabled (no `onPressed`) it is dimmed; `loading` shows a spinner in place of the label; neither takes taps |
+| `DSIconButton` | `IconButton` | A button with only an icon; `filled` and `tonal`, sizes `xs` 36 and `sm` 40 so far; round, or a square with an input's corners (`rounded`) next to a field |
+| `DSStepper` | `Stepper` | A quantity between a minus and a plus; sizes `sm` 32 high and `md` 40. Keeps no number of its own: it shows the value it is given and reports the one asked for |
 | `DSRatingStars` | `RatingStars`, display only | Five stars to the half star; zero is five empty stars |
 | `DSTextArea` | `Textarea` | A four-line text field on the main background: a hairline border, 2 thick in the interactive colour when focused. Can limit the length; the handoff's label, helper text, error state and counter are added when used |
 | `DSRatingInput` | `RatingStars`, not read-only | Five 32 stars to give a rating with: a tap on a star gives that many, whole stars only. Keeps no rating of its own. A separate component from `DSRatingStars`: it takes taps and has no half stars |

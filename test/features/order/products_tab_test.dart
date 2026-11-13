@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gastro_suit/design_system/components/feedback/ds_badge.dart';
 import 'package:gastro_suit/design_system/theme/app_theme.dart';
 import 'package:gastro_suit/design_system/theme/ds_colors.dart';
 import 'package:gastro_suit/domain/entities/branch.dart';
+import 'package:gastro_suit/domain/entities/cart.dart';
 import 'package:gastro_suit/domain/entities/menu.dart';
 import 'package:gastro_suit/domain/entities/menu_category.dart';
 import 'package:gastro_suit/domain/entities/product.dart';
 import 'package:gastro_suit/domain/state/active_branch_state.dart';
+import 'package:gastro_suit/domain/state/cart_state.dart';
 import 'package:gastro_suit/domain/state/menu_state.dart';
+import 'package:gastro_suit/features/cart/cart_sheet/cart_sheet.dart';
 import 'package:gastro_suit/features/menu/widgets/menu_product_card.dart';
 import 'package:gastro_suit/features/order/order_screen/widgets/products_tab.dart';
 import 'package:gastro_suit/features/shared_widgets/product_card.dart';
 import 'package:gastro_suit/l10n/generated/app_localizations.dart';
+
+import '../../fakes/fake_cart_controller.dart';
 
 class _FakeMenu extends BranchMenuController {
   _FakeMenu(this.menu) : super(menu.branchId);
@@ -35,7 +41,11 @@ void main() {
     optionGroups: const [],
   );
 
-  Future<void> pumpTab(WidgetTester tester, List<Product> products) async {
+  Future<void> pumpTab(
+    WidgetTester tester,
+    List<Product> products, {
+    Cart? cart,
+  }) async {
     tester.view.physicalSize = const Size(360, 640);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
@@ -57,6 +67,7 @@ void main() {
             ),
           ),
           menuProvider('b1').overrideWith(() => _FakeMenu(menu)),
+          cartProvider.overrideWith(() => FakeCartController(cart)),
         ],
         child: MaterialApp(
           theme: buildAppTheme(lightColors),
@@ -78,6 +89,30 @@ void main() {
     expect(find.byType(ProductCard), findsOneWidget);
     expect(find.text('Menu'), findsOneWidget);
     expect(find.byType(MenuProductCard), findsNWidgets(2));
+  });
+
+  testWidgets('the cart bar shows the branch and opens the cart', (
+    tester,
+  ) async {
+    await pumpTab(tester, [
+      product('cake'),
+    ], cart: cartAt('b1', quantity: 3, total: 3750));
+
+    expect(find.text('Northern Avenue'), findsOneWidget);
+    expect(tester.widget<DSBadge>(find.byType(DSBadge)).count, 3);
+
+    await tester.tap(find.bySemanticsLabel('Open the basket'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(CartSheet), findsOneWidget);
+    expect(find.text('Order · ֏3,750'), findsOneWidget);
+  });
+
+  testWidgets('an empty cart puts no count on the cart button', (tester) async {
+    await pumpTab(tester, [product('cake')]);
+
+    expect(find.bySemanticsLabel('Open the basket'), findsOneWidget);
+    expect(find.byType(DSBadge), findsNothing);
   });
 
   testWidgets('without featured products the rail is not shown', (

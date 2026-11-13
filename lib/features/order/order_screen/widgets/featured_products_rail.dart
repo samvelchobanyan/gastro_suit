@@ -5,6 +5,7 @@ import '../../../../design_system/components/layout/ds_section_header.dart';
 import '../../../../design_system/ds_extensions.dart';
 import '../../../../domain/state/menu_state.dart';
 import '../../../../l10n/generated/app_localizations.dart';
+import '../../../menu/product_sheet/product_sheet.dart';
 import '../../../shared_widgets/product_card.dart';
 
 /// The products a branch features, in a sideways rail over its menu.
@@ -49,12 +50,17 @@ class FeaturedProductsRail extends ConsumerWidget {
               width: DSSizes.productRailCardWidth,
               child: ProductCard(
                 product: featured[i],
-                // The product screen is not built yet.
-                onTap: () {},
-                // The cart is not built yet: the quantity stays at zero and
-                // the control does nothing.
-                quantity: 0,
-                onQuantityChanged: (_) {},
+                onTap: () => showProduct(
+                  context,
+                  branchId: branchId,
+                  productId: featured[i].id,
+                ),
+                onAdd: () => quickAddProduct(
+                  context,
+                  ref,
+                  branchId: branchId,
+                  product: featured[i],
+                ),
               ),
             ),
           ),

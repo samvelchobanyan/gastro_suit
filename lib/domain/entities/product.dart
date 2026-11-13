@@ -79,6 +79,14 @@ abstract class ProductOptionGroup with _$ProductOptionGroup {
 
   /// Whether any of its options costs extra.
   bool get isPaid => options.any((o) => o.price > 0);
+
+  /// The options chosen until the user changes them: the pre-selected ones
+  /// the branch still has, no more than may be chosen.
+  List<ProductOption> get defaultOptions {
+    final defaults = options.where((o) => o.isDefault && o.isAvailable);
+    final max = maxSelected;
+    return (max == null ? defaults : defaults.take(max)).toList();
+  }
 }
 
 /// One answer to a group's question. Chosen at most once.

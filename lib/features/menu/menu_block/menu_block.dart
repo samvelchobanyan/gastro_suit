@@ -12,6 +12,7 @@ import '../../../domain/entities/product.dart';
 import '../../../domain/state/menu_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../shared_widgets/load_error_row.dart';
+import '../product_sheet/product_sheet.dart';
 import '../widgets/menu_product_card.dart';
 import 'menu_block_skeleton.dart';
 import 'menu_category_row.dart';
@@ -258,7 +259,7 @@ class _MenuBlockState extends ConsumerState<MenuBlock> {
               ),
             ),
           ),
-          _ProductGrid(products: section.products),
+          _ProductGrid(branchId: widget.branchId, products: section.products),
         ],
       ],
     );
@@ -289,15 +290,16 @@ List<_Section> _sectionsOf(Menu menu, MenuCategory category) => [
 ];
 
 /// Products in two columns; the cards are built as they scroll into view.
-class _ProductGrid extends StatelessWidget {
-  const _ProductGrid({required this.products});
+class _ProductGrid extends ConsumerWidget {
+  const _ProductGrid({required this.branchId, required this.products});
 
+  final String branchId;
   final List<Product> products;
 
   static const _columns = 2;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final textScaler = MediaQuery.textScalerOf(context);
     return SliverPadding(
       padding: const EdgeInsets.fromLTRB(
@@ -321,12 +323,17 @@ class _ProductGrid extends StatelessWidget {
             itemCount: products.length,
             itemBuilder: (context, i) => MenuProductCard(
               product: products[i],
-              // The product screen is not built yet.
-              onTap: () {},
-              // The cart is not built yet: the quantity stays at zero and
-              // the control does nothing.
-              quantity: 0,
-              onQuantityChanged: (_) {},
+              onTap: () => showProduct(
+                context,
+                branchId: branchId,
+                productId: products[i].id,
+              ),
+              onAdd: () => quickAddProduct(
+                context,
+                ref,
+                branchId: branchId,
+                product: products[i],
+              ),
             ),
           );
         },

@@ -21,7 +21,8 @@ mixin _$Branch {
  double? get latitude; double? get longitude;/// Today's hours as the server reported them when the list was loaded;
 /// null when the branch has no hours entered.
  TodayHours? get today;/// Closed for now regardless of its hours (repairs and the like).
- bool get isTemporarilyClosed;
+ bool get isTemporarilyClosed;/// Whether an order here may carry a tip.
+ bool get acceptsTips;
 /// Create a copy of Branch
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -32,16 +33,16 @@ $BranchCopyWith<Branch> get copyWith => _$BranchCopyWithImpl<Branch>(this as Bra
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Branch&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.description, description) || other.description == description)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.cityId, cityId) || other.cityId == cityId)&&(identical(other.districtId, districtId) || other.districtId == districtId)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.today, today) || other.today == today)&&(identical(other.isTemporarilyClosed, isTemporarilyClosed) || other.isTemporarilyClosed == isTemporarilyClosed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Branch&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.description, description) || other.description == description)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.cityId, cityId) || other.cityId == cityId)&&(identical(other.districtId, districtId) || other.districtId == districtId)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.today, today) || other.today == today)&&(identical(other.isTemporarilyClosed, isTemporarilyClosed) || other.isTemporarilyClosed == isTemporarilyClosed)&&(identical(other.acceptsTips, acceptsTips) || other.acceptsTips == acceptsTips));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,address,description,photoUrl,rating,cityId,districtId,latitude,longitude,today,isTemporarilyClosed);
+int get hashCode => Object.hash(runtimeType,id,name,address,description,photoUrl,rating,cityId,districtId,latitude,longitude,today,isTemporarilyClosed,acceptsTips);
 
 @override
 String toString() {
-  return 'Branch(id: $id, name: $name, address: $address, description: $description, photoUrl: $photoUrl, rating: $rating, cityId: $cityId, districtId: $districtId, latitude: $latitude, longitude: $longitude, today: $today, isTemporarilyClosed: $isTemporarilyClosed)';
+  return 'Branch(id: $id, name: $name, address: $address, description: $description, photoUrl: $photoUrl, rating: $rating, cityId: $cityId, districtId: $districtId, latitude: $latitude, longitude: $longitude, today: $today, isTemporarilyClosed: $isTemporarilyClosed, acceptsTips: $acceptsTips)';
 }
 
 
@@ -52,7 +53,7 @@ abstract mixin class $BranchCopyWith<$Res>  {
   factory $BranchCopyWith(Branch value, $Res Function(Branch) _then) = _$BranchCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String address, String? description, String? photoUrl, BranchRating? rating, String? cityId, String? districtId, double? latitude, double? longitude, TodayHours? today, bool isTemporarilyClosed
+ String id, String name, String address, String? description, String? photoUrl, BranchRating? rating, String? cityId, String? districtId, double? latitude, double? longitude, TodayHours? today, bool isTemporarilyClosed, bool acceptsTips
 });
 
 
@@ -69,7 +70,7 @@ class _$BranchCopyWithImpl<$Res>
 
 /// Create a copy of Branch
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? address = null,Object? description = freezed,Object? photoUrl = freezed,Object? rating = freezed,Object? cityId = freezed,Object? districtId = freezed,Object? latitude = freezed,Object? longitude = freezed,Object? today = freezed,Object? isTemporarilyClosed = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? address = null,Object? description = freezed,Object? photoUrl = freezed,Object? rating = freezed,Object? cityId = freezed,Object? districtId = freezed,Object? latitude = freezed,Object? longitude = freezed,Object? today = freezed,Object? isTemporarilyClosed = null,Object? acceptsTips = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -83,6 +84,7 @@ as String?,latitude: freezed == latitude ? _self.latitude : latitude // ignore: 
 as double?,longitude: freezed == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
 as double?,today: freezed == today ? _self.today : today // ignore: cast_nullable_to_non_nullable
 as TodayHours?,isTemporarilyClosed: null == isTemporarilyClosed ? _self.isTemporarilyClosed : isTemporarilyClosed // ignore: cast_nullable_to_non_nullable
+as bool,acceptsTips: null == acceptsTips ? _self.acceptsTips : acceptsTips // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -192,10 +194,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String address,  String? description,  String? photoUrl,  BranchRating? rating,  String? cityId,  String? districtId,  double? latitude,  double? longitude,  TodayHours? today,  bool isTemporarilyClosed)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String address,  String? description,  String? photoUrl,  BranchRating? rating,  String? cityId,  String? districtId,  double? latitude,  double? longitude,  TodayHours? today,  bool isTemporarilyClosed,  bool acceptsTips)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Branch() when $default != null:
-return $default(_that.id,_that.name,_that.address,_that.description,_that.photoUrl,_that.rating,_that.cityId,_that.districtId,_that.latitude,_that.longitude,_that.today,_that.isTemporarilyClosed);case _:
+return $default(_that.id,_that.name,_that.address,_that.description,_that.photoUrl,_that.rating,_that.cityId,_that.districtId,_that.latitude,_that.longitude,_that.today,_that.isTemporarilyClosed,_that.acceptsTips);case _:
   return orElse();
 
 }
@@ -213,10 +215,10 @@ return $default(_that.id,_that.name,_that.address,_that.description,_that.photoU
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String address,  String? description,  String? photoUrl,  BranchRating? rating,  String? cityId,  String? districtId,  double? latitude,  double? longitude,  TodayHours? today,  bool isTemporarilyClosed)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String address,  String? description,  String? photoUrl,  BranchRating? rating,  String? cityId,  String? districtId,  double? latitude,  double? longitude,  TodayHours? today,  bool isTemporarilyClosed,  bool acceptsTips)  $default,) {final _that = this;
 switch (_that) {
 case _Branch():
-return $default(_that.id,_that.name,_that.address,_that.description,_that.photoUrl,_that.rating,_that.cityId,_that.districtId,_that.latitude,_that.longitude,_that.today,_that.isTemporarilyClosed);case _:
+return $default(_that.id,_that.name,_that.address,_that.description,_that.photoUrl,_that.rating,_that.cityId,_that.districtId,_that.latitude,_that.longitude,_that.today,_that.isTemporarilyClosed,_that.acceptsTips);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -233,10 +235,10 @@ return $default(_that.id,_that.name,_that.address,_that.description,_that.photoU
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String address,  String? description,  String? photoUrl,  BranchRating? rating,  String? cityId,  String? districtId,  double? latitude,  double? longitude,  TodayHours? today,  bool isTemporarilyClosed)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String address,  String? description,  String? photoUrl,  BranchRating? rating,  String? cityId,  String? districtId,  double? latitude,  double? longitude,  TodayHours? today,  bool isTemporarilyClosed,  bool acceptsTips)?  $default,) {final _that = this;
 switch (_that) {
 case _Branch() when $default != null:
-return $default(_that.id,_that.name,_that.address,_that.description,_that.photoUrl,_that.rating,_that.cityId,_that.districtId,_that.latitude,_that.longitude,_that.today,_that.isTemporarilyClosed);case _:
+return $default(_that.id,_that.name,_that.address,_that.description,_that.photoUrl,_that.rating,_that.cityId,_that.districtId,_that.latitude,_that.longitude,_that.today,_that.isTemporarilyClosed,_that.acceptsTips);case _:
   return null;
 
 }
@@ -248,7 +250,7 @@ return $default(_that.id,_that.name,_that.address,_that.description,_that.photoU
 
 
 class _Branch extends Branch {
-  const _Branch({required this.id, required this.name, required this.address, this.description, this.photoUrl, this.rating, this.cityId, this.districtId, this.latitude, this.longitude, this.today, required this.isTemporarilyClosed}): super._();
+  const _Branch({required this.id, required this.name, required this.address, this.description, this.photoUrl, this.rating, this.cityId, this.districtId, this.latitude, this.longitude, this.today, required this.isTemporarilyClosed, this.acceptsTips = false}): super._();
   
 
 @override final  String id;
@@ -270,6 +272,8 @@ class _Branch extends Branch {
 @override final  TodayHours? today;
 /// Closed for now regardless of its hours (repairs and the like).
 @override final  bool isTemporarilyClosed;
+/// Whether an order here may carry a tip.
+@override@JsonKey() final  bool acceptsTips;
 
 /// Create a copy of Branch
 /// with the given fields replaced by the non-null parameter values.
@@ -281,16 +285,16 @@ _$BranchCopyWith<_Branch> get copyWith => __$BranchCopyWithImpl<_Branch>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Branch&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.description, description) || other.description == description)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.cityId, cityId) || other.cityId == cityId)&&(identical(other.districtId, districtId) || other.districtId == districtId)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.today, today) || other.today == today)&&(identical(other.isTemporarilyClosed, isTemporarilyClosed) || other.isTemporarilyClosed == isTemporarilyClosed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Branch&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.description, description) || other.description == description)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.cityId, cityId) || other.cityId == cityId)&&(identical(other.districtId, districtId) || other.districtId == districtId)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.today, today) || other.today == today)&&(identical(other.isTemporarilyClosed, isTemporarilyClosed) || other.isTemporarilyClosed == isTemporarilyClosed)&&(identical(other.acceptsTips, acceptsTips) || other.acceptsTips == acceptsTips));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,address,description,photoUrl,rating,cityId,districtId,latitude,longitude,today,isTemporarilyClosed);
+int get hashCode => Object.hash(runtimeType,id,name,address,description,photoUrl,rating,cityId,districtId,latitude,longitude,today,isTemporarilyClosed,acceptsTips);
 
 @override
 String toString() {
-  return 'Branch(id: $id, name: $name, address: $address, description: $description, photoUrl: $photoUrl, rating: $rating, cityId: $cityId, districtId: $districtId, latitude: $latitude, longitude: $longitude, today: $today, isTemporarilyClosed: $isTemporarilyClosed)';
+  return 'Branch(id: $id, name: $name, address: $address, description: $description, photoUrl: $photoUrl, rating: $rating, cityId: $cityId, districtId: $districtId, latitude: $latitude, longitude: $longitude, today: $today, isTemporarilyClosed: $isTemporarilyClosed, acceptsTips: $acceptsTips)';
 }
 
 
@@ -301,7 +305,7 @@ abstract mixin class _$BranchCopyWith<$Res> implements $BranchCopyWith<$Res> {
   factory _$BranchCopyWith(_Branch value, $Res Function(_Branch) _then) = __$BranchCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String address, String? description, String? photoUrl, BranchRating? rating, String? cityId, String? districtId, double? latitude, double? longitude, TodayHours? today, bool isTemporarilyClosed
+ String id, String name, String address, String? description, String? photoUrl, BranchRating? rating, String? cityId, String? districtId, double? latitude, double? longitude, TodayHours? today, bool isTemporarilyClosed, bool acceptsTips
 });
 
 
@@ -318,7 +322,7 @@ class __$BranchCopyWithImpl<$Res>
 
 /// Create a copy of Branch
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? address = null,Object? description = freezed,Object? photoUrl = freezed,Object? rating = freezed,Object? cityId = freezed,Object? districtId = freezed,Object? latitude = freezed,Object? longitude = freezed,Object? today = freezed,Object? isTemporarilyClosed = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? address = null,Object? description = freezed,Object? photoUrl = freezed,Object? rating = freezed,Object? cityId = freezed,Object? districtId = freezed,Object? latitude = freezed,Object? longitude = freezed,Object? today = freezed,Object? isTemporarilyClosed = null,Object? acceptsTips = null,}) {
   return _then(_Branch(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -332,6 +336,7 @@ as String?,latitude: freezed == latitude ? _self.latitude : latitude // ignore: 
 as double?,longitude: freezed == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
 as double?,today: freezed == today ? _self.today : today // ignore: cast_nullable_to_non_nullable
 as TodayHours?,isTemporarilyClosed: null == isTemporarilyClosed ? _self.isTemporarilyClosed : isTemporarilyClosed // ignore: cast_nullable_to_non_nullable
+as bool,acceptsTips: null == acceptsTips ? _self.acceptsTips : acceptsTips // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

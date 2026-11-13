@@ -53,4 +53,41 @@ void main() {
       expect(product(const []).defaultSize, isNull);
     });
   });
+
+  group('defaultOptions', () {
+    ProductOption option(
+      String id, {
+      bool isDefault = true,
+      bool available = true,
+    }) => ProductOption(
+      id: id,
+      name: id,
+      price: 0,
+      isAvailable: available,
+      isDefault: isDefault,
+    );
+
+    ProductOptionGroup optionGroup(List<ProductOption> options, {int? max}) =>
+        ProductOptionGroup(
+          id: 'g1',
+          name: 'Milk',
+          minSelected: 0,
+          maxSelected: max,
+          options: options,
+        );
+
+    test('are the pre-selected options the branch still has', () {
+      final g = optionGroup([
+        option('whole'),
+        option('oat', isDefault: false),
+        option('almond', available: false),
+      ]);
+      expect([for (final o in g.defaultOptions) o.id], ['whole']);
+    });
+
+    test('are no more than may be chosen', () {
+      final g = optionGroup([option('whole'), option('oat')], max: 1);
+      expect([for (final o in g.defaultOptions) o.id], ['whole']);
+    });
+  });
 }

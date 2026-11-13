@@ -124,4 +124,94 @@ class AppLocalizationsEn extends AppLocalizations {
   String ratingStar(int star) {
     return '$star of 5';
   }
+
+  @override
+  String addWithTotal(String total) {
+    return 'Add · $total';
+  }
+
+  @override
+  String portionGrams(String amount) {
+    return '$amount g';
+  }
+
+  @override
+  String portionKilograms(String amount) {
+    return '$amount kg';
+  }
+
+  @override
+  String portionMilliliters(String amount) {
+    return '$amount ml';
+  }
+
+  @override
+  String portionLiters(String amount) {
+    return '$amount l';
+  }
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get cartReplaceTitle => 'Clear the cart?';
+
+  @override
+  String get cartReplaceMessage =>
+      'The cart holds products of one branch only. Changing the branch will clear it.';
+
+  @override
+  String get cartReplaceConfirm => 'Clear';
+
+  @override
+  String get cartTitle => 'Basket';
+
+  @override
+  String get cartOpen => 'Open the basket';
+
+  @override
+  String get cartBarBranch => 'Branch';
+
+  @override
+  String get cartSectionBranch => 'Location';
+
+  @override
+  String get cartSectionTime => 'Time';
+
+  @override
+  String cartSectionOrder(int count) {
+    return 'Your order ($count)';
+  }
+
+  @override
+  String get cartSectionTip => 'Tip';
+
+  @override
+  String get cartEmpty => 'Your basket is empty';
+
+  @override
+  String get cartAddProducts => 'Add products';
+
+  @override
+  String get cartLineRemove => 'Remove from the basket';
+
+  @override
+  String get cartLineUnavailable => 'Not available at this branch now';
+
+  @override
+  String get cartTimeAsap => 'ASAP';
+
+  @override
+  String get cartTipNone => 'No tip';
+
+  @override
+  String get cartTipOther => 'Other';
+
+  @override
+  String get cartTipHint => 'Enter tip amount';
+
+  @override
+  String orderWithTotal(String total) {
+    return 'Order · $total';
+  }
 }

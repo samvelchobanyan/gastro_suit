@@ -165,8 +165,10 @@ server and belongs to one branch, the active branch.
 - Prices and availability in the cart are the server's, re-checked on every read. Every
   change returns the whole cart, which replaces the one held.
 - An order cannot be placed while any line is unavailable.
-- The cart moves with the active branch (see `IMPLEMENTATION_NOTES.md`, default and
-  active branch).
+- The cart belongs to the active branch. Until the backend can move it, a change of
+  the active branch clears it, after the user confirms (`DESIGN_PRODUCT_QUESTIONS.md`
+  §4).
+- Only a signed-in user has a cart; a guest signs in before adding.
 
 ---
 

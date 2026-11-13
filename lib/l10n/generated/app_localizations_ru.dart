@@ -124,4 +124,94 @@ class AppLocalizationsRu extends AppLocalizations {
   String ratingStar(int star) {
     return '$star из 5';
   }
+
+  @override
+  String addWithTotal(String total) {
+    return 'Добавить · $total';
+  }
+
+  @override
+  String portionGrams(String amount) {
+    return '$amount г';
+  }
+
+  @override
+  String portionKilograms(String amount) {
+    return '$amount кг';
+  }
+
+  @override
+  String portionMilliliters(String amount) {
+    return '$amount мл';
+  }
+
+  @override
+  String portionLiters(String amount) {
+    return '$amount л';
+  }
+
+  @override
+  String get cancel => 'Отмена';
+
+  @override
+  String get cartReplaceTitle => 'Очистить корзину?';
+
+  @override
+  String get cartReplaceMessage =>
+      'В корзине могут быть товары только одного филиала. При смене филиала она будет очищена.';
+
+  @override
+  String get cartReplaceConfirm => 'Очистить';
+
+  @override
+  String get cartTitle => 'Корзина';
+
+  @override
+  String get cartOpen => 'Открыть корзину';
+
+  @override
+  String get cartBarBranch => 'Филиал';
+
+  @override
+  String get cartSectionBranch => 'Филиал';
+
+  @override
+  String get cartSectionTime => 'Время';
+
+  @override
+  String cartSectionOrder(int count) {
+    return 'Ваш заказ ($count)';
+  }
+
+  @override
+  String get cartSectionTip => 'Чаевые';
+
+  @override
+  String get cartEmpty => 'Корзина пуста';
+
+  @override
+  String get cartAddProducts => 'Добавить товары';
+
+  @override
+  String get cartLineRemove => 'Убрать из корзины';
+
+  @override
+  String get cartLineUnavailable => 'Сейчас недоступно в этом филиале';
+
+  @override
+  String get cartTimeAsap => 'Сейчас';
+
+  @override
+  String get cartTipNone => 'Без чаевых';
+
+  @override
+  String get cartTipOther => 'Другое';
+
+  @override
+  String get cartTipHint => 'Введите сумму чаевых';
+
+  @override
+  String orderWithTotal(String total) {
+    return 'Заказать · $total';
+  }
 }

@@ -23,6 +23,7 @@ class BranchDto {
     this.longitude,
     this.today,
     this.isTemporarilyClosed,
+    this.acceptsTips,
   });
 
   factory BranchDto.fromJson(Map<String, dynamic> json) =>
@@ -48,6 +49,7 @@ class BranchDto {
   final double? longitude;
   final TodayHoursDto? today;
   final bool? isTemporarilyClosed;
+  final bool? acceptsTips;
 
   Branch toDomain(ContentLanguage language) {
     final hasCoordinates = latitude != null && longitude != null;
@@ -64,6 +66,7 @@ class BranchDto {
       longitude: hasCoordinates ? longitude : null,
       today: today?.toDomain(),
       isTemporarilyClosed: isTemporarilyClosed ?? false,
+      acceptsTips: acceptsTips ?? false,
     );
   }
 }

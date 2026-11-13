@@ -62,6 +62,24 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   `modifiers` as one flat list of ids: the chosen size plus every chosen option.
 - The server merges a line with the same product and the same options into one line and
   sums the quantity.
+- Checked on the dev server (2026-11-13):
+  - every cart request needs a signed-in user; a guest gets 401;
+  - `GET /cart` and `DELETE /cart` take `branchId` (required). The cart is one per user
+    and tied to one branch: asked for at another branch it answers empty and discards
+    nothing;
+  - adding with another `branchId` silently replaces the cart with the one new line;
+  - every change (`POST`, `PUT`, `DELETE` of a line) answers with the whole cart;
+  - a required group left empty is refused with `options_required`.
+- In code: `cartProvider` (`domain/state/cart_state.dart`) is the cart at the active
+  branch, null for a guest; its methods add, change a quantity, remove a line and
+  clear. Adding at another branch makes that branch the active one. The cart sheet (`features/cart/cart_sheet/`)
+  shows it and changes it; the time and the tip chosen there are the sheet's own state
+  (`CartCheckoutController`) until an order is placed. The times offered are worked out
+  by `pickupSlots` next to it; when the server offers them, that controller loads them
+  instead and nothing else changes. What must be asked
+  first is two calls where the product is added: `ensureSignedIn` (next to the sign-in
+  screen) and `confirmReplaceCart` (the cart's `replace_cart_dialog`). The branch
+  picker asks the second one too, then clears the cart before the branch changes.
 
 ## 4. ProductChoice — agreed
 
@@ -79,6 +97,16 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - Shows a price preview: size price (or base price) + surcharges. The server's price
   is the real one.
 - On "Add" it becomes a `ProductChoice` and is sent as in §3.
+- Built (2026-11-13) as `ProductSelectionController` next to the product sheet: it holds
+  the chosen size, options and quantity, and computes the price and whether the
+  selection may be added. The entity carries only what describes itself
+  (`defaultSize`, a group's `defaultOptions`). Where the check for the card's quick "+"
+  lives is decided with the cart.
+- The quantity is part of the selection, 1 to 99.
+- An option is chosen at most once: the design's stepper inside an option row is not
+  built, since the API takes no quantity per option (`DOMAIN_SPEC.md` §1.4).
+- The portion is shown only for a product without sizes: the API has one portion per
+  product, so it would not follow the chosen size.
 
 ## 6. Buy again — agreed
 
@@ -123,8 +151,10 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 **On a change of the active branch**
 
 - The active menu is reloaded for the new branch.
-- The cart moves to the new branch: its lines stay, prices and availability are checked
-  again, and lines unavailable there are marked, not removed.
+- The cart is cleared, after the user confirms (decided 2026-11-13,
+  `DESIGN_PRODUCT_QUESTIONS.md` §4). The target, once the backend supports it: the cart
+  moves to the new branch, its lines stay, prices and availability are checked again,
+  and lines unavailable there are marked, not removed.
 
 **Open questions**
 

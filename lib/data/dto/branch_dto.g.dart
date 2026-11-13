@@ -24,6 +24,7 @@ BranchDto _$BranchDtoFromJson(Map<String, dynamic> json) => BranchDto(
       ? null
       : TodayHoursDto.fromJson(json['today'] as Map<String, dynamic>),
   isTemporarilyClosed: json['isTemporarilyClosed'] as bool?,
+  acceptsTips: json['acceptsTips'] as bool?,
 );
 
 TodayHoursDto _$TodayHoursDtoFromJson(Map<String, dynamic> json) =>

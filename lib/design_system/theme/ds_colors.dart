@@ -53,6 +53,9 @@ class DSColors extends ThemeExtension<DSColors> {
     required this.overlayPressDark,
     required this.overlayPressLight,
     required this.overlayHoverDark,
+    required this.handleOnDark,
+    required this.glassBg,
+    required this.glassBorder,
     required this.scrimHero,
   });
 
@@ -142,6 +145,13 @@ class DSColors extends ThemeExtension<DSColors> {
   final Color overlayPressLight;
   final Color overlayHoverDark;
 
+  /// A sheet's drag handle where it lies over a photo or a dark fill.
+  final Color handleOnDark;
+
+  /// A frosted-glass surface floating over content, and its edge.
+  final Color glassBg;
+  final Color glassBorder;
+
   /// Bottom-up scrim over hero photos.
   final LinearGradient scrimHero;
 
@@ -189,6 +199,9 @@ class DSColors extends ThemeExtension<DSColors> {
     Color? overlayPressDark,
     Color? overlayPressLight,
     Color? overlayHoverDark,
+    Color? handleOnDark,
+    Color? glassBg,
+    Color? glassBorder,
     LinearGradient? scrimHero,
   }) {
     return DSColors(
@@ -234,6 +247,9 @@ class DSColors extends ThemeExtension<DSColors> {
       overlayPressDark: overlayPressDark ?? this.overlayPressDark,
       overlayPressLight: overlayPressLight ?? this.overlayPressLight,
       overlayHoverDark: overlayHoverDark ?? this.overlayHoverDark,
+      handleOnDark: handleOnDark ?? this.handleOnDark,
+      glassBg: glassBg ?? this.glassBg,
+      glassBorder: glassBorder ?? this.glassBorder,
       scrimHero: scrimHero ?? this.scrimHero,
     );
   }
@@ -308,6 +324,9 @@ class DSColors extends ThemeExtension<DSColors> {
         other.overlayHoverDark,
         t,
       )!,
+      handleOnDark: Color.lerp(handleOnDark, other.handleOnDark, t)!,
+      glassBg: Color.lerp(glassBg, other.glassBg, t)!,
+      glassBorder: Color.lerp(glassBorder, other.glassBorder, t)!,
       scrimHero: LinearGradient.lerp(scrimHero, other.scrimHero, t)!,
     );
   }
@@ -357,6 +376,9 @@ const lightColors = DSColors(
   overlayPressDark: DSPalette.alphaBlack12,
   overlayPressLight: DSPalette.alphaWhite12,
   overlayHoverDark: DSPalette.alphaBlack4,
+  handleOnDark: DSPalette.alphaWhite40,
+  glassBg: DSPalette.alphaWhite64,
+  glassBorder: DSPalette.alphaWhite24,
   scrimHero: LinearGradient(
     begin: Alignment.bottomCenter,
     end: Alignment.topCenter,

@@ -32,6 +32,9 @@ abstract class Branch with _$Branch {
 
     /// Closed for now regardless of its hours (repairs and the like).
     required bool isTemporarilyClosed,
+
+    /// Whether an order here may carry a tip.
+    @Default(false) bool acceptsTips,
   }) = _Branch;
 
   const Branch._();

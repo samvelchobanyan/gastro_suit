@@ -4,8 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-import '../../../core/auth/auth_status.dart';
-import '../../../core/navigation/app_routes.dart';
 import '../../../design_system/components/buttons/ds_button.dart';
 import '../../../design_system/components/buttons/ds_icon_button.dart';
 import '../../../design_system/components/feedback/ds_badge.dart';
@@ -13,8 +11,11 @@ import '../../../design_system/ds_extensions.dart';
 import '../../../design_system/theme/ds_status_bar.dart';
 import '../../../domain/entities/branch.dart';
 import '../../../domain/state/branches_state.dart';
+import '../../../domain/state/cart_state.dart';
 import '../../../domain/state/menu_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
+import '../../auth/login_screen/login_screen.dart';
+import '../../cart/cart_sheet/cart_sheet.dart';
 import '../../menu/menu_block/menu_block.dart';
 import '../../menu/menu_block/menu_block_skeleton.dart';
 import '../../shared_widgets/branch_hours_row.dart';
@@ -38,10 +39,9 @@ class BranchScreen extends ConsumerWidget {
   /// are left alone. What is on screen stays until the new arrives; a
   /// failed refresh keeps it.
   Future<void> _refresh(WidgetRef ref) async {
-    ref.invalidate(menuProvider(branchId));
     try {
       await Future.wait<void>([
-        ref.read(menuProvider(branchId).future),
+        ref.refresh(menuProvider(branchId).future),
         ref.read(branchesControllerProvider.notifier).refreshBranch(branchId),
       ]);
     } catch (_) {
@@ -52,12 +52,8 @@ class BranchScreen extends ConsumerWidget {
   /// Opens the review sheet. Rating needs an account: a guest is sent to
   /// sign in first, and gets the sheet on coming back signed in.
   Future<void> _rate(BuildContext context, WidgetRef ref) async {
-    if (ref.read(authStatusProvider) == AuthStatus.signedOut) {
-      await context.push(AppRoutes.login);
-      if (!context.mounted) return;
-      // Came back without signing in.
-      if (ref.read(authStatusProvider) == AuthStatus.signedOut) return;
-    }
+    if (!await ensureSignedIn(context, ref)) return;
+    if (!context.mounted) return;
     await showBranchReview(context, branchId);
   }
 
@@ -103,7 +99,7 @@ class BranchScreen extends ConsumerWidget {
               ),
             ),
           ),
-          const _CheckoutBar(),
+          _CheckoutBar(branchId: branchId),
         ],
       );
     } else if (branches == null && !state.hasError) {
@@ -245,12 +241,18 @@ class _Info extends StatelessWidget {
 /// The button that opens the cart, with the cart's total and the number of
 /// items in it. The cart is not built yet: it shows an empty one and does
 /// nothing.
-class _CheckoutBar extends StatelessWidget {
-  const _CheckoutBar();
+class _CheckoutBar extends ConsumerWidget {
+  const _CheckoutBar({required this.branchId});
+
+  final String branchId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final colors = context.colors;
+    // The cart of another branch is not this page's: the bar shows nothing
+    // of it.
+    final cart = ref.watch(cartProvider).value;
+    final here = cart != null && cart.branchId == branchId ? cart : null;
     return DecoratedBox(
       decoration: BoxDecoration(
         color: colors.bgSurface,
@@ -269,18 +271,18 @@ class _CheckoutBar extends StatelessWidget {
             DSButton(
               label: AppLocalizations.of(
                 context,
-              ).checkoutWithTotal(formatPrice(context, 0)),
+              ).checkoutWithTotal(formatPrice(context, here?.total ?? 0)),
               icon: PhosphorIcons.shoppingCartSimple(),
               variant: DSButtonVariant.secondary,
               size: DSButtonSize.sm,
               fullWidth: true,
-              onPressed: () {},
+              onPressed: () => showCart(context),
             ),
             // Over the button's end; taps go through to the button.
-            const IgnorePointer(
+            IgnorePointer(
               child: Padding(
-                padding: EdgeInsetsDirectional.only(end: DSSpacing.base),
-                child: DSBadge(count: 0),
+                padding: const EdgeInsetsDirectional.only(end: DSSpacing.base),
+                child: DSBadge(count: here?.itemCount ?? 0),
               ),
             ),
           ],

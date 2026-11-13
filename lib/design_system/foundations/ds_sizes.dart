@@ -73,6 +73,26 @@ abstract final class DSSizes {
   static const double radio = 20;
   static const double radioDot = 10;
 
+  // Checkbox (handoff `Checkbox`)
+  static const double checkbox = 20;
+
+  /// The least width of the number of a `md` stepper (handoff `Stepper`).
+  static const double stepperValueWidthMd = 44;
+
+  // Cart (handoff `ProductBasket`, `TipSelector`, the Order page's cart bar)
+  /// The photo on a cart line.
+  static const double cartLineImage = 64;
+  static const double tipSelectorMinWidth = 80;
+
+  /// The line of the label over the cart bar's branch field.
+  static const double cartBarLabelHeight = 16;
+
+  /// How much a glass surface blurs what is behind it (`--glass-blur`).
+  static const double glassBlur = 16;
+
+  // Dialog (handoff `Dialog`)
+  static const double dialogMaxWidth = 320;
+
   // Bottom sheet (handoff `BottomSheet`)
   static const double sheetHandleWidth = 36;
   static const double sheetHandleHeight = 4;

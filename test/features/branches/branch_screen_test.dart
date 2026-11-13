@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:gastro_suit/core/auth/auth_status.dart';
 import 'package:gastro_suit/core/config/app_config.dart';
 import 'package:gastro_suit/core/di/repositories.dart';
+import 'package:gastro_suit/design_system/components/feedback/ds_badge.dart';
 import 'package:gastro_suit/design_system/components/inputs/ds_rating_input.dart';
 import 'package:gastro_suit/domain/entities/branch_review.dart';
 import 'package:gastro_suit/domain/repositories/branch_repository.dart';
@@ -14,15 +15,20 @@ import 'package:gastro_suit/design_system/theme/app_theme.dart';
 import 'package:gastro_suit/design_system/theme/ds_colors.dart';
 import 'package:gastro_suit/design_system/theme/ds_status_bar.dart';
 import 'package:gastro_suit/domain/entities/branch.dart';
+import 'package:gastro_suit/domain/entities/cart.dart';
 import 'package:gastro_suit/domain/entities/menu.dart';
 import 'package:gastro_suit/domain/entities/menu_category.dart';
 import 'package:gastro_suit/domain/entities/product.dart';
 import 'package:gastro_suit/domain/state/branches_state.dart';
+import 'package:gastro_suit/domain/state/cart_state.dart';
 import 'package:gastro_suit/domain/state/menu_state.dart';
 import 'package:gastro_suit/features/branches/branch_screen/branch_screen.dart';
+import 'package:gastro_suit/features/cart/cart_sheet/cart_sheet.dart';
 import 'package:gastro_suit/features/branches/branch_screen/widgets/branch_header.dart';
 import 'package:gastro_suit/features/menu/widgets/menu_product_card.dart';
 import 'package:gastro_suit/l10n/generated/app_localizations.dart';
+
+import '../../fakes/fake_cart_controller.dart';
 
 /// The user has rated nothing; the branch lists are not asked for.
 class _NoReviewRepository implements BranchRepository {
@@ -108,6 +114,7 @@ void main() {
     required List<Branch> branches,
     double screenHeight = 640,
     AuthStatus auth = AuthStatus.signedOut,
+    Cart? cart,
   }) async {
     tester.view.physicalSize = Size(360, screenHeight);
     tester.view.devicePixelRatio = 1;
@@ -129,6 +136,7 @@ void main() {
           ),
           menuProvider('b1').overrideWith(() => _FakeMenu(menu)),
           authStatusProvider.overrideWithValue(auth),
+          cartProvider.overrideWith(() => FakeCartController(cart)),
           branchRepositoryProvider.overrideWithValue(_NoReviewRepository()),
         ],
         child: MaterialApp(
@@ -222,6 +230,43 @@ void main() {
 
     expect(find.text('Leave a feedback'), findsOneWidget);
     expect(find.byType(DSRatingInput), findsOneWidget);
+  });
+
+  testWidgets('the checkout bar shows the cart of this branch', (tester) async {
+    await pumpScreen(
+      tester,
+      branches: [branch],
+      cart: cartAt('b1', quantity: 3, total: 4350),
+    );
+
+    expect(find.text('Checkout · ֏4,350'), findsOneWidget);
+    expect(tester.widget<DSBadge>(find.byType(DSBadge)).count, 3);
+  });
+
+  testWidgets('the checkout bar opens the cart', (tester) async {
+    await pumpScreen(
+      tester,
+      branches: [branch],
+      cart: cartAt('b1', quantity: 3, total: 4350),
+    );
+
+    await tester.tap(find.text('Checkout · ֏4,350'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(CartSheet), findsOneWidget);
+  });
+
+  testWidgets('the checkout bar shows nothing of another branch\'s cart', (
+    tester,
+  ) async {
+    await pumpScreen(
+      tester,
+      branches: [branch],
+      cart: cartAt('b2', quantity: 3, total: 4350),
+    );
+
+    expect(find.text('Checkout · ֏0'), findsOneWidget);
+    expect(tester.widget<DSBadge>(find.byType(DSBadge)).count, 0);
   });
 
   testWidgets('pulling down loads this branch again, not the whole list', (

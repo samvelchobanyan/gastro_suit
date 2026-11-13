@@ -124,4 +124,94 @@ class AppLocalizationsHy extends AppLocalizations {
   String ratingStar(int star) {
     return '$star՝ 5-ից';
   }
+
+  @override
+  String addWithTotal(String total) {
+    return 'Ավելացնել · $total';
+  }
+
+  @override
+  String portionGrams(String amount) {
+    return '$amount գ';
+  }
+
+  @override
+  String portionKilograms(String amount) {
+    return '$amount կգ';
+  }
+
+  @override
+  String portionMilliliters(String amount) {
+    return '$amount մլ';
+  }
+
+  @override
+  String portionLiters(String amount) {
+    return '$amount լ';
+  }
+
+  @override
+  String get cancel => 'Չեղարկել';
+
+  @override
+  String get cartReplaceTitle => 'Դատարկե՞լ զամբյուղը';
+
+  @override
+  String get cartReplaceMessage =>
+      'Զամբյուղում կարող են լինել միայն մեկ մասնաճյուղի ապրանքներ։ Մասնաճյուղը փոխելիս այն կդատարկվի։';
+
+  @override
+  String get cartReplaceConfirm => 'Դատարկել';
+
+  @override
+  String get cartTitle => 'Զամբյուղ';
+
+  @override
+  String get cartOpen => 'Բացել զամբյուղը';
+
+  @override
+  String get cartBarBranch => 'Մասնաճյուղ';
+
+  @override
+  String get cartSectionBranch => 'Մասնաճյուղ';
+
+  @override
+  String get cartSectionTime => 'Ժամ';
+
+  @override
+  String cartSectionOrder(int count) {
+    return 'Ձեր պատվերը ($count)';
+  }
+
+  @override
+  String get cartSectionTip => 'Թեյավճար';
+
+  @override
+  String get cartEmpty => 'Զամբյուղը դատարկ է';
+
+  @override
+  String get cartAddProducts => 'Ավելացնել ապրանքներ';
+
+  @override
+  String get cartLineRemove => 'Հեռացնել զամբյուղից';
+
+  @override
+  String get cartLineUnavailable => 'Այս մասնաճյուղում այժմ հասանելի չէ';
+
+  @override
+  String get cartTimeAsap => 'Հիմա';
+
+  @override
+  String get cartTipNone => 'Առանց թեյավճարի';
+
+  @override
+  String get cartTipOther => 'Այլ';
+
+  @override
+  String get cartTipHint => 'Մուտքագրեք թեյավճարի գումարը';
+
+  @override
+  String orderWithTotal(String total) {
+    return 'Պատվիրել · $total';
+  }
 }
