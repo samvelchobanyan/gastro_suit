@@ -11,7 +11,8 @@ import '../../../../core/utils/price_format.dart';
 
 /// One line of the cart (handoff `ProductBasket`): the product's photo,
 /// name, what was chosen for it ("Large · Sugar ×2") and the price of one;
-/// under them a button that removes the line and the quantity.
+/// under them the buttons that change what was chosen and remove the
+/// line, and the quantity.
 ///
 /// A line the branch cannot make now is dimmed and says so; it can only be
 /// removed.
@@ -20,6 +21,7 @@ class CartLineTile extends StatelessWidget {
     super.key,
     required this.line,
     required this.onQuantityChanged,
+    required this.onEdit,
     required this.onRemove,
   });
 
@@ -27,6 +29,9 @@ class CartLineTile extends StatelessWidget {
 
   /// Called with the quantity asked for, never below 1.
   final ValueChanged<int> onQuantityChanged;
+
+  /// Opens the product for what was chosen to be changed.
+  final VoidCallback onEdit;
   final VoidCallback onRemove;
 
   /// The most of one line.
@@ -114,12 +119,27 @@ class CartLineTile extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              DSIconButton(
-                icon: PhosphorIcons.trash(),
-                semanticLabel: l10n.cartLineRemove,
-                variant: DSIconButtonVariant.tonal,
-                size: DSIconButtonSize.xs,
-                onPressed: onRemove,
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (line.isAvailable) ...[
+                    DSIconButton(
+                      icon: PhosphorIcons.pencilSimple(),
+                      semanticLabel: l10n.cartLineEdit,
+                      variant: DSIconButtonVariant.tonal,
+                      size: DSIconButtonSize.xs,
+                      onPressed: onEdit,
+                    ),
+                    const SizedBox(width: DSSpacing.sm),
+                  ],
+                  DSIconButton(
+                    icon: PhosphorIcons.trash(),
+                    semanticLabel: l10n.cartLineRemove,
+                    variant: DSIconButtonVariant.tonal,
+                    size: DSIconButtonSize.xs,
+                    onPressed: onRemove,
+                  ),
+                ],
               ),
               if (line.isAvailable)
                 DSStepper(

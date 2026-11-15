@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gastro_suit/domain/entities/cart.dart';
 import 'package:gastro_suit/domain/entities/product.dart';
+import 'package:gastro_suit/domain/entities/product_choice.dart';
 import 'package:gastro_suit/features/menu/product_sheet/product_selection_controller.dart';
 
 void main() {
@@ -61,10 +63,13 @@ void main() {
   );
 
   /// The selection of [p] as it is now, and the controller that changes it.
-  (ProductSelection Function(), ProductSelectionController) open(Product p) {
+  (ProductSelection Function(), ProductSelectionController) open(
+    Product p, {
+    CartLine? editing,
+  }) {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    final provider = productSelectionProvider(p);
+    final provider = productSelectionProvider((product: p, editing: editing));
     // Kept alive as an open sheet keeps it.
     container.listen(provider, (_, _) {});
     return (() => container.read(provider), container.read(provider.notifier));
@@ -356,6 +361,98 @@ void main() {
       controller.setOptionQuantity('sweetener', 'sugar', 3);
       expect(controller.choice.options.single.id, 'sugar');
       expect(controller.choice.options.single.quantity, 3);
+    });
+  });
+
+  group('the selection opened from a cart line', () {
+    CartLine line({
+      String? sizeId,
+      List<(String, int)> options = const [],
+      int quantity = 1,
+    }) => CartLine(
+      id: 'line-1',
+      choice: ProductChoice(
+        productId: 'p1',
+        productName: 'Latte',
+        size: sizeId == null ? null : ChosenSize(id: sizeId, name: sizeId),
+        options: [
+          for (final (id, count) in options)
+            ChosenOption(
+              id: id,
+              groupId: 'g',
+              name: id,
+              price: 0,
+              quantity: count,
+            ),
+        ],
+      ),
+      quantity: quantity,
+      unitPrice: 0,
+      total: 0,
+      isAvailable: true,
+    );
+
+    Product latte({bool largeAvailable = true, bool oatAvailable = true}) =>
+        product(
+          sizes: [
+            size('small', 1000, isDefault: true),
+            size('large', 1400, available: largeAvailable),
+          ],
+          groups: [
+            optionGroup('milk', [
+              option('whole', isDefault: true),
+              option('oat', price: 250, available: oatAvailable),
+            ], max: 1),
+            optionGroup('sweetener', [option('sugar', maxQuantity: 5)]),
+          ],
+        );
+
+    test('starts from what the line holds, not from the defaults', () {
+      final (selection, _) = open(
+        latte(),
+        editing: line(
+          sizeId: 'large',
+          options: [('oat', 1), ('sugar', 3)],
+          quantity: 2,
+        ),
+      );
+      expect(selection().sizeId, 'large');
+      expect(selection().optionQuantities, {'oat': 1, 'sugar': 3});
+      expect(selection().quantity, 2);
+      expect(selection().unitPrice, 1650);
+      expect(selection().total, 3300);
+    });
+
+    test('a line with nothing chosen leaves the defaults off', () {
+      final (selection, _) = open(latte(), editing: line(sizeId: 'small'));
+      expect(selection().optionQuantities, isEmpty);
+    });
+
+    test('a size the branch no longer has gives way to the default', () {
+      final (selection, _) = open(
+        latte(largeAvailable: false),
+        editing: line(sizeId: 'large'),
+      );
+      expect(selection().sizeId, 'small');
+    });
+
+    test('an option the branch no longer has is left out', () {
+      final (selection, _) = open(
+        latte(oatAvailable: false),
+        editing: line(sizeId: 'small', options: [('oat', 1), ('gone', 1)]),
+      );
+      expect(selection().optionQuantities, isEmpty);
+    });
+
+    test('changes like any other selection', () {
+      final (selection, controller) = open(
+        latte(),
+        editing: line(sizeId: 'large', options: [('sugar', 3)]),
+      );
+      controller.selectSize('small');
+      controller.setOptionQuantity('sweetener', 'sugar', 1);
+      expect(selection().sizeId, 'small');
+      expect(selection().optionQuantities, {'sugar': 1});
     });
   });
 

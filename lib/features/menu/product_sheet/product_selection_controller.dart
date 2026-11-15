@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../domain/entities/cart.dart';
 import '../../../domain/entities/product.dart';
 import '../../../domain/entities/product_choice.dart';
 
@@ -36,25 +37,60 @@ abstract class ProductSelection with _$ProductSelection {
   int get total => unitPrice * quantity;
 }
 
+/// What a selection is made for: a product, and the cart line being
+/// changed when the sheet was opened from the cart.
+typedef ProductSelectionTarget = ({Product product, CartLine? editing});
+
 /// The selection on a product's sheet: starts from the defaults (the
-/// default size, the pre-selected options, one piece) and changes as the
-/// user taps.
+/// default size, the pre-selected options, one piece), or from what a cart
+/// line holds, and changes as the user taps.
 class ProductSelectionController extends Notifier<ProductSelection> {
-  ProductSelectionController(this.product);
+  ProductSelectionController(ProductSelectionTarget target)
+    : product = target.product,
+      editing = target.editing;
 
   final Product product;
+
+  /// The cart line the selection starts from; null for a new one.
+  final CartLine? editing;
 
   static const maxQuantity = 99;
 
   @override
-  ProductSelection build() => _selection(
-    sizeId: product.defaultSize?.id,
-    optionQuantities: {
-      for (final group in product.optionGroups)
-        for (final option in group.defaultOptions) option.id: 1,
-    },
-    quantity: 1,
-  );
+  ProductSelection build() {
+    final line = editing;
+    if (line == null) {
+      return _selection(
+        sizeId: product.defaultSize?.id,
+        optionQuantities: {
+          for (final group in product.optionGroups)
+            for (final option in group.defaultOptions) option.id: 1,
+        },
+        quantity: 1,
+      );
+    }
+
+    // What the line holds, as far as the branch still offers it: a size
+    // that is gone gives way to the default one, an option that is gone is
+    // left out.
+    final chosen = {
+      for (final option in line.choice.options) option.id: option.quantity,
+    };
+    final size = product.sizes
+        .where((s) => s.id == line.choice.size?.id && s.isAvailable)
+        .firstOrNull;
+    return _selection(
+      sizeId: (size ?? product.defaultSize)?.id,
+      optionQuantities: {
+        for (final group in product.optionGroups)
+          for (final option in group.options)
+            if (option.isAvailable)
+              if (chosen[option.id] case final quantity?)
+                option.id: quantity.clamp(1, option.maxQuantity),
+      },
+      quantity: line.quantity.clamp(1, maxQuantity),
+    );
+  }
 
   /// A size the branch has run out of is not taken.
   void selectSize(String sizeId) {
@@ -202,10 +238,13 @@ class ProductSelectionController extends Notifier<ProductSelection> {
   }
 }
 
-/// The selection for one product: `productSelectionProvider(product)`.
+/// The selection for one product:
+/// `productSelectionProvider((product: …, editing: …))`.
 /// Lives while the product's sheet is open; a product that changed (the
-/// menu was loaded again) starts from its defaults.
+/// menu was loaded again) starts over.
 final productSelectionProvider = NotifierProvider.autoDispose
-    .family<ProductSelectionController, ProductSelection, Product>(
-      ProductSelectionController.new,
-    );
+    .family<
+      ProductSelectionController,
+      ProductSelection,
+      ProductSelectionTarget
+    >(ProductSelectionController.new);

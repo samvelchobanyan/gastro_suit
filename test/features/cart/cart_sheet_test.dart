@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:gastro_suit/core/network/app_exception.dart';
 import 'package:gastro_suit/design_system/components/buttons/ds_button.dart';
 import 'package:gastro_suit/design_system/components/inputs/ds_amount_field.dart';
+import 'package:gastro_suit/design_system/components/inputs/ds_radio.dart';
 import 'package:gastro_suit/design_system/components/inputs/ds_stepper.dart';
 import 'package:gastro_suit/design_system/components/inputs/ds_time_picker.dart';
 import 'package:gastro_suit/design_system/components/inputs/ds_tip_selector.dart';
@@ -11,15 +12,28 @@ import 'package:gastro_suit/design_system/theme/app_theme.dart';
 import 'package:gastro_suit/design_system/theme/ds_colors.dart';
 import 'package:gastro_suit/domain/entities/branch.dart';
 import 'package:gastro_suit/domain/entities/cart.dart';
+import 'package:gastro_suit/domain/entities/menu.dart';
+import 'package:gastro_suit/domain/entities/product.dart';
 import 'package:gastro_suit/domain/entities/product_choice.dart';
 import 'package:gastro_suit/domain/state/active_branch_state.dart';
 import 'package:gastro_suit/domain/state/cart_state.dart';
+import 'package:gastro_suit/domain/state/menu_state.dart';
 import 'package:gastro_suit/features/cart/cart_sheet/cart_checkout_controller.dart';
 import 'package:gastro_suit/features/cart/cart_sheet/cart_sheet.dart';
 import 'package:gastro_suit/features/cart/cart_sheet/widgets/cart_line_tile.dart';
+import 'package:gastro_suit/features/menu/product_sheet/product_sheet.dart';
 import 'package:gastro_suit/l10n/generated/app_localizations.dart';
 
 import '../../fakes/fake_cart_controller.dart';
+
+class _FakeMenu extends BranchMenuController {
+  _FakeMenu(this.menu) : super('b1');
+
+  final Menu menu;
+
+  @override
+  Future<Menu> build() async => menu;
+}
 
 void main() {
   const latte = CartLine(
@@ -70,6 +84,7 @@ void main() {
     WidgetTester tester, {
     required Cart? cart,
     bool acceptsTips = true,
+    List<Product> menu = const [],
   }) async {
     tester.view.physicalSize = const Size(360, 800);
     tester.view.devicePixelRatio = 1;
@@ -90,6 +105,11 @@ void main() {
             ),
           ),
           cartProvider.overrideWith(() => fakeCart),
+          menuProvider('b1').overrideWith(
+            () => _FakeMenu(
+              Menu(branchId: 'b1', categories: const [], products: menu),
+            ),
+          ),
         ],
         child: MaterialApp(
           theme: buildAppTheme(lightColors),
@@ -204,7 +224,107 @@ void main() {
 
     expect(find.text('Not available at this branch now'), findsOneWidget);
     expect(find.byType(DSStepper), findsNothing);
+    expect(find.bySemanticsLabel('Change the choice'), findsNothing);
     expect(find.bySemanticsLabel('Remove from the basket'), findsOneWidget);
+  });
+
+  testWidgets('the pencil opens the product on what the line holds', (
+    tester,
+  ) async {
+    await openCart(
+      tester,
+      cart: cartOf([latte]),
+      menu: const [
+        Product(
+          id: 'latte',
+          categoryId: 'c1',
+          name: 'Latte',
+          price: 1450,
+          isAvailable: true,
+          isFeatured: false,
+          sizes: [
+            ProductSize(
+              id: 's',
+              name: 'Small',
+              price: 1450,
+              isAvailable: true,
+              isDefault: true,
+            ),
+            ProductSize(
+              id: 'l',
+              name: 'Large',
+              price: 1850,
+              isAvailable: true,
+              isDefault: false,
+            ),
+          ],
+          optionGroups: [
+            ProductOptionGroup(
+              id: 'milk',
+              name: 'Milk',
+              minSelected: 1,
+              maxSelected: 1,
+              options: [
+                ProductOption(
+                  id: 'whole',
+                  name: 'Whole milk',
+                  price: 0,
+                  isAvailable: true,
+                  isDefault: true,
+                ),
+                ProductOption(
+                  id: 'oat',
+                  name: 'Oat milk',
+                  price: 250,
+                  isAvailable: true,
+                  isDefault: false,
+                ),
+              ],
+            ),
+            ProductOptionGroup(
+              id: 'sweetener',
+              name: 'Sweetener',
+              minSelected: 0,
+              options: [
+                ProductOption(
+                  id: 'sugar',
+                  name: 'Sugar',
+                  price: 0,
+                  isAvailable: true,
+                  isDefault: false,
+                  maxQuantity: 5,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+
+    await tester.tap(find.bySemanticsLabel('Change the choice'));
+    await tester.pumpAndSettle();
+
+    final sheet = find.byType(ProductSheet);
+    expect(sheet, findsOneWidget);
+    // The line's size, milk and sugar, not the defaults; two pieces.
+    final radios = tester.widgetList<DSRadio>(
+      find.descendant(of: sheet, matching: find.byType(DSRadio)),
+    );
+    expect([for (final radio in radios) radio.selected], [false, true]);
+    final steppers = tester.widgetList<DSStepper>(
+      find.descendant(of: sheet, matching: find.byType(DSStepper)),
+    );
+    // Sugar twice, and two of the product.
+    expect([for (final stepper in steppers) stepper.value], [2, 2]);
+
+    // Large with oat milk, twice. Saving is not built: the button only
+    // shows the total, and nothing can be added from here.
+    final save = tester.widget<DSButton>(
+      find.descendant(of: sheet, matching: find.byType(DSButton)),
+    );
+    expect(save.label, 'Save · ֏4,200');
+    expect(save.onPressed, isNull);
+    expect(find.textContaining('Add ·'), findsNothing);
   });
 
   testWidgets('an empty cart says so and offers no time or tip', (

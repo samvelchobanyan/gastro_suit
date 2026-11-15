@@ -131,6 +131,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String saveWithTotal(String total) {
+    return 'Save · $total';
+  }
+
+  @override
   String portionGrams(String amount) {
     return '$amount g';
   }
@@ -191,6 +196,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cartAddProducts => 'Add products';
+
+  @override
+  String get cartLineEdit => 'Change the choice';
 
   @override
   String get cartLineRemove => 'Remove from the basket';

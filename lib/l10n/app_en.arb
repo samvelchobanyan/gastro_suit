@@ -176,6 +176,16 @@
       }
     }
   },
+  "saveWithTotal": "Save · {total}",
+  "@saveWithTotal": {
+    "description": "Product sheet opened from a cart line: the button that saves the changed choice, with what the chosen quantity costs, e.g. Save · ֏1,450",
+    "placeholders": {
+      "total": {
+        "type": "String",
+        "example": "֏1,450"
+      }
+    }
+  },
   "portionGrams": "{amount} g",
   "@portionGrams": {
     "description": "A portion in grams, e.g. 120 g",
@@ -273,6 +283,10 @@
   "cartAddProducts": "Add products",
   "@cartAddProducts": {
     "description": "Cart sheet: the link under the products that goes back to the menu"
+  },
+  "cartLineEdit": "Change the choice",
+  "@cartLineEdit": {
+    "description": "Cart sheet: what the pencil button of a line does, for screen readers"
   },
   "cartLineRemove": "Remove from the basket",
   "@cartLineRemove": {

@@ -8,6 +8,7 @@ import '../../../design_system/components/buttons/ds_button.dart';
 import '../../../design_system/components/inputs/ds_stepper.dart';
 import '../../../design_system/components/overlays/ds_tall_sheet.dart';
 import '../../../design_system/ds_extensions.dart';
+import '../../../domain/entities/cart.dart';
 import '../../../domain/entities/product.dart';
 import '../../../domain/state/cart_state.dart';
 import '../../../domain/state/menu_state.dart';
@@ -27,15 +28,20 @@ import 'widgets/recommended_products_rail.dart';
 ///
 /// The product is read from the branch's menu, which whoever opens the
 /// sheet already shows.
+///
+/// With [editing], a line of the cart, the sheet opens on what that line
+/// holds instead of the defaults, for the user to change it.
 Future<void> showProduct(
   BuildContext context, {
   required String branchId,
   required String productId,
+  CartLine? editing,
 }) => showDSTallSheet<void>(
   context: context,
   builder: (context, scroll) => ProductSheet(
     branchId: branchId,
     productId: productId,
+    editing: editing,
     scrollController: scroll,
   ),
 );
@@ -52,7 +58,7 @@ Future<void> quickAddProduct(
   required String branchId,
   required Product product,
 }) async {
-  final provider = productSelectionProvider(product);
+  final provider = productSelectionProvider((product: product, editing: null));
   if (!ref.read(provider).isComplete) {
     return showProduct(context, branchId: branchId, productId: product.id);
   }
@@ -77,17 +83,25 @@ Future<void> quickAddProduct(
 /// options, all scrolling; the quantity and the add button stay at the
 /// bottom.
 ///
+/// Opened from the cart on one of its lines ([editing]), it starts from
+/// what the line holds and its button saves instead of adding. Saving is
+/// not built yet: the button shows the total and takes no taps.
+///
 /// Opened with [showProduct], in a `showDSTallSheet`.
 class ProductSheet extends ConsumerWidget {
   const ProductSheet({
     super.key,
     required this.branchId,
     required this.productId,
+    this.editing,
     required this.scrollController,
   });
 
   final String branchId;
   final String productId;
+
+  /// The cart line being changed; null when the product is being added.
+  final CartLine? editing;
 
   /// The tall sheet's: the content scrolls with it.
   final ScrollController scrollController;
@@ -100,6 +114,7 @@ class ProductSheet extends ConsumerWidget {
         ? _ProductContent(
             branchId: branchId,
             product: product,
+            editing: editing,
             scrollController: scrollController,
           )
         : _NoProduct(loading: menu.isLoading);
@@ -135,11 +150,13 @@ class _ProductContent extends ConsumerStatefulWidget {
   const _ProductContent({
     required this.branchId,
     required this.product,
+    required this.editing,
     required this.scrollController,
   });
 
   final String branchId;
   final Product product;
+  final CartLine? editing;
   final ScrollController scrollController;
 
   @override
@@ -147,6 +164,9 @@ class _ProductContent extends ConsumerStatefulWidget {
 }
 
 class _ProductContentState extends ConsumerState<_ProductContent> {
+  ProductSelectionTarget get _target =>
+      (product: widget.product, editing: widget.editing);
+
   /// The add request is under way.
   var _adding = false;
 
@@ -156,7 +176,7 @@ class _ProductContentState extends ConsumerState<_ProductContent> {
   /// Adds the selection to the cart and closes the sheet. A failed add
   /// leaves the sheet open with the selection and says why.
   Future<void> _add() async {
-    final provider = productSelectionProvider(widget.product);
+    final provider = productSelectionProvider(_target);
     final choice = ref.read(provider.notifier).choice;
     final quantity = ref.read(provider).quantity;
     setState(() => _addError = null);
@@ -186,8 +206,9 @@ class _ProductContentState extends ConsumerState<_ProductContent> {
     final colors = context.colors;
     final product = widget.product;
     final scrollController = widget.scrollController;
-    final selection = ref.watch(productSelectionProvider(product));
-    final controller = ref.read(productSelectionProvider(product).notifier);
+    final editing = widget.editing != null;
+    final selection = ref.watch(productSelectionProvider(_target));
+    final controller = ref.read(productSelectionProvider(_target).notifier);
     final description = product.description;
     final size = product.sizes
         .where((s) => s.id == selection.sizeId)
@@ -310,11 +331,13 @@ class _ProductContentState extends ConsumerState<_ProductContent> {
                   ),
                 ),
                 // From one edge of the sheet to the other, so outside the
-                // padding of what is above.
-                RecommendedProductsRail(
-                  branchId: widget.branchId,
-                  productId: product.id,
-                ),
+                // padding of what is above. Not while a line is changed:
+                // the sheet is then about that line only.
+                if (!editing)
+                  RecommendedProductsRail(
+                    branchId: widget.branchId,
+                    productId: product.id,
+                  ),
                 const SizedBox(height: DSSpacing.base),
               ],
             ),
@@ -325,6 +348,7 @@ class _ProductContentState extends ConsumerState<_ProductContent> {
           onQuantityChanged: controller.setQuantity,
           adding: _adding,
           error: _addError,
+          editing: editing,
           onAdd: _add,
         ),
       ],
@@ -340,6 +364,7 @@ class _AddBar extends StatelessWidget {
     required this.onQuantityChanged,
     required this.adding,
     required this.error,
+    required this.editing,
     required this.onAdd,
   });
 
@@ -352,12 +377,16 @@ class _AddBar extends StatelessWidget {
 
   /// Why the last add was not accepted, shown over the controls.
   final String? error;
+
+  /// A cart line is being changed: the button saves instead of adding.
+  final bool editing;
   final VoidCallback onAdd;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final l10n = AppLocalizations.of(context);
+    final total = formatPrice(context, selection.total);
     return DecoratedBox(
       decoration: BoxDecoration(
         color: colors.bgSurface,
@@ -402,16 +431,22 @@ class _AddBar extends StatelessWidget {
                 ),
                 const SizedBox(width: DSSpacing.sm),
                 Expanded(
-                  child: DSButton(
-                    label: l10n.addWithTotal(
-                      formatPrice(context, selection.total),
-                    ),
-                    icon: PhosphorIcons.shoppingCartSimple(),
-                    size: DSButtonSize.sm,
-                    fullWidth: true,
-                    loading: adding,
-                    onPressed: selection.isComplete ? onAdd : null,
-                  ),
+                  child: editing
+                      ? DSButton(
+                          label: l10n.saveWithTotal(total),
+                          size: DSButtonSize.sm,
+                          fullWidth: true,
+                          // TODO: save the changed line to the cart.
+                          onPressed: null,
+                        )
+                      : DSButton(
+                          label: l10n.addWithTotal(total),
+                          icon: PhosphorIcons.shoppingCartSimple(),
+                          size: DSButtonSize.sm,
+                          fullWidth: true,
+                          loading: adding,
+                          onPressed: selection.isComplete ? onAdd : null,
+                        ),
                 ),
               ],
             ),

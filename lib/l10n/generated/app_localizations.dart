@@ -328,6 +328,12 @@ abstract class AppLocalizations {
   /// **'Add · {total}'**
   String addWithTotal(String total);
 
+  /// Product sheet opened from a cart line: the button that saves the changed choice, with what the chosen quantity costs, e.g. Save · ֏1,450
+  ///
+  /// In en, this message translates to:
+  /// **'Save · {total}'**
+  String saveWithTotal(String total);
+
   /// A portion in grams, e.g. 120 g
   ///
   /// In en, this message translates to:
@@ -429,6 +435,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add products'**
   String get cartAddProducts;
+
+  /// Cart sheet: what the pencil button of a line does, for screen readers
+  ///
+  /// In en, this message translates to:
+  /// **'Change the choice'**
+  String get cartLineEdit;
 
   /// Accessibility label of the button that removes a line of the cart
   ///

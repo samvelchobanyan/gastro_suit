@@ -131,6 +131,11 @@ class AppLocalizationsHy extends AppLocalizations {
   }
 
   @override
+  String saveWithTotal(String total) {
+    return 'Պահպանել · $total';
+  }
+
+  @override
   String portionGrams(String amount) {
     return '$amount գ';
   }
@@ -191,6 +196,9 @@ class AppLocalizationsHy extends AppLocalizations {
 
   @override
   String get cartAddProducts => 'Ավելացնել ապրանքներ';
+
+  @override
+  String get cartLineEdit => 'Փոխել ընտրությունը';
 
   @override
   String get cartLineRemove => 'Հեռացնել զամբյուղից';

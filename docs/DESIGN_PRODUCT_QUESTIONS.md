@@ -171,8 +171,13 @@ product owner answer:
 - While the cart loads a spinner is shown; a failed load shows the generic error with
   "Try again".
 - A line shows the price of one piece, as the design does. Its quantity does not go
-  under one; the bin removes it. The design's pencil (edit) is not shown: the API
-  changes only a line's quantity.
+  under one; the bin removes it.
+- The pencil opens the product's sheet on what the line holds (its size, options and
+  quantity) with "Save" in place of "Add" and without "Anything else?". The design
+  draws the pencil and gives it nothing to do. Saving is not built yet: the button
+  shows the total and takes no taps. The API changes only a line's quantity, so a
+  changed choice will be saved as a new line added and the old one removed, unless
+  the backend offers one call for it. A line the branch cannot make has no pencil.
 - A change the server refuses leaves the cart as it was and shows one line of error
   text over the order button.
 - The branch is a row with a caret that opens the branch picker; the design shows a

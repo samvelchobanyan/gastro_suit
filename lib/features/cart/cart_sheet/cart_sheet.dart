@@ -16,6 +16,7 @@ import '../../../domain/state/active_branch_state.dart';
 import '../../../domain/state/cart_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../branches/branch_picker_sheet/branch_picker_sheet.dart';
+import '../../menu/product_sheet/product_sheet.dart';
 import '../../../core/utils/error_text.dart';
 import '../../shared_widgets/load_error_row.dart';
 import '../../../core/utils/price_format.dart';
@@ -158,6 +159,12 @@ class _CartSheetState extends ConsumerState<CartSheet> {
                             line: line,
                             onQuantityChanged: (quantity) => _change(
                               (cart) => cart.setQuantity(line.id, quantity),
+                            ),
+                            onEdit: () => showProduct(
+                              context,
+                              branchId: cart!.branchId,
+                              productId: line.choice.productId,
+                              editing: line,
                             ),
                             onRemove: () =>
                                 _change((cart) => cart.removeLine(line.id)),

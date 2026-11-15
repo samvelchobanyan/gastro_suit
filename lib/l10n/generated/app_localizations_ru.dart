@@ -131,6 +131,11 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String saveWithTotal(String total) {
+    return 'Сохранить · $total';
+  }
+
+  @override
   String portionGrams(String amount) {
     return '$amount г';
   }
@@ -191,6 +196,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get cartAddProducts => 'Добавить товары';
+
+  @override
+  String get cartLineEdit => 'Изменить выбор';
 
   @override
   String get cartLineRemove => 'Убрать из корзины';
