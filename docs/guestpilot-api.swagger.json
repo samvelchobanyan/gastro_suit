@@ -1154,6 +1154,77 @@
         ]
       }
     },
+    "/api/v1/menu/items/{id}/recommended": {
+      "get": {
+        "description": "The set the merchant chose for the dish’s category in the panel — or for its group, when the category has none — in that order, each as the list routes answer it, at this location. Never the dish itself, nor what the app does not show. A stopped dish is answered with `isAvailable: false`. `[]` when the category has no set. No POS call.",
+        "operationId": "MenuController_getRecommended",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "restaurantId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "branchId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ItemResponse"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Any other refusal: a `code` to act on and a `message` to show",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          }
+        },
+        "summary": "The dishes recommended under a dish",
+        "tags": [
+          "Menu"
+        ]
+      }
+    },
     "/api/v1/menu/search": {
       "get": {
         "operationId": "MenuController_search",
@@ -1663,6 +1734,7 @@
     },
     "/api/v1/cart/branch": {
       "post": {
+        "description": "The basket keeps its lines, each priced at the new location. A line that location cannot sell stays, with `available: false` and its `unavailableReason`; checkout refuses it until it is removed, and moving back makes it orderable again. No basket, or an empty one: an empty basket there. To empty it, `DELETE /cart`. Ask `GET /cart/branch-preview` first to show the guest what moves.",
         "operationId": "CartController_switchLocation",
         "parameters": [],
         "requestBody": {
@@ -1677,7 +1749,7 @@
         },
         "responses": {
           "201": {
-            "description": "New empty cart for the selected location created",
+            "description": "The basket, at the new location",
             "content": {
               "application/json": {
                 "schema": {
@@ -1706,6 +1778,16 @@
               }
             }
           },
+          "404": {
+            "description": "Location not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
           "default": {
             "description": "Any other refusal: a `code` to act on and a `message` to show",
             "content": {
@@ -1722,7 +1804,75 @@
             "bearer": []
           }
         ],
-        "summary": "Switch location (clears cart)",
+        "summary": "Move the basket to another location",
+        "tags": [
+          "Cart"
+        ]
+      }
+    },
+    "/api/v1/cart/branch-preview": {
+      "get": {
+        "description": "What `POST /cart/branch` would make of it: each line at that location’s price, a line it cannot sell with `available: false` and why, and the total. For *\"2 of 5 items are not sold there — move anyway?\"*. No basket, or an empty one: an empty basket at that location.",
+        "operationId": "CartController_previewMove",
+        "parameters": [
+          {
+            "name": "branchId",
+            "required": true,
+            "in": "query",
+            "description": "The location the basket would move to.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Location not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Any other refusal: a `code` to act on and a `message` to show",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "The basket as it would be at another location — nothing is moved",
         "tags": [
           "Cart"
         ]
@@ -6042,11 +6192,11 @@
           },
           "maxQuantity": {
             "type": "number",
-            "description": "On a group: how many they may choose. 1 is a radio group. Absent: no limit."
+            "description": "On a group: how many they may choose, quantities added together. 1 is a radio group. Absent: no limit. On an option: the POS’s own limit, `0` meaning none — read `maxPerDish` instead."
           },
           "defaultQuantity": {
             "type": "number",
-            "description": "On an option: above 0, pre-select it."
+            "description": "On an option: above 0, pre-select it — at this quantity, where `maxPerDish` allows more than one."
           }
         }
       },
@@ -6056,7 +6206,7 @@
           "id": {
             "type": "string",
             "example": "mod-vanilla",
-            "description": "What `modifiers: [{ id }]` on an add takes."
+            "description": "What `modifiers: [{ id, quantity }]` on an add takes."
           },
           "name": {
             "type": "string",
@@ -6069,12 +6219,28 @@
           },
           "restrictions": {
             "$ref": "#/components/schemas/ModifierRestrictionsResponse"
+          },
+          "maxPerDish": {
+            "type": "integer",
+            "example": 5,
+            "description": "How many of it one dish may carry. `1`: a tick (or a radio). Above `1`: a quantity selector, 1 to this — three spoons of sugar is `{ id, quantity: 3 }`. The group’s `maxQuantity` still caps the group’s options added together."
+          },
+          "portion": {
+            "nullable": true,
+            "description": "On a size (`kind: \"size\"`) only: how much that size is — the design’s *300 ml*. `null`: the kitchen entered none. Absent on an ordinary option.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PortionResponse"
+              }
+            ]
           }
         },
         "required": [
           "id",
           "name",
-          "price"
+          "price",
+          "maxPerDish"
         ]
       },
       "ModifierGroupResponse": {
@@ -6375,18 +6541,25 @@
           },
           "price": {
             "type": "integer",
-            "example": 300
+            "example": 300,
+            "description": "One of it. The line carries `price × quantity`."
           },
           "groupId": {
             "type": "string",
             "example": "mod-group-extras"
+          },
+          "quantity": {
+            "type": "integer",
+            "example": 2,
+            "description": "How many of it one dish carries — the *×2* of *Sugar ×2*."
           }
         },
         "required": [
           "id",
           "name",
           "price",
-          "groupId"
+          "groupId",
+          "quantity"
         ]
       },
       "ItemSummaryResponse": {
@@ -6495,6 +6668,8 @@
               "item_has_no_options",
               "options_required",
               "options_too_many",
+              "option_quantity_too_many",
+              "option_quantity_invalid",
               null
             ],
             "description": "Why not — the code adding that line now would be refused with. `null` when `available`."
@@ -6562,10 +6737,14 @@
           },
           "modifiers": {
             "type": "array",
-            "description": "The options the guest chose, as `[{ id }]` — option ids from the item’s `modifiersJson[].items[].id`, one entry per option. Names and prices are the server’s: anything else sent is ignored. Omit it for an item with no options, or when nothing is chosen from optional groups.",
+            "description": "The options the guest chose, as `[{ id, quantity }]` — option ids from the item’s `modifiersJson[].items[].id`, one entry per option. `quantity` is how many of it one dish carries (three spoons of sugar: `3`), a whole number from 1 to the option’s `maxPerDish`; omitted, it is 1. Names and prices are the server’s: anything else sent is ignored. Omit the list for an item with no options, or when nothing is chosen from optional groups.",
             "example": [
               {
                 "id": "mod-option-1"
+              },
+              {
+                "id": "mod-sugar",
+                "quantity": 3
               }
             ]
           }
@@ -6592,7 +6771,7 @@
         "properties": {
           "branchId": {
             "type": "string",
-            "description": "Target location ID — existing cart will be abandoned (PRD §4.3)"
+            "description": "The location to move the basket to — its lines go with it, priced there."
           }
         },
         "required": [
@@ -7088,14 +7267,20 @@
           "price": {
             "type": "number",
             "example": 0,
-            "description": "What it adds today. A whole number of the currency."
+            "description": "What one of it adds today. A whole number of the currency."
+          },
+          "quantity": {
+            "type": "integer",
+            "example": 1,
+            "description": "How many of it the dish carried — what `POST /cart/items` takes in `modifiers[].quantity`."
           }
         },
         "required": [
           "id",
           "groupId",
           "name",
-          "price"
+          "price",
+          "quantity"
         ]
       },
       "BuyAgainResponse": {
@@ -9126,7 +9311,9 @@
               "option_not_offered",
               "item_has_no_options",
               "options_required",
-              "options_too_many"
+              "options_too_many",
+              "option_quantity_too_many",
+              "option_quantity_invalid"
             ],
             "description": "Why — the code adding that line now would be refused with."
           }
@@ -9195,6 +9382,8 @@
               "option_unavailable",
               "options_required",
               "options_too_many",
+              "option_quantity_too_many",
+              "option_quantity_invalid",
               "cart_item_not_found",
               "cart_empty",
               "cart_too_large",
