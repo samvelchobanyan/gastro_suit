@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../core/network/app_exception.dart';
+import '../network/app_exception.dart';
 import '../../l10n/generated/app_localizations.dart';
 
 /// One sentence about a failed action: the server's own when there is one

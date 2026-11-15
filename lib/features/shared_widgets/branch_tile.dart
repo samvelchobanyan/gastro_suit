@@ -4,7 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../design_system/components/image/ds_network_image.dart';
 import '../../design_system/ds_extensions.dart';
 import '../../domain/entities/branch.dart';
-import 'branch_distance.dart';
+import '../../core/utils/branch_distance.dart';
 import 'branch_hours_row.dart';
 
 /// One branch in a list (handoff `BranchCard`): photo, name, distance,

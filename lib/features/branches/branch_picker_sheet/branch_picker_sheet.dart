@@ -12,7 +12,7 @@ import '../../../domain/state/cities_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../cart/replace_cart_dialog/replace_cart_dialog.dart';
 import '../../shared_widgets/branch_select_tile.dart';
-import '../../shared_widgets/error_text.dart';
+import '../../../core/utils/error_text.dart';
 import '../../shared_widgets/load_error_row.dart';
 import '../branch_filter.dart';
 import '../widgets/branch_area_filter.dart';

@@ -6,7 +6,7 @@ import '../../../core/auth/auth_status.dart';
 import '../../../core/navigation/app_routes.dart';
 import '../../../design_system/ds_extensions.dart';
 import '../../../l10n/generated/app_localizations.dart';
-import '../../shared_widgets/error_text.dart';
+import '../../../core/utils/error_text.dart';
 import 'login_controller.dart';
 
 /// For an action that needs an account: a guest is sent to the sign-in

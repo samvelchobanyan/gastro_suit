@@ -21,14 +21,18 @@ import '../../../cart/cart_sheet/cart_sheet.dart';
 class CartBar extends ConsumerWidget {
   const CartBar({super.key});
 
-  /// What the bar takes of the screen's height, its bottom margin
-  /// included: the room a scroll view under it leaves at its end.
-  static const height =
-      DSSpacing.sm * 2 +
-      DSSizes.cartBarLabelHeight +
-      DSSpacing.xs +
-      DSSizes.inputHeightCompact +
-      DSSpacing.base;
+  /// What the bar takes of the screen's height at the user's text size,
+  /// its bottom margin included: the room a scroll view under it leaves at
+  /// its end.
+  static double heightFor(TextScaler textScaler) {
+    final label = DSTypography.bodySm;
+    return DSSizes.borderWidthDefault * 2 +
+        DSSpacing.sm * 2 +
+        (textScaler.scale(label.fontSize!) * label.height!).ceilToDouble() +
+        DSSpacing.xs +
+        DSSizes.inputHeightCompact +
+        DSSpacing.base;
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -124,17 +128,14 @@ class _BranchField extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: DSSizes.cartBarLabelHeight,
-              child: Text(
-                label,
-                maxLines: 1,
-                style: DSTypography.bodySm.copyWith(
-                  color: colors.textSecondary,
-                ),
-              ),
+            Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: DSTypography.bodySm.copyWith(color: colors.textSecondary),
             ),
             const SizedBox(height: DSSpacing.xs),
             Container(

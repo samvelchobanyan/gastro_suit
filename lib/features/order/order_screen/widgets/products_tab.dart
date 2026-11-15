@@ -62,7 +62,11 @@ class ProductsTab extends ConsumerWidget {
               ),
               MenuBlock(branchId: branch.id),
               // Room for the last products to scroll clear of the bar.
-              const SliverToBoxAdapter(child: SizedBox(height: CartBar.height)),
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: CartBar.heightFor(MediaQuery.textScalerOf(context)),
+                ),
+              ),
             ],
           ),
         ),

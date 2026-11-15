@@ -280,6 +280,35 @@ void main() {
     expect(find.byType(DSAmountField), findsNothing);
   });
 
+  testWidgets('the keyboard covers neither the tip field nor the order bar', (
+    tester,
+  ) async {
+    await openCart(tester, cart: cartOf([cake]));
+    await tester.scrollUntilVisible(
+      find.text('No tip'),
+      100,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.ensureVisible(find.text('Other'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Other'));
+    await tester.pumpAndSettle();
+
+    // The keyboard takes the screen from 500 down.
+    tester.view.viewInsets = const FakeViewPadding(bottom: 300);
+    await tester.showKeyboard(find.byType(DSAmountField));
+    await tester.pumpAndSettle();
+
+    expect(
+      tester.getRect(find.byType(DSAmountField)).bottom,
+      lessThanOrEqualTo(500),
+    );
+    expect(
+      tester.getRect(find.byType(DSButton)).bottom,
+      lessThanOrEqualTo(500),
+    );
+  });
+
   testWidgets('a branch that takes no tips shows no tip part', (tester) async {
     await openCart(tester, cart: cartOf([cake]), acceptsTips: false);
 

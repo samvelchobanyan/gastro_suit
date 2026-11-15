@@ -20,7 +20,7 @@ import '../../menu/menu_block/menu_block.dart';
 import '../../menu/menu_block/menu_block_skeleton.dart';
 import '../../shared_widgets/branch_hours_row.dart';
 import '../../shared_widgets/load_error_row.dart';
-import '../../shared_widgets/price_text.dart';
+import '../../../core/utils/price_format.dart';
 import '../branch_map_sheet/branch_map_sheet.dart';
 import '../branch_review_sheet/branch_review_sheet.dart';
 import 'widgets/branch_header.dart';

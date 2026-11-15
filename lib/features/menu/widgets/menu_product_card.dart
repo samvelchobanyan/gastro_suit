@@ -5,7 +5,7 @@ import '../../../design_system/components/buttons/ds_icon_button.dart';
 import '../../../design_system/ds_extensions.dart';
 import '../../../domain/entities/product.dart';
 import '../../../l10n/generated/app_localizations.dart';
-import '../../shared_widgets/price_text.dart';
+import '../../../core/utils/price_format.dart';
 import '../../shared_widgets/product_card.dart';
 
 /// A product in the menu grid (handoff `ProductMenuCard`): a dark card with

@@ -9,7 +9,7 @@ import '../../../design_system/components/overlays/ds_bottom_sheet.dart';
 import '../../../design_system/ds_extensions.dart';
 import '../../../domain/entities/branch_review.dart';
 import '../../../l10n/generated/app_localizations.dart';
-import '../../shared_widgets/error_text.dart';
+import '../../../core/utils/error_text.dart';
 import '../../shared_widgets/load_error_row.dart';
 import 'branch_review_controller.dart';
 

@@ -21,9 +21,10 @@ List<DateTime> pickupSlots(DateTime now, {DateTime? closesAt}) {
   return slots;
 }
 
-/// When [branch] closes today, on the device's clock; null when it has no
+/// When [branch] closes next, on the device's clock; null when it has no
 /// hours for today. A closing time not after the opening time runs past
-/// midnight.
+/// midnight: before that time of the night the branch closes today, after
+/// it tomorrow.
 DateTime? closingTime(Branch? branch, DateTime now) {
   final today = branch?.today;
   if (today is! TodayOpen) return null;
@@ -31,8 +32,9 @@ DateTime? closingTime(Branch? branch, DateTime now) {
   final closes = _minutes(today.closes);
   if (opens == null || closes == null) return null;
   final midnight = DateTime(now.year, now.month, now.day);
+  final closesToday = closes > opens || now.hour * 60 + now.minute < closes;
   return midnight.add(
-    Duration(minutes: closes > opens ? closes : closes + 24 * 60),
+    Duration(minutes: closesToday ? closes : closes + 24 * 60),
   );
 }
 

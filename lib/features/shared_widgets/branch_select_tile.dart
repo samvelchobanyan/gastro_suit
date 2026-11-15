@@ -5,7 +5,7 @@ import '../../design_system/components/image/ds_network_image.dart';
 import '../../design_system/components/inputs/ds_radio.dart';
 import '../../design_system/ds_extensions.dart';
 import '../../domain/entities/branch.dart';
-import 'branch_distance.dart';
+import '../../core/utils/branch_distance.dart';
 
 /// A branch row with a radio mark, for picking one branch out of a list
 /// (handoff `BranchSelectorCard`): photo, name, distance, address.

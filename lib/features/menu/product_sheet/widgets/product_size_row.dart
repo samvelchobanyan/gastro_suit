@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../design_system/ds_extensions.dart';
 import '../../../../domain/entities/product.dart';
-import '../../../shared_widgets/price_text.dart';
+import '../../../../core/utils/price_format.dart';
 
 /// The sizes of a product side by side, equally wide, one of them selected
 /// (handoff `SizeSelector`). A size the branch has run out of is dimmed and

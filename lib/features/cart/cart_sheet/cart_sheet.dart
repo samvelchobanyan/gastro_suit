@@ -16,9 +16,9 @@ import '../../../domain/state/active_branch_state.dart';
 import '../../../domain/state/cart_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../branches/branch_picker_sheet/branch_picker_sheet.dart';
-import '../../shared_widgets/error_text.dart';
+import '../../../core/utils/error_text.dart';
 import '../../shared_widgets/load_error_row.dart';
-import '../../shared_widgets/price_text.dart';
+import '../../../core/utils/price_format.dart';
 import 'cart_checkout_controller.dart';
 import 'widgets/cart_line_tile.dart';
 
@@ -360,19 +360,19 @@ class _TipRow extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final checkout = ref.watch(cartCheckoutProvider);
     final controller = ref.read(cartCheckoutProvider.notifier);
-    // The sign after the amount, as the design writes a tip: "100֏".
-    final currency = formatPrice(context, 0).replaceAll('0', '');
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.fromLTRB(
+          padding: EdgeInsets.fromLTRB(
             DSSpacing.base,
             0,
             DSSpacing.base,
-            DSSpacing.lg,
+            // The field under the row is closer to it than a part of its
+            // own.
+            checkout.isCustomTip ? DSSpacing.md : DSSpacing.lg,
           ),
           child: Row(
             children: [
@@ -384,7 +384,9 @@ class _TipRow extends ConsumerWidget {
               for (final amount in CartCheckoutController.tipPresets) ...[
                 const SizedBox(width: DSSpacing.sm),
                 DSTipSelector(
-                  label: '$amount$currency',
+                  // The sign after the amount, as the design writes a
+                  // tip: "100֏".
+                  label: '$amount$currencySign',
                   selected: !checkout.isCustomTip && checkout.tip == amount,
                   onTap: () => controller.selectTip(amount),
                 ),
@@ -409,15 +411,11 @@ class _TipRow extends ConsumerWidget {
               DSSpacing.base,
               DSSpacing.lg,
             ),
-            // Closer to the row above than a part of its own.
-            child: Transform.translate(
-              offset: const Offset(0, -DSSpacing.md),
-              child: DSAmountField(
-                controller: customTip,
-                onChanged: controller.setCustomTip,
-                hintText: l10n.cartTipHint,
-                suffix: currency,
-              ),
+            child: DSAmountField(
+              controller: customTip,
+              onChanged: controller.setCustomTip,
+              hintText: l10n.cartTipHint,
+              suffix: currencySign,
             ),
           ),
       ],

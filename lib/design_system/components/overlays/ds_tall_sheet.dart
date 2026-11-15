@@ -10,6 +10,9 @@ import '../../ds_extensions.dart';
 /// dragged down from the top of that content, or flung down, the sheet
 /// closes; a short drag lets it come back. What the content keeps outside
 /// the scroll view (a bar at the bottom) stays in place.
+///
+/// The sheet ends where the keyboard begins, so a field in it and the bar
+/// at its bottom stay in sight while the user types.
 Future<T?> showDSTallSheet<T>({
   required BuildContext context,
   required Widget Function(BuildContext context, ScrollController scroll)
@@ -30,18 +33,21 @@ Future<T?> showDSTallSheet<T>({
     constraints: BoxConstraints(
       maxHeight: screen.size.height - screen.padding.top - DSSpacing.xl,
     ),
-    builder: (_) => DraggableScrollableSheet(
-      expand: false,
-      initialChildSize: 1,
-      minChildSize: _closeBelow,
-      snap: true,
-      builder: (context, scroll) => ClipRRect(
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(DSRadius.lg),
-        ),
-        child: ColoredBox(
-          color: colors.bgSurface,
-          child: builder(context, scroll),
+    builder: (context) => Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
+      child: DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 1,
+        minChildSize: _closeBelow,
+        snap: true,
+        builder: (context, scroll) => ClipRRect(
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(DSRadius.lg),
+          ),
+          child: ColoredBox(
+            color: colors.bgSurface,
+            child: builder(context, scroll),
+          ),
         ),
       ),
     ),

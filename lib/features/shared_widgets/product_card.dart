@@ -6,7 +6,7 @@ import '../../design_system/components/image/ds_network_image.dart';
 import '../../design_system/ds_extensions.dart';
 import '../../domain/entities/product.dart';
 import '../../l10n/generated/app_localizations.dart';
-import 'price_text.dart';
+import '../../core/utils/price_format.dart';
 
 /// A product in a sideways rail (handoff `ProductVerticalCard`): a rounded
 /// photo with the name and the price under it. As wide as its parent makes

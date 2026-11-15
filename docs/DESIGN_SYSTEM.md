@@ -184,7 +184,7 @@ with real content (see §7).
 | `DSNetworkImage` | — | A cached network picture; a recessed fill while loading, with an image icon on error or without an address |
 | `DSStatusPill` | `StatusPill` | A short state label on a tonal capsule (Open / Closed); tones `success`, `error` so far — the handoff's `warning` and `neutral` are added when used |
 | `DSSectionHeader` | `SectionHeader` | A section title (`h3`); the handoff's optional action button is used by no page, so it is not built |
-| `showDSTallSheet`, `DSSheetHandle` | the frame of `ProductOverlay` and `BasketOverlay` | A sheet over the whole app that starts 32 under the status bar, with 16 top corners. Its content scrolls with the controller it is given; a drag down from the top of the content, or a fling, closes it. The handle is drawn by the content: on the surface, or over a photo |
+| `showDSTallSheet`, `DSSheetHandle` | the frame of `ProductOverlay` and `BasketOverlay` | A sheet over the whole app that starts 32 under the status bar, with 16 top corners. Its content scrolls with the controller it is given; a drag down from the top of the content, or a fling, closes it. It ends where the keyboard begins. The handle is drawn by the content: on the surface, or over a photo |
 | `DSTimePicker` | `TimePicker` | A row of pills, 40 high, one picked; as wide as its pills, the screen scrolls it sideways. Keeps no time of its own. The handoff's label and disabled slots are added when used |
 | `DSTipSelector` | `TipSelector` | One tile of a row of amounts, at least 80 wide, in the brand colour when chosen |
 | `DSAmountField` | `Input`, 40 high | A one-line field for a whole amount: digits only, the currency sign at its end |

@@ -5,7 +5,7 @@ import '../../../../design_system/components/inputs/ds_radio.dart';
 import '../../../../design_system/components/layout/ds_section_header.dart';
 import '../../../../design_system/ds_extensions.dart';
 import '../../../../domain/entities/product.dart';
-import '../../../shared_widgets/price_text.dart';
+import '../../../../core/utils/price_format.dart';
 
 /// One question of a product with its answers (handoff `CheckboxAddOn`,
 /// `RadioAddOn` and their `Simple` variants): the group's name over a row

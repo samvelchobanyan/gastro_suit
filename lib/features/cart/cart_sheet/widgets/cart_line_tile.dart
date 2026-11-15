@@ -7,7 +7,7 @@ import '../../../../design_system/components/inputs/ds_stepper.dart';
 import '../../../../design_system/ds_extensions.dart';
 import '../../../../domain/entities/cart.dart';
 import '../../../../l10n/generated/app_localizations.dart';
-import '../../../shared_widgets/price_text.dart';
+import '../../../../core/utils/price_format.dart';
 
 /// One line of the cart (handoff `ProductBasket`): the product's photo,
 /// name, what was chosen for it and the price of one; under them a button

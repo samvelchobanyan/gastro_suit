@@ -90,6 +90,21 @@ void main() {
       expect(closes, DateTime(2026, 11, 14, 2, 0));
     });
 
+    test('is today when asked after midnight, before the closing hour', () {
+      final closes = closingTime(
+        branch(
+          const TodayHours.open(
+            opens: '10:00',
+            closes: '02:00',
+            isOpenNow: true,
+          ),
+        ),
+        DateTime(2026, 11, 14, 0, 30),
+      );
+
+      expect(closes, DateTime(2026, 11, 14, 2, 0));
+    });
+
     test('is unknown without hours for today', () {
       expect(closingTime(branch(null), now), isNull);
       expect(closingTime(branch(const TodayHours.closed()), now), isNull);

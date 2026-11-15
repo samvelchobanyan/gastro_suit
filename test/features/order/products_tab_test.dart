@@ -16,6 +16,7 @@ import 'package:gastro_suit/features/cart/cart_sheet/cart_sheet.dart';
 import 'package:gastro_suit/features/menu/widgets/menu_product_card.dart';
 import 'package:gastro_suit/features/order/order_screen/widgets/products_tab.dart';
 import 'package:gastro_suit/features/shared_widgets/product_card.dart';
+import 'package:gastro_suit/features/order/order_screen/widgets/cart_bar.dart';
 import 'package:gastro_suit/l10n/generated/app_localizations.dart';
 
 import '../../fakes/fake_cart_controller.dart';
@@ -106,6 +107,20 @@ void main() {
 
     expect(find.byType(CartSheet), findsOneWidget);
     expect(find.text('Order · ֏3,750'), findsOneWidget);
+  });
+
+  testWidgets('the cart bar is as tall as it says at a larger text size', (
+    tester,
+  ) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await pumpTab(tester, [product('cake')]);
+
+    expect(tester.takeException(), isNull);
+    expect(
+      tester.getSize(find.byType(CartBar)).height,
+      CartBar.heightFor(const TextScaler.linear(2)),
+    );
   });
 
   testWidgets('an empty cart puts no count on the cart button', (tester) async {

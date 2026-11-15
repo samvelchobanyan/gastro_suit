@@ -84,9 +84,6 @@ abstract final class DSSizes {
   static const double cartLineImage = 64;
   static const double tipSelectorMinWidth = 80;
 
-  /// The line of the label over the cart bar's branch field.
-  static const double cartBarLabelHeight = 16;
-
   /// How much a glass surface blurs what is behind it (`--glass-blur`).
   static const double glassBlur = 16;
 
