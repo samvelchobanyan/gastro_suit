@@ -1,6 +1,7 @@
 import '../../core/locale/content_language.dart';
 import '../../core/network/api_client.dart';
 import '../../domain/entities/menu.dart';
+import '../../domain/entities/product.dart';
 import '../../domain/repositories/menu_repository.dart';
 import '../dto/json_list.dart';
 import '../dto/menu_category_dto.dart';
@@ -34,5 +35,22 @@ class MenuRepositoryImpl implements MenuRepository {
           ProductDto.fromJson(json).toDomain(language),
       ],
     );
+  }
+
+  @override
+  Future<List<Product>> getRecommended({
+    required String restaurantId,
+    required String branchId,
+    required String productId,
+    required ContentLanguage language,
+  }) async {
+    final items = await _api.get(
+      '/menu/items/$productId/recommended',
+      query: {'restaurantId': restaurantId, 'branchId': branchId},
+    );
+    return [
+      for (final json in jsonObjectList(items))
+        ProductDto.fromJson(json).toDomain(language),
+    ];
   }
 }

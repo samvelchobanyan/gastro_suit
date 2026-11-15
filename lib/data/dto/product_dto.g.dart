@@ -53,6 +53,10 @@ ModifierOptionDto _$ModifierOptionDtoFromJson(Map<String, dynamic> json) =>
           : ModifierRestrictionsDto.fromJson(
               json['restrictions'] as Map<String, dynamic>,
             ),
+      maxPerDish: (json['maxPerDish'] as num?)?.toInt(),
+      portion: json['portion'] == null
+          ? null
+          : PortionDto.fromJson(json['portion'] as Map<String, dynamic>),
     );
 
 ModifierRestrictionsDto _$ModifierRestrictionsDtoFromJson(

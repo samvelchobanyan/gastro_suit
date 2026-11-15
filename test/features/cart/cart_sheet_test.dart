@@ -30,6 +30,13 @@ void main() {
       size: ChosenSize(id: 'l', name: 'Large'),
       options: [
         ChosenOption(id: 'oat', groupId: 'milk', name: 'Oat milk', price: 250),
+        ChosenOption(
+          id: 'sugar',
+          groupId: 'sweetener',
+          name: 'Sugar',
+          price: 0,
+          quantity: 2,
+        ),
       ],
     ),
     quantity: 2,
@@ -123,8 +130,9 @@ void main() {
     expect(find.text('Basket'), findsOneWidget);
     expect(find.text('Northern Avenue'), findsOneWidget);
     expect(find.text('YOUR ORDER (3)'), findsOneWidget);
-    // What was chosen, the size first, and the price of one.
-    expect(find.text('Large · Oat milk'), findsOneWidget);
+    // What was chosen, the size first, an option taken twice with its
+    // count, and the price of one.
+    expect(find.text('Large · Oat milk · Sugar ×2'), findsOneWidget);
     expect(find.text('֏2,100'), findsOneWidget);
     expect(find.text('Cheesecake'), findsOneWidget);
 

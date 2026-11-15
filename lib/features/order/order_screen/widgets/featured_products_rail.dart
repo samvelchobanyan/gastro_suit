@@ -6,7 +6,7 @@ import '../../../../design_system/ds_extensions.dart';
 import '../../../../domain/state/menu_state.dart';
 import '../../../../l10n/generated/app_localizations.dart';
 import '../../../menu/product_sheet/product_sheet.dart';
-import '../../../shared_widgets/product_card.dart';
+import '../../../menu/widgets/product_cards_rail.dart';
 
 /// The products a branch features, in a sideways rail over its menu.
 ///
@@ -36,33 +36,15 @@ class FeaturedProductsRail extends ConsumerWidget {
             title: AppLocalizations.of(context).featuredProducts,
           ),
         ),
-        SizedBox(
-          height: ProductCard.heightFor(
-            DSSizes.productRailCardWidth,
-            MediaQuery.textScalerOf(context),
-          ),
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: DSLayout.margin),
-            itemCount: featured.length,
-            separatorBuilder: (_, _) => const SizedBox(width: DSSpacing.sm),
-            itemBuilder: (_, i) => SizedBox(
-              width: DSSizes.productRailCardWidth,
-              child: ProductCard(
-                product: featured[i],
-                onTap: () => showProduct(
-                  context,
-                  branchId: branchId,
-                  productId: featured[i].id,
-                ),
-                onAdd: () => quickAddProduct(
-                  context,
-                  ref,
-                  branchId: branchId,
-                  product: featured[i],
-                ),
-              ),
-            ),
+        ProductCardsRail(
+          products: featured,
+          onTap: (product) =>
+              showProduct(context, branchId: branchId, productId: product.id),
+          onAdd: (product) => quickAddProduct(
+            context,
+            ref,
+            branchId: branchId,
+            product: product,
           ),
         ),
         const SizedBox(height: DSSpacing.lg),

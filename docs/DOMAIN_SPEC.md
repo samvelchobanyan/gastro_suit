@@ -40,15 +40,17 @@ A product exists only within a branch menu; buying is always a product at a bran
 - option groups — a list of `ProductOptionGroup`, empty when the product has no add-ons
 
 **ProductSize** (value, part of a product)
-- identity, name, final price of that size, availability, whether it is the default
+- identity, name, final price of that size, availability, whether it is the default,
+  its own portion (optional)
 
 **ProductOptionGroup** (value, part of a product) — one question asked when ordering
 ("Which milk?", "Any syrup?")
 - identity, name, minimum and maximum number of options that may be chosen (no maximum
-  means no limit), its options
+  means no limit; an option taken several times counts as many), its options
 
 **ProductOption** (value, part of a group) — one answer to that question
-- identity, name, surcharge (0 means free), availability, whether it is pre-selected
+- identity, name, surcharge (0 means free), availability, whether it is pre-selected,
+  how many of it one product may carry (1 for an option that is chosen or not)
 
 ### 1.3 Rules
 
@@ -58,14 +60,15 @@ A product exists only within a branch menu; buying is always a product at a bran
   size price (or the base price) plus the surcharges of the chosen options.
 - A group is required when its minimum is at least 1, and single-choice when its maximum
   is 1. A group is paid when any of its options has a surcharge.
-- An option is selected at most once; there is no quantity per option.
+- An option is chosen with a quantity, from 1 up to what the option allows; most
+  options allow 1. Its surcharge is per piece.
+- With sizes, the portion is the chosen size's; the product's own portion describes a
+  product without sizes.
 - Favourites are not part of the product: they are the user's set of product ids,
   resolved against the loaded menu.
 
 ### 1.4 Open questions for the backend
 
-- Quantity per add-on (shown in the design, not supported by the API).
-- Portion per size (the API has one portion per product).
 - A fixed shape for nutrition and ingredients (both are free-form POS objects).
 - A product in more than one category (the API allows one).
 
@@ -165,9 +168,10 @@ server and belongs to one branch, the active branch.
 - Prices and availability in the cart are the server's, re-checked on every read. Every
   change returns the whole cart, which replaces the one held.
 - An order cannot be placed while any line is unavailable.
-- The cart belongs to the active branch. Until the backend can move it, a change of
-  the active branch clears it, after the user confirms (`DESIGN_PRODUCT_QUESTIONS.md`
-  §4).
+- The cart belongs to the active branch and follows it: changing the active branch
+  moves the cart, its lines priced and checked at the new branch. Adding a product of
+  another branch replaces the cart instead, after the user confirms
+  (`DESIGN_PRODUCT_QUESTIONS.md` §4).
 - Only a signed-in user has a cart; a guest signs in before adding.
 
 ---

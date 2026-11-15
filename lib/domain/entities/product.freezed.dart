@@ -16,7 +16,8 @@ mixin _$Product {
 
  String get id; String get categoryId; String get name; String? get description; String? get imageUrl;/// The base price; with [sizes], the price of the smallest size.
  int get price;/// False: the branch has stopped it. Shown greyed; the cart refuses it.
- bool get isAvailable; Portion? get portion; bool get isFeatured;/// From the cheapest; empty when the product has one size.
+ bool get isAvailable;/// How much one portion is. With [sizes] each size has its own.
+ Portion? get portion; bool get isFeatured;/// From the cheapest; empty when the product has one size.
  List<ProductSize> get sizes;/// Empty when the product has no add-ons.
  List<ProductOptionGroup> get optionGroups;
 /// Create a copy of Product
@@ -244,6 +245,7 @@ class _Product extends Product {
 @override final  int price;
 /// False: the branch has stopped it. Shown greyed; the cart refuses it.
 @override final  bool isAvailable;
+/// How much one portion is. With [sizes] each size has its own.
 @override final  Portion? portion;
 @override final  bool isFeatured;
 /// From the cheapest; empty when the product has one size.
@@ -349,7 +351,8 @@ mixin _$ProductSize {
 
  String get id; String get name; int get price;/// False: the branch has run out of it.
  bool get isAvailable;/// Exactly one size of a product is the default.
- bool get isDefault;
+ bool get isDefault;/// How much this size is; null when the kitchen entered none.
+ Portion? get portion;
 /// Create a copy of ProductSize
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -360,16 +363,16 @@ $ProductSizeCopyWith<ProductSize> get copyWith => _$ProductSizeCopyWithImpl<Prod
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProductSize&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.price, price) || other.price == price)&&(identical(other.isAvailable, isAvailable) || other.isAvailable == isAvailable)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProductSize&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.price, price) || other.price == price)&&(identical(other.isAvailable, isAvailable) || other.isAvailable == isAvailable)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault)&&(identical(other.portion, portion) || other.portion == portion));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,price,isAvailable,isDefault);
+int get hashCode => Object.hash(runtimeType,id,name,price,isAvailable,isDefault,portion);
 
 @override
 String toString() {
-  return 'ProductSize(id: $id, name: $name, price: $price, isAvailable: $isAvailable, isDefault: $isDefault)';
+  return 'ProductSize(id: $id, name: $name, price: $price, isAvailable: $isAvailable, isDefault: $isDefault, portion: $portion)';
 }
 
 
@@ -380,11 +383,11 @@ abstract mixin class $ProductSizeCopyWith<$Res>  {
   factory $ProductSizeCopyWith(ProductSize value, $Res Function(ProductSize) _then) = _$ProductSizeCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, int price, bool isAvailable, bool isDefault
+ String id, String name, int price, bool isAvailable, bool isDefault, Portion? portion
 });
 
 
-
+$PortionCopyWith<$Res>? get portion;
 
 }
 /// @nodoc
@@ -397,17 +400,30 @@ class _$ProductSizeCopyWithImpl<$Res>
 
 /// Create a copy of ProductSize
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? price = null,Object? isAvailable = null,Object? isDefault = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? price = null,Object? isAvailable = null,Object? isDefault = null,Object? portion = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as int,isAvailable: null == isAvailable ? _self.isAvailable : isAvailable // ignore: cast_nullable_to_non_nullable
 as bool,isDefault: null == isDefault ? _self.isDefault : isDefault // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,portion: freezed == portion ? _self.portion : portion // ignore: cast_nullable_to_non_nullable
+as Portion?,
   ));
 }
+/// Create a copy of ProductSize
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PortionCopyWith<$Res>? get portion {
+    if (_self.portion == null) {
+    return null;
+  }
 
+  return $PortionCopyWith<$Res>(_self.portion!, (value) {
+    return _then(_self.copyWith(portion: value));
+  });
+}
 }
 
 
@@ -489,10 +505,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  int price,  bool isAvailable,  bool isDefault)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  int price,  bool isAvailable,  bool isDefault,  Portion? portion)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProductSize() when $default != null:
-return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefault);case _:
+return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefault,_that.portion);case _:
   return orElse();
 
 }
@@ -510,10 +526,10 @@ return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefaul
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  int price,  bool isAvailable,  bool isDefault)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  int price,  bool isAvailable,  bool isDefault,  Portion? portion)  $default,) {final _that = this;
 switch (_that) {
 case _ProductSize():
-return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefault);case _:
+return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefault,_that.portion);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -530,10 +546,10 @@ return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefaul
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  int price,  bool isAvailable,  bool isDefault)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  int price,  bool isAvailable,  bool isDefault,  Portion? portion)?  $default,) {final _that = this;
 switch (_that) {
 case _ProductSize() when $default != null:
-return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefault);case _:
+return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefault,_that.portion);case _:
   return null;
 
 }
@@ -545,7 +561,7 @@ return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefaul
 
 
 class _ProductSize implements ProductSize {
-  const _ProductSize({required this.id, required this.name, required this.price, required this.isAvailable, required this.isDefault});
+  const _ProductSize({required this.id, required this.name, required this.price, required this.isAvailable, required this.isDefault, this.portion});
   
 
 @override final  String id;
@@ -555,6 +571,8 @@ class _ProductSize implements ProductSize {
 @override final  bool isAvailable;
 /// Exactly one size of a product is the default.
 @override final  bool isDefault;
+/// How much this size is; null when the kitchen entered none.
+@override final  Portion? portion;
 
 /// Create a copy of ProductSize
 /// with the given fields replaced by the non-null parameter values.
@@ -566,16 +584,16 @@ _$ProductSizeCopyWith<_ProductSize> get copyWith => __$ProductSizeCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProductSize&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.price, price) || other.price == price)&&(identical(other.isAvailable, isAvailable) || other.isAvailable == isAvailable)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProductSize&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.price, price) || other.price == price)&&(identical(other.isAvailable, isAvailable) || other.isAvailable == isAvailable)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault)&&(identical(other.portion, portion) || other.portion == portion));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,price,isAvailable,isDefault);
+int get hashCode => Object.hash(runtimeType,id,name,price,isAvailable,isDefault,portion);
 
 @override
 String toString() {
-  return 'ProductSize(id: $id, name: $name, price: $price, isAvailable: $isAvailable, isDefault: $isDefault)';
+  return 'ProductSize(id: $id, name: $name, price: $price, isAvailable: $isAvailable, isDefault: $isDefault, portion: $portion)';
 }
 
 
@@ -586,11 +604,11 @@ abstract mixin class _$ProductSizeCopyWith<$Res> implements $ProductSizeCopyWith
   factory _$ProductSizeCopyWith(_ProductSize value, $Res Function(_ProductSize) _then) = __$ProductSizeCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, int price, bool isAvailable, bool isDefault
+ String id, String name, int price, bool isAvailable, bool isDefault, Portion? portion
 });
 
 
-
+@override $PortionCopyWith<$Res>? get portion;
 
 }
 /// @nodoc
@@ -603,25 +621,40 @@ class __$ProductSizeCopyWithImpl<$Res>
 
 /// Create a copy of ProductSize
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? price = null,Object? isAvailable = null,Object? isDefault = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? price = null,Object? isAvailable = null,Object? isDefault = null,Object? portion = freezed,}) {
   return _then(_ProductSize(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as int,isAvailable: null == isAvailable ? _self.isAvailable : isAvailable // ignore: cast_nullable_to_non_nullable
 as bool,isDefault: null == isDefault ? _self.isDefault : isDefault // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,portion: freezed == portion ? _self.portion : portion // ignore: cast_nullable_to_non_nullable
+as Portion?,
   ));
 }
 
+/// Create a copy of ProductSize
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PortionCopyWith<$Res>? get portion {
+    if (_self.portion == null) {
+    return null;
+  }
 
+  return $PortionCopyWith<$Res>(_self.portion!, (value) {
+    return _then(_self.copyWith(portion: value));
+  });
+}
 }
 
 /// @nodoc
 mixin _$ProductOptionGroup {
 
- String get id; String get name;/// How many options must be chosen; 0 for an optional group.
- int get minSelected;/// How many options may be chosen; null for no limit.
+ String get id; String get name;/// How many options must be chosen; 0 for an optional group. An option
+/// chosen several times counts as many.
+ int get minSelected;/// How many options may be chosen, counted the same way; null for no
+/// limit.
  int? get maxSelected; List<ProductOption> get options;
 /// Create a copy of ProductOptionGroup
 /// with the given fields replaced by the non-null parameter values.
@@ -823,9 +856,11 @@ class _ProductOptionGroup extends ProductOptionGroup {
 
 @override final  String id;
 @override final  String name;
-/// How many options must be chosen; 0 for an optional group.
+/// How many options must be chosen; 0 for an optional group. An option
+/// chosen several times counts as many.
 @override final  int minSelected;
-/// How many options may be chosen; null for no limit.
+/// How many options may be chosen, counted the same way; null for no
+/// limit.
 @override final  int? maxSelected;
  final  List<ProductOption> _options;
 @override List<ProductOption> get options {
@@ -902,7 +937,9 @@ mixin _$ProductOption {
  String get id; String get name;/// What choosing it adds to the product's price; 0 when free.
  int get price;/// False: the branch has run out of it.
  bool get isAvailable;/// Chosen until the user changes it.
- bool get isDefault;
+ bool get isDefault;/// How many of it one product may carry: 1 for an option that is
+/// chosen or not, more for one with a quantity (three spoons of sugar).
+ int get maxQuantity;
 /// Create a copy of ProductOption
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -913,16 +950,16 @@ $ProductOptionCopyWith<ProductOption> get copyWith => _$ProductOptionCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProductOption&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.price, price) || other.price == price)&&(identical(other.isAvailable, isAvailable) || other.isAvailable == isAvailable)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProductOption&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.price, price) || other.price == price)&&(identical(other.isAvailable, isAvailable) || other.isAvailable == isAvailable)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault)&&(identical(other.maxQuantity, maxQuantity) || other.maxQuantity == maxQuantity));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,price,isAvailable,isDefault);
+int get hashCode => Object.hash(runtimeType,id,name,price,isAvailable,isDefault,maxQuantity);
 
 @override
 String toString() {
-  return 'ProductOption(id: $id, name: $name, price: $price, isAvailable: $isAvailable, isDefault: $isDefault)';
+  return 'ProductOption(id: $id, name: $name, price: $price, isAvailable: $isAvailable, isDefault: $isDefault, maxQuantity: $maxQuantity)';
 }
 
 
@@ -933,7 +970,7 @@ abstract mixin class $ProductOptionCopyWith<$Res>  {
   factory $ProductOptionCopyWith(ProductOption value, $Res Function(ProductOption) _then) = _$ProductOptionCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, int price, bool isAvailable, bool isDefault
+ String id, String name, int price, bool isAvailable, bool isDefault, int maxQuantity
 });
 
 
@@ -950,14 +987,15 @@ class _$ProductOptionCopyWithImpl<$Res>
 
 /// Create a copy of ProductOption
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? price = null,Object? isAvailable = null,Object? isDefault = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? price = null,Object? isAvailable = null,Object? isDefault = null,Object? maxQuantity = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as int,isAvailable: null == isAvailable ? _self.isAvailable : isAvailable // ignore: cast_nullable_to_non_nullable
 as bool,isDefault: null == isDefault ? _self.isDefault : isDefault // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,maxQuantity: null == maxQuantity ? _self.maxQuantity : maxQuantity // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 
@@ -1042,10 +1080,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  int price,  bool isAvailable,  bool isDefault)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  int price,  bool isAvailable,  bool isDefault,  int maxQuantity)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProductOption() when $default != null:
-return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefault);case _:
+return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefault,_that.maxQuantity);case _:
   return orElse();
 
 }
@@ -1063,10 +1101,10 @@ return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefaul
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  int price,  bool isAvailable,  bool isDefault)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  int price,  bool isAvailable,  bool isDefault,  int maxQuantity)  $default,) {final _that = this;
 switch (_that) {
 case _ProductOption():
-return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefault);case _:
+return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefault,_that.maxQuantity);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1083,10 +1121,10 @@ return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefaul
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  int price,  bool isAvailable,  bool isDefault)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  int price,  bool isAvailable,  bool isDefault,  int maxQuantity)?  $default,) {final _that = this;
 switch (_that) {
 case _ProductOption() when $default != null:
-return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefault);case _:
+return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefault,_that.maxQuantity);case _:
   return null;
 
 }
@@ -1098,7 +1136,7 @@ return $default(_that.id,_that.name,_that.price,_that.isAvailable,_that.isDefaul
 
 
 class _ProductOption implements ProductOption {
-  const _ProductOption({required this.id, required this.name, required this.price, required this.isAvailable, required this.isDefault});
+  const _ProductOption({required this.id, required this.name, required this.price, required this.isAvailable, required this.isDefault, this.maxQuantity = 1});
   
 
 @override final  String id;
@@ -1109,6 +1147,9 @@ class _ProductOption implements ProductOption {
 @override final  bool isAvailable;
 /// Chosen until the user changes it.
 @override final  bool isDefault;
+/// How many of it one product may carry: 1 for an option that is
+/// chosen or not, more for one with a quantity (three spoons of sugar).
+@override@JsonKey() final  int maxQuantity;
 
 /// Create a copy of ProductOption
 /// with the given fields replaced by the non-null parameter values.
@@ -1120,16 +1161,16 @@ _$ProductOptionCopyWith<_ProductOption> get copyWith => __$ProductOptionCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProductOption&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.price, price) || other.price == price)&&(identical(other.isAvailable, isAvailable) || other.isAvailable == isAvailable)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProductOption&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.price, price) || other.price == price)&&(identical(other.isAvailable, isAvailable) || other.isAvailable == isAvailable)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault)&&(identical(other.maxQuantity, maxQuantity) || other.maxQuantity == maxQuantity));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,price,isAvailable,isDefault);
+int get hashCode => Object.hash(runtimeType,id,name,price,isAvailable,isDefault,maxQuantity);
 
 @override
 String toString() {
-  return 'ProductOption(id: $id, name: $name, price: $price, isAvailable: $isAvailable, isDefault: $isDefault)';
+  return 'ProductOption(id: $id, name: $name, price: $price, isAvailable: $isAvailable, isDefault: $isDefault, maxQuantity: $maxQuantity)';
 }
 
 
@@ -1140,7 +1181,7 @@ abstract mixin class _$ProductOptionCopyWith<$Res> implements $ProductOptionCopy
   factory _$ProductOptionCopyWith(_ProductOption value, $Res Function(_ProductOption) _then) = __$ProductOptionCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, int price, bool isAvailable, bool isDefault
+ String id, String name, int price, bool isAvailable, bool isDefault, int maxQuantity
 });
 
 
@@ -1157,14 +1198,15 @@ class __$ProductOptionCopyWithImpl<$Res>
 
 /// Create a copy of ProductOption
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? price = null,Object? isAvailable = null,Object? isDefault = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? price = null,Object? isAvailable = null,Object? isDefault = null,Object? maxQuantity = null,}) {
   return _then(_ProductOption(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as int,isAvailable: null == isAvailable ? _self.isAvailable : isAvailable // ignore: cast_nullable_to_non_nullable
 as bool,isDefault: null == isDefault ? _self.isDefault : isDefault // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,maxQuantity: null == maxQuantity ? _self.maxQuantity : maxQuantity // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

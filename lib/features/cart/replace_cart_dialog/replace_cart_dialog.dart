@@ -6,18 +6,11 @@ import '../../../domain/entities/cart.dart';
 import '../../../domain/state/cart_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
 
-/// Whether going over to [branchId] loses what [cart] holds: the cart is
-/// tied to one branch, and it is not empty at another one.
-bool cartWouldBeLost(Cart? cart, String branchId) =>
-    cart != null && !cart.isEmpty && cart.branchId != branchId;
-
-/// Asks the user before the cart is lost to a change of branch: adding a
-/// product of [branchId], or making [branchId] the active branch.
+/// Asks the user before adding a product of [branchId] loses the cart:
+/// the cart is tied to one branch, and adding at another replaces it.
 ///
 /// True when the caller may go on: there is nothing to lose, or the user
-/// agreed to lose it. Asking does not clear the cart; the caller's own
-/// action does (adding at the other branch replaces it; a change of the
-/// active branch clears it first).
+/// agreed to lose it. Asking does not clear the cart; the add does.
 Future<bool> confirmReplaceCart(
   BuildContext context,
   WidgetRef ref, {
@@ -31,7 +24,7 @@ Future<bool> confirmReplaceCart(
     cart = null;
   }
   if (!context.mounted) return false;
-  if (!cartWouldBeLost(cart, branchId)) return true;
+  if (cart == null || cart.isEmpty || cart.branchId == branchId) return true;
 
   final l10n = AppLocalizations.of(context);
   return showDSConfirmDialog(

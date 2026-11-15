@@ -298,6 +298,10 @@
   "@cartTipHint": {
     "description": "Cart sheet: placeholder of the field for a tip of the user's own"
   },
+  "productAnythingElse": "Anything else?",
+  "@productAnythingElse": {
+    "description": "Product sheet: the title of the rail of products suggested with this one"
+  },
   "orderWithTotal": "Order · {total}",
   "@orderWithTotal": {
     "description": "Cart sheet: the button that places the order, with the cart's total, e.g. Order · ֏1,450",

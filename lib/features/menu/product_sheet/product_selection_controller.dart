@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -14,8 +16,9 @@ abstract class ProductSelection with _$ProductSelection {
     /// Null for a product without sizes, or when every size has run out.
     String? sizeId,
 
-    /// The chosen options of every group together.
-    required Set<String> optionIds,
+    /// The chosen options of every group together, each with how many of
+    /// it one product carries (1 or more).
+    required Map<String, int> optionQuantities,
     required int quantity,
 
     /// The price of one: the size's price (the base price without sizes)
@@ -46,9 +49,9 @@ class ProductSelectionController extends Notifier<ProductSelection> {
   @override
   ProductSelection build() => _selection(
     sizeId: product.defaultSize?.id,
-    optionIds: {
+    optionQuantities: {
       for (final group in product.optionGroups)
-        for (final option in group.defaultOptions) option.id,
+        for (final option in group.defaultOptions) option.id: 1,
     },
     quantity: 1,
   );
@@ -59,45 +62,74 @@ class ProductSelectionController extends Notifier<ProductSelection> {
     if (size == null || !size.isAvailable) return;
     state = _selection(
       sizeId: sizeId,
-      optionIds: state.optionIds,
+      optionQuantities: state.optionQuantities,
       quantity: state.quantity,
     );
   }
 
-  /// Chooses [optionId] of [groupId], or takes it back when it is chosen.
+  /// Chooses one of [optionId] of [groupId], or takes the option back
+  /// when it is chosen.
   ///
   /// In a single-choice group the new option replaces the chosen one, and
   /// the only option of a required one cannot be taken back. In other
   /// groups an option over the group's maximum is not taken. Neither is an
   /// option the branch has run out of.
   void toggleOption(String groupId, String optionId) {
-    final group = product.optionGroups
-        .where((g) => g.id == groupId)
-        .firstOrNull;
-    final option = group?.options.where((o) => o.id == optionId).firstOrNull;
+    final (group, option) = _find(groupId, optionId);
     if (group == null || option == null || !option.isAvailable) return;
 
-    final chosen = {...state.optionIds};
-    final chosenInGroup = group.options
-        .where((o) => chosen.contains(o.id))
-        .length;
-    if (chosen.contains(optionId)) {
+    final chosen = {...state.optionQuantities};
+    if (chosen.containsKey(optionId)) {
       if (group.isSingleChoice && group.isRequired) return;
       chosen.remove(optionId);
     } else if (group.isSingleChoice) {
-      chosen
-        ..removeAll(group.options.map((o) => o.id))
-        ..add(optionId);
+      for (final other in group.options) {
+        chosen.remove(other.id);
+      }
+      chosen[optionId] = 1;
     } else {
-      final max = group.maxSelected;
-      if (max != null && chosenInGroup >= max) return;
-      chosen.add(optionId);
+      if (maxQuantityOf(groupId, optionId) < 1) return;
+      chosen[optionId] = 1;
     }
     state = _selection(
       sizeId: state.sizeId,
-      optionIds: chosen,
+      optionQuantities: chosen,
       quantity: state.quantity,
     );
+  }
+
+  /// How many of the chosen option [optionId] one product carries, kept
+  /// between 1 and [maxQuantityOf]. An option that is not chosen is left
+  /// alone: [toggleOption] chooses it.
+  void setOptionQuantity(String groupId, String optionId, int quantity) {
+    if (!state.optionQuantities.containsKey(optionId)) return;
+    final max = maxQuantityOf(groupId, optionId);
+    if (max < 1) return;
+    state = _selection(
+      sizeId: state.sizeId,
+      optionQuantities: {
+        ...state.optionQuantities,
+        optionId: quantity.clamp(1, max),
+      },
+      quantity: state.quantity,
+    );
+  }
+
+  /// The most of [optionId] the selection can hold now: what the option
+  /// allows on one product, and what its group has left once the group's
+  /// other chosen options are counted. 0 when it cannot be chosen.
+  int maxQuantityOf(String groupId, String optionId) {
+    final (group, option) = _find(groupId, optionId);
+    if (group == null || option == null || !option.isAvailable) return 0;
+    final groupMax = group.maxSelected;
+    if (groupMax == null) return option.maxQuantity;
+    var others = 0;
+    for (final other in group.options) {
+      if (other.id != optionId) {
+        others += state.optionQuantities[other.id] ?? 0;
+      }
+    }
+    return math.max(0, math.min(option.maxQuantity, groupMax - others));
   }
 
   /// The selection as the cart takes it: the product with the chosen size
@@ -111,12 +143,13 @@ class ProductSelectionController extends Notifier<ProductSelection> {
       options: [
         for (final group in product.optionGroups)
           for (final option in group.options)
-            if (state.optionIds.contains(option.id))
+            if (state.optionQuantities[option.id] case final quantity?)
               ChosenOption(
                 id: option.id,
                 groupId: group.id,
                 name: option.name,
                 price: option.price,
+                quantity: quantity,
               ),
       ],
     );
@@ -127,20 +160,30 @@ class ProductSelectionController extends Notifier<ProductSelection> {
     state = state.copyWith(quantity: quantity.clamp(1, maxQuantity));
   }
 
+  (ProductOptionGroup?, ProductOption?) _find(String groupId, String optionId) {
+    final group = product.optionGroups
+        .where((g) => g.id == groupId)
+        .firstOrNull;
+    final option = group?.options.where((o) => o.id == optionId).firstOrNull;
+    return (group, option);
+  }
+
   ProductSelection _selection({
     required String? sizeId,
-    required Set<String> optionIds,
+    required Map<String, int> optionQuantities,
     required int quantity,
   }) {
     final size = product.sizes.where((s) => s.id == sizeId).firstOrNull;
     var unitPrice = size?.price ?? product.price;
     var groupsFilled = true;
     for (final group in product.optionGroups) {
-      final chosen = group.options.where((o) => optionIds.contains(o.id));
-      for (final option in chosen) {
-        unitPrice += option.price;
+      // A group counts the pieces of its options together.
+      var count = 0;
+      for (final option in group.options) {
+        final chosen = optionQuantities[option.id] ?? 0;
+        count += chosen;
+        unitPrice += option.price * chosen;
       }
-      final count = chosen.length;
       final max = group.maxSelected;
       if (count < group.minSelected || (max != null && count > max)) {
         groupsFilled = false;
@@ -148,7 +191,7 @@ class ProductSelectionController extends Notifier<ProductSelection> {
     }
     return ProductSelection(
       sizeId: sizeId,
-      optionIds: optionIds,
+      optionQuantities: optionQuantities,
       quantity: quantity,
       unitPrice: unitPrice,
       isComplete:

@@ -34,18 +34,20 @@ Built by default (2026-11-13): the line is dimmed, says "Not available at this b
 now" and can only be removed. The server's reason is a code, not words, so one sentence
 is shown for every reason.
 
-### 4. Moving a non-empty cart to another branch — decided for now
-Decided (2026-11-13): the cart does not move. The backend keeps one cart tied to one
-branch and replaces it when a product of another branch is added. So wherever the
-active branch would change while the cart is not empty, the user is asked first: on
-"yes" the cart is cleared and the branch changes, on "no" nothing changes. This holds
-for the branch picker, for adding from another branch's page ("+" and the product
-sheet's "Add") and for changing the branch inside the cart. An empty cart changes
-branch without a question.
+### 4. Moving a non-empty cart to another branch — decided
+Decided (2026-11-16), now that the backend can move a cart: choosing another branch in
+the branch picker takes the cart along, wherever the picker was opened from, and asks
+nothing. Its products are priced at the new branch; one that branch cannot make stays
+in the cart, marked unavailable (§3). What the cart would look like there is not
+checked before the move.
+Adding from another branch's page ("+" and the product sheet's "Add") is different: the
+backend still replaces the cart with the one new product. There the user is asked
+first: on "yes" the product is added and the old cart is gone, on "no" nothing changes.
 The question is the handoff's `Dialog` with our own words; no page of the design draws
 it.
-To revisit when the backend can move a cart between branches (prices and availability
-checked again): the question then becomes the move.
+To revisit: a question before the move ("2 of 5 products are not sold there"), which
+the backend can answer in advance, and whether adding at another branch should move
+the cart instead of replacing it.
 
 ### 4a. A guest adds to the cart — decided
 Decided (2026-11-13): the server keeps a cart only for an account. A guest who taps "+"
@@ -146,12 +148,16 @@ Built by default until the designer and the product owner answer:
 - The line under the price is left out when nothing follows it (no description, sizes
   or options).
 - A drag down from the top of the content, or a fling down, closes the sheet.
+- With sizes, the portion next to the price is the chosen size's own.
+- An option one product may carry several of shows a quantity at the end of its row
+  once it is chosen. The quantity goes from one up; the checkbox takes the option back.
+- "Anything else?" shows the products the merchant suggests with this one and is left
+  out when there are none. A card opens that product's sheet over this one; its plus
+  adds the product as every card's plus does, and stays a plus (the design turns it
+  into a cross that removes the product again).
 - Not built, waiting for an answer:
-  - "Anything else?": the API has no list of products to suggest. Where it comes from
-    (featured products, the same category, a list the merchant sets).
   - "Nutrition facts": the API's nutrition is free-form and empty for every product on
     the dev server; the info button is not shown until its shape is fixed.
-  - The stepper inside an option row (quantity per option): not supported by the API.
 - The heart (favourites) comes with that feature.
 
 ### 20. Cart sheet: what the design leaves open

@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../core/locale/content_language.dart';
@@ -89,6 +91,7 @@ class ProductDto {
             price: basePrice + (option.price ?? 0),
             isAvailable: !unavailable.contains(option.id),
             isDefault: i == defaultIndex,
+            portion: option.portion?.toDomain(),
           ),
       ],
       optionGroups: [
@@ -107,6 +110,7 @@ class ProductDto {
                     price: option.price ?? 0,
                     isAvailable: !unavailable.contains(option.id),
                     isDefault: option.isDefault,
+                    maxQuantity: math.max(1, option.maxPerDish ?? 1),
                   ),
               ],
             ),
@@ -145,6 +149,8 @@ class ModifierOptionDto {
     this.name,
     this.price,
     this.restrictions,
+    this.maxPerDish,
+    this.portion,
   });
 
   factory ModifierOptionDto.fromJson(Map<String, dynamic> json) =>
@@ -154,6 +160,12 @@ class ModifierOptionDto {
   final String? name;
   final int? price;
   final ModifierRestrictionsDto? restrictions;
+
+  /// How many of it one dish may carry; above 1 it has a quantity.
+  final int? maxPerDish;
+
+  /// On a size only: how much that size is.
+  final PortionDto? portion;
 
   /// Pre-selected by the merchant.
   bool get isDefault => (restrictions?.defaultQuantity ?? 0) > 0;

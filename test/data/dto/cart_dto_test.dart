@@ -25,6 +25,13 @@ void main() {
             'price': 0,
             'groupId': 'mod-group-milk',
           },
+          {
+            'id': 'mod-sugar',
+            'name': 'Sugar',
+            'price': 0,
+            'groupId': 'mod-group-sweetener',
+            'quantity': 3,
+          },
         ],
         'item': {
           'id': 'raf',
@@ -90,8 +97,12 @@ void main() {
     expect(line.choice.productId, 'raf');
     expect(line.choice.productName, 'Раф клубничный');
     expect(line.choice.size, isNull);
-    expect(line.choice.options.single.id, 'mod-oat-milk');
-    expect(line.choice.options.single.groupId, 'mod-group-milk');
+    expect(line.choice.options.first.id, 'mod-oat-milk');
+    expect(line.choice.options.first.groupId, 'mod-group-milk');
+    // Without a quantity an option is there once.
+    expect(line.choice.options.first.quantity, 1);
+    expect(line.choice.options.last.id, 'mod-sugar');
+    expect(line.choice.options.last.quantity, 3);
     expect(line.imageUrl, 'http://img.test/raf.png');
     expect(line.quantity, 2);
     expect(line.unitPrice, 1650);

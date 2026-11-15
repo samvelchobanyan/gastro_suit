@@ -36,7 +36,10 @@ abstract class ChosenOption with _$ChosenOption {
     required String groupId,
     required String name,
 
-    /// What it adds to the product's price; 0 when free.
+    /// What one of it adds to the product's price; 0 when free.
     required int price,
+
+    /// How many of it one product carries.
+    @Default(1) int quantity,
   }) = _ChosenOption;
 }

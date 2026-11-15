@@ -59,7 +59,8 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 ## 3. Adding to the cart — agreed
 
 - `POST /cart/items` with `itemId`, `branchId` (the active branch), `quantity`, and
-  `modifiers` as one flat list of ids: the chosen size plus every chosen option.
+  `modifiers` as one flat list: the chosen size by its id, plus every chosen option
+  with its id and how many of it (`quantity`, 1 when left out).
 - The server merges a line with the same product and the same options into one line and
   sums the quantity.
 - Checked on the dev server (2026-11-13):
@@ -68,18 +69,24 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
     and tied to one branch: asked for at another branch it answers empty and discards
     nothing;
   - adding with another `branchId` silently replaces the cart with the one new line;
+  - `POST /cart/branch` moves the cart to another branch: the lines stay, priced there,
+    and one that branch cannot make is marked unavailable (checked 2026-11-16);
+    `GET /cart/branch-preview` answers the same without moving anything (not used yet);
+  - an option's quantity over its `maxPerDish` is refused with
+    `option_quantity_too_many`; the group's maximum counts the quantities together;
   - every change (`POST`, `PUT`, `DELETE` of a line) answers with the whole cart;
   - a required group left empty is refused with `options_required`.
 - In code: `cartProvider` (`domain/state/cart_state.dart`) is the cart at the active
-  branch, null for a guest; its methods add, change a quantity, remove a line and
-  clear. Adding at another branch makes that branch the active one. The cart sheet (`features/cart/cart_sheet/`)
+  branch, null for a guest; its methods add, change a quantity, remove a line,
+  clear, and move the cart to another branch (`moveTo`, which also makes that branch
+  the active one). Adding at another branch makes that branch the active one. The cart sheet (`features/cart/cart_sheet/`)
   shows it and changes it; the time and the tip chosen there are the sheet's own state
   (`CartCheckoutController`) until an order is placed. The times offered are worked out
   by `pickupSlots` next to it; when the server offers them, that controller loads them
   instead and nothing else changes. What must be asked
   first is two calls where the product is added: `ensureSignedIn` (next to the sign-in
   screen) and `confirmReplaceCart` (the cart's `replace_cart_dialog`). The branch
-  picker asks the second one too, then clears the cart before the branch changes.
+  picker asks nothing: it calls `moveTo`.
 
 ## 4. ProductChoice — agreed
 
@@ -103,10 +110,14 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   (`defaultSize`, a group's `defaultOptions`). Where the check for the card's quick "+"
   lives is decided with the cart.
 - The quantity is part of the selection, 1 to 99.
-- An option is chosen at most once: the design's stepper inside an option row is not
-  built, since the API takes no quantity per option (`DOMAIN_SPEC.md` §1.4).
-- The portion is shown only for a product without sizes: the API has one portion per
-  product, so it would not follow the chosen size.
+- The chosen options are kept with how many of each. An option may be taken up to
+  its own limit (`maxPerDish`), and a group's minimum and maximum count the pieces of
+  its options together; the controller answers how many more of an option fit.
+- With sizes the portion shown is the chosen size's own (`portion` on a size option);
+  the product's portion is shown only without sizes.
+- "Anything else?" is `recommendedProductsProvider` (`domain/state/menu_state.dart`,
+  `GET /menu/items/{id}/recommended`), drawn by `RecommendedProductsRail` with the same
+  row of cards as the Order tab's featured rail (`ProductCardsRail`).
 
 ## 6. Buy again — agreed
 
@@ -151,16 +162,16 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 **On a change of the active branch**
 
 - The active menu is reloaded for the new branch.
-- The cart is cleared, after the user confirms (decided 2026-11-13,
-  `DESIGN_PRODUCT_QUESTIONS.md` §4). The target, once the backend supports it: the cart
-  moves to the new branch, its lines stay, prices and availability are checked again,
-  and lines unavailable there are marked, not removed.
+- The cart moves to the new branch when the branch is changed in the branch picker
+  (decided 2026-11-16, `DESIGN_PRODUCT_QUESTIONS.md` §4): its lines stay, prices and
+  availability are the new branch's, and lines unavailable there are marked, not
+  removed. Adding a product at another branch still replaces the cart, after the user
+  confirms.
 
 **Open questions**
 
-- Whether moving a non-empty cart asks the user to confirm (design question).
-- What happens to the cart until the backend can move it between branches (today it is
-  cleared).
+- Whether moving a non-empty cart asks the user to confirm, with what would not be
+  sold at the new branch (design question; the backend can answer it in advance).
 - A non-empty cart left in another branch when the application starts again.
 - A change of organisation (multi-concept): loyalty and wallet are per organisation.
   For now each build serves one organisation, set in the build config (`RESTAURANT_ID`);
@@ -268,19 +279,14 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 
 ## 15. Questions for the backend
 
-- Move the cart between branches: keep the lines, re-price, mark what is unavailable
-  (`available` / `unavailableReason` already exist) instead of clearing it.
+- Adding a product at another branch replaces the cart; whether it should move the
+  cart there and add to it, as `POST /cart/branch` does.
 - Return the user's cart without a branch, with the branch it is in (needed to restore
   the active branch on start).
-- Quantity per add-on: the design has steppers on add-ons; the API selects an option at
-  most once (`restrictions` on options exist in the POS data and are ignored).
-- Portion per size: the design shows the portion next to the price and it should follow
-  the chosen size; the API has one portion per product.
 - A fixed shape for `nutritionalInfo` (the design shows calories, proteins, fats,
   carbohydrates) and `ingredients`.
 - A product in more than one category (e.g. an iced latte under both "Iced Coffee" and
   "Iced Drinks"); the API allows one.
-- Data for the "Anything else?" rail on the product screen (no endpoint yet).
 - An image on order lines (history rows show one; today it can only come from the
   current menu).
 - `docs/mobile/FLOWS.md` is referenced by the Swagger and the collection but is not in

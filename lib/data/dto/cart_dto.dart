@@ -92,6 +92,7 @@ class CartLineDto {
                 groupId: m.groupId ?? '',
                 name: m.name ?? '',
                 price: m.price ?? 0,
+                quantity: m.quantity ?? 1,
               ),
         ],
       ),
@@ -114,6 +115,7 @@ class SelectedModifierDto {
     this.name,
     this.price,
     this.groupId,
+    this.quantity,
   });
 
   factory SelectedModifierDto.fromJson(Map<String, dynamic> json) =>
@@ -123,6 +125,9 @@ class SelectedModifierDto {
   final String? name;
   final int? price;
   final String? groupId;
+
+  /// How many of it one dish carries.
+  final int? quantity;
 }
 
 /// The dish of a cart line: enough to draw the line.

@@ -14,7 +14,8 @@ abstract interface class CartRepository {
 
   /// Adds [quantity] of [choice] at [branchId]. A choice already in the
   /// cart gets the quantity added to its line. Adding at another branch
-  /// than the cart's replaces the cart: its earlier lines are gone.
+  /// than the cart's replaces the cart: its earlier lines are gone (they
+  /// are kept only by [moveTo]).
   Future<Cart> addItem({
     required String branchId,
     required ProductChoice choice,
@@ -30,6 +31,13 @@ abstract interface class CartRepository {
   });
 
   Future<Cart> removeLine(String lineId, {required ContentLanguage language});
+
+  /// Moves the cart to [branchId]: it keeps its lines, each priced there.
+  /// A line that branch cannot make stays, marked unavailable.
+  Future<Cart> moveTo({
+    required String branchId,
+    required ContentLanguage language,
+  });
 
   /// Empties the cart at [branchId].
   Future<Cart> clear({

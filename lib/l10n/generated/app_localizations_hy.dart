@@ -211,6 +211,9 @@ class AppLocalizationsHy extends AppLocalizations {
   String get cartTipHint => 'Մուտքագրեք թեյավճարի գումարը';
 
   @override
+  String get productAnythingElse => 'Ուրիշ բա՞ն';
+
+  @override
   String orderWithTotal(String total) {
     return 'Պատվիրել · $total';
   }

@@ -61,5 +61,6 @@
   "cartTipNone": "Առանց թեյավճարի",
   "cartTipOther": "Այլ",
   "cartTipHint": "Մուտքագրեք թեյավճարի գումարը",
+  "productAnythingElse": "Ուրիշ բա՞ն",
   "orderWithTotal": "Պատվիրել · {total}"
 }

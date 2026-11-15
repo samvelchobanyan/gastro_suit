@@ -20,6 +20,7 @@ import 'product_selection_controller.dart';
 import 'widgets/product_option_group.dart';
 import 'widgets/product_sheet_photo.dart';
 import 'widgets/product_size_row.dart';
+import 'widgets/recommended_products_rail.dart';
 
 /// Opens [productId] as [branchId] offers it, in a sheet over the whole
 /// app that leaves only a strip of the screen above it.
@@ -188,12 +189,11 @@ class _ProductContentState extends ConsumerState<_ProductContent> {
     final selection = ref.watch(productSelectionProvider(product));
     final controller = ref.read(productSelectionProvider(product).notifier);
     final description = product.description;
-    // The API has one portion per product, not per size: with sizes it
-    // would not follow the chosen one, so it is left out.
-    final portion = product.sizes.isEmpty ? product.portion : null;
     final size = product.sizes
         .where((s) => s.id == selection.sizeId)
         .firstOrNull;
+    // With sizes the portion is the chosen size's own.
+    final portion = product.sizes.isEmpty ? product.portion : size?.portion;
     final hasMore =
         description != null ||
         product.sizes.isNotEmpty ||
@@ -209,7 +209,12 @@ class _ProductContentState extends ConsumerState<_ProductContent> {
               children: [
                 ProductSheetPhoto(url: product.imageUrl),
                 Padding(
-                  padding: const EdgeInsets.all(DSSpacing.base),
+                  padding: const EdgeInsets.fromLTRB(
+                    DSSpacing.base,
+                    DSSpacing.base,
+                    DSSpacing.base,
+                    0,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -288,14 +293,29 @@ class _ProductContentState extends ConsumerState<_ProductContent> {
                           ),
                           child: ProductOptionGroupSection(
                             group: group,
-                            selectedIds: selection.optionIds,
+                            quantities: selection.optionQuantities,
+                            maxQuantityOf: (option) =>
+                                controller.maxQuantityOf(group.id, option.id),
                             onToggle: (option) =>
                                 controller.toggleOption(group.id, option.id),
+                            onQuantityChanged: (option, quantity) =>
+                                controller.setOptionQuantity(
+                                  group.id,
+                                  option.id,
+                                  quantity,
+                                ),
                           ),
                         ),
                     ],
                   ),
                 ),
+                // From one edge of the sheet to the other, so outside the
+                // padding of what is above.
+                RecommendedProductsRail(
+                  branchId: widget.branchId,
+                  productId: product.id,
+                ),
+                const SizedBox(height: DSSpacing.base),
               ],
             ),
           ),

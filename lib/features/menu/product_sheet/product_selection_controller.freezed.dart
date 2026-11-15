@@ -15,8 +15,9 @@ T _$identity<T>(T value) => value;
 mixin _$ProductSelection {
 
 /// Null for a product without sizes, or when every size has run out.
- String? get sizeId;/// The chosen options of every group together.
- Set<String> get optionIds; int get quantity;/// The price of one: the size's price (the base price without sizes)
+ String? get sizeId;/// The chosen options of every group together, each with how many of
+/// it one product carries (1 or more).
+ Map<String, int> get optionQuantities; int get quantity;/// The price of one: the size's price (the base price without sizes)
 /// plus the surcharges of the chosen options. A preview: the server
 /// prices the cart line.
  int get unitPrice;/// Whether this may be added: the product and a size are available,
@@ -32,16 +33,16 @@ $ProductSelectionCopyWith<ProductSelection> get copyWith => _$ProductSelectionCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProductSelection&&(identical(other.sizeId, sizeId) || other.sizeId == sizeId)&&const DeepCollectionEquality().equals(other.optionIds, optionIds)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.unitPrice, unitPrice) || other.unitPrice == unitPrice)&&(identical(other.isComplete, isComplete) || other.isComplete == isComplete));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProductSelection&&(identical(other.sizeId, sizeId) || other.sizeId == sizeId)&&const DeepCollectionEquality().equals(other.optionQuantities, optionQuantities)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.unitPrice, unitPrice) || other.unitPrice == unitPrice)&&(identical(other.isComplete, isComplete) || other.isComplete == isComplete));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,sizeId,const DeepCollectionEquality().hash(optionIds),quantity,unitPrice,isComplete);
+int get hashCode => Object.hash(runtimeType,sizeId,const DeepCollectionEquality().hash(optionQuantities),quantity,unitPrice,isComplete);
 
 @override
 String toString() {
-  return 'ProductSelection(sizeId: $sizeId, optionIds: $optionIds, quantity: $quantity, unitPrice: $unitPrice, isComplete: $isComplete)';
+  return 'ProductSelection(sizeId: $sizeId, optionQuantities: $optionQuantities, quantity: $quantity, unitPrice: $unitPrice, isComplete: $isComplete)';
 }
 
 
@@ -52,7 +53,7 @@ abstract mixin class $ProductSelectionCopyWith<$Res>  {
   factory $ProductSelectionCopyWith(ProductSelection value, $Res Function(ProductSelection) _then) = _$ProductSelectionCopyWithImpl;
 @useResult
 $Res call({
- String? sizeId, Set<String> optionIds, int quantity, int unitPrice, bool isComplete
+ String? sizeId, Map<String, int> optionQuantities, int quantity, int unitPrice, bool isComplete
 });
 
 
@@ -69,11 +70,11 @@ class _$ProductSelectionCopyWithImpl<$Res>
 
 /// Create a copy of ProductSelection
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? sizeId = freezed,Object? optionIds = null,Object? quantity = null,Object? unitPrice = null,Object? isComplete = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? sizeId = freezed,Object? optionQuantities = null,Object? quantity = null,Object? unitPrice = null,Object? isComplete = null,}) {
   return _then(_self.copyWith(
 sizeId: freezed == sizeId ? _self.sizeId : sizeId // ignore: cast_nullable_to_non_nullable
-as String?,optionIds: null == optionIds ? _self.optionIds : optionIds // ignore: cast_nullable_to_non_nullable
-as Set<String>,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
+as String?,optionQuantities: null == optionQuantities ? _self.optionQuantities : optionQuantities // ignore: cast_nullable_to_non_nullable
+as Map<String, int>,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
 as int,unitPrice: null == unitPrice ? _self.unitPrice : unitPrice // ignore: cast_nullable_to_non_nullable
 as int,isComplete: null == isComplete ? _self.isComplete : isComplete // ignore: cast_nullable_to_non_nullable
 as bool,
@@ -161,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? sizeId,  Set<String> optionIds,  int quantity,  int unitPrice,  bool isComplete)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? sizeId,  Map<String, int> optionQuantities,  int quantity,  int unitPrice,  bool isComplete)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProductSelection() when $default != null:
-return $default(_that.sizeId,_that.optionIds,_that.quantity,_that.unitPrice,_that.isComplete);case _:
+return $default(_that.sizeId,_that.optionQuantities,_that.quantity,_that.unitPrice,_that.isComplete);case _:
   return orElse();
 
 }
@@ -182,10 +183,10 @@ return $default(_that.sizeId,_that.optionIds,_that.quantity,_that.unitPrice,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? sizeId,  Set<String> optionIds,  int quantity,  int unitPrice,  bool isComplete)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? sizeId,  Map<String, int> optionQuantities,  int quantity,  int unitPrice,  bool isComplete)  $default,) {final _that = this;
 switch (_that) {
 case _ProductSelection():
-return $default(_that.sizeId,_that.optionIds,_that.quantity,_that.unitPrice,_that.isComplete);case _:
+return $default(_that.sizeId,_that.optionQuantities,_that.quantity,_that.unitPrice,_that.isComplete);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -202,10 +203,10 @@ return $default(_that.sizeId,_that.optionIds,_that.quantity,_that.unitPrice,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? sizeId,  Set<String> optionIds,  int quantity,  int unitPrice,  bool isComplete)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? sizeId,  Map<String, int> optionQuantities,  int quantity,  int unitPrice,  bool isComplete)?  $default,) {final _that = this;
 switch (_that) {
 case _ProductSelection() when $default != null:
-return $default(_that.sizeId,_that.optionIds,_that.quantity,_that.unitPrice,_that.isComplete);case _:
+return $default(_that.sizeId,_that.optionQuantities,_that.quantity,_that.unitPrice,_that.isComplete);case _:
   return null;
 
 }
@@ -217,18 +218,20 @@ return $default(_that.sizeId,_that.optionIds,_that.quantity,_that.unitPrice,_tha
 
 
 class _ProductSelection extends ProductSelection {
-  const _ProductSelection({this.sizeId, required final  Set<String> optionIds, required this.quantity, required this.unitPrice, required this.isComplete}): _optionIds = optionIds,super._();
+  const _ProductSelection({this.sizeId, required final  Map<String, int> optionQuantities, required this.quantity, required this.unitPrice, required this.isComplete}): _optionQuantities = optionQuantities,super._();
   
 
 /// Null for a product without sizes, or when every size has run out.
 @override final  String? sizeId;
-/// The chosen options of every group together.
- final  Set<String> _optionIds;
-/// The chosen options of every group together.
-@override Set<String> get optionIds {
-  if (_optionIds is EqualUnmodifiableSetView) return _optionIds;
+/// The chosen options of every group together, each with how many of
+/// it one product carries (1 or more).
+ final  Map<String, int> _optionQuantities;
+/// The chosen options of every group together, each with how many of
+/// it one product carries (1 or more).
+@override Map<String, int> get optionQuantities {
+  if (_optionQuantities is EqualUnmodifiableMapView) return _optionQuantities;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableSetView(_optionIds);
+  return EqualUnmodifiableMapView(_optionQuantities);
 }
 
 @override final  int quantity;
@@ -250,16 +253,16 @@ _$ProductSelectionCopyWith<_ProductSelection> get copyWith => __$ProductSelectio
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProductSelection&&(identical(other.sizeId, sizeId) || other.sizeId == sizeId)&&const DeepCollectionEquality().equals(other._optionIds, _optionIds)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.unitPrice, unitPrice) || other.unitPrice == unitPrice)&&(identical(other.isComplete, isComplete) || other.isComplete == isComplete));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProductSelection&&(identical(other.sizeId, sizeId) || other.sizeId == sizeId)&&const DeepCollectionEquality().equals(other._optionQuantities, _optionQuantities)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.unitPrice, unitPrice) || other.unitPrice == unitPrice)&&(identical(other.isComplete, isComplete) || other.isComplete == isComplete));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,sizeId,const DeepCollectionEquality().hash(_optionIds),quantity,unitPrice,isComplete);
+int get hashCode => Object.hash(runtimeType,sizeId,const DeepCollectionEquality().hash(_optionQuantities),quantity,unitPrice,isComplete);
 
 @override
 String toString() {
-  return 'ProductSelection(sizeId: $sizeId, optionIds: $optionIds, quantity: $quantity, unitPrice: $unitPrice, isComplete: $isComplete)';
+  return 'ProductSelection(sizeId: $sizeId, optionQuantities: $optionQuantities, quantity: $quantity, unitPrice: $unitPrice, isComplete: $isComplete)';
 }
 
 
@@ -270,7 +273,7 @@ abstract mixin class _$ProductSelectionCopyWith<$Res> implements $ProductSelecti
   factory _$ProductSelectionCopyWith(_ProductSelection value, $Res Function(_ProductSelection) _then) = __$ProductSelectionCopyWithImpl;
 @override @useResult
 $Res call({
- String? sizeId, Set<String> optionIds, int quantity, int unitPrice, bool isComplete
+ String? sizeId, Map<String, int> optionQuantities, int quantity, int unitPrice, bool isComplete
 });
 
 
@@ -287,11 +290,11 @@ class __$ProductSelectionCopyWithImpl<$Res>
 
 /// Create a copy of ProductSelection
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? sizeId = freezed,Object? optionIds = null,Object? quantity = null,Object? unitPrice = null,Object? isComplete = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? sizeId = freezed,Object? optionQuantities = null,Object? quantity = null,Object? unitPrice = null,Object? isComplete = null,}) {
   return _then(_ProductSelection(
 sizeId: freezed == sizeId ? _self.sizeId : sizeId // ignore: cast_nullable_to_non_nullable
-as String?,optionIds: null == optionIds ? _self._optionIds : optionIds // ignore: cast_nullable_to_non_nullable
-as Set<String>,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
+as String?,optionQuantities: null == optionQuantities ? _self._optionQuantities : optionQuantities // ignore: cast_nullable_to_non_nullable
+as Map<String, int>,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
 as int,unitPrice: null == unitPrice ? _self.unitPrice : unitPrice // ignore: cast_nullable_to_non_nullable
 as int,isComplete: null == isComplete ? _self.isComplete : isComplete // ignore: cast_nullable_to_non_nullable
 as bool,

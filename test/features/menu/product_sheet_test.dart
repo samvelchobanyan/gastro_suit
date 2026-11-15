@@ -7,6 +7,7 @@ import 'package:gastro_suit/core/network/app_exception.dart';
 import 'package:gastro_suit/design_system/components/buttons/ds_button.dart';
 import 'package:gastro_suit/design_system/components/inputs/ds_checkbox.dart';
 import 'package:gastro_suit/design_system/components/inputs/ds_radio.dart';
+import 'package:gastro_suit/design_system/components/inputs/ds_stepper.dart';
 import 'package:gastro_suit/design_system/theme/app_theme.dart';
 import 'package:gastro_suit/design_system/theme/ds_colors.dart';
 import 'package:gastro_suit/domain/entities/cart.dart';
@@ -17,6 +18,7 @@ import 'package:gastro_suit/domain/state/cart_state.dart';
 import 'package:gastro_suit/domain/state/menu_state.dart';
 import 'package:gastro_suit/features/menu/product_sheet/product_sheet.dart';
 import 'package:gastro_suit/features/menu/product_sheet/widgets/product_sheet_photo.dart';
+import 'package:gastro_suit/features/shared_widgets/product_card.dart';
 import 'package:gastro_suit/l10n/generated/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
@@ -59,6 +61,7 @@ void main() {
     List<Product> products, {
     AuthStatus auth = AuthStatus.signedIn,
     Cart? cart,
+    List<Product> recommended = const [],
   }) async {
     tester.view.physicalSize = const Size(360, 800);
     tester.view.devicePixelRatio = 1;
@@ -103,6 +106,9 @@ void main() {
       ProviderScope(
         overrides: [
           menuProvider('b1').overrideWith(() => _FakeMenuController(menu)),
+          recommendedProductsProvider.overrideWith(
+            (ref, key) async => key.productId == 'p1' ? recommended : const [],
+          ),
           authStatusProvider.overrideWithValue(auth),
           cartProvider.overrideWith(() => fakeCart),
         ],
@@ -159,11 +165,10 @@ void main() {
     expect(find.text('֏1,450'), findsOneWidget);
   });
 
-  testWidgets('a size changes the price; the portion is left out', (
-    tester,
-  ) async {
+  testWidgets('a size changes the price and the portion', (tester) async {
     await openSheet(tester, [
       product(
+        // The product's own portion is not shown with sizes.
         portion: const Portion(amount: 300, unit: PortionUnit.milliliter),
         sizes: const [
           ProductSize(
@@ -172,6 +177,7 @@ void main() {
             price: 1450,
             isAvailable: true,
             isDefault: true,
+            portion: Portion(amount: 250, unit: PortionUnit.milliliter),
           ),
           ProductSize(
             id: 'l',
@@ -179,6 +185,7 @@ void main() {
             price: 1850,
             isAvailable: true,
             isDefault: false,
+            portion: Portion(amount: 450, unit: PortionUnit.milliliter),
           ),
           ProductSize(
             id: 'xl',
@@ -192,10 +199,12 @@ void main() {
     ]);
 
     expect(find.text('300 ml'), findsNothing);
+    expect(find.text('250 ml'), findsOneWidget);
     expect(find.text('Add · ֏1,450'), findsOneWidget);
 
     await tester.tap(find.text('Large'));
     await tester.pump();
+    expect(find.text('450 ml'), findsOneWidget);
     expect(find.text('Add · ֏1,850'), findsOneWidget);
     // Under the name and on the size itself.
     expect(find.text('֏1,850'), findsNWidgets(2));
@@ -293,6 +302,119 @@ void main() {
       tester.widgetList<DSCheckbox>(find.byType(DSCheckbox)).last.checked,
       isFalse,
     );
+  });
+
+  testWidgets('an option taken several times has a quantity at its end', (
+    tester,
+  ) async {
+    final cart = await openSheet(tester, [
+      product(
+        groups: const [
+          ProductOptionGroup(
+            id: 'sweetener',
+            name: 'Sweetener',
+            minSelected: 0,
+            maxSelected: 3,
+            options: [
+              ProductOption(
+                id: 'sugar',
+                name: 'Sugar',
+                price: 0,
+                isAvailable: true,
+                isDefault: false,
+                maxQuantity: 5,
+              ),
+              ProductOption(
+                id: 'honey',
+                name: 'Honey',
+                price: 150,
+                isAvailable: true,
+                isDefault: false,
+              ),
+            ],
+          ),
+        ],
+      ),
+    ]);
+    // The quantity of an option comes before the product's own, which is
+    // in the bar at the bottom.
+    final steppers = find.byType(DSStepper);
+    final increase = find.descendant(
+      of: steppers.first,
+      matching: find.bySemanticsLabel('Increase quantity'),
+    );
+
+    // Not chosen yet: only the product's quantity.
+    expect(steppers, findsOneWidget);
+
+    await tester.tap(find.text('Sugar'));
+    await tester.pump();
+    expect(steppers, findsNWidgets(2));
+
+    // An option taken once at most never shows one.
+    await tester.tap(find.text('Honey'));
+    await tester.pump();
+    expect(steppers, findsNWidgets(2));
+    expect(find.text('Add · ֏1,600'), findsOneWidget);
+
+    // The group holds three: with honey in it, sugar stops at two.
+    await tester.tap(increase);
+    await tester.pump();
+    await tester.tap(increase);
+    await tester.pump();
+    // The second tap was on a plus at its limit: it does nothing, and
+    // does not fall through to the row and take the option back.
+    expect(steppers, findsNWidgets(2));
+    expect(tester.widget<DSStepper>(steppers.first).value, 2);
+
+    await tester.tap(find.textContaining('Add ·'));
+    await tester.pumpAndSettle();
+    final (_, choice, _) = cart.added.single;
+    expect(
+      [for (final option in choice.options) (option.id, option.quantity)],
+      [('sugar', 2), ('honey', 1)],
+    );
+  });
+
+  testWidgets('"Anything else?" suggests products and opens theirs', (
+    tester,
+  ) async {
+    final muffin = product().copyWith(id: 'p2', name: 'Muffin', price: 900);
+    final cart = await openSheet(
+      tester,
+      [product(), muffin],
+      recommended: [muffin],
+    );
+    await tester.scrollUntilVisible(
+      find.text('Anything else?'),
+      100,
+      scrollable: find.byType(Scrollable).first,
+    );
+
+    expect(find.byType(ProductCard), findsOneWidget);
+    expect(find.text('Muffin'), findsOneWidget);
+
+    // The plus adds it, as on every card.
+    await tester.ensureVisible(find.bySemanticsLabel('Add to cart'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.bySemanticsLabel('Add to cart'));
+    await tester.pumpAndSettle();
+    expect(cart.added.single.$2.productId, 'p2');
+
+    // A tap opens its sheet over this one.
+    await tester.tap(find.text('Muffin'));
+    await tester.pumpAndSettle();
+    expect(find.byType(ProductSheet), findsNWidgets(2));
+    expect(find.text('Add · ֏900'), findsOneWidget);
+  });
+
+  testWidgets('without suggestions there is no "Anything else?"', (
+    tester,
+  ) async {
+    await openSheet(tester, [product()]);
+
+    expect(find.text('Anything else?'), findsNothing);
+    expect(find.byType(ProductCard), findsNothing);
   });
 
   testWidgets('a stopped product cannot be added', (tester) async {

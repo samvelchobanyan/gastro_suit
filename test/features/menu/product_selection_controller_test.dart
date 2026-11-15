@@ -22,12 +22,14 @@ void main() {
     int price = 0,
     bool isDefault = false,
     bool available = true,
+    int maxQuantity = 1,
   }) => ProductOption(
     id: id,
     name: id,
     price: price,
     isAvailable: available,
     isDefault: isDefault,
+    maxQuantity: maxQuantity,
   );
 
   ProductOptionGroup optionGroup(
@@ -73,7 +75,7 @@ void main() {
       final (selection, _) = open(product());
       expect(selection().quantity, 1);
       expect(selection().sizeId, isNull);
-      expect(selection().optionIds, isEmpty);
+      expect(selection().optionQuantities, isEmpty);
       expect(selection().unitPrice, 1000);
       expect(selection().isComplete, isTrue);
     });
@@ -91,7 +93,7 @@ void main() {
         ),
       );
       expect(selection().sizeId, 'large');
-      expect(selection().optionIds, {'whole'});
+      expect(selection().optionQuantities, {'whole': 1});
       expect(selection().unitPrice, 1400);
     });
 
@@ -108,7 +110,7 @@ void main() {
           ],
         ),
       );
-      expect(selection().optionIds, isEmpty);
+      expect(selection().optionQuantities, isEmpty);
       expect(selection().isComplete, isFalse);
     });
 
@@ -197,7 +199,7 @@ void main() {
       );
       controller.toggleOption('milk', 'whole');
       controller.toggleOption('milk', 'oat');
-      expect(selection().optionIds, {'oat'});
+      expect(selection().optionQuantities, {'oat': 1});
     });
 
     test('the option of a required single-choice group stays chosen', () {
@@ -215,7 +217,7 @@ void main() {
       );
       controller.toggleOption('milk', 'oat');
       controller.toggleOption('milk', 'oat');
-      expect(selection().optionIds, {'oat'});
+      expect(selection().optionQuantities, {'oat': 1});
     });
 
     test('the option of an optional single-choice group is taken back', () {
@@ -229,7 +231,7 @@ void main() {
       controller.toggleOption('extras', 'shot');
       expect(selection().unitPrice, 1250);
       controller.toggleOption('extras', 'shot');
-      expect(selection().optionIds, isEmpty);
+      expect(selection().optionQuantities, isEmpty);
       expect(selection().unitPrice, 1000);
     });
 
@@ -248,7 +250,7 @@ void main() {
       controller.toggleOption('extras', 'a');
       controller.toggleOption('extras', 'b');
       controller.toggleOption('extras', 'c');
-      expect(selection().optionIds, {'a', 'b'});
+      expect(selection().optionQuantities, {'a': 1, 'b': 1});
     });
 
     test('an option that has run out is not taken', () {
@@ -260,7 +262,7 @@ void main() {
         ),
       );
       controller.toggleOption('extras', 'shot');
-      expect(selection().optionIds, isEmpty);
+      expect(selection().optionQuantities, isEmpty);
     });
 
     test('options of one group do not count against another', () {
@@ -274,8 +276,86 @@ void main() {
       );
       controller.toggleOption('milk', 'oat');
       controller.toggleOption('temperature', 'iced');
-      expect(selection().optionIds, {'oat', 'iced'});
+      expect(selection().optionQuantities, {'oat': 1, 'iced': 1});
       expect(selection().isComplete, isTrue);
+    });
+  });
+
+  group('an option with a quantity', () {
+    Product tea() => product(
+      groups: [
+        optionGroup('sweetener', [
+          option('sugar', maxQuantity: 5),
+          option('honey', price: 150, maxQuantity: 2),
+        ], max: 5),
+      ],
+    );
+
+    test('is chosen once and goes up to what one product may carry', () {
+      final (selection, controller) = open(tea());
+      controller.toggleOption('sweetener', 'honey');
+      expect(selection().optionQuantities, {'honey': 1});
+
+      controller.setOptionQuantity('sweetener', 'honey', 2);
+      expect(selection().optionQuantities, {'honey': 2});
+      expect(selection().unitPrice, 1300);
+
+      controller.setOptionQuantity('sweetener', 'honey', 3);
+      expect(selection().optionQuantities, {'honey': 2});
+    });
+
+    test('does not go under one: taking it back is the toggle', () {
+      final (selection, controller) = open(tea());
+      controller.toggleOption('sweetener', 'sugar');
+      controller.setOptionQuantity('sweetener', 'sugar', 0);
+      expect(selection().optionQuantities, {'sugar': 1});
+
+      controller.toggleOption('sweetener', 'sugar');
+      expect(selection().optionQuantities, isEmpty);
+    });
+
+    test('shares the room of its group with the other options', () {
+      final (selection, controller) = open(tea());
+      controller.toggleOption('sweetener', 'sugar');
+      controller.setOptionQuantity('sweetener', 'sugar', 4);
+      expect(controller.maxQuantityOf('sweetener', 'honey'), 1);
+
+      controller.toggleOption('sweetener', 'honey');
+      controller.setOptionQuantity('sweetener', 'honey', 2);
+      expect(selection().optionQuantities, {'sugar': 4, 'honey': 1});
+      expect(controller.maxQuantityOf('sweetener', 'sugar'), 4);
+
+      // The group is full: sugar stays where it is.
+      controller.setOptionQuantity('sweetener', 'sugar', 5);
+      expect(selection().optionQuantities, {'sugar': 4, 'honey': 1});
+    });
+
+    test('is not changed while it is not chosen', () {
+      final (selection, controller) = open(tea());
+      controller.setOptionQuantity('sweetener', 'sugar', 3);
+      expect(selection().optionQuantities, isEmpty);
+    });
+
+    test('counts every piece towards what the group asks for', () {
+      final (selection, controller) = open(
+        product(
+          groups: [
+            optionGroup('shots', [option('shot', maxQuantity: 3)], min: 2),
+          ],
+        ),
+      );
+      controller.toggleOption('shots', 'shot');
+      expect(selection().isComplete, isFalse);
+      controller.setOptionQuantity('shots', 'shot', 2);
+      expect(selection().isComplete, isTrue);
+    });
+
+    test('goes to the cart with its quantity', () {
+      final (_, controller) = open(tea());
+      controller.toggleOption('sweetener', 'sugar');
+      controller.setOptionQuantity('sweetener', 'sugar', 3);
+      expect(controller.choice.options.single.id, 'sugar');
+      expect(controller.choice.options.single.quantity, 3);
     });
   });
 

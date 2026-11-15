@@ -108,6 +108,32 @@ void main() {
       expect([for (final s in p.sizes) s.isAvailable], [true, true, false]);
     });
 
+    test('a size carries its own portion', () {
+      final p = product(
+        json(
+          modifiers: [
+            {
+              'id': 'size:p1',
+              'kind': 'size',
+              'items': [
+                {
+                  'id': 'small',
+                  'price': 0,
+                  'portion': {'amount': 250, 'unit': 'MILLILITER'},
+                },
+                {'id': 'large', 'price': 400, 'portion': null},
+              ],
+            },
+          ],
+        ),
+      );
+      expect(
+        p.sizes.first.portion,
+        const Portion(amount: 250, unit: PortionUnit.milliliter),
+      );
+      expect(p.sizes.last.portion, isNull);
+    });
+
     test('without a mark the first size is the default', () {
       final p = product(json(modifiers: [sizes(markRegular: false)]));
       expect([for (final s in p.sizes) s.isDefault], [true, false, false]);
@@ -124,6 +150,26 @@ void main() {
       expect(group.isPaid, isTrue);
       expect([for (final o in group.options) o.isDefault], [true, false]);
       expect([for (final o in group.options) o.price], [0, 300]);
+    });
+
+    test('an option says how many of it one product may carry', () {
+      final group = product(
+        json(
+          modifiers: [
+            {
+              'id': 'sweetener',
+              'items': [
+                {'id': 'sugar', 'price': 0, 'maxPerDish': 5},
+                {'id': 'honey', 'price': 150, 'maxPerDish': 1},
+                {'id': 'stevia', 'price': 0},
+              ],
+              'restrictions': {'minQuantity': 0, 'maxQuantity': 5},
+            },
+          ],
+        ),
+      ).optionGroups.single;
+      expect([for (final o in group.options) o.maxQuantity], [5, 1, 1]);
+      expect(group.maxSelected, 5);
     });
 
     test('a group without restrictions is optional, unlimited and free', () {

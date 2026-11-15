@@ -211,6 +211,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cartTipHint => 'Enter tip amount';
 
   @override
+  String get productAnythingElse => 'Anything else?';
+
+  @override
   String orderWithTotal(String total) {
     return 'Order · $total';
   }

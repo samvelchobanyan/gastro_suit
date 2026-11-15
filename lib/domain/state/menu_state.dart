@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/config/app_config.dart';
 import '../../core/di/repositories.dart';
 import '../entities/menu.dart';
+import '../entities/product.dart';
 import 'server_config_state.dart';
 
 /// The menu of one branch. Knows nothing about the active branch: whoever
@@ -34,3 +35,22 @@ class BranchMenuController extends AsyncNotifier<Menu> {
 /// branch the user is browsing lives while its screen is open.
 final menuProvider = AsyncNotifierProvider.autoDispose
     .family<BranchMenuController, Menu, String>(BranchMenuController.new);
+
+/// The products the merchant suggests with a product of a branch:
+/// `recommendedProductsProvider((branchId: …, productId: …))`. Loaded when
+/// first asked for and dropped when nobody watches it any more.
+final recommendedProductsProvider = FutureProvider.autoDispose
+    .family<List<Product>, ({String branchId, String productId})>((
+      ref,
+      key,
+    ) async {
+      final language = await ref.watch(contentLanguageProvider.future);
+      return ref
+          .read(menuRepositoryProvider)
+          .getRecommended(
+            restaurantId: ref.read(appConfigProvider).restaurantId,
+            branchId: key.branchId,
+            productId: key.productId,
+            language: language,
+          );
+    });

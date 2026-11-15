@@ -61,5 +61,6 @@
   "cartTipNone": "Без чаевых",
   "cartTipOther": "Другое",
   "cartTipHint": "Введите сумму чаевых",
+  "productAnythingElse": "Что-нибудь ещё?",
   "orderWithTotal": "Заказать · {total}"
 }

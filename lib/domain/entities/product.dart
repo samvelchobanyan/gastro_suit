@@ -18,6 +18,8 @@ abstract class Product with _$Product {
 
     /// False: the branch has stopped it. Shown greyed; the cart refuses it.
     required bool isAvailable,
+
+    /// How much one portion is. With [sizes] each size has its own.
     Portion? portion,
     required bool isFeatured,
 
@@ -53,6 +55,9 @@ abstract class ProductSize with _$ProductSize {
 
     /// Exactly one size of a product is the default.
     required bool isDefault,
+
+    /// How much this size is; null when the kitchen entered none.
+    Portion? portion,
   }) = _ProductSize;
 }
 
@@ -63,10 +68,12 @@ abstract class ProductOptionGroup with _$ProductOptionGroup {
     required String id,
     required String name,
 
-    /// How many options must be chosen; 0 for an optional group.
+    /// How many options must be chosen; 0 for an optional group. An option
+    /// chosen several times counts as many.
     required int minSelected,
 
-    /// How many options may be chosen; null for no limit.
+    /// How many options may be chosen, counted the same way; null for no
+    /// limit.
     int? maxSelected,
     required List<ProductOption> options,
   }) = _ProductOptionGroup;
@@ -89,7 +96,7 @@ abstract class ProductOptionGroup with _$ProductOptionGroup {
   }
 }
 
-/// One answer to a group's question. Chosen at most once.
+/// One answer to a group's question.
 @freezed
 abstract class ProductOption with _$ProductOption {
   const factory ProductOption({
@@ -104,6 +111,10 @@ abstract class ProductOption with _$ProductOption {
 
     /// Chosen until the user changes it.
     required bool isDefault,
+
+    /// How many of it one product may carry: 1 for an option that is
+    /// chosen or not, more for one with a quantity (three spoons of sugar).
+    @Default(1) int maxQuantity,
   }) = _ProductOption;
 }
 

@@ -12,7 +12,8 @@ import 'server_config_state.dart';
 ///
 /// Null for a guest (the server keeps a cart only for an account) and
 /// while there is no active branch. Loaded again when the user signs in or
-/// out and when the active branch changes.
+/// out and when the active branch changes. The cart follows a change of
+/// the active branch made through [moveTo].
 ///
 /// Every change goes to the server and puts the cart it answers with in
 /// place of the one held. A change that fails throws its `AppException`
@@ -55,6 +56,32 @@ class CartController extends AsyncNotifier<Cart?> {
     if (active?.id != branchId) {
       ref.read(branchPickProvider.notifier).pick(branchId);
     }
+  }
+
+  /// Makes [branchId] the active branch and takes the cart along: its
+  /// products go to that branch, each at the price there. One the branch
+  /// cannot make stays in the cart, marked unavailable.
+  ///
+  /// A failed move throws and changes neither the cart nor the branch.
+  Future<void> moveTo(String branchId) async {
+    // A cart that failed to load is not known to hold anything.
+    Cart? cart;
+    try {
+      cart = await future;
+    } catch (_) {
+      cart = null;
+    }
+    if (cart != null && !cart.isEmpty && cart.branchId != branchId) {
+      state = AsyncData(
+        await ref
+            .read(cartRepositoryProvider)
+            .moveTo(
+              branchId: branchId,
+              language: await ref.read(contentLanguageProvider.future),
+            ),
+      );
+    }
+    ref.read(branchPickProvider.notifier).pick(branchId);
   }
 
   /// Sets the quantity of the line [lineId]; 0 removes it.

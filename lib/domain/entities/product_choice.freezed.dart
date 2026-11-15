@@ -575,8 +575,9 @@ as String,
 /// @nodoc
 mixin _$ChosenOption {
 
- String get id; String get groupId; String get name;/// What it adds to the product's price; 0 when free.
- int get price;
+ String get id; String get groupId; String get name;/// What one of it adds to the product's price; 0 when free.
+ int get price;/// How many of it one product carries.
+ int get quantity;
 /// Create a copy of ChosenOption
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -587,16 +588,16 @@ $ChosenOptionCopyWith<ChosenOption> get copyWith => _$ChosenOptionCopyWithImpl<C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChosenOption&&(identical(other.id, id) || other.id == id)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.name, name) || other.name == name)&&(identical(other.price, price) || other.price == price));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChosenOption&&(identical(other.id, id) || other.id == id)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.name, name) || other.name == name)&&(identical(other.price, price) || other.price == price)&&(identical(other.quantity, quantity) || other.quantity == quantity));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,groupId,name,price);
+int get hashCode => Object.hash(runtimeType,id,groupId,name,price,quantity);
 
 @override
 String toString() {
-  return 'ChosenOption(id: $id, groupId: $groupId, name: $name, price: $price)';
+  return 'ChosenOption(id: $id, groupId: $groupId, name: $name, price: $price, quantity: $quantity)';
 }
 
 
@@ -607,7 +608,7 @@ abstract mixin class $ChosenOptionCopyWith<$Res>  {
   factory $ChosenOptionCopyWith(ChosenOption value, $Res Function(ChosenOption) _then) = _$ChosenOptionCopyWithImpl;
 @useResult
 $Res call({
- String id, String groupId, String name, int price
+ String id, String groupId, String name, int price, int quantity
 });
 
 
@@ -624,12 +625,13 @@ class _$ChosenOptionCopyWithImpl<$Res>
 
 /// Create a copy of ChosenOption
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? groupId = null,Object? name = null,Object? price = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? groupId = null,Object? name = null,Object? price = null,Object? quantity = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,groupId: null == groupId ? _self.groupId : groupId // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
+as int,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
@@ -715,10 +717,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String groupId,  String name,  int price)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String groupId,  String name,  int price,  int quantity)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChosenOption() when $default != null:
-return $default(_that.id,_that.groupId,_that.name,_that.price);case _:
+return $default(_that.id,_that.groupId,_that.name,_that.price,_that.quantity);case _:
   return orElse();
 
 }
@@ -736,10 +738,10 @@ return $default(_that.id,_that.groupId,_that.name,_that.price);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String groupId,  String name,  int price)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String groupId,  String name,  int price,  int quantity)  $default,) {final _that = this;
 switch (_that) {
 case _ChosenOption():
-return $default(_that.id,_that.groupId,_that.name,_that.price);case _:
+return $default(_that.id,_that.groupId,_that.name,_that.price,_that.quantity);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -756,10 +758,10 @@ return $default(_that.id,_that.groupId,_that.name,_that.price);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String groupId,  String name,  int price)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String groupId,  String name,  int price,  int quantity)?  $default,) {final _that = this;
 switch (_that) {
 case _ChosenOption() when $default != null:
-return $default(_that.id,_that.groupId,_that.name,_that.price);case _:
+return $default(_that.id,_that.groupId,_that.name,_that.price,_that.quantity);case _:
   return null;
 
 }
@@ -771,14 +773,16 @@ return $default(_that.id,_that.groupId,_that.name,_that.price);case _:
 
 
 class _ChosenOption implements ChosenOption {
-  const _ChosenOption({required this.id, required this.groupId, required this.name, required this.price});
+  const _ChosenOption({required this.id, required this.groupId, required this.name, required this.price, this.quantity = 1});
   
 
 @override final  String id;
 @override final  String groupId;
 @override final  String name;
-/// What it adds to the product's price; 0 when free.
+/// What one of it adds to the product's price; 0 when free.
 @override final  int price;
+/// How many of it one product carries.
+@override@JsonKey() final  int quantity;
 
 /// Create a copy of ChosenOption
 /// with the given fields replaced by the non-null parameter values.
@@ -790,16 +794,16 @@ _$ChosenOptionCopyWith<_ChosenOption> get copyWith => __$ChosenOptionCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChosenOption&&(identical(other.id, id) || other.id == id)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.name, name) || other.name == name)&&(identical(other.price, price) || other.price == price));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChosenOption&&(identical(other.id, id) || other.id == id)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.name, name) || other.name == name)&&(identical(other.price, price) || other.price == price)&&(identical(other.quantity, quantity) || other.quantity == quantity));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,groupId,name,price);
+int get hashCode => Object.hash(runtimeType,id,groupId,name,price,quantity);
 
 @override
 String toString() {
-  return 'ChosenOption(id: $id, groupId: $groupId, name: $name, price: $price)';
+  return 'ChosenOption(id: $id, groupId: $groupId, name: $name, price: $price, quantity: $quantity)';
 }
 
 
@@ -810,7 +814,7 @@ abstract mixin class _$ChosenOptionCopyWith<$Res> implements $ChosenOptionCopyWi
   factory _$ChosenOptionCopyWith(_ChosenOption value, $Res Function(_ChosenOption) _then) = __$ChosenOptionCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String groupId, String name, int price
+ String id, String groupId, String name, int price, int quantity
 });
 
 
@@ -827,12 +831,13 @@ class __$ChosenOptionCopyWithImpl<$Res>
 
 /// Create a copy of ChosenOption
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? groupId = null,Object? name = null,Object? price = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? groupId = null,Object? name = null,Object? price = null,Object? quantity = null,}) {
   return _then(_ChosenOption(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,groupId: null == groupId ? _self.groupId : groupId // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
+as int,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }

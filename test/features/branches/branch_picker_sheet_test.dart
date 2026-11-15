@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gastro_suit/core/network/app_exception.dart';
 import 'package:gastro_suit/domain/entities/branch.dart';
 import 'package:gastro_suit/domain/entities/cart.dart';
 import 'package:gastro_suit/domain/entities/city.dart';
@@ -95,52 +96,43 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('with an empty cart the branch changes without a question', (
-    tester,
-  ) async {
+  testWidgets('choosing a branch makes it the active one', (tester) async {
     final (container, _) = await openPicker(tester);
 
     await choose(tester, 'Cascade');
 
-    expect(find.text('Clear the cart?'), findsNothing);
     expect(container.read(branchPickProvider), 'b2');
     expect(find.byType(BranchPickerSheet), findsNothing);
   });
 
-  testWidgets('with products in the cart the user is asked first', (
-    tester,
-  ) async {
+  testWidgets('the cart goes along, and nothing is asked', (tester) async {
     final (container, cart) = await openPicker(tester, cart: cartAt('b1'));
 
     await choose(tester, 'Cascade');
-    expect(find.text('Clear the cart?'), findsOneWidget);
 
-    // No: the branch and the cart stay.
-    await tester.tap(find.text('Cancel'));
-    await tester.pumpAndSettle();
-    expect(container.read(branchPickProvider), isNull);
+    expect(find.text('Clear the cart?'), findsNothing);
+    expect(cart.moved, ['b2']);
     expect(cart.cleared, 0);
-    expect(find.byType(BranchPickerSheet), findsOneWidget);
-
-    // Yes: the cart is cleared, then the branch changes.
-    await tester.tap(find.text('Choose'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Clear'));
-    await tester.pumpAndSettle();
-    expect(cart.cleared, 1);
+    expect(container.read(cartProvider).value?.branchId, 'b2');
+    expect(container.read(cartProvider).value?.itemCount, 1);
     expect(container.read(branchPickProvider), 'b2');
     expect(find.byType(BranchPickerSheet), findsNothing);
   });
 
-  testWidgets('choosing the branch the cart is at asks nothing', (
+  testWidgets('a cart that cannot be moved keeps the branch and says why', (
     tester,
   ) async {
     final (container, cart) = await openPicker(tester, cart: cartAt('b1'));
+    cart.moveError = const AppException(
+      AppExceptionKind.server,
+      message: 'The branch takes no orders now',
+    );
 
-    await choose(tester, 'Northern');
+    await choose(tester, 'Cascade');
 
-    expect(find.text('Clear the cart?'), findsNothing);
-    expect(cart.cleared, 0);
-    expect(container.read(branchPickProvider), 'b1');
+    expect(find.text('The branch takes no orders now'), findsOneWidget);
+    expect(container.read(branchPickProvider), isNull);
+    expect(container.read(cartProvider).value?.branchId, 'b1');
+    expect(find.byType(BranchPickerSheet), findsOneWidget);
   });
 }

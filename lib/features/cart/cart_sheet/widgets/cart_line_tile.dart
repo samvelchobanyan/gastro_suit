@@ -10,8 +10,8 @@ import '../../../../l10n/generated/app_localizations.dart';
 import '../../../../core/utils/price_format.dart';
 
 /// One line of the cart (handoff `ProductBasket`): the product's photo,
-/// name, what was chosen for it and the price of one; under them a button
-/// that removes the line and the quantity.
+/// name, what was chosen for it ("Large · Sugar ×2") and the price of one;
+/// under them a button that removes the line and the quantity.
 ///
 /// A line the branch cannot make now is dimmed and says so; it can only be
 /// removed.
@@ -39,7 +39,10 @@ class CartLineTile extends StatelessWidget {
     final choice = line.choice;
     final chosen = [
       if (choice.size case final size?) size.name,
-      for (final option in choice.options) option.name,
+      for (final option in choice.options)
+        option.quantity > 1
+            ? '${option.name} ×${option.quantity}'
+            : option.name,
     ].join(' · ');
 
     final product = Row(

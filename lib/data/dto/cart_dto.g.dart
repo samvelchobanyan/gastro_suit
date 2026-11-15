@@ -37,6 +37,7 @@ SelectedModifierDto _$SelectedModifierDtoFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String?,
       price: (json['price'] as num?)?.toInt(),
       groupId: json['groupId'] as String?,
+      quantity: (json['quantity'] as num?)?.toInt(),
     );
 
 CartLineItemDto _$CartLineItemDtoFromJson(Map<String, dynamic> json) =>

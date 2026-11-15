@@ -466,6 +466,12 @@ abstract class AppLocalizations {
   /// **'Enter tip amount'**
   String get cartTipHint;
 
+  /// Product sheet: the title of the rail of products suggested with this one
+  ///
+  /// In en, this message translates to:
+  /// **'Anything else?'**
+  String get productAnythingElse;
+
   /// Cart sheet: the button that places the order, with the cart's total, e.g. Order · ֏1,450
   ///
   /// In en, this message translates to:

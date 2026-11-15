@@ -84,6 +84,19 @@ class _FakeRepository implements CartRepository {
   Future<Cart> removeLine(String lineId, {required ContentLanguage language}) =>
       setQuantity(lineId, quantity: 0, language: language);
 
+  /// Every branch the cart was moved to.
+  final moved = <String>[];
+
+  @override
+  Future<Cart> moveTo({
+    required String branchId,
+    required ContentLanguage language,
+  }) async {
+    if (error case final error?) throw error;
+    moved.add(branchId);
+    return stored = _with(branchId, stored?.lines ?? const []);
+  }
+
   @override
   Future<Cart> clear({
     required String branchId,
@@ -174,6 +187,57 @@ void main() {
     expect(cart?.branchId, 'b2');
     expect(cart?.itemCount, 1);
     expect(repository.asked.last, 'b2');
+  });
+
+  test('moving takes the cart to the new active branch', () async {
+    final (container, repository) = setUp();
+    await container.read(cartProvider.future);
+    final controller = container.read(cartProvider.notifier);
+    await controller.add(branchId: 'b1', choice: latte, quantity: 2);
+
+    await controller.moveTo('b2');
+
+    expect(repository.moved, ['b2']);
+    expect(container.read(branchPickProvider), 'b2');
+    final cart = await container.read(cartProvider.future);
+    expect(cart?.branchId, 'b2');
+    expect(cart?.itemCount, 2);
+  });
+
+  test('an empty cart is not moved: only the branch changes', () async {
+    final (container, repository) = setUp();
+    await container.read(cartProvider.future);
+
+    await container.read(cartProvider.notifier).moveTo('b2');
+
+    expect(repository.moved, isEmpty);
+    expect(container.read(branchPickProvider), 'b2');
+  });
+
+  test('a guest changes the branch without a cart', () async {
+    final (container, repository) = setUp(auth: AuthStatus.signedOut);
+    await container.read(cartProvider.future);
+
+    await container.read(cartProvider.notifier).moveTo('b2');
+
+    expect(repository.moved, isEmpty);
+    expect(container.read(branchPickProvider), 'b2');
+  });
+
+  test('a refused move throws and keeps the cart and the branch', () async {
+    final (container, repository) = setUp();
+    await container.read(cartProvider.future);
+    final controller = container.read(cartProvider.notifier);
+    await controller.add(branchId: 'b1', choice: latte);
+    repository.error = const AppException(
+      AppExceptionKind.server,
+      code: 'location_not_found',
+    );
+
+    await expectLater(controller.moveTo('b2'), throwsA(isA<AppException>()));
+
+    expect(container.read(branchPickProvider), isNull);
+    expect(container.read(cartProvider).value?.branchId, 'b1');
   });
 
   test('a refused add throws and leaves the cart as it was', () async {

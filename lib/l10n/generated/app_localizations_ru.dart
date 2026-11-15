@@ -211,6 +211,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get cartTipHint => 'Введите сумму чаевых';
 
   @override
+  String get productAnythingElse => 'Что-нибудь ещё?';
+
+  @override
   String orderWithTotal(String total) {
     return 'Заказать · $total';
   }

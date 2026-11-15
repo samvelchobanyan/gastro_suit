@@ -10,7 +10,6 @@ import '../../../domain/state/branches_state.dart';
 import '../../../domain/state/cart_state.dart';
 import '../../../domain/state/cities_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
-import '../../cart/replace_cart_dialog/replace_cart_dialog.dart';
 import '../../shared_widgets/branch_select_tile.dart';
 import '../../../core/utils/error_text.dart';
 import '../../shared_widgets/load_error_row.dart';
@@ -43,34 +42,28 @@ class _BranchPickerSheetState extends ConsumerState<BranchPickerSheet> {
   String? _districtId;
   String? _markedId;
 
-  /// The cart is being cleared for the change of branch.
-  var _clearing = false;
+  /// The cart is on its way to the chosen branch.
+  var _moving = false;
 
-  /// Why the cart could not be cleared; the branch stays as it was.
+  /// Why the cart could not be moved; the branch stays as it was.
   String? _error;
 
-  /// Makes [branchId] the active branch. A cart with products of another
-  /// branch does not go along: the user is asked, and it is cleared first.
+  /// Makes [branchId] the active branch; the cart goes along.
   Future<void> _choose(String branchId) async {
-    setState(() => _error = null);
-    if (!await confirmReplaceCart(context, ref, branchId: branchId)) return;
-    if (!mounted) return;
-    if (cartWouldBeLost(ref.read(cartProvider).value, branchId)) {
-      setState(() => _clearing = true);
-      try {
-        await ref.read(cartProvider.notifier).clear();
-      } on AppException catch (error) {
-        if (!mounted) return;
-        setState(() {
-          _clearing = false;
-          _error = errorText(context, error);
-        });
-        return;
-      }
+    setState(() {
+      _moving = true;
+      _error = null;
+    });
+    try {
+      await ref.read(cartProvider.notifier).moveTo(branchId);
+      if (mounted) Navigator.pop(context);
+    } on AppException catch (error) {
       if (!mounted) return;
+      setState(() {
+        _moving = false;
+        _error = errorText(context, error);
+      });
     }
-    ref.read(branchPickProvider.notifier).pick(branchId);
-    Navigator.pop(context);
   }
 
   @override
@@ -143,7 +136,7 @@ class _BranchPickerSheetState extends ConsumerState<BranchPickerSheet> {
           label: AppLocalizations.of(context).choose,
           size: DSButtonSize.sm,
           fullWidth: true,
-          loading: _clearing,
+          loading: _moving,
           onPressed: () {
             if (markedId != null) _choose(markedId);
           },

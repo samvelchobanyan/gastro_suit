@@ -38,7 +38,8 @@ class CartRepositoryImpl implements CartRepository {
         // their names and prices.
         'modifiers': [
           if (size != null) {'id': size.id},
-          for (final option in choice.options) {'id': option.id},
+          for (final option in choice.options)
+            {'id': option.id, 'quantity': option.quantity},
         ],
       },
     );
@@ -64,6 +65,15 @@ class CartRepositoryImpl implements CartRepository {
     required ContentLanguage language,
   }) async {
     final json = await _api.delete('/cart/items/$lineId');
+    return _cart(json, language);
+  }
+
+  @override
+  Future<Cart> moveTo({
+    required String branchId,
+    required ContentLanguage language,
+  }) async {
+    final json = await _api.post('/cart/branch', data: {'branchId': branchId});
     return _cart(json, language);
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gastro_suit/domain/entities/cart.dart';
 import 'package:gastro_suit/domain/entities/product_choice.dart';
+import 'package:gastro_suit/domain/state/active_branch_state.dart';
 import 'package:gastro_suit/domain/state/cart_state.dart';
 
 /// A cart that lives in memory: starts as [initial] and records what is
@@ -18,6 +19,23 @@ class FakeCartController extends CartController {
 
   /// How many times the cart was cleared.
   int cleared = 0;
+
+  /// Every branch the cart was asked to move to.
+  final moved = <String>[];
+
+  /// Thrown by the next moves when set.
+  Object? moveError;
+
+  @override
+  Future<void> moveTo(String branchId) async {
+    if (moveError case final error?) throw error;
+    moved.add(branchId);
+    final current = state.value;
+    if (current != null) {
+      state = AsyncData(current.copyWith(branchId: branchId));
+    }
+    ref.read(branchPickProvider.notifier).pick(branchId);
+  }
 
   @override
   Future<Cart?> build() async => initial;
