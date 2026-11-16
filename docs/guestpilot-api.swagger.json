@@ -1732,6 +1732,93 @@
         ]
       }
     },
+    "/api/v1/cart/items/{id}/options": {
+      "put": {
+        "description": "The line keeps its dish, its place and its quantity (unless `quantity` is sent); the choice is priced and refused exactly as `POST /cart/items` would price and refuse it, and a refused change leaves the line as it was. A choice another line of the same dish already holds merges into that line, as an add would — the edited line is gone, and the answer is the basket without it.",
+        "operationId": "CartController_changeItemOptions",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeCartLineOptionsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The basket, with the line changed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The new choice is refused — the same codes as an add",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cart item not found, or the dish is no longer on this menu",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Any other refusal: a `code` to act on and a `message` to show",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Change a line’s size and options",
+        "tags": [
+          "Cart"
+        ]
+      }
+    },
     "/api/v1/cart/branch": {
       "post": {
         "description": "The basket keeps its lines, each priced at the new location. A line that location cannot sell stays, with `available: false` and its `unavailableReason`; checkout refuses it until it is removed, and moving back makes it orderable again. No basket, or an empty one: an empty basket there. To empty it, `DELETE /cart`. Ask `GET /cart/branch-preview` first to show the guest what moves.",
@@ -6766,6 +6853,28 @@
           "quantity"
         ]
       },
+      "ChangeCartLineOptionsDto": {
+        "type": "object",
+        "properties": {
+          "modifiers": {
+            "type": "array",
+            "description": "The whole new choice, in `POST /cart/items`’s `modifiers` shape — the size and every option, not only what changed. Omitted or `[]`: nothing chosen (refused where a group is required).",
+            "example": [
+              {
+                "id": "size-large"
+              },
+              {
+                "id": "mod-sugar",
+                "quantity": 3
+              }
+            ]
+          },
+          "quantity": {
+            "type": "number",
+            "description": "How many of the dish; omitted, the line keeps its quantity"
+          }
+        }
+      },
       "SwitchLocationDto": {
         "type": "object",
         "properties": {
@@ -9187,6 +9296,10 @@
         "properties": {}
       },
       "WebAddToCartDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "WebChangeCartLineDto": {
         "type": "object",
         "properties": {}
       },

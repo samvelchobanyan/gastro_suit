@@ -6,6 +6,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../core/network/app_exception.dart';
 import '../../../design_system/components/buttons/ds_button.dart';
 import '../../../design_system/components/inputs/ds_amount_field.dart';
+import '../../../design_system/components/inputs/ds_payment_method.dart';
 import '../../../design_system/components/inputs/ds_time_picker.dart';
 import '../../../design_system/components/inputs/ds_tip_selector.dart';
 import '../../../design_system/components/layout/ds_section_header.dart';
@@ -20,6 +21,8 @@ import '../../menu/product_sheet/product_sheet.dart';
 import '../../../core/utils/error_text.dart';
 import '../../shared_widgets/load_error_row.dart';
 import '../../../core/utils/price_format.dart';
+import '../order_success_screen/order_success_screen.dart';
+import '../payment_method_sheet/payment_method_sheet.dart';
 import 'cart_checkout_controller.dart';
 import 'widgets/cart_line_tile.dart';
 
@@ -30,11 +33,12 @@ Future<void> showCart(BuildContext context) => showDSTallSheet<void>(
 );
 
 /// The cart at the active branch (handoff `BasketOverlay`): the branch,
-/// when the order is wanted, the products with their quantities, and the
-/// tip where the branch takes one; all scrolling over the order button.
+/// when the order is wanted, the products with their quantities, the tip
+/// where the branch takes one, and the card to pay with; all scrolling
+/// over the order button.
 ///
-/// Placing the order is not built yet: the button shows the total and
-/// takes no taps. The design's payment method comes with it.
+/// The button places the order; once it is placed, the success screen
+/// takes the sheet's place.
 class CartSheet extends ConsumerStatefulWidget {
   const CartSheet({super.key, required this.scrollController});
 
@@ -51,7 +55,10 @@ class _CartSheetState extends ConsumerState<CartSheet> {
   /// taps till it answers.
   var _changing = false;
 
-  /// Why the last change was not accepted.
+  /// The order is on its way to the server.
+  var _ordering = false;
+
+  /// Why the last change, or the order, was not accepted.
   String? _error;
 
   @override
@@ -76,6 +83,26 @@ class _CartSheetState extends ConsumerState<CartSheet> {
       if (!mounted) return;
       setState(() {
         _changing = false;
+        _error = errorText(context, error);
+      });
+    }
+  }
+
+  /// Places the order and shows that it was placed, in the sheet's place.
+  /// A refused order leaves the cart as it was and says why over the
+  /// button.
+  Future<void> _placeOrder() async {
+    setState(() {
+      _ordering = true;
+      _error = null;
+    });
+    try {
+      final order = await ref.read(cartCheckoutProvider.notifier).placeOrder();
+      if (mounted) showOrderSuccess(context, order);
+    } on AppException catch (error) {
+      if (!mounted) return;
+      setState(() {
+        _ordering = false;
         _error = errorText(context, error);
       });
     }
@@ -148,7 +175,7 @@ class _CartSheetState extends ConsumerState<CartSheet> {
                     ),
                   ),
                 IgnorePointer(
-                  ignoring: _changing,
+                  ignoring: _changing || _ordering,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -189,6 +216,13 @@ class _CartSheetState extends ConsumerState<CartSheet> {
               title: l10n.cartSectionTip,
             ),
             _TipRow(customTip: _customTip),
+          ],
+          if (lines.isNotEmpty) ...[
+            _SectionTitle(
+              icon: PhosphorIcons.creditCard(),
+              title: l10n.cartSectionPayment,
+            ),
+            const _PaymentRow(),
           ],
         ],
       );
@@ -234,7 +268,12 @@ class _CartSheetState extends ConsumerState<CartSheet> {
             ),
           ),
         ),
-        _OrderBar(total: cart?.total ?? 0, error: _error),
+        _OrderBar(
+          total: cart?.total ?? 0,
+          error: _error,
+          busy: _ordering,
+          onOrder: lines.isEmpty || _changing ? null : _placeOrder,
+        ),
       ],
     );
   }
@@ -430,6 +469,33 @@ class _TipRow extends ConsumerWidget {
   }
 }
 
+/// The card the order is paid with; a tap opens the ways to pay.
+class _PaymentRow extends ConsumerWidget {
+  const _PaymentRow();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final card = ref.watch(checkoutCardProvider);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        DSSpacing.base,
+        0,
+        DSSpacing.base,
+        DSSpacing.base,
+      ),
+      child: DSPaymentMethod(
+        icon: PhosphorIcons.creditCard(),
+        name: card == null
+            ? l10n.paymentNewCard
+            : l10n.paymentCard(card.lastDigits),
+        showCaret: true,
+        onTap: () => showPaymentMethods(context),
+      ),
+    );
+  }
+}
+
 class _AddProductsLink extends StatelessWidget {
   const _AddProductsLink({required this.label, required this.onTap});
 
@@ -470,14 +536,25 @@ class _AddProductsLink extends StatelessWidget {
 }
 
 /// The bar under the scrolling content: the order button with the cart's
-/// total. It takes no taps until placing an order is built.
+/// total.
 class _OrderBar extends StatelessWidget {
-  const _OrderBar({required this.total, required this.error});
+  const _OrderBar({
+    required this.total,
+    required this.error,
+    required this.busy,
+    required this.onOrder,
+  });
 
   final int total;
 
-  /// Why the last change of the cart was not accepted.
+  /// Why the last change of the cart, or the order, was not accepted.
   final String? error;
+
+  /// The order is on its way: the button shows it.
+  final bool busy;
+
+  /// Null while there is nothing to order.
+  final VoidCallback? onOrder;
 
   @override
   Widget build(BuildContext context) {
@@ -516,8 +593,8 @@ class _OrderBar extends StatelessWidget {
               ).orderWithTotal(formatPrice(context, total)),
               size: DSButtonSize.sm,
               fullWidth: true,
-              // TODO: place the order (the checkout stage).
-              onPressed: null,
+              loading: busy,
+              onPressed: onOrder,
             ),
           ],
         ),

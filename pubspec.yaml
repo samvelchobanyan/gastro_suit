@@ -81,6 +81,8 @@ flutter:
   # The client's brand: each client build ships its own files here.
   assets:
     - assets/brand/
+    # Pictures every client build shares.
+    - assets/images/
 
   fonts:
     - family: PlusJakartaSans

@@ -30,6 +30,16 @@ abstract interface class CartRepository {
     required ContentLanguage language,
   });
 
+  /// Puts [choice] and [quantity] in place of what the line [lineId]
+  /// holds; the line keeps its place. A choice another line of the same
+  /// product already holds merges into that line, and this one is gone.
+  Future<Cart> changeLine(
+    String lineId, {
+    required ProductChoice choice,
+    required int quantity,
+    required ContentLanguage language,
+  });
+
   Future<Cart> removeLine(String lineId, {required ContentLanguage language});
 
   /// Moves the cart to [branchId]: it keeps its lines, each priced there.

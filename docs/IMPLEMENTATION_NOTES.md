@@ -74,10 +74,16 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
     `GET /cart/branch-preview` answers the same without moving anything (not used yet);
   - an option's quantity over its `maxPerDish` is refused with
     `option_quantity_too_many`; the group's maximum counts the quantities together;
+  - `PUT /cart/items/{id}/options` puts a new choice in a line (checked 2026-11-16):
+    `modifiers` is the whole choice in the shape of an add, `quantity` is optional. The
+    line keeps its id and place; a choice another line of the same product holds merges
+    the two into that other line; a refusal (the codes of an add) changes nothing; a
+    line that is gone answers 404 `cart_item_not_found`;
   - every change (`POST`, `PUT`, `DELETE` of a line) answers with the whole cart;
   - a required group left empty is refused with `options_required`.
 - In code: `cartProvider` (`domain/state/cart_state.dart`) is the cart at the active
-  branch, null for a guest; its methods add, change a quantity, remove a line,
+  branch, null for a guest; its methods add, change a quantity, change a line's choice
+  (`changeLine`, what the product sheet's "Save" calls), remove a line,
   clear, and move the cart to another branch (`moveTo`, which also makes that branch
   the active one). Adding at another branch makes that branch the active one. The cart sheet (`features/cart/cart_sheet/`)
   shows it and changes it; the time and the tip chosen there are the sheet's own state
@@ -262,10 +268,16 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - Branch from `location` (name in the current language from its translations).
 - Lines: `name` is the product name as ordered; `modifiersJson` becomes the choice's
   size (group id starting with `size:`) and add-ons; `itemId` may be null.
-- Not mapped: `paymentStatus`, `paymentProvider`, `gatewayOrderId` (payment flow, not the
-  order), guest contact, `itemsTotal` / `walletSpent` / `totalToCharge` separately,
+- Not mapped: `paymentStatus`, `paymentProvider` (payment flow, not the order), guest
+  contact, `itemsTotal` / `walletSpent` / `totalToCharge` separately,
   `updatedAt`. Pending a screen: `posNumber` (number called at the till), `scheduledAt`
   (pickup time).
+
+- `gatewayOrderId` is not part of `Order` either, but placing an order answers with it
+  next to the order while the order awaits payment (`PlacedOrder.paymentReference`):
+  paying with a saved card takes it.
+- Built so far (§16): the id, the status, the branch name and the time. The lines and
+  the amounts are mapped with the screens that show them.
 
 ## 14. Voucher mapping (`GET /loyalty/entitlements` → `Voucher`) — agreed
 
@@ -302,3 +314,31 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - ~~Cities and districts as reference lists with ids~~ — done: `GET /branches/cities`,
   `cityId` / `districtId` on a branch and as `/branches` filters.
 - ~~The default branch for all users~~ — done: `defaultBranchId` in `GET /config`.
+
+## 16. Placing an order — built for saved cards (2026-11-16)
+
+- `POST /orders` with `branchId`, `fulfillmentType: pickup`, `scheduledAt` (left out for
+  as soon as possible) and `tip` (left out for none). No `paymentProvider` is sent: the
+  server pays through its default gateway.
+- The answer is the order and, for a gateway with a payment page, the page to open.
+  Checked on the dev server (2026-11-16):
+  - with the default gateway there (`mock-instant`) the order comes back paid
+    (`placed`) and the cart is empty;
+  - with a gateway that has a page (`mock`) it comes back `payment_pending` with
+    `gatewayOrderId`, and the cart stays until it is paid;
+  - `POST /payments/cards/{bindingId}/pay` with `{orderId: gatewayOrderId}` pays such
+    an order with a saved card and answers `{success, order}`; an order that is not
+    awaiting payment is refused with `order_not_awaiting_payment`;
+  - `GET /payments/methods` lists the saved cards (`bindingId`, `maskedPan`,
+    `expiryDate`, `isDefault`); `GET /config` → `payment` names the gateways.
+- In code: `CartCheckoutController.placeOrder` (the cart sheet's controller) places
+  the order with the chosen time and tip; when the order comes back awaiting payment,
+  it pays it with the chosen card; then the cart is loaded again. The cards are
+  `paymentCardsProvider` (`domain/state/payment_cards_state.dart`); the card the order
+  is paid with is `checkoutCardProvider` next to the controller.
+- Not built: the bank's page for a new card (it needs a page shown inside the app that
+  sees the return to `/orders/payment-callback`), adding and removing cards, spending
+  the balance (`walletToSpend`, `POST /loyalty/calculate-redemption`), the order's
+  status on Home.
+- With `mock-instant` the step that pays with a card never runs on the dev server; it
+  is covered by tests only.

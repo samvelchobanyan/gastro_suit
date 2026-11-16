@@ -161,11 +161,26 @@ Built by default until the designer and the product owner answer:
 - The heart (favourites) comes with that feature.
 
 ### 20. Cart sheet: what the design leaves open
-The design's "Basket" is the cart and the checkout in one sheet. Built so far: the
-branch, the time, the products and the tip. Built by default until the designer and the
-product owner answer:
-- The order button shows the total and takes no taps: placing an order, the payment
-  method and the success screen are the next stage.
+The design's "Basket" is the cart and the checkout in one sheet: the branch, the time,
+the products, the tip and the payment method. Built by default until the designer and
+the product owner answer:
+- The payment method is a saved card: the user's default one until they pick another
+  in the list. The list is the saved cards and "New card". Paying with a new card (on
+  the bank's page) is not built: its row is shown and takes no taps. The design's
+  wallet, loyalty points and voucher are not offered: the API does not treat them as a
+  way to pay but as an amount taken off the order, and the design for it is expected
+  to change (decided 2026-11-16).
+- A card is named "Card •••• 1111": the API gives the masked number and no brand. The
+  design's amount at the end of the row is not shown: a card has none.
+- A user without saved cards sees "New card" as the payment method and can still
+  order: whether the order needs a card is the server's to say.
+- The order button places the order. Once it is placed, the success screen takes the
+  sheet's place as a screen of its own (the design draws it inside the sheet). A
+  refused order leaves the cart as it was, with the reason over the button.
+- "Track order" on the success screen closes it and opens the Home tab, as in the
+  design, where the order's status is shown. That status block is the next stage (§8).
+- An order left unpaid (a declined card) stays on the server as it is; the next order
+  is a new one.
 - An empty cart (and a guest's): "Your basket is empty" under the order title, with
   "Add products"; no time and no tip.
 - While the cart loads a spinner is shown; a failed load shows the generic error with
@@ -174,10 +189,11 @@ product owner answer:
   under one; the bin removes it.
 - The pencil opens the product's sheet on what the line holds (its size, options and
   quantity) with "Save" in place of "Add" and without "Anything else?". The design
-  draws the pencil and gives it nothing to do. Saving is not built yet: the button
-  shows the total and takes no taps. The API changes only a line's quantity, so a
-  changed choice will be saved as a new line added and the old one removed, unless
-  the backend offers one call for it. A line the branch cannot make has no pencil.
+  draws the pencil and gives it nothing to do. "Save" puts the new choice and
+  quantity in the line, which keeps its place, and closes the sheet; with nothing
+  changed it only closes it. A choice another line of the product already holds
+  joins that line. A refused save leaves the sheet open with the reason over the
+  button. A line the branch cannot make has no pencil.
 - A change the server refuses leaves the cart as it was and shows one line of error
   text over the order button.
 - The branch is a row with a caret that opens the branch picker; the design shows a

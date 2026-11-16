@@ -456,6 +456,81 @@ void main() {
     });
   });
 
+  group('whether a cart line was changed', () {
+    CartLine held() => CartLine(
+      id: 'line-1',
+      choice: const ProductChoice(
+        productId: 'p1',
+        productName: 'Latte',
+        size: ChosenSize(id: 'large', name: 'large'),
+        options: [
+          ChosenOption(
+            id: 'sugar',
+            groupId: 'sweetener',
+            name: 'sugar',
+            price: 0,
+            quantity: 2,
+          ),
+        ],
+      ),
+      quantity: 2,
+      unitPrice: 0,
+      total: 0,
+      isAvailable: true,
+    );
+
+    Product latte({bool largeAvailable = true}) => product(
+      sizes: [
+        size('small', 1000, isDefault: true),
+        size('large', 1400, available: largeAvailable),
+      ],
+      groups: [
+        optionGroup('milk', [option('oat', price: 250)], max: 1),
+        optionGroup('sweetener', [option('sugar', maxQuantity: 5)]),
+      ],
+    );
+
+    test('a new selection is never unchanged', () {
+      final (_, controller) = open(latte());
+      expect(controller.isUnchanged, isFalse);
+    });
+
+    test('opened on a line, nothing is changed yet', () {
+      final (_, controller) = open(latte(), editing: held());
+      expect(controller.isUnchanged, isTrue);
+    });
+
+    test('a size, an option, its quantity or the quantity changes it', () {
+      final (_, controller) = open(latte(), editing: held());
+
+      controller.selectSize('small');
+      expect(controller.isUnchanged, isFalse);
+      controller.selectSize('large');
+      expect(controller.isUnchanged, isTrue);
+
+      controller.toggleOption('milk', 'oat');
+      expect(controller.isUnchanged, isFalse);
+      controller.toggleOption('milk', 'oat');
+      expect(controller.isUnchanged, isTrue);
+
+      controller.setOptionQuantity('sweetener', 'sugar', 3);
+      expect(controller.isUnchanged, isFalse);
+      controller.setOptionQuantity('sweetener', 'sugar', 2);
+      expect(controller.isUnchanged, isTrue);
+
+      controller.setQuantity(1);
+      expect(controller.isUnchanged, isFalse);
+    });
+
+    test('a line the branch can no longer make as it is counts as changed', () {
+      final (_, controller) = open(
+        latte(largeAvailable: false),
+        editing: held(),
+      );
+      expect(controller.isUnchanged, isFalse);
+    });
+  });
+
   group('the quantity', () {
     test('stays between one and the most a line holds', () {
       final (selection, controller) = open(product());

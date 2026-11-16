@@ -4,6 +4,8 @@ import '../../data/repositories/auth_repository_impl.dart';
 import '../../data/repositories/branch_repository_impl.dart';
 import '../../data/repositories/cart_repository_impl.dart';
 import '../../data/repositories/menu_repository_impl.dart';
+import '../../data/repositories/order_repository_impl.dart';
+import '../../data/repositories/payment_repository_impl.dart';
 import '../../data/repositories/promo_banner_repository_impl.dart';
 import '../../data/repositories/server_config_repository_impl.dart';
 import '../../data/repositories/story_repository_impl.dart';
@@ -11,6 +13,8 @@ import '../../domain/repositories/auth_repository.dart';
 import '../../domain/repositories/branch_repository.dart';
 import '../../domain/repositories/cart_repository.dart';
 import '../../domain/repositories/menu_repository.dart';
+import '../../domain/repositories/order_repository.dart';
+import '../../domain/repositories/payment_repository.dart';
 import '../../domain/repositories/promo_banner_repository.dart';
 import '../../domain/repositories/server_config_repository.dart';
 import '../../domain/repositories/story_repository.dart';
@@ -40,6 +44,14 @@ final branchRepositoryProvider = Provider<BranchRepository>(
 
 final cartRepositoryProvider = Provider<CartRepository>(
   (ref) => CartRepositoryImpl(ref.watch(apiClientProvider)),
+);
+
+final orderRepositoryProvider = Provider<OrderRepository>(
+  (ref) => OrderRepositoryImpl(ref.watch(apiClientProvider)),
+);
+
+final paymentRepositoryProvider = Provider<PaymentRepository>(
+  (ref) => PaymentRepositoryImpl(ref.watch(apiClientProvider)),
 );
 
 final menuRepositoryProvider = Provider<MenuRepository>(

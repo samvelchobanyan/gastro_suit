@@ -97,6 +97,29 @@ class FakeCartController extends CartController {
     ]);
   }
 
+  /// Every changed line: line, choice, quantity.
+  final changedLines = <(String, ProductChoice, int)>[];
+
+  @override
+  Future<void> changeLine(
+    String lineId, {
+    required ProductChoice choice,
+    required int quantity,
+  }) async {
+    if (changeError case final error?) throw error;
+    changedLines.add((lineId, choice, quantity));
+    _replaceLines([
+      for (final line in state.value!.lines)
+        line.id == lineId
+            ? line.copyWith(
+                choice: choice,
+                quantity: quantity,
+                total: line.unitPrice * quantity,
+              )
+            : line,
+    ]);
+  }
+
   @override
   Future<void> removeLine(String lineId) async {
     if (changeError case final error?) throw error;

@@ -84,6 +84,9 @@ abstract final class DSSizes {
   static const double cartLineImage = 64;
   static const double tipSelectorMinWidth = 80;
 
+  /// The picture on a success screen (handoff `PurchaseSuccess`).
+  static const double successImage = 110;
+
   /// How much a glass surface blurs what is behind it (`--glass-blur`).
   static const double glassBlur = 16;
 

@@ -219,6 +219,32 @@ class AppLocalizationsHy extends AppLocalizations {
   String get cartTipHint => 'Մուտքագրեք թեյավճարի գումարը';
 
   @override
+  String get cartSectionPayment => 'Վճարման եղանակ';
+
+  @override
+  String get paymentMethodsTitle => 'Ընտրեք վճարման եղանակը';
+
+  @override
+  String paymentCard(String digits) {
+    return 'Քարտ •••• $digits';
+  }
+
+  @override
+  String get paymentNewCard => 'Նոր քարտ';
+
+  @override
+  String get orderSuccessTitle => 'Ձեր պատվերը հաջողությամբ ձևակերպվել է։';
+
+  @override
+  String get orderSuccessBranch => 'Ստացման վայր';
+
+  @override
+  String get orderSuccessTime => 'Ստացման ժամ';
+
+  @override
+  String get orderTrack => 'Հետևել պատվերին';
+
+  @override
   String get productAnythingElse => 'Ուրիշ բա՞ն';
 
   @override

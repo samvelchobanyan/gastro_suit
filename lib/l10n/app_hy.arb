@@ -63,6 +63,14 @@
   "cartTipNone": "Առանց թեյավճարի",
   "cartTipOther": "Այլ",
   "cartTipHint": "Մուտքագրեք թեյավճարի գումարը",
+  "cartSectionPayment": "Վճարման եղանակ",
+  "paymentMethodsTitle": "Ընտրեք վճարման եղանակը",
+  "paymentCard": "Քարտ •••• {digits}",
+  "paymentNewCard": "Նոր քարտ",
+  "orderSuccessTitle": "Ձեր պատվերը հաջողությամբ ձևակերպվել է։",
+  "orderSuccessBranch": "Ստացման վայր",
+  "orderSuccessTime": "Ստացման ժամ",
+  "orderTrack": "Հետևել պատվերին",
   "productAnythingElse": "Ուրիշ բա՞ն",
   "orderWithTotal": "Պատվիրել · {total}"
 }

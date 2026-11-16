@@ -219,6 +219,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cartTipHint => 'Enter tip amount';
 
   @override
+  String get cartSectionPayment => 'Payment method';
+
+  @override
+  String get paymentMethodsTitle => 'Choose payment method';
+
+  @override
+  String paymentCard(String digits) {
+    return 'Card •••• $digits';
+  }
+
+  @override
+  String get paymentNewCard => 'New card';
+
+  @override
+  String get orderSuccessTitle => 'Your order has been successfully placed!';
+
+  @override
+  String get orderSuccessBranch => 'Pickup location';
+
+  @override
+  String get orderSuccessTime => 'Pickup time';
+
+  @override
+  String get orderTrack => 'Track order';
+
+  @override
   String get productAnythingElse => 'Anything else?';
 
   @override

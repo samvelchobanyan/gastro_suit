@@ -312,6 +312,44 @@
   "@cartTipHint": {
     "description": "Cart sheet: placeholder of the field for a tip of the user's own"
   },
+  "cartSectionPayment": "Payment method",
+  "@cartSectionPayment": {
+    "description": "Cart sheet: title of the part with the way to pay; shown in capitals"
+  },
+  "paymentMethodsTitle": "Choose payment method",
+  "@paymentMethodsTitle": {
+    "description": "Title of the sheet that lists the ways to pay for an order"
+  },
+  "paymentCard": "Card •••• {digits}",
+  "@paymentCard": {
+    "description": "A saved bank card, named by its last four digits, e.g. Card •••• 1111",
+    "placeholders": {
+      "digits": {
+        "type": "String",
+        "example": "1111"
+      }
+    }
+  },
+  "paymentNewCard": "New card",
+  "@paymentNewCard": {
+    "description": "The way to pay with a card that is not saved yet"
+  },
+  "orderSuccessTitle": "Your order has been successfully placed!",
+  "@orderSuccessTitle": {
+    "description": "Success screen after placing an order: the title"
+  },
+  "orderSuccessBranch": "Pickup location",
+  "@orderSuccessBranch": {
+    "description": "Success screen after placing an order: label over the branch to collect the order from"
+  },
+  "orderSuccessTime": "Pickup time",
+  "@orderSuccessTime": {
+    "description": "Success screen after placing an order: label over the time the order is wanted for"
+  },
+  "orderTrack": "Track order",
+  "@orderTrack": {
+    "description": "Success screen after placing an order: the button that leads to the order's status"
+  },
   "productAnythingElse": "Anything else?",
   "@productAnythingElse": {
     "description": "Product sheet: the title of the rail of products suggested with this one"

@@ -140,7 +140,8 @@ with real content (see §7).
   `branchImage` 72 (`BranchCard`); `branchHeaderHeight` 260 (`RestaurantHeader`);
   `branchMapHeight` 320 (`MapBottomSheet`);
   `menuCategoryImage` 56 and `menuCategoryItemWidth` 64 (`MenuTabsVertical`);
-  `productRailCardWidth` 128 (`ProductVerticalCard`); `badge` 18 (`Badge`).
+  `productRailCardWidth` 128 (`ProductVerticalCard`); `badge` 18 (`Badge`);
+  `successImage` 110 (`PurchaseSuccess`).
 - `DSElevation`: `card`, `raised`, `overlay`, `sheet` — lists of `BoxShadow`.
 - `DSOpacity`: `disabled` 0.35 — a control that cannot be used now.
 
@@ -171,7 +172,11 @@ with real content (see §7).
 - `IconButton` `tonal` pressed (`accent-100`) has no role: the pressed fill is
   `brandSubtle` under `overlayPressDark`.
 - `--alpha-white-80` (the quieter text over `RestaurantHeader`'s photo) is `textInverse`
-  at 80%.
+  at 80%. The label on `PurchaseSuccess`'s dark tiles (`gray-500` on `gray-900`) is
+  painted the same way: it has no role of its own, and `textDisabled`, the role of the
+  same value, would say the wrong thing.
+- `PaymentMethods` paints with palette greys: the row's `gray-50` is `bgCanvas`, the
+  icon tile's `gray-900` and white are `bgInverse` and `textInverse`.
 
 ---
 
@@ -186,6 +191,7 @@ with real content (see §7).
 | `DSSectionHeader` | `SectionHeader` | A section title (`h3`); the handoff's optional action button is used by no page, so it is not built |
 | `showDSTallSheet`, `DSSheetHandle` | the frame of `ProductOverlay` and `BasketOverlay` | A sheet over the whole app that starts 32 under the status bar, with 16 top corners. Its content scrolls with the controller it is given; a drag down from the top of the content, or a fling, closes it. It ends where the keyboard begins. The handle is drawn by the content: on the surface, or over a photo |
 | `DSTimePicker` | `TimePicker` | A row of pills, 40 high, one picked; as wide as its pills, the screen scrolls it sideways. Keeps no time of its own. The handoff's label and disabled slots are added when used |
+| `DSPaymentMethod` | `PaymentMethods` | One way to pay as a row: an icon on a dark tile, the name, a caret when it opens a list. Dimmed and without taps when it has no `onTap`. The handoff's trailing balance is added when a way to pay has one |
 | `DSTipSelector` | `TipSelector` | One tile of a row of amounts, at least 80 wide, in the brand colour when chosen |
 | `DSAmountField` | `Input`, 40 high | A one-line field for a whole amount: digits only, the currency sign at its end |
 | `DSDialog` | `Dialog` | A centred card, up to 320 wide, with a question: a title, a sentence, then cancel (outline) and confirm (primary) side by side; opened with `showDSConfirmDialog`, which answers true or false. The handoff's icon and destructive tone are added when used |

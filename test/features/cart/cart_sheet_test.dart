@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gastro_suit/core/di/repositories.dart';
+import 'package:gastro_suit/core/locale/content_language.dart';
 import 'package:gastro_suit/core/network/app_exception.dart';
 import 'package:gastro_suit/design_system/components/buttons/ds_button.dart';
 import 'package:gastro_suit/design_system/components/inputs/ds_amount_field.dart';
+import 'package:gastro_suit/design_system/components/inputs/ds_payment_method.dart';
 import 'package:gastro_suit/design_system/components/inputs/ds_radio.dart';
 import 'package:gastro_suit/design_system/components/inputs/ds_stepper.dart';
 import 'package:gastro_suit/design_system/components/inputs/ds_time_picker.dart';
@@ -13,18 +16,24 @@ import 'package:gastro_suit/design_system/theme/ds_colors.dart';
 import 'package:gastro_suit/domain/entities/branch.dart';
 import 'package:gastro_suit/domain/entities/cart.dart';
 import 'package:gastro_suit/domain/entities/menu.dart';
+import 'package:gastro_suit/domain/entities/payment_card.dart';
 import 'package:gastro_suit/domain/entities/product.dart';
 import 'package:gastro_suit/domain/entities/product_choice.dart';
 import 'package:gastro_suit/domain/state/active_branch_state.dart';
 import 'package:gastro_suit/domain/state/cart_state.dart';
 import 'package:gastro_suit/domain/state/menu_state.dart';
+import 'package:gastro_suit/domain/state/payment_cards_state.dart';
+import 'package:gastro_suit/domain/state/server_config_state.dart';
 import 'package:gastro_suit/features/cart/cart_sheet/cart_checkout_controller.dart';
 import 'package:gastro_suit/features/cart/cart_sheet/cart_sheet.dart';
 import 'package:gastro_suit/features/cart/cart_sheet/widgets/cart_line_tile.dart';
+import 'package:gastro_suit/features/cart/order_success_screen/order_success_screen.dart';
+import 'package:gastro_suit/features/cart/payment_method_sheet/payment_method_sheet.dart';
 import 'package:gastro_suit/features/menu/product_sheet/product_sheet.dart';
 import 'package:gastro_suit/l10n/generated/app_localizations.dart';
 
 import '../../fakes/fake_cart_controller.dart';
+import '../../fakes/fake_checkout_repositories.dart';
 
 class _FakeMenu extends BranchMenuController {
   _FakeMenu(this.menu) : super('b1');
@@ -78,6 +87,20 @@ void main() {
     total: lines.fold(0, (sum, line) => sum + line.total),
   );
 
+  const visa = PaymentCard(
+    id: 'card-1',
+    maskedNumber: '411111******1111',
+    isDefault: false,
+  );
+  const master = PaymentCard(
+    id: 'card-2',
+    maskedNumber: '555555******2222',
+    isDefault: true,
+  );
+
+  /// The server the last opened cart places its orders at.
+  late FakeOrderRepository orders;
+
   /// The cart sheet open over a page. Answers with the providers and the
   /// cart behind it.
   Future<(ProviderContainer, FakeCartController)> openCart(
@@ -85,7 +108,9 @@ void main() {
     required Cart? cart,
     bool acceptsTips = true,
     List<Product> menu = const [],
+    List<PaymentCard> cards = const [visa, master],
   }) async {
+    orders = FakeOrderRepository();
     tester.view.physicalSize = const Size(360, 800);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
@@ -105,6 +130,14 @@ void main() {
             ),
           ),
           cartProvider.overrideWith(() => fakeCart),
+          paymentCardsProvider.overrideWith((ref) async => cards),
+          orderRepositoryProvider.overrideWithValue(orders),
+          paymentRepositoryProvider.overrideWithValue(
+            FakePaymentRepository(cards),
+          ),
+          contentLanguageProvider.overrideWith(
+            (ref) async => const ContentLanguage(current: 'en'),
+          ),
           menuProvider('b1').overrideWith(
             () => _FakeMenu(
               Menu(branchId: 'b1', categories: const [], products: menu),
@@ -156,10 +189,90 @@ void main() {
     expect(find.text('֏2,100'), findsOneWidget);
     expect(find.text('Cheesecake'), findsOneWidget);
 
-    // Placing an order is not built: the button only shows the total.
     final order = tester.widget<DSButton>(find.byType(DSButton));
     expect(order.label, 'Order · ֏6,450');
-    expect(order.onPressed, isNull);
+    expect(order.onPressed, isNotNull);
+  });
+
+  testWidgets('the order is paid with the default card or a picked one', (
+    tester,
+  ) async {
+    await openCart(tester, cart: cartOf([cake]));
+    await tester.scrollUntilVisible(
+      find.text('PAYMENT METHOD'),
+      100,
+      scrollable: find.byType(Scrollable).first,
+    );
+
+    expect(find.text('Card •••• 2222'), findsOneWidget);
+
+    await tester.tap(find.text('Card •••• 2222'));
+    await tester.pumpAndSettle();
+    final list = find.byType(PaymentMethodSheet);
+    expect(find.text('Choose payment method'), findsOneWidget);
+    final rows = tester.widgetList<DSPaymentMethod>(
+      find.descendant(of: list, matching: find.byType(DSPaymentMethod)),
+    );
+    expect(
+      [for (final row in rows) row.name],
+      ['Card •••• 1111', 'Card •••• 2222', 'New card'],
+    );
+    // Paying with a new card is not built: its row takes no taps.
+    expect(rows.last.onTap, isNull);
+
+    await tester.tap(find.text('Card •••• 1111'));
+    await tester.pumpAndSettle();
+    expect(list, findsNothing);
+    expect(find.text('Card •••• 1111'), findsOneWidget);
+    expect(find.text('Card •••• 2222'), findsNothing);
+  });
+
+  testWidgets('a user without cards sees a new card as the way to pay', (
+    tester,
+  ) async {
+    await openCart(tester, cart: cartOf([cake]), cards: const []);
+    await tester.scrollUntilVisible(
+      find.text('PAYMENT METHOD'),
+      100,
+      scrollable: find.byType(Scrollable).first,
+    );
+
+    expect(find.text('New card'), findsOneWidget);
+    expect(tester.widget<DSButton>(find.byType(DSButton)).onPressed, isNotNull);
+  });
+
+  testWidgets('the order button places the order and shows it was placed', (
+    tester,
+  ) async {
+    await openCart(tester, cart: cartOf([cake]));
+    await tester.tap(find.text('200֏'));
+    await tester.pump();
+
+    await tester.tap(find.text('Order · ֏2,250'));
+    await tester.pumpAndSettle();
+
+    // For as soon as possible, with the tip chosen.
+    expect(orders.placed, [('b1', null, 200)]);
+    expect(find.byType(CartSheet), findsNothing);
+    expect(find.byType(OrderSuccessScreen), findsOneWidget);
+    expect(find.text('Northern Avenue'), findsOneWidget);
+    expect(find.text('ASAP'), findsOneWidget);
+  });
+
+  testWidgets('a refused order keeps the cart and says why', (tester) async {
+    await openCart(tester, cart: cartOf([cake]));
+    orders.error = const AppException(
+      AppExceptionKind.server,
+      message: 'The branch is closed now',
+    );
+
+    await tester.tap(find.text('Order · ֏2,250'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(OrderSuccessScreen), findsNothing);
+    expect(find.byType(CartSheet), findsOneWidget);
+    expect(find.text('The branch is closed now'), findsOneWidget);
+    expect(find.text('Cheesecake'), findsOneWidget);
   });
 
   testWidgets('the stepper of a line changes its quantity', (tester) async {
@@ -231,7 +344,7 @@ void main() {
   testWidgets('the pencil opens the product on what the line holds', (
     tester,
   ) async {
-    await openCart(
+    final (_, cart) = await openCart(
       tester,
       cart: cartOf([latte]),
       menu: const [
@@ -317,14 +430,52 @@ void main() {
     // Sugar twice, and two of the product.
     expect([for (final stepper in steppers) stepper.value], [2, 2]);
 
-    // Large with oat milk, twice. Saving is not built: the button only
-    // shows the total, and nothing can be added from here.
+    // Large with oat milk, twice: the button saves, nothing is added from
+    // here.
     final save = tester.widget<DSButton>(
       find.descendant(of: sheet, matching: find.byType(DSButton)),
     );
     expect(save.label, 'Save · ֏4,200');
-    expect(save.onPressed, isNull);
     expect(find.textContaining('Add ·'), findsNothing);
+
+    // Nothing was changed: saving closes the sheet and asks for nothing.
+    await tester.tap(find.text('Save · ֏4,200'));
+    await tester.pumpAndSettle();
+    expect(sheet, findsNothing);
+    expect(cart.changedLines, isEmpty);
+
+    // A changed choice goes to the line, with its quantity.
+    await tester.tap(find.bySemanticsLabel('Change the choice'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.descendant(of: sheet, matching: find.text('Small')));
+    await tester.pump();
+    await tester.tap(find.text('Save · ֏3,400'));
+    await tester.pumpAndSettle();
+    expect(sheet, findsNothing);
+    final (lineId, choice, quantity) = cart.changedLines.single;
+    expect(lineId, 'line-latte');
+    expect(choice.size?.id, 's');
+    expect(
+      [for (final option in choice.options) (option.id, option.quantity)],
+      [('oat', 1), ('sugar', 2)],
+    );
+    expect(quantity, 2);
+    expect(find.text('Small · Oat milk · Sugar ×2'), findsOneWidget);
+
+    // A refused save leaves the sheet open and says why.
+    cart.changeError = const AppException(
+      AppExceptionKind.server,
+      message: 'Not sold in this size now',
+    );
+    await tester.tap(find.bySemanticsLabel('Change the choice'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.descendant(of: sheet, matching: find.text('Large')));
+    await tester.pump();
+    await tester.tap(find.text('Save · ֏4,200'));
+    await tester.pumpAndSettle();
+    expect(sheet, findsOneWidget);
+    expect(find.text('Not sold in this size now'), findsOneWidget);
+    expect(cart.changedLines, hasLength(1));
   });
 
   testWidgets('an empty cart says so and offers no time or tip', (

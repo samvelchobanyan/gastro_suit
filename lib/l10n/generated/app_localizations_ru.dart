@@ -219,6 +219,32 @@ class AppLocalizationsRu extends AppLocalizations {
   String get cartTipHint => 'Введите сумму чаевых';
 
   @override
+  String get cartSectionPayment => 'Способ оплаты';
+
+  @override
+  String get paymentMethodsTitle => 'Выберите способ оплаты';
+
+  @override
+  String paymentCard(String digits) {
+    return 'Карта •••• $digits';
+  }
+
+  @override
+  String get paymentNewCard => 'Новая карта';
+
+  @override
+  String get orderSuccessTitle => 'Ваш заказ успешно оформлен!';
+
+  @override
+  String get orderSuccessBranch => 'Где забрать';
+
+  @override
+  String get orderSuccessTime => 'Время получения';
+
+  @override
+  String get orderTrack => 'Отследить заказ';
+
+  @override
   String get productAnythingElse => 'Что-нибудь ещё?';
 
   @override

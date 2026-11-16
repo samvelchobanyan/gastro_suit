@@ -27,21 +27,29 @@ class CartRepositoryImpl implements CartRepository {
     required int quantity,
     required ContentLanguage language,
   }) async {
-    final size = choice.size;
     final json = await _api.post(
       '/cart/items',
       data: {
         'itemId': choice.productId,
         'branchId': branchId,
         'quantity': quantity,
-        // The size and the add-ons in one list of ids; the server knows
-        // their names and prices.
-        'modifiers': [
-          if (size != null) {'id': size.id},
-          for (final option in choice.options)
-            {'id': option.id, 'quantity': option.quantity},
-        ],
+        'modifiers': _modifiers(choice),
       },
+    );
+    return _cart(json, language);
+  }
+
+  @override
+  Future<Cart> changeLine(
+    String lineId, {
+    required ProductChoice choice,
+    required int quantity,
+    required ContentLanguage language,
+  }) async {
+    final json = await _api.put(
+      '/cart/items/$lineId/options',
+      // The whole choice, not only what changed.
+      data: {'modifiers': _modifiers(choice), 'quantity': quantity},
     );
     return _cart(json, language);
   }
@@ -84,6 +92,17 @@ class CartRepositoryImpl implements CartRepository {
   }) async {
     final json = await _api.delete('/cart', query: {'branchId': branchId});
     return _cart(json, language);
+  }
+
+  /// The size and the add-ons in one list of ids; the server knows their
+  /// names and prices.
+  static List<Map<String, Object>> _modifiers(ProductChoice choice) {
+    final size = choice.size;
+    return [
+      if (size != null) {'id': size.id},
+      for (final option in choice.options)
+        {'id': option.id, 'quantity': option.quantity},
+    ];
   }
 
   static Cart _cart(Object? json, ContentLanguage language) {

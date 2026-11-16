@@ -191,6 +191,18 @@ class ProductSelectionController extends Notifier<ProductSelection> {
     );
   }
 
+  /// Whether the selection is what the cart line being changed already
+  /// holds: the same size, options and quantity. False for a new one.
+  bool get isUnchanged {
+    final line = editing;
+    if (line == null) return false;
+    final options = line.choice.options;
+    return state.quantity == line.quantity &&
+        state.sizeId == line.choice.size?.id &&
+        state.optionQuantities.length == options.length &&
+        options.every((o) => state.optionQuantities[o.id] == o.quantity);
+  }
+
   /// Kept between 1 and [maxQuantity].
   void setQuantity(int quantity) {
     state = state.copyWith(quantity: quantity.clamp(1, maxQuantity));

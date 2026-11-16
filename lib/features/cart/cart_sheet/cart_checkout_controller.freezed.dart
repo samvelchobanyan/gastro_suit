@@ -18,7 +18,9 @@ mixin _$CartCheckout {
  List<DateTime> get slots;/// Null: as soon as possible.
  DateTime? get time;/// The tip in whole currency; 0 for none.
  int get tip;/// The user is entering an amount of their own.
- bool get isCustomTip;
+ bool get isCustomTip;/// The card the user picked to pay with; null until they pick one
+/// ([checkoutCardProvider] then answers with their default card).
+ String? get cardId;
 /// Create a copy of CartCheckout
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +31,16 @@ $CartCheckoutCopyWith<CartCheckout> get copyWith => _$CartCheckoutCopyWithImpl<C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CartCheckout&&const DeepCollectionEquality().equals(other.slots, slots)&&(identical(other.time, time) || other.time == time)&&(identical(other.tip, tip) || other.tip == tip)&&(identical(other.isCustomTip, isCustomTip) || other.isCustomTip == isCustomTip));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CartCheckout&&const DeepCollectionEquality().equals(other.slots, slots)&&(identical(other.time, time) || other.time == time)&&(identical(other.tip, tip) || other.tip == tip)&&(identical(other.isCustomTip, isCustomTip) || other.isCustomTip == isCustomTip)&&(identical(other.cardId, cardId) || other.cardId == cardId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(slots),time,tip,isCustomTip);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(slots),time,tip,isCustomTip,cardId);
 
 @override
 String toString() {
-  return 'CartCheckout(slots: $slots, time: $time, tip: $tip, isCustomTip: $isCustomTip)';
+  return 'CartCheckout(slots: $slots, time: $time, tip: $tip, isCustomTip: $isCustomTip, cardId: $cardId)';
 }
 
 
@@ -49,7 +51,7 @@ abstract mixin class $CartCheckoutCopyWith<$Res>  {
   factory $CartCheckoutCopyWith(CartCheckout value, $Res Function(CartCheckout) _then) = _$CartCheckoutCopyWithImpl;
 @useResult
 $Res call({
- List<DateTime> slots, DateTime? time, int tip, bool isCustomTip
+ List<DateTime> slots, DateTime? time, int tip, bool isCustomTip, String? cardId
 });
 
 
@@ -66,13 +68,14 @@ class _$CartCheckoutCopyWithImpl<$Res>
 
 /// Create a copy of CartCheckout
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? slots = null,Object? time = freezed,Object? tip = null,Object? isCustomTip = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? slots = null,Object? time = freezed,Object? tip = null,Object? isCustomTip = null,Object? cardId = freezed,}) {
   return _then(_self.copyWith(
 slots: null == slots ? _self.slots : slots // ignore: cast_nullable_to_non_nullable
 as List<DateTime>,time: freezed == time ? _self.time : time // ignore: cast_nullable_to_non_nullable
 as DateTime?,tip: null == tip ? _self.tip : tip // ignore: cast_nullable_to_non_nullable
 as int,isCustomTip: null == isCustomTip ? _self.isCustomTip : isCustomTip // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,cardId: freezed == cardId ? _self.cardId : cardId // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -157,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<DateTime> slots,  DateTime? time,  int tip,  bool isCustomTip)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<DateTime> slots,  DateTime? time,  int tip,  bool isCustomTip,  String? cardId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CartCheckout() when $default != null:
-return $default(_that.slots,_that.time,_that.tip,_that.isCustomTip);case _:
+return $default(_that.slots,_that.time,_that.tip,_that.isCustomTip,_that.cardId);case _:
   return orElse();
 
 }
@@ -178,10 +181,10 @@ return $default(_that.slots,_that.time,_that.tip,_that.isCustomTip);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<DateTime> slots,  DateTime? time,  int tip,  bool isCustomTip)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<DateTime> slots,  DateTime? time,  int tip,  bool isCustomTip,  String? cardId)  $default,) {final _that = this;
 switch (_that) {
 case _CartCheckout():
-return $default(_that.slots,_that.time,_that.tip,_that.isCustomTip);case _:
+return $default(_that.slots,_that.time,_that.tip,_that.isCustomTip,_that.cardId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +201,10 @@ return $default(_that.slots,_that.time,_that.tip,_that.isCustomTip);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<DateTime> slots,  DateTime? time,  int tip,  bool isCustomTip)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<DateTime> slots,  DateTime? time,  int tip,  bool isCustomTip,  String? cardId)?  $default,) {final _that = this;
 switch (_that) {
 case _CartCheckout() when $default != null:
-return $default(_that.slots,_that.time,_that.tip,_that.isCustomTip);case _:
+return $default(_that.slots,_that.time,_that.tip,_that.isCustomTip,_that.cardId);case _:
   return null;
 
 }
@@ -213,7 +216,7 @@ return $default(_that.slots,_that.time,_that.tip,_that.isCustomTip);case _:
 
 
 class _CartCheckout implements CartCheckout {
-  const _CartCheckout({required final  List<DateTime> slots, this.time, required this.tip, required this.isCustomTip}): _slots = slots;
+  const _CartCheckout({required final  List<DateTime> slots, this.time, required this.tip, required this.isCustomTip, this.cardId}): _slots = slots;
   
 
 /// The times offered besides "as soon as possible".
@@ -231,6 +234,9 @@ class _CartCheckout implements CartCheckout {
 @override final  int tip;
 /// The user is entering an amount of their own.
 @override final  bool isCustomTip;
+/// The card the user picked to pay with; null until they pick one
+/// ([checkoutCardProvider] then answers with their default card).
+@override final  String? cardId;
 
 /// Create a copy of CartCheckout
 /// with the given fields replaced by the non-null parameter values.
@@ -242,16 +248,16 @@ _$CartCheckoutCopyWith<_CartCheckout> get copyWith => __$CartCheckoutCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CartCheckout&&const DeepCollectionEquality().equals(other._slots, _slots)&&(identical(other.time, time) || other.time == time)&&(identical(other.tip, tip) || other.tip == tip)&&(identical(other.isCustomTip, isCustomTip) || other.isCustomTip == isCustomTip));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CartCheckout&&const DeepCollectionEquality().equals(other._slots, _slots)&&(identical(other.time, time) || other.time == time)&&(identical(other.tip, tip) || other.tip == tip)&&(identical(other.isCustomTip, isCustomTip) || other.isCustomTip == isCustomTip)&&(identical(other.cardId, cardId) || other.cardId == cardId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_slots),time,tip,isCustomTip);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_slots),time,tip,isCustomTip,cardId);
 
 @override
 String toString() {
-  return 'CartCheckout(slots: $slots, time: $time, tip: $tip, isCustomTip: $isCustomTip)';
+  return 'CartCheckout(slots: $slots, time: $time, tip: $tip, isCustomTip: $isCustomTip, cardId: $cardId)';
 }
 
 
@@ -262,7 +268,7 @@ abstract mixin class _$CartCheckoutCopyWith<$Res> implements $CartCheckoutCopyWi
   factory _$CartCheckoutCopyWith(_CartCheckout value, $Res Function(_CartCheckout) _then) = __$CartCheckoutCopyWithImpl;
 @override @useResult
 $Res call({
- List<DateTime> slots, DateTime? time, int tip, bool isCustomTip
+ List<DateTime> slots, DateTime? time, int tip, bool isCustomTip, String? cardId
 });
 
 
@@ -279,13 +285,14 @@ class __$CartCheckoutCopyWithImpl<$Res>
 
 /// Create a copy of CartCheckout
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? slots = null,Object? time = freezed,Object? tip = null,Object? isCustomTip = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? slots = null,Object? time = freezed,Object? tip = null,Object? isCustomTip = null,Object? cardId = freezed,}) {
   return _then(_CartCheckout(
 slots: null == slots ? _self._slots : slots // ignore: cast_nullable_to_non_nullable
 as List<DateTime>,time: freezed == time ? _self.time : time // ignore: cast_nullable_to_non_nullable
 as DateTime?,tip: null == tip ? _self.tip : tip // ignore: cast_nullable_to_non_nullable
 as int,isCustomTip: null == isCustomTip ? _self.isCustomTip : isCustomTip // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,cardId: freezed == cardId ? _self.cardId : cardId // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

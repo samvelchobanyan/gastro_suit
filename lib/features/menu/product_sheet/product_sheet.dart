@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../core/network/app_exception.dart';
-import '../../../design_system/components/buttons/ds_button.dart';
-import '../../../design_system/components/inputs/ds_stepper.dart';
 import '../../../design_system/components/overlays/ds_tall_sheet.dart';
 import '../../../design_system/ds_extensions.dart';
 import '../../../domain/entities/cart.dart';
@@ -18,6 +15,7 @@ import '../../cart/replace_cart_dialog/replace_cart_dialog.dart';
 import '../../../core/utils/error_text.dart';
 import '../../../core/utils/price_format.dart';
 import 'product_selection_controller.dart';
+import 'widgets/product_add_bar.dart';
 import 'widgets/product_option_group.dart';
 import 'widgets/product_sheet_photo.dart';
 import 'widgets/product_size_row.dart';
@@ -84,8 +82,7 @@ Future<void> quickAddProduct(
 /// bottom.
 ///
 /// Opened from the cart on one of its lines ([editing]), it starts from
-/// what the line holds and its button saves instead of adding. Saving is
-/// not built yet: the button shows the total and takes no taps.
+/// what the line holds, and its button saves the line instead of adding.
 ///
 /// Opened with [showProduct], in a `showDSTallSheet`.
 class ProductSheet extends ConsumerWidget {
@@ -167,11 +164,12 @@ class _ProductContentState extends ConsumerState<_ProductContent> {
   ProductSelectionTarget get _target =>
       (product: widget.product, editing: widget.editing);
 
-  /// The add request is under way.
-  var _adding = false;
+  /// The add or save request is under way.
+  var _busy = false;
 
-  /// Why the last add was not accepted; null once the user tries again.
-  String? _addError;
+  /// Why the last add or save was not accepted; null once the user tries
+  /// again.
+  String? _error;
 
   /// Adds the selection to the cart and closes the sheet. A failed add
   /// leaves the sheet open with the selection and says why.
@@ -179,14 +177,14 @@ class _ProductContentState extends ConsumerState<_ProductContent> {
     final provider = productSelectionProvider(_target);
     final choice = ref.read(provider.notifier).choice;
     final quantity = ref.read(provider).quantity;
-    setState(() => _addError = null);
+    setState(() => _error = null);
     if (!await ensureSignedIn(context, ref)) return;
     if (!mounted) return;
     if (!await confirmReplaceCart(context, ref, branchId: widget.branchId)) {
       return;
     }
     if (!mounted) return;
-    setState(() => _adding = true);
+    setState(() => _busy = true);
     try {
       await ref
           .read(cartProvider.notifier)
@@ -195,8 +193,35 @@ class _ProductContentState extends ConsumerState<_ProductContent> {
     } on AppException catch (error) {
       if (!mounted) return;
       setState(() {
-        _adding = false;
-        _addError = errorText(context, error);
+        _busy = false;
+        _error = errorText(context, error);
+      });
+    }
+  }
+
+  /// Saves the selection to the cart line [line] and closes the sheet; a
+  /// selection the line already holds only closes it. A failed save leaves
+  /// the sheet open with the selection and says why.
+  Future<void> _save(CartLine line) async {
+    final provider = productSelectionProvider(_target);
+    final controller = ref.read(provider.notifier);
+    if (controller.isUnchanged) return Navigator.pop(context);
+    final choice = controller.choice;
+    final quantity = ref.read(provider).quantity;
+    setState(() {
+      _error = null;
+      _busy = true;
+    });
+    try {
+      await ref
+          .read(cartProvider.notifier)
+          .changeLine(line.id, choice: choice, quantity: quantity);
+      if (mounted) Navigator.pop(context);
+    } on AppException catch (error) {
+      if (!mounted) return;
+      setState(() {
+        _busy = false;
+        _error = errorText(context, error);
       });
     }
   }
@@ -206,7 +231,7 @@ class _ProductContentState extends ConsumerState<_ProductContent> {
     final colors = context.colors;
     final product = widget.product;
     final scrollController = widget.scrollController;
-    final editing = widget.editing != null;
+    final editing = widget.editing;
     final selection = ref.watch(productSelectionProvider(_target));
     final controller = ref.read(productSelectionProvider(_target).notifier);
     final description = product.description;
@@ -333,7 +358,7 @@ class _ProductContentState extends ConsumerState<_ProductContent> {
                 // From one edge of the sheet to the other, so outside the
                 // padding of what is above. Not while a line is changed:
                 // the sheet is then about that line only.
-                if (!editing)
+                if (editing == null)
                   RecommendedProductsRail(
                     branchId: widget.branchId,
                     productId: product.id,
@@ -343,116 +368,15 @@ class _ProductContentState extends ConsumerState<_ProductContent> {
             ),
           ),
         ),
-        _AddBar(
+        ProductAddBar(
           selection: selection,
           onQuantityChanged: controller.setQuantity,
-          adding: _adding,
-          error: _addError,
-          editing: editing,
-          onAdd: _add,
+          busy: _busy,
+          error: _error,
+          editing: editing != null,
+          onSubmit: editing == null ? _add : () => _save(editing),
         ),
       ],
-    );
-  }
-}
-
-/// The bar under the scrolling content: how many, and the add button with
-/// what they cost together.
-class _AddBar extends StatelessWidget {
-  const _AddBar({
-    required this.selection,
-    required this.onQuantityChanged,
-    required this.adding,
-    required this.error,
-    required this.editing,
-    required this.onAdd,
-  });
-
-  final ProductSelection selection;
-  final ValueChanged<int> onQuantityChanged;
-
-  /// The add request is under way: the button shows it and the quantity
-  /// takes no taps.
-  final bool adding;
-
-  /// Why the last add was not accepted, shown over the controls.
-  final String? error;
-
-  /// A cart line is being changed: the button saves instead of adding.
-  final bool editing;
-  final VoidCallback onAdd;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    final l10n = AppLocalizations.of(context);
-    final total = formatPrice(context, selection.total);
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: colors.bgSurface,
-        border: Border(
-          top: BorderSide(
-            color: colors.borderMuted,
-            width: DSSizes.borderWidthDefault,
-          ),
-        ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(
-          DSSpacing.base,
-          DSSpacing.base,
-          DSSpacing.base,
-          DSSpacing.base + MediaQuery.paddingOf(context).bottom,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (error case final error?) ...[
-              Text(
-                error,
-                style: DSTypography.bodySm.copyWith(color: colors.textError),
-              ),
-              const SizedBox(height: DSSpacing.sm),
-            ],
-            Row(
-              children: [
-                IgnorePointer(
-                  ignoring: adding,
-                  child: DSStepper(
-                    size: DSStepperSize.md,
-                    value: selection.quantity,
-                    min: 1,
-                    max: ProductSelectionController.maxQuantity,
-                    onChanged: onQuantityChanged,
-                    decreaseLabel: l10n.quantityDecrease,
-                    increaseLabel: l10n.quantityIncrease,
-                  ),
-                ),
-                const SizedBox(width: DSSpacing.sm),
-                Expanded(
-                  child: editing
-                      ? DSButton(
-                          label: l10n.saveWithTotal(total),
-                          size: DSButtonSize.sm,
-                          fullWidth: true,
-                          // TODO: save the changed line to the cart.
-                          onPressed: null,
-                        )
-                      : DSButton(
-                          label: l10n.addWithTotal(total),
-                          icon: PhosphorIcons.shoppingCartSimple(),
-                          size: DSButtonSize.sm,
-                          fullWidth: true,
-                          loading: adding,
-                          onPressed: selection.isComplete ? onAdd : null,
-                        ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

@@ -63,6 +63,14 @@
   "cartTipNone": "Без чаевых",
   "cartTipOther": "Другое",
   "cartTipHint": "Введите сумму чаевых",
+  "cartSectionPayment": "Способ оплаты",
+  "paymentMethodsTitle": "Выберите способ оплаты",
+  "paymentCard": "Карта •••• {digits}",
+  "paymentNewCard": "Новая карта",
+  "orderSuccessTitle": "Ваш заказ успешно оформлен!",
+  "orderSuccessBranch": "Где забрать",
+  "orderSuccessTime": "Время получения",
+  "orderTrack": "Отследить заказ",
   "productAnythingElse": "Что-нибудь ещё?",
   "orderWithTotal": "Заказать · {total}"
 }

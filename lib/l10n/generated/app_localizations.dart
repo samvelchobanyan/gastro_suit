@@ -478,6 +478,54 @@ abstract class AppLocalizations {
   /// **'Enter tip amount'**
   String get cartTipHint;
 
+  /// Cart sheet: title of the part with the way to pay; shown in capitals
+  ///
+  /// In en, this message translates to:
+  /// **'Payment method'**
+  String get cartSectionPayment;
+
+  /// Title of the sheet that lists the ways to pay for an order
+  ///
+  /// In en, this message translates to:
+  /// **'Choose payment method'**
+  String get paymentMethodsTitle;
+
+  /// A saved bank card, named by its last four digits, e.g. Card •••• 1111
+  ///
+  /// In en, this message translates to:
+  /// **'Card •••• {digits}'**
+  String paymentCard(String digits);
+
+  /// The way to pay with a card that is not saved yet
+  ///
+  /// In en, this message translates to:
+  /// **'New card'**
+  String get paymentNewCard;
+
+  /// Success screen after placing an order: the title
+  ///
+  /// In en, this message translates to:
+  /// **'Your order has been successfully placed!'**
+  String get orderSuccessTitle;
+
+  /// Success screen after placing an order: label over the branch to collect the order from
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup location'**
+  String get orderSuccessBranch;
+
+  /// Success screen after placing an order: label over the time the order is wanted for
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup time'**
+  String get orderSuccessTime;
+
+  /// Success screen after placing an order: the button that leads to the order's status
+  ///
+  /// In en, this message translates to:
+  /// **'Track order'**
+  String get orderTrack;
+
   /// Product sheet: the title of the rail of products suggested with this one
   ///
   /// In en, this message translates to:

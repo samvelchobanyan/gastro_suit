@@ -81,6 +81,27 @@ class _FakeRepository implements CartRepository {
   }
 
   @override
+  Future<Cart> changeLine(
+    String lineId, {
+    required ProductChoice choice,
+    required int quantity,
+    required ContentLanguage language,
+  }) async {
+    if (error case final error?) throw error;
+    final cart = stored!;
+    return stored = _with(cart.branchId, [
+      for (final line in cart.lines)
+        line.id == lineId
+            ? line.copyWith(
+                choice: choice,
+                quantity: quantity,
+                total: line.unitPrice * quantity,
+              )
+            : line,
+    ]);
+  }
+
+  @override
   Future<Cart> removeLine(String lineId, {required ContentLanguage language}) =>
       setQuantity(lineId, quantity: 0, language: language);
 
@@ -272,6 +293,38 @@ void main() {
 
     await controller.setQuantity(lineId, 0);
     expect(container.read(cartProvider).value?.isEmpty, isTrue);
+  });
+
+  test('a line takes a new choice and quantity', () async {
+    final (container, repository) = setUp();
+    await container.read(cartProvider.future);
+    final controller = container.read(cartProvider.notifier);
+    await controller.add(branchId: 'b1', choice: latte);
+    final lineId = container.read(cartProvider).value!.lines.single.id;
+    const large = ProductChoice(
+      productId: 'latte',
+      productName: 'Latte',
+      size: ChosenSize(id: 'l', name: 'Large'),
+      options: [],
+    );
+
+    await controller.changeLine(lineId, choice: large, quantity: 3);
+
+    final line = container.read(cartProvider).value!.lines.single;
+    expect(line.id, lineId);
+    expect(line.choice, large);
+    expect(line.quantity, 3);
+
+    // A refused change throws and leaves the line as it was.
+    repository.error = const AppException(
+      AppExceptionKind.server,
+      code: 'option_quantity_too_many',
+    );
+    await expectLater(
+      controller.changeLine(lineId, choice: latte, quantity: 1),
+      throwsA(isA<AppException>()),
+    );
+    expect(container.read(cartProvider).value!.lines.single.choice, large);
   });
 
   test('removing a line and clearing empty the cart', () async {

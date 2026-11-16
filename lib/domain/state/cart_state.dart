@@ -97,6 +97,26 @@ class CartController extends AsyncNotifier<Cart?> {
     );
   }
 
+  /// Puts [choice] and [quantity] in place of what the line [lineId]
+  /// holds. When another line already holds that choice, the two become
+  /// one.
+  Future<void> changeLine(
+    String lineId, {
+    required ProductChoice choice,
+    required int quantity,
+  }) async {
+    state = AsyncData(
+      await ref
+          .read(cartRepositoryProvider)
+          .changeLine(
+            lineId,
+            choice: choice,
+            quantity: quantity,
+            language: await ref.read(contentLanguageProvider.future),
+          ),
+    );
+  }
+
   Future<void> removeLine(String lineId) async {
     state = AsyncData(
       await ref
