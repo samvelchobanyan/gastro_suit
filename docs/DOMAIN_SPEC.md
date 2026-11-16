@@ -246,6 +246,9 @@ described when it is designed.
 - name
 - percent (optional; pending the backend)
 
+In code the tier is only its name, a field of `LoyaltyCard`, until the backend gives a
+tier more than a name.
+
 ### 8.3 Rules
 
 - There is one points balance (see `DESIGN_PRODUCT_QUESTIONS.md`, points and cashback).
@@ -264,12 +267,16 @@ is kept apart from loyalty points.
 ### 9.2 Composition
 
 **Wallet** (entity, one per user)
-- balance — the total, in the currency of the instance
+- total — all of it, in the currency of the instance
+- own top-up — what the user put in themselves
+- gifts — what came as gifts
+- expiring and its date (optional) — how much of the wallet expires next, and when
 
 ### 9.3 Rules
 
-- Money in the wallet does not expire (a decision of the sessions; the PRD allows gift
-  and promo value to expire — see `DESIGN_PRODUCT_QUESTIONS.md`).
+- What the user topped up themselves does not expire. Money from elsewhere (a gift, a
+  credit from the restaurant) may, as the PRD allows (decided 2026-11-16; before that
+  the sessions had it that nothing expires — see `DESIGN_PRODUCT_QUESTIONS.md` §15).
 - Topping up is an action, not part of the wallet. Its limits (minimum and maximum
   amount) are a setting of the instance, not of the wallet.
 - The balance is the POS's and is read live; the app never computes it.

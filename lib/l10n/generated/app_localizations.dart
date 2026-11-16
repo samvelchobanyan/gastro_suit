@@ -568,6 +568,96 @@ abstract class AppLocalizations {
   /// **'Ready'**
   String get orderStepReady;
 
+  /// Home, the loyalty card: the label over the number of points
+  ///
+  /// In en, this message translates to:
+  /// **'Loyalty points'**
+  String get loyaltyPointsLabel;
+
+  /// Home, the loyalty card: what tapping it does, read by screen readers
+  ///
+  /// In en, this message translates to:
+  /// **'Show loyalty card'**
+  String get loyaltyShowCard;
+
+  /// Loyalty card sheet: the line under the QR code the cashier scans
+  ///
+  /// In en, this message translates to:
+  /// **'Scan at checkout to earn points'**
+  String get loyaltyScanHint;
+
+  /// Loyalty card sheet: what the QR code is, read by screen readers
+  ///
+  /// In en, this message translates to:
+  /// **'Loyalty QR code'**
+  String get loyaltyQrLabel;
+
+  /// Loyalty card sheet: the label over the points the user has
+  ///
+  /// In en, this message translates to:
+  /// **'Available balance'**
+  String get loyaltyBalanceLabel;
+
+  /// A number of loyalty points, short, e.g. 1,240 pts
+  ///
+  /// In en, this message translates to:
+  /// **'{points} pts'**
+  String loyaltyPoints(String points);
+
+  /// Home's wallet: the label over the balance; also the title of the sheet that breaks the balance down
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet balance'**
+  String get walletBalanceTitle;
+
+  /// The button that adds money to the wallet
+  ///
+  /// In en, this message translates to:
+  /// **'Top up'**
+  String get walletTopUp;
+
+  /// Wallet balance sheet: the label over all the money in the wallet
+  ///
+  /// In en, this message translates to:
+  /// **'Total balance'**
+  String get walletTotal;
+
+  /// Wallet balance sheet: the money the user added themselves
+  ///
+  /// In en, this message translates to:
+  /// **'Top-up balance'**
+  String get walletOwnTopUp;
+
+  /// Wallet balance sheet: the note under the money the user added themselves
+  ///
+  /// In en, this message translates to:
+  /// **'No expiry · use anytime'**
+  String get walletNoExpiry;
+
+  /// Wallet balance sheet: the heading of the money that came as gifts
+  ///
+  /// In en, this message translates to:
+  /// **'From gift cards'**
+  String get walletGifts;
+
+  /// Wallet balance sheet: the sum of the money that came as gifts, e.g. ֏2,680 total
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} total'**
+  String walletGiftsTotal(String amount);
+
+  /// Wallet balance sheet: the part of the wallet that expires next
+  ///
+  /// In en, this message translates to:
+  /// **'Expiring balance'**
+  String get walletExpiring;
+
+  /// Wallet balance sheet: when a part of the wallet expires, e.g. Expires Dec 16, 2026
+  ///
+  /// In en, this message translates to:
+  /// **'Expires {date}'**
+  String walletExpires(String date);
+
   /// Product sheet: the title of the rail of products suggested with this one
   ///
   /// In en, this message translates to:

@@ -8,6 +8,7 @@ import '../../../domain/entities/payment_card.dart';
 import '../../../domain/state/active_branch_state.dart';
 import '../../../domain/state/active_orders_state.dart';
 import '../../../domain/state/cart_state.dart';
+import '../../../domain/state/loyalty_card_state.dart';
 import '../../../domain/state/payment_cards_state.dart';
 import '../../../domain/state/server_config_state.dart';
 import 'pickup_slots.dart';
@@ -122,6 +123,8 @@ class CartCheckoutController extends Notifier<CartCheckout> {
     }
     ref.invalidate(cartProvider);
     ref.invalidate(activeOrdersProvider);
+    // An order earns points.
+    ref.invalidate(loyaltyCardProvider);
     return order;
   }
 }

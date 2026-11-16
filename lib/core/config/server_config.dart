@@ -14,5 +14,12 @@ abstract class ServerConfig with _$ServerConfig {
     /// The branch to open on when the user's position is unknown. Null only
     /// when the instance serves no branch.
     String? defaultBranchId,
+
+    /// Whether the instance has a loyalty programme. Its blocks and
+    /// requests are left out when it has none.
+    @Default(false) bool loyaltyEnabled,
+
+    /// Whether the instance has a wallet.
+    @Default(false) bool walletEnabled,
   }) = _ServerConfig;
 }

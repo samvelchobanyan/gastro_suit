@@ -270,6 +270,58 @@ class AppLocalizationsHy extends AppLocalizations {
   String get orderStepReady => 'Պատրաստ է';
 
   @override
+  String get loyaltyPointsLabel => 'Հավատարմության միավորներ';
+
+  @override
+  String get loyaltyShowCard => 'Ցույց տալ հավատարմության քարտը';
+
+  @override
+  String get loyaltyScanHint =>
+      'Ցույց տվեք դրամարկղում՝ միավորներ ստանալու համար';
+
+  @override
+  String get loyaltyQrLabel => 'Հավատարմության քարտի QR կոդ';
+
+  @override
+  String get loyaltyBalanceLabel => 'Հասանելի մնացորդ';
+
+  @override
+  String loyaltyPoints(String points) {
+    return '$points միավոր';
+  }
+
+  @override
+  String get walletBalanceTitle => 'Դրամապանակի մնացորդ';
+
+  @override
+  String get walletTopUp => 'Լիցքավորել';
+
+  @override
+  String get walletTotal => 'Ընդհանուր մնացորդ';
+
+  @override
+  String get walletOwnTopUp => 'Լիցքավորումներ';
+
+  @override
+  String get walletNoExpiry => 'Առանց ժամկետի · ցանկացած ժամանակ';
+
+  @override
+  String get walletGifts => 'Նվեր քարտերից';
+
+  @override
+  String walletGiftsTotal(String amount) {
+    return 'ընդամենը $amount';
+  }
+
+  @override
+  String get walletExpiring => 'Ժամկետանց դարձող մաս';
+
+  @override
+  String walletExpires(String date) {
+    return 'Ուժի մեջ է մինչև $date';
+  }
+
+  @override
   String get productAnythingElse => 'Ուրիշ բա՞ն';
 
   @override

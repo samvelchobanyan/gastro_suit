@@ -390,6 +390,84 @@
   "@orderStepReady": {
     "description": "Order status, step 4 of 4: the order waits at the counter. Short, one word if possible"
   },
+  "loyaltyPointsLabel": "Loyalty points",
+  "@loyaltyPointsLabel": {
+    "description": "Home, the loyalty card: the label over the number of points"
+  },
+  "loyaltyShowCard": "Show loyalty card",
+  "@loyaltyShowCard": {
+    "description": "Home, the loyalty card: what tapping it does, read by screen readers"
+  },
+  "loyaltyScanHint": "Scan at checkout to earn points",
+  "@loyaltyScanHint": {
+    "description": "Loyalty card sheet: the line under the QR code the cashier scans"
+  },
+  "loyaltyQrLabel": "Loyalty QR code",
+  "@loyaltyQrLabel": {
+    "description": "Loyalty card sheet: what the QR code is, read by screen readers"
+  },
+  "loyaltyBalanceLabel": "Available balance",
+  "@loyaltyBalanceLabel": {
+    "description": "Loyalty card sheet: the label over the points the user has"
+  },
+  "loyaltyPoints": "{points} pts",
+  "@loyaltyPoints": {
+    "description": "A number of loyalty points, short, e.g. 1,240 pts",
+    "placeholders": {
+      "points": {
+        "type": "String",
+        "example": "1,240"
+      }
+    }
+  },
+  "walletBalanceTitle": "Wallet balance",
+  "@walletBalanceTitle": {
+    "description": "Home's wallet: the label over the balance; also the title of the sheet that breaks the balance down"
+  },
+  "walletTopUp": "Top up",
+  "@walletTopUp": {
+    "description": "The button that adds money to the wallet"
+  },
+  "walletTotal": "Total balance",
+  "@walletTotal": {
+    "description": "Wallet balance sheet: the label over all the money in the wallet"
+  },
+  "walletOwnTopUp": "Top-up balance",
+  "@walletOwnTopUp": {
+    "description": "Wallet balance sheet: the money the user added themselves"
+  },
+  "walletNoExpiry": "No expiry · use anytime",
+  "@walletNoExpiry": {
+    "description": "Wallet balance sheet: the note under the money the user added themselves"
+  },
+  "walletGifts": "From gift cards",
+  "@walletGifts": {
+    "description": "Wallet balance sheet: the heading of the money that came as gifts"
+  },
+  "walletGiftsTotal": "{amount} total",
+  "@walletGiftsTotal": {
+    "description": "Wallet balance sheet: the sum of the money that came as gifts, e.g. ֏2,680 total",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "֏2,680"
+      }
+    }
+  },
+  "walletExpiring": "Expiring balance",
+  "@walletExpiring": {
+    "description": "Wallet balance sheet: the part of the wallet that expires next"
+  },
+  "walletExpires": "Expires {date}",
+  "@walletExpires": {
+    "description": "Wallet balance sheet: when a part of the wallet expires, e.g. Expires Dec 16, 2026",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "Dec 16, 2026"
+      }
+    }
+  },
   "productAnythingElse": "Anything else?",
   "@productAnythingElse": {
     "description": "Product sheet: the title of the rail of products suggested with this one"

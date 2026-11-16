@@ -270,6 +270,57 @@ class AppLocalizationsEn extends AppLocalizations {
   String get orderStepReady => 'Ready';
 
   @override
+  String get loyaltyPointsLabel => 'Loyalty points';
+
+  @override
+  String get loyaltyShowCard => 'Show loyalty card';
+
+  @override
+  String get loyaltyScanHint => 'Scan at checkout to earn points';
+
+  @override
+  String get loyaltyQrLabel => 'Loyalty QR code';
+
+  @override
+  String get loyaltyBalanceLabel => 'Available balance';
+
+  @override
+  String loyaltyPoints(String points) {
+    return '$points pts';
+  }
+
+  @override
+  String get walletBalanceTitle => 'Wallet balance';
+
+  @override
+  String get walletTopUp => 'Top up';
+
+  @override
+  String get walletTotal => 'Total balance';
+
+  @override
+  String get walletOwnTopUp => 'Top-up balance';
+
+  @override
+  String get walletNoExpiry => 'No expiry · use anytime';
+
+  @override
+  String get walletGifts => 'From gift cards';
+
+  @override
+  String walletGiftsTotal(String amount) {
+    return '$amount total';
+  }
+
+  @override
+  String get walletExpiring => 'Expiring balance';
+
+  @override
+  String walletExpires(String date) {
+    return 'Expires $date';
+  }
+
+  @override
   String get productAnythingElse => 'Anything else?';
 
   @override

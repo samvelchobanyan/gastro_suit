@@ -4,17 +4,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../design_system/ds_extensions.dart';
 import '../../../domain/state/active_orders_state.dart';
 import '../../../domain/state/branches_state.dart';
+import '../../../domain/state/loyalty_card_state.dart';
+import '../../../domain/state/wallet_state.dart';
 import 'banners_controller.dart';
 import 'stories_controller.dart';
 import 'widgets/banners_block.dart';
 import 'widgets/home_header.dart';
+import 'widgets/loyalty_card_block.dart';
 import 'widgets/nearest_branches_block.dart';
 import 'widgets/order_status_block.dart';
 import 'widgets/stories_block.dart';
+import 'widgets/wallet_block.dart';
 
 /// The Home tab: one vertical scroll of blocks, top to bottom — header,
-/// stories, the status of orders on their way, banners, nearest branches (loyalty, wallet, vouchers and the
-/// buy-again / favourites rails later).
+/// stories, the status of orders on their way, the loyalty card, the wallet,
+/// banners, nearest branches (vouchers and the buy-again / favourites rails
+/// later).
 ///
 /// Each block loads, fails and refreshes on its own; this screen only places
 /// them and refreshes them all on pull-to-refresh.
@@ -25,10 +30,12 @@ class HomeScreen extends ConsumerWidget {
   /// arrives; a failed refresh keeps it.
   Future<void> _refresh(WidgetRef ref) async {
     try {
-      await Future.wait<Object>([
+      await Future.wait<Object?>([
         ref.refresh(storiesControllerProvider.future),
         ref.refresh(bannersControllerProvider.future),
         ref.refresh(activeOrdersProvider.future),
+        ref.refresh(loyaltyCardProvider.future),
+        ref.refresh(walletProvider.future),
         // Also reads the position again.
         ref.refresh(branchesControllerProvider.future),
       ]);
@@ -52,6 +59,8 @@ class HomeScreen extends ConsumerWidget {
               SliverToBoxAdapter(child: HomeHeader()),
               SliverToBoxAdapter(child: StoriesBlock()),
               SliverToBoxAdapter(child: OrderStatusBlock()),
+              SliverToBoxAdapter(child: LoyaltyCardBlock()),
+              SliverToBoxAdapter(child: WalletBlock()),
               SliverToBoxAdapter(child: BannersBlock()),
               SliverToBoxAdapter(child: NearestBranchesBlock()),
             ],

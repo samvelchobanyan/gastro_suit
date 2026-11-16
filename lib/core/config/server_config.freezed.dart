@@ -18,7 +18,10 @@ mixin _$ServerConfig {
 /// the app's language.
  String get defaultLanguage;/// The branch to open on when the user's position is unknown. Null only
 /// when the instance serves no branch.
- String? get defaultBranchId;
+ String? get defaultBranchId;/// Whether the instance has a loyalty programme. Its blocks and
+/// requests are left out when it has none.
+ bool get loyaltyEnabled;/// Whether the instance has a wallet.
+ bool get walletEnabled;
 /// Create a copy of ServerConfig
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +32,16 @@ $ServerConfigCopyWith<ServerConfig> get copyWith => _$ServerConfigCopyWithImpl<S
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ServerConfig&&(identical(other.defaultLanguage, defaultLanguage) || other.defaultLanguage == defaultLanguage)&&(identical(other.defaultBranchId, defaultBranchId) || other.defaultBranchId == defaultBranchId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ServerConfig&&(identical(other.defaultLanguage, defaultLanguage) || other.defaultLanguage == defaultLanguage)&&(identical(other.defaultBranchId, defaultBranchId) || other.defaultBranchId == defaultBranchId)&&(identical(other.loyaltyEnabled, loyaltyEnabled) || other.loyaltyEnabled == loyaltyEnabled)&&(identical(other.walletEnabled, walletEnabled) || other.walletEnabled == walletEnabled));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,defaultLanguage,defaultBranchId);
+int get hashCode => Object.hash(runtimeType,defaultLanguage,defaultBranchId,loyaltyEnabled,walletEnabled);
 
 @override
 String toString() {
-  return 'ServerConfig(defaultLanguage: $defaultLanguage, defaultBranchId: $defaultBranchId)';
+  return 'ServerConfig(defaultLanguage: $defaultLanguage, defaultBranchId: $defaultBranchId, loyaltyEnabled: $loyaltyEnabled, walletEnabled: $walletEnabled)';
 }
 
 
@@ -49,7 +52,7 @@ abstract mixin class $ServerConfigCopyWith<$Res>  {
   factory $ServerConfigCopyWith(ServerConfig value, $Res Function(ServerConfig) _then) = _$ServerConfigCopyWithImpl;
 @useResult
 $Res call({
- String defaultLanguage, String? defaultBranchId
+ String defaultLanguage, String? defaultBranchId, bool loyaltyEnabled, bool walletEnabled
 });
 
 
@@ -66,11 +69,13 @@ class _$ServerConfigCopyWithImpl<$Res>
 
 /// Create a copy of ServerConfig
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? defaultLanguage = null,Object? defaultBranchId = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? defaultLanguage = null,Object? defaultBranchId = freezed,Object? loyaltyEnabled = null,Object? walletEnabled = null,}) {
   return _then(_self.copyWith(
 defaultLanguage: null == defaultLanguage ? _self.defaultLanguage : defaultLanguage // ignore: cast_nullable_to_non_nullable
 as String,defaultBranchId: freezed == defaultBranchId ? _self.defaultBranchId : defaultBranchId // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,loyaltyEnabled: null == loyaltyEnabled ? _self.loyaltyEnabled : loyaltyEnabled // ignore: cast_nullable_to_non_nullable
+as bool,walletEnabled: null == walletEnabled ? _self.walletEnabled : walletEnabled // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -155,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String defaultLanguage,  String? defaultBranchId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String defaultLanguage,  String? defaultBranchId,  bool loyaltyEnabled,  bool walletEnabled)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ServerConfig() when $default != null:
-return $default(_that.defaultLanguage,_that.defaultBranchId);case _:
+return $default(_that.defaultLanguage,_that.defaultBranchId,_that.loyaltyEnabled,_that.walletEnabled);case _:
   return orElse();
 
 }
@@ -176,10 +181,10 @@ return $default(_that.defaultLanguage,_that.defaultBranchId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String defaultLanguage,  String? defaultBranchId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String defaultLanguage,  String? defaultBranchId,  bool loyaltyEnabled,  bool walletEnabled)  $default,) {final _that = this;
 switch (_that) {
 case _ServerConfig():
-return $default(_that.defaultLanguage,_that.defaultBranchId);case _:
+return $default(_that.defaultLanguage,_that.defaultBranchId,_that.loyaltyEnabled,_that.walletEnabled);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +201,10 @@ return $default(_that.defaultLanguage,_that.defaultBranchId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String defaultLanguage,  String? defaultBranchId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String defaultLanguage,  String? defaultBranchId,  bool loyaltyEnabled,  bool walletEnabled)?  $default,) {final _that = this;
 switch (_that) {
 case _ServerConfig() when $default != null:
-return $default(_that.defaultLanguage,_that.defaultBranchId);case _:
+return $default(_that.defaultLanguage,_that.defaultBranchId,_that.loyaltyEnabled,_that.walletEnabled);case _:
   return null;
 
 }
@@ -211,7 +216,7 @@ return $default(_that.defaultLanguage,_that.defaultBranchId);case _:
 
 
 class _ServerConfig implements ServerConfig {
-  const _ServerConfig({required this.defaultLanguage, this.defaultBranchId});
+  const _ServerConfig({required this.defaultLanguage, this.defaultBranchId, this.loyaltyEnabled = false, this.walletEnabled = false});
   
 
 /// The language content falls back to when a text has no translation in
@@ -220,6 +225,11 @@ class _ServerConfig implements ServerConfig {
 /// The branch to open on when the user's position is unknown. Null only
 /// when the instance serves no branch.
 @override final  String? defaultBranchId;
+/// Whether the instance has a loyalty programme. Its blocks and
+/// requests are left out when it has none.
+@override@JsonKey() final  bool loyaltyEnabled;
+/// Whether the instance has a wallet.
+@override@JsonKey() final  bool walletEnabled;
 
 /// Create a copy of ServerConfig
 /// with the given fields replaced by the non-null parameter values.
@@ -231,16 +241,16 @@ _$ServerConfigCopyWith<_ServerConfig> get copyWith => __$ServerConfigCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ServerConfig&&(identical(other.defaultLanguage, defaultLanguage) || other.defaultLanguage == defaultLanguage)&&(identical(other.defaultBranchId, defaultBranchId) || other.defaultBranchId == defaultBranchId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ServerConfig&&(identical(other.defaultLanguage, defaultLanguage) || other.defaultLanguage == defaultLanguage)&&(identical(other.defaultBranchId, defaultBranchId) || other.defaultBranchId == defaultBranchId)&&(identical(other.loyaltyEnabled, loyaltyEnabled) || other.loyaltyEnabled == loyaltyEnabled)&&(identical(other.walletEnabled, walletEnabled) || other.walletEnabled == walletEnabled));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,defaultLanguage,defaultBranchId);
+int get hashCode => Object.hash(runtimeType,defaultLanguage,defaultBranchId,loyaltyEnabled,walletEnabled);
 
 @override
 String toString() {
-  return 'ServerConfig(defaultLanguage: $defaultLanguage, defaultBranchId: $defaultBranchId)';
+  return 'ServerConfig(defaultLanguage: $defaultLanguage, defaultBranchId: $defaultBranchId, loyaltyEnabled: $loyaltyEnabled, walletEnabled: $walletEnabled)';
 }
 
 
@@ -251,7 +261,7 @@ abstract mixin class _$ServerConfigCopyWith<$Res> implements $ServerConfigCopyWi
   factory _$ServerConfigCopyWith(_ServerConfig value, $Res Function(_ServerConfig) _then) = __$ServerConfigCopyWithImpl;
 @override @useResult
 $Res call({
- String defaultLanguage, String? defaultBranchId
+ String defaultLanguage, String? defaultBranchId, bool loyaltyEnabled, bool walletEnabled
 });
 
 
@@ -268,11 +278,13 @@ class __$ServerConfigCopyWithImpl<$Res>
 
 /// Create a copy of ServerConfig
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? defaultLanguage = null,Object? defaultBranchId = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? defaultLanguage = null,Object? defaultBranchId = freezed,Object? loyaltyEnabled = null,Object? walletEnabled = null,}) {
   return _then(_ServerConfig(
 defaultLanguage: null == defaultLanguage ? _self.defaultLanguage : defaultLanguage // ignore: cast_nullable_to_non_nullable
 as String,defaultBranchId: freezed == defaultBranchId ? _self.defaultBranchId : defaultBranchId // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,loyaltyEnabled: null == loyaltyEnabled ? _self.loyaltyEnabled : loyaltyEnabled // ignore: cast_nullable_to_non_nullable
+as bool,walletEnabled: null == walletEnabled ? _self.walletEnabled : walletEnabled // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

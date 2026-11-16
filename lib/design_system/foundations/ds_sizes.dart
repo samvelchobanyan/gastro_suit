@@ -90,6 +90,24 @@ abstract final class DSSizes {
   /// The bar over a step of a progress row (Home's order status).
   static const double stepBarHeight = 4;
 
+  // Loyalty and wallet (handoff `LoyaltyPointsCard`, `LoyaltyCardSheet`,
+  // `Wallet`, `WalletBalanceSheet`)
+  /// The least height of Home's loyalty card.
+  static const double loyaltyCardHeight = 116;
+
+  /// The card's code on Home's loyalty card.
+  static const double loyaltyCardQr = 68;
+
+  /// The card's code where the cashier scans it.
+  static const double loyaltyQr = 200;
+
+  /// The wallet's picture on Home, and on its balance sheet.
+  static const double walletImage = 48;
+  static const double walletImageLg = 56;
+
+  /// How much the dark sheet of the loyalty card blurs what is behind it.
+  static const double darkSheetBlur = 24;
+
   /// How much a glass surface blurs what is behind it (`--glass-blur`).
   static const double glassBlur = 16;
 

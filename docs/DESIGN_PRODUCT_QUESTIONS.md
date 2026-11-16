@@ -113,7 +113,11 @@ the backend reports one bonus balance (with iiko, cashback accrues as points). F
 the app follows the API: one points balance. If cashback must be money, the wallet
 already has a promo part.
 
-### 15. Wallet money does not expire — to confirm
+### 15. Wallet money does not expire — revised 2026-11-16
+Revised: what the user topped up themselves does not expire; money from elsewhere (a
+gift, a credit from the restaurant) may. The API agrees: `expiring` and `expiryDate`
+on the wallet. The earlier text:
+
 The PRD (5.5 Wallet) lets gift-card and promo value in the wallet expire. Decided in the
 sessions: wallet money never expires; only loyalty points can expire.
 
@@ -218,3 +222,25 @@ the product owner answer:
   for. Worked out on the device for now as in the design's row: "ASAP", then the next
   round ten minutes and steps of 10, 15, 15, 30 and 30 minutes, no later than the
   branch closes today.
+
+### 21. Loyalty card and wallet: what the API does not give (2026-11-16)
+Built: Home's loyalty card and wallet, the sheet with the card's code, the sheet of the
+wallet's balance. Drawn in the design and left out, or changed, for want of data:
+- **A tier's percent.** The card and the sheet show "Master 10%"; the API gives a tier
+  only a name. Shown: the name alone.
+- **Progress to the next tier** ("Spend ֏35,000 more to reach Gold 15%") and the "how
+  the programme works" sheet with its table of tiers: no next tier, no spend, no list of
+  tiers in the API. Both left out, with the sheet's "i" button.
+- **The list of gift cards** in the wallet (sender, amount, its own date). The API gives
+  the gifts as one sum (`giftCard`) and one amount that expires next (`expiring`,
+  `expiryDate`), not saying which part it belongs to. Shown: the sum, and one row
+  "Expiring balance" in the list's place. To ask the backend: the gifts as a list.
+- **`promo`** in the wallet and **`cashback`** in the loyalty balance: given by the API,
+  not drawn. Not shown.
+- **An urgent date** is red in the design without saying how close it is. Taken as 7
+  days or less.
+- **The card's code where the cashier scans it** is drawn light on dark. Built dark on a
+  light plate: not every scanner reads a code with its colours swapped. The small code
+  on Home's card is light on dark as drawn. To confirm with the designer.
+- **Topping up** is the next stage: its buttons are shown and take no taps.
+- **A guest** sees neither block; the design does not draw Home for a guest.

@@ -142,9 +142,14 @@ with real content (see §7).
   `menuCategoryImage` 56 and `menuCategoryItemWidth` 64 (`MenuTabsVertical`);
   `productRailCardWidth` 128 (`ProductVerticalCard`); `badge` 18 (`Badge`);
   `successImage` 110 (`PurchaseSuccess`); `stepBarHeight` 4 (the bar over a step of
-  Home's order status).
+  Home's order status); `loyaltyCardHeight` 116 and `loyaltyCardQr` 68
+  (`LoyaltyPointsCard`), `loyaltyQr` 200 and `darkSheetBlur` 24 (`LoyaltyCardSheet`),
+  `walletImage` 48 (`Wallet`) and `walletImageLg` 56 (`WalletBalanceSheet`).
 - `DSElevation`: `card`, `raised`, `overlay`, `sheet` — lists of `BoxShadow`.
-- `DSOpacity`: `disabled` 0.35 — a control that cannot be used now.
+- `DSOpacity`: `disabled` 0.35 — a control that cannot be used now. Over a dark fill,
+  applied to `textInverse`: `quietOnDark` 0.8 (the quieter text), `surfaceOnDark` 0.08 (a
+  pill, a panel); `darkGlass` 0.78 — `bgInverse` as a sheet that lets what is behind it
+  show (`LoyaltyCardSheet`).
 
 ---
 
@@ -176,6 +181,11 @@ with real content (see §7).
   at 80%. The label on `PurchaseSuccess`'s dark tiles (`gray-500` on `gray-900`) is
   painted the same way: it has no role of its own, and `textDisabled`, the role of the
   same value, would say the wrong thing.
+- The loyalty card, the wallet and their sheets paint with palette values on dark:
+  `gray-900` is `bgInverse`, white is `textInverse`; `gray-500` and white at 70% (quiet
+  text) are `textInverse` at `quietOnDark`; white at 6–8% (a pill, a panel) is
+  `textInverse` at `surfaceOnDark`; the sheet's `gray-1000` at 78% is `bgInverse` at
+  `darkGlass`. The sheet's two blurred glows are left out.
 - `PaymentMethods` paints with palette greys: the row's `gray-50` is `bgCanvas`, the
   icon tile's `gray-900` and white are `bgInverse` and `textInverse`.
 
@@ -203,7 +213,7 @@ with real content (see §7).
 | `DSScreenHeader` | `ScreenHeader` | A screen's title (`h1`); the handoff's back button and trailing action are added when a screen needs them |
 | `DSRadio` | `RadioButton` | The radio mark only; the row it sits in takes the tap |
 | `DSCheckbox` | `Checkbox` | The checkbox mark only: a 20 square, the brand fill with a tick when checked; the row it sits in takes the tap |
-| `DSButton` | `Button` | `primary` and `secondary` (outline), sizes `sm` 40 and `md` 48, an optional icon before the label; other variants and sizes are added when used. Disabled (no `onPressed`) it is dimmed; `loading` shows a spinner in place of the label; neither takes taps |
+| `DSButton` | `Button` | `primary` and `secondary` (outline), sizes `xs` 32, `sm` 40 and `md` 48, an optional icon before the label, `pill` for fully rounded ends; other variants and sizes are added when used. Disabled (no `onPressed`) it is dimmed; `loading` shows a spinner in place of the label; neither takes taps |
 | `DSIconButton` | `IconButton` | A button with only an icon; `filled` and `tonal`, sizes `xs` 36 and `sm` 40 so far; round, or a square with an input's corners (`rounded`) next to a field |
 | `DSStepper` | `Stepper` | A quantity between a minus and a plus; sizes `sm` 32 high and `md` 40. Keeps no number of its own: it shows the value it is given and reports the one asked for |
 | `DSRatingStars` | `RatingStars`, display only | Five stars to the half star; zero is five empty stars |

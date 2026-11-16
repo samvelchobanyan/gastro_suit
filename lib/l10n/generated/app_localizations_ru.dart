@@ -270,6 +270,57 @@ class AppLocalizationsRu extends AppLocalizations {
   String get orderStepReady => 'Готов';
 
   @override
+  String get loyaltyPointsLabel => 'Баллы лояльности';
+
+  @override
+  String get loyaltyShowCard => 'Показать карту лояльности';
+
+  @override
+  String get loyaltyScanHint => 'Покажите на кассе, чтобы получить баллы';
+
+  @override
+  String get loyaltyQrLabel => 'QR-код карты лояльности';
+
+  @override
+  String get loyaltyBalanceLabel => 'Доступный баланс';
+
+  @override
+  String loyaltyPoints(String points) {
+    return '$points б.';
+  }
+
+  @override
+  String get walletBalanceTitle => 'Баланс кошелька';
+
+  @override
+  String get walletTopUp => 'Пополнить';
+
+  @override
+  String get walletTotal => 'Общий баланс';
+
+  @override
+  String get walletOwnTopUp => 'Пополнения';
+
+  @override
+  String get walletNoExpiry => 'Без срока · в любое время';
+
+  @override
+  String get walletGifts => 'Подарочные карты';
+
+  @override
+  String walletGiftsTotal(String amount) {
+    return 'всего $amount';
+  }
+
+  @override
+  String get walletExpiring => 'Сгорающая часть';
+
+  @override
+  String walletExpires(String date) {
+    return 'Сгорает $date';
+  }
+
+  @override
   String get productAnythingElse => 'Что-нибудь ещё?';
 
   @override

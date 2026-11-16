@@ -252,8 +252,8 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   (the tier already comes from them), `wallets` (the wallet comes from
   `/wallet/balance`; vouchers are discussed separately).
 - The card number does not change; a refresh may re-read only the balance.
-- Proposed: draw the QR in the app from the card number (e.g. `qr_flutter`) instead of
-  showing the PNG the API sends.
+- Decided 2026-11-16: the QR is drawn in the app from the card number (`qr_flutter`),
+  not shown from the PNG the API sends: sharp at any size and in the theme's colours.
 
 ## 13. Order mapping (`OrderResponse` → `Order`) — agreed
 
@@ -361,3 +361,20 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   in about 12 minutes), so the block can be watched there.
 - To ask the backend: a request for the open orders alone, or their statuses in one
   call — the history page carries every order whole, lines included.
+
+## 18. Loyalty card and wallet on Home (2026-11-16)
+
+- `GET /config` → `modules.loyalty` / `modules.wallet` are `ServerConfig.loyaltyEnabled`
+  / `walletEnabled`; a module the instance does not name is off. Each block reads its own
+  flag through its provider; nothing else checks modules yet.
+- `loyaltyCardProvider` and `walletProvider` (`domain/state/`) are none for a guest and
+  with the module off, without a request; they wait for `/config` first. Home's blocks
+  take no room without a value: while loading, on a failure, for a guest.
+- Wallet mapping (`GET /wallet/balance`): `total`, `ownTopUp`, `giftCard` → gifts,
+  `expiring` with `expiryDate` → what expires next (no date when nothing expires).
+  `promo` is not read. On the dev server `ownTopUp` and `giftCard` equal the POS's
+  `deposit` and `certificate` wallets of `/loyalty/balance`.
+- The tier is the POS's name for it, a string on `LoyaltyCard`.
+- Placing an order reads the loyalty card again.
+- Not built: topping up (`POST /wallet/top-up`; limits in `/config` → `wallet.minTopUp`
+  / `maxTopUp`), the wallet's history, spending the balance on an order.

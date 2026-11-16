@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../ds_extensions.dart';
 
-/// Button sizes: `sm` is 40 high, `md` 48. The handoff's others (`lg`,
-/// `xs`) are added when used.
-enum DSButtonSize { sm, md }
+/// Button sizes: `xs` is 32 high, `sm` 40, `md` 48. The handoff's `lg` is
+/// added when used.
+enum DSButtonSize { xs, sm, md }
 
 /// How a button is painted. The handoff's `tertiary` and `destructive` are
 /// added when a screen needs them.
@@ -31,6 +31,7 @@ class DSButton extends StatelessWidget {
     this.icon,
     this.fullWidth = false,
     this.loading = false,
+    this.pill = false,
   });
 
   final String label;
@@ -47,20 +48,31 @@ class DSButton extends StatelessWidget {
   /// The action is under way.
   final bool loading;
 
+  /// Fully rounded ends in place of the size's own corners.
+  final bool pill;
+
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final icon = this.icon;
-    final (height, padding, textStyle) = switch (size) {
+    final (height, padding, textStyle, radius) = switch (size) {
+      DSButtonSize.xs => (
+        DSSizes.buttonHeightXxs,
+        DSSpacing.md,
+        DSTypography.bodySmSemibold,
+        DSRadius.sm,
+      ),
       DSButtonSize.sm => (
         DSSizes.buttonHeightSm,
         DSSpacing.base,
         DSTypography.bodySemibold,
+        DSRadius.md,
       ),
       DSButtonSize.md => (
         DSSizes.buttonHeightMd,
         DSSpacing.base,
         DSTypography.bodyLgSemibold,
+        DSRadius.md,
       ),
     };
     final (
@@ -105,7 +117,9 @@ class DSButton extends StatelessWidget {
         ),
         shape: WidgetStatePropertyAll(
           RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(DSRadius.md)),
+            borderRadius: BorderRadius.all(
+              Radius.circular(pill ? DSRadius.full : radius),
+            ),
             side: border,
           ),
         ),
