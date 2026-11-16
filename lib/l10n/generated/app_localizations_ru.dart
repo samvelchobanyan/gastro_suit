@@ -321,6 +321,28 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String get walletTopUpTitle => 'Пополнение кошелька';
+
+  @override
+  String get walletTopUpAmountHint => 'Введите сумму';
+
+  @override
+  String walletTopUpLimits(String min, String max) {
+    return 'От $min до $max';
+  }
+
+  @override
+  String get walletTopUpUnavailable => 'Оплата этим способом пока недоступна';
+
+  @override
+  String walletTopUpSuccess(String amount) {
+    return 'Кошелёк успешно пополнен на $amount';
+  }
+
+  @override
+  String get continueAction => 'Продолжить';
+
+  @override
   String get productAnythingElse => 'Что-нибудь ещё?';
 
   @override

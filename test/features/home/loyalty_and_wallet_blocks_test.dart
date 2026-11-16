@@ -9,11 +9,15 @@ import 'package:gastro_suit/design_system/components/buttons/ds_button.dart';
 import 'package:gastro_suit/design_system/theme/app_theme.dart';
 import 'package:gastro_suit/design_system/theme/ds_colors.dart';
 import 'package:gastro_suit/domain/entities/loyalty_card.dart';
+import 'package:gastro_suit/domain/entities/payment_card.dart';
 import 'package:gastro_suit/domain/entities/wallet.dart';
+import 'package:gastro_suit/domain/state/payment_cards_state.dart';
 import 'package:gastro_suit/features/home/home_screen/widgets/loyalty_card_block.dart';
 import 'package:gastro_suit/features/home/home_screen/widgets/wallet_block.dart';
 import 'package:gastro_suit/features/loyalty/loyalty_card_sheet/loyalty_card_sheet.dart';
 import 'package:gastro_suit/features/wallet/wallet_balance_sheet/wallet_balance_sheet.dart';
+import 'package:gastro_suit/features/wallet/wallet_top_up_sheet/wallet_top_up_sheet.dart';
+import 'package:gastro_suit/features/wallet/wallet_top_up_success_screen/wallet_top_up_success_screen.dart';
 import 'package:gastro_suit/l10n/generated/app_localizations.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -67,6 +71,20 @@ void main() {
             FakeServerConfigRepository(loyalty: loyaltyOn, wallet: walletOn),
           ),
           loyaltyRepositoryProvider.overrideWithValue(loyalty),
+          paymentCardsProvider.overrideWith(
+            (ref) async => const [
+              PaymentCard(
+                id: 'card-1',
+                maskedNumber: '411111******1111',
+                isDefault: true,
+              ),
+              PaymentCard(
+                id: 'card-2',
+                maskedNumber: '555555******2222',
+                isDefault: false,
+              ),
+            ],
+          ),
           walletRepositoryProvider.overrideWithValue(wallets),
         ],
         child: MaterialApp(
@@ -127,17 +145,36 @@ void main() {
   });
 
   group('the wallet', () {
-    testWidgets('shows the balance; topping up is not offered yet', (
-      tester,
-    ) async {
+    testWidgets('shows the balance and the way to top it up', (tester) async {
       await pumpBlocks(tester);
 
       expect(find.text('Wallet balance'), findsOneWidget);
       expect(find.text('֏15,000'), findsOneWidget);
-      final topUp = tester.widget<DSButton>(
-        find.widgetWithText(DSButton, 'Top up'),
+
+      await tester.tap(find.widgetWithText(DSButton, 'Top up'));
+      await tester.pumpAndSettle();
+      expect(find.byType(WalletTopUpSheet), findsOneWidget);
+      // Not what the balance is made of: the button is not the card.
+      expect(find.byType(WalletBalanceSheet), findsNothing);
+    });
+
+    testWidgets('"Top up" in the balance sheet goes on to topping up', (
+      tester,
+    ) async {
+      await pumpBlocks(tester);
+      await tester.tap(find.text('֏15,000'));
+      await tester.pumpAndSettle();
+
+      await tester.tap(
+        find.descendant(
+          of: find.byType(WalletBalanceSheet),
+          matching: find.widgetWithText(DSButton, 'Top up'),
+        ),
       );
-      expect(topUp.onPressed, isNull);
+      await tester.pumpAndSettle();
+
+      expect(find.byType(WalletBalanceSheet), findsNothing);
+      expect(find.byType(WalletTopUpSheet), findsOneWidget);
     });
 
     testWidgets('opens what the balance is made of', (tester) async {
@@ -206,6 +243,119 @@ void main() {
       expect(find.text('Top-up balance'), findsOneWidget);
       expect(find.text('From gift cards'), findsNothing);
       expect(find.text('Expiring balance'), findsNothing);
+    });
+  });
+
+  group('topping up the wallet', () {
+    Finder sheetButton() => find.descendant(
+      of: find.byType(WalletTopUpSheet),
+      matching: find.widgetWithText(DSButton, 'Top up'),
+    );
+    bool enabled(WidgetTester tester) =>
+        tester.widget<DSButton>(sheetButton()).onPressed != null;
+
+    Future<FakeWalletRepository> openTopUp(WidgetTester tester) async {
+      final (_, wallets) = await pumpBlocks(tester);
+      await tester.tap(find.widgetWithText(DSButton, 'Top up'));
+      await tester.pumpAndSettle();
+      return wallets;
+    }
+
+    testWidgets('takes an amount within the instance\'s limits', (
+      tester,
+    ) async {
+      await openTopUp(tester);
+
+      expect(find.text('Top up wallet'), findsOneWidget);
+      expect(find.text('From ֏500 to ֏500,000'), findsOneWidget);
+      expect(enabled(tester), isFalse);
+
+      await tester.enterText(find.byType(TextField), '100');
+      await tester.pump();
+      expect(enabled(tester), isFalse);
+
+      await tester.enterText(find.byType(TextField), '500');
+      await tester.pump();
+      expect(enabled(tester), isTrue);
+
+      await tester.enterText(find.byType(TextField), '500001');
+      await tester.pump();
+      expect(enabled(tester), isFalse);
+    });
+
+    testWidgets('shows the card, and another one once chosen', (tester) async {
+      await openTopUp(tester);
+      expect(find.text('Card •••• 1111'), findsOneWidget);
+
+      await tester.tap(find.text('Card •••• 1111'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Card •••• 2222'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(WalletTopUpSheet), findsOneWidget);
+      expect(find.text('Card •••• 2222'), findsOneWidget);
+      expect(find.text('Card •••• 1111'), findsNothing);
+    });
+
+    testWidgets('a top-up that is done shows so, and the new balance after', (
+      tester,
+    ) async {
+      final wallets = await openTopUp(tester);
+      await tester.enterText(find.byType(TextField), '5000');
+      await tester.pump();
+
+      await tester.tap(sheetButton());
+      await tester.pumpAndSettle();
+
+      expect(wallets.toppedUp, [5000]);
+      expect(find.byType(WalletTopUpSheet), findsNothing);
+      expect(find.byType(WalletTopUpSuccessScreen), findsOneWidget);
+      expect(
+        find.text('You have successfully topped up your wallet by ֏5,000'),
+        findsOneWidget,
+      );
+
+      await tester.tap(find.text('Continue'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(WalletTopUpSuccessScreen), findsNothing);
+      expect(find.text('֏20,000'), findsOneWidget);
+    });
+
+    testWidgets('a top-up left to be paid on the bank\'s page says it cannot '
+        'be yet', (tester) async {
+      final wallets = await openTopUp(tester);
+      wallets.topUpDone = false;
+      await tester.enterText(find.byType(TextField), '5000');
+      await tester.pump();
+
+      await tester.tap(sheetButton());
+      await tester.pumpAndSettle();
+
+      expect(find.byType(WalletTopUpSheet), findsOneWidget);
+      expect(find.text('Paying this way is not available yet'), findsOneWidget);
+      expect(enabled(tester), isTrue);
+    });
+
+    testWidgets('a refused top-up shows the server\'s reason', (tester) async {
+      final wallets = await openTopUp(tester);
+      wallets.topUpError = const AppException(
+        AppExceptionKind.server,
+        code: 'topup_amount_invalid',
+        message: 'A top-up is a whole number of drams from 500 to 500,000',
+      );
+      await tester.enterText(find.byType(TextField), '5000');
+      await tester.pump();
+
+      await tester.tap(sheetButton());
+      await tester.pumpAndSettle();
+
+      expect(find.byType(WalletTopUpSheet), findsOneWidget);
+      expect(
+        find.text('A top-up is a whole number of drams from 500 to 500,000'),
+        findsOneWidget,
+      );
+      expect(wallets.toppedUp, isEmpty);
     });
   });
 

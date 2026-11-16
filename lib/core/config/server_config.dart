@@ -21,5 +21,10 @@ abstract class ServerConfig with _$ServerConfig {
 
     /// Whether the instance has a wallet.
     @Default(false) bool walletEnabled,
+
+    /// The least and the most the wallet can be topped up by at once; null
+    /// when the instance names no limit.
+    int? minTopUp,
+    int? maxTopUp,
   }) = _ServerConfig;
 }

@@ -17,6 +17,8 @@ class FakeServerConfigRepository implements ServerConfigRepository {
     defaultLanguage: 'en',
     loyaltyEnabled: loyalty,
     walletEnabled: wallet,
+    minTopUp: 500,
+    maxTopUp: 500000,
   );
 }
 
@@ -57,5 +59,23 @@ class FakeWalletRepository implements WalletRepository {
     reads++;
     if (error case final error?) throw error;
     return wallet;
+  }
+
+  /// Every amount the wallet was topped up by.
+  final toppedUp = <int>[];
+
+  /// Whether a top-up comes back done; false for one left to be paid on
+  /// the bank's page.
+  var topUpDone = true;
+
+  /// Thrown by the next top-ups when set.
+  Object? topUpError;
+
+  @override
+  Future<bool> topUp(int amount) async {
+    if (topUpError case final error?) throw error;
+    toppedUp.add(amount);
+    if (topUpDone) wallet = wallet.copyWith(total: wallet.total + amount);
+    return topUpDone;
   }
 }

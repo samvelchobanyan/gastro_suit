@@ -93,6 +93,12 @@
   "walletGiftsTotal": "всего {amount}",
   "walletExpiring": "Сгорающая часть",
   "walletExpires": "Сгорает {date}",
+  "walletTopUpTitle": "Пополнение кошелька",
+  "walletTopUpAmountHint": "Введите сумму",
+  "walletTopUpLimits": "От {min} до {max}",
+  "walletTopUpUnavailable": "Оплата этим способом пока недоступна",
+  "walletTopUpSuccess": "Кошелёк успешно пополнен на {amount}",
+  "continueAction": "Продолжить",
   "productAnythingElse": "Что-нибудь ещё?",
   "orderWithTotal": "Заказать · {total}"
 }

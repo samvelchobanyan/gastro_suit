@@ -79,7 +79,7 @@ void main() {
     addTearDown(container.dispose);
     // Kept alive as the open cart sheet keeps them.
     container.listen(cartCheckoutProvider, (_, _) {});
-    container.listen(checkoutCardProvider, (_, _) {});
+    container.listen(paymentCardProvider, (_, _) {});
     await container.read(cartProvider.future);
     await container.read(paymentCardsProvider.future);
     return (container, orders, payments, fakeCart);
@@ -88,20 +88,20 @@ void main() {
   group('the card to pay with', () {
     test('is the default card until the user picks one', () async {
       final (container, _, _, _) = await setUp();
-      expect(container.read(checkoutCardProvider), second);
+      expect(container.read(paymentCardProvider), second);
 
-      container.read(cartCheckoutProvider.notifier).selectCard('card-1');
-      expect(container.read(checkoutCardProvider), first);
+      container.read(pickedPaymentCardProvider.notifier).pick('card-1');
+      expect(container.read(paymentCardProvider), first);
     });
 
     test('is the first card when none is the default', () async {
       final (container, _, _, _) = await setUp(cards: const [first]);
-      expect(container.read(checkoutCardProvider), first);
+      expect(container.read(paymentCardProvider), first);
     });
 
     test('is none for a user without cards', () async {
       final (container, _, _, _) = await setUp(cards: const []);
-      expect(container.read(checkoutCardProvider), isNull);
+      expect(container.read(paymentCardProvider), isNull);
     });
   });
 
@@ -141,7 +141,7 @@ void main() {
       final (container, orders, payments, _) = await setUp();
       orders.awaitsPayment = true;
       final controller = container.read(cartCheckoutProvider.notifier);
-      controller.selectCard('card-1');
+      container.read(pickedPaymentCardProvider.notifier).pick('card-1');
 
       final order = await controller.placeOrder();
 

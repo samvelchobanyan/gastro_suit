@@ -28,7 +28,7 @@ import 'package:gastro_suit/features/cart/cart_sheet/cart_checkout_controller.da
 import 'package:gastro_suit/features/cart/cart_sheet/cart_sheet.dart';
 import 'package:gastro_suit/features/cart/cart_sheet/widgets/cart_line_tile.dart';
 import 'package:gastro_suit/features/cart/order_success_screen/order_success_screen.dart';
-import 'package:gastro_suit/features/cart/payment_method_sheet/payment_method_sheet.dart';
+import 'package:gastro_suit/features/payment/payment_method_sheet/payment_method_sheet.dart';
 import 'package:gastro_suit/features/menu/product_sheet/product_sheet.dart';
 import 'package:gastro_suit/l10n/generated/app_localizations.dart';
 

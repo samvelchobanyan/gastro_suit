@@ -468,6 +468,46 @@
       }
     }
   },
+  "walletTopUpTitle": "Top up wallet",
+  "@walletTopUpTitle": {
+    "description": "Title of the sheet where the user adds money to the wallet"
+  },
+  "walletTopUpAmountHint": "Enter amount",
+  "@walletTopUpAmountHint": {
+    "description": "Top-up sheet: the hint in the empty amount field"
+  },
+  "walletTopUpLimits": "From {min} to {max}",
+  "@walletTopUpLimits": {
+    "description": "Top-up sheet: the least and the most that can be added at once, under the amount field",
+    "placeholders": {
+      "min": {
+        "type": "String",
+        "example": "֏500"
+      },
+      "max": {
+        "type": "String",
+        "example": "֏500,000"
+      }
+    }
+  },
+  "walletTopUpUnavailable": "Paying this way is not available yet",
+  "@walletTopUpUnavailable": {
+    "description": "Top-up sheet: shown when the payment needs the bank's page, which the app does not open yet"
+  },
+  "walletTopUpSuccess": "You have successfully topped up your wallet by {amount}",
+  "@walletTopUpSuccess": {
+    "description": "Success screen after topping up the wallet",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "֏5,000"
+      }
+    }
+  },
+  "continueAction": "Continue",
+  "@continueAction": {
+    "description": "A button that closes a finished step and goes on"
+  },
   "productAnythingElse": "Anything else?",
   "@productAnythingElse": {
     "description": "Product sheet: the title of the rail of products suggested with this one"

@@ -15,6 +15,7 @@ import '../../../design_system/ds_extensions.dart';
 import '../../../domain/entities/cart.dart';
 import '../../../domain/state/active_branch_state.dart';
 import '../../../domain/state/cart_state.dart';
+import '../../../domain/state/payment_cards_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../branches/branch_picker_sheet/branch_picker_sheet.dart';
 import '../../menu/product_sheet/product_sheet.dart';
@@ -22,7 +23,7 @@ import '../../../core/utils/error_text.dart';
 import '../../shared_widgets/load_error_row.dart';
 import '../../../core/utils/price_format.dart';
 import '../order_success_screen/order_success_screen.dart';
-import '../payment_method_sheet/payment_method_sheet.dart';
+import '../../payment/payment_method_sheet/payment_method_sheet.dart';
 import 'cart_checkout_controller.dart';
 import 'widgets/cart_line_tile.dart';
 
@@ -476,7 +477,7 @@ class _PaymentRow extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final card = ref.watch(checkoutCardProvider);
+    final card = ref.watch(paymentCardProvider);
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         DSSpacing.base,

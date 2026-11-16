@@ -8,11 +8,10 @@ import '../../../../design_system/ds_extensions.dart';
 import '../../../../domain/state/wallet_state.dart';
 import '../../../../l10n/generated/app_localizations.dart';
 import '../../../wallet/wallet_balance_sheet/wallet_balance_sheet.dart';
+import '../../../wallet/wallet_top_up_sheet/wallet_top_up_sheet.dart';
 
 /// Home's wallet (handoff `Wallet`): the balance and the way to top it up.
 /// Opens what the balance is made of.
-///
-/// Topping up is not built yet: its button is shown and takes no taps.
 ///
 /// Takes no room for a guest, without a wallet, while it loads, or when it
 /// fails to load.
@@ -81,13 +80,12 @@ class WalletBlock extends ConsumerWidget {
                 ),
               ),
               const SizedBox(width: DSSpacing.md),
-              // TODO: topping up the wallet.
               DSButton(
                 label: l10n.walletTopUp,
                 icon: PhosphorIcons.plus(),
                 size: DSButtonSize.xs,
                 pill: true,
-                onPressed: null,
+                onPressed: () => showWalletTopUp(context),
               ),
             ],
           ),

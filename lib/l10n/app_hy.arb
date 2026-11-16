@@ -93,6 +93,12 @@
   "walletGiftsTotal": "ընդամենը {amount}",
   "walletExpiring": "Ժամկետանց դարձող մաս",
   "walletExpires": "Ուժի մեջ է մինչև {date}",
+  "walletTopUpTitle": "Լիցքավորել դրամապանակը",
+  "walletTopUpAmountHint": "Մուտքագրեք գումարը",
+  "walletTopUpLimits": "{min}-ից մինչև {max}",
+  "walletTopUpUnavailable": "Այս եղանակով վճարումը դեռ հասանելի չէ",
+  "walletTopUpSuccess": "Դրամապանակը հաջողությամբ լիցքավորվել է {amount}-ով",
+  "continueAction": "Շարունակել",
   "productAnythingElse": "Ուրիշ բա՞ն",
   "orderWithTotal": "Պատվիրել · {total}"
 }

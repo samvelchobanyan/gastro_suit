@@ -9,6 +9,7 @@ import '../../../design_system/components/overlays/ds_bottom_sheet.dart';
 import '../../../design_system/ds_extensions.dart';
 import '../../../domain/state/wallet_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
+import '../wallet_top_up_sheet/wallet_top_up_sheet.dart';
 
 /// Opens what the wallet's balance is made of in a sheet.
 Future<void> showWalletBalance(BuildContext context) => showDSBottomSheet<void>(
@@ -24,7 +25,7 @@ Future<void> showWalletBalance(BuildContext context) => showDSBottomSheet<void>(
 /// gives the gifts as one sum and one amount that expires next, so one row
 /// stands in the list's place.
 ///
-/// Topping up is not built yet: its button is shown and takes no taps.
+/// "Top up" closes this sheet and opens topping up.
 class WalletBalanceSheet extends ConsumerWidget {
   const WalletBalanceSheet({super.key});
 
@@ -140,12 +141,16 @@ class WalletBalanceSheet extends ConsumerWidget {
             ),
           ],
           const SizedBox(height: DSSpacing.lg),
-          // TODO: topping up the wallet.
           DSButton(
             label: l10n.walletTopUp,
             size: DSButtonSize.sm,
             fullWidth: true,
-            onPressed: null,
+            onPressed: () {
+              // The page under the sheets outlives this one.
+              final page = Navigator.of(context, rootNavigator: true).context;
+              Navigator.pop(context);
+              showWalletTopUp(page);
+            },
           ),
         ],
       ),

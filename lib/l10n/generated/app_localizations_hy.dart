@@ -322,6 +322,28 @@ class AppLocalizationsHy extends AppLocalizations {
   }
 
   @override
+  String get walletTopUpTitle => 'Լիցքավորել դրամապանակը';
+
+  @override
+  String get walletTopUpAmountHint => 'Մուտքագրեք գումարը';
+
+  @override
+  String walletTopUpLimits(String min, String max) {
+    return '$min-ից մինչև $max';
+  }
+
+  @override
+  String get walletTopUpUnavailable => 'Այս եղանակով վճարումը դեռ հասանելի չէ';
+
+  @override
+  String walletTopUpSuccess(String amount) {
+    return 'Դրամապանակը հաջողությամբ լիցքավորվել է $amount-ով';
+  }
+
+  @override
+  String get continueAction => 'Շարունակել';
+
+  @override
   String get productAnythingElse => 'Ուրիշ բա՞ն';
 
   @override

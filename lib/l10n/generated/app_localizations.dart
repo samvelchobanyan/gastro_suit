@@ -658,6 +658,42 @@ abstract class AppLocalizations {
   /// **'Expires {date}'**
   String walletExpires(String date);
 
+  /// Title of the sheet where the user adds money to the wallet
+  ///
+  /// In en, this message translates to:
+  /// **'Top up wallet'**
+  String get walletTopUpTitle;
+
+  /// Top-up sheet: the hint in the empty amount field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter amount'**
+  String get walletTopUpAmountHint;
+
+  /// Top-up sheet: the least and the most that can be added at once, under the amount field
+  ///
+  /// In en, this message translates to:
+  /// **'From {min} to {max}'**
+  String walletTopUpLimits(String min, String max);
+
+  /// Top-up sheet: shown when the payment needs the bank's page, which the app does not open yet
+  ///
+  /// In en, this message translates to:
+  /// **'Paying this way is not available yet'**
+  String get walletTopUpUnavailable;
+
+  /// Success screen after topping up the wallet
+  ///
+  /// In en, this message translates to:
+  /// **'You have successfully topped up your wallet by {amount}'**
+  String walletTopUpSuccess(String amount);
+
+  /// A button that closes a finished step and goes on
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueAction;
+
   /// Product sheet: the title of the rail of products suggested with this one
   ///
   /// In en, this message translates to:

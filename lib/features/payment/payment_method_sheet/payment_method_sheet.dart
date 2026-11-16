@@ -8,10 +8,8 @@ import '../../../design_system/ds_extensions.dart';
 import '../../../domain/state/payment_cards_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../shared_widgets/load_error_row.dart';
-import '../cart_sheet/cart_checkout_controller.dart';
 
-/// Opens the list of ways to pay for the order in a sheet. Choosing one
-/// makes it the checkout's and closes the sheet.
+/// Opens the list of ways to pay in a sheet.
 Future<void> showPaymentMethods(BuildContext context) =>
     showDSBottomSheet<void>(
       context: context,
@@ -19,8 +17,9 @@ Future<void> showPaymentMethods(BuildContext context) =>
       child: const PaymentMethodSheet(),
     );
 
-/// The ways to pay for the order (handoff `PaymentBottomSheet`): the
-/// user's saved cards, then a new card.
+/// The ways to pay (handoff `PaymentBottomSheet`): the user's saved cards,
+/// then a new card. A tapped card becomes the one to pay with
+/// (`paymentCardProvider`) wherever the app pays, and the sheet closes.
 ///
 /// Paying with a new card is not built yet: its row is shown and takes no
 /// taps. The handoff's wallet, loyalty points and voucher are not offered.
@@ -55,7 +54,7 @@ class PaymentMethodSheet extends ConsumerWidget {
                 icon: PhosphorIcons.creditCard(),
                 name: l10n.paymentCard(card.lastDigits),
                 onTap: () {
-                  ref.read(cartCheckoutProvider.notifier).selectCard(card.id);
+                  ref.read(pickedPaymentCardProvider.notifier).pick(card.id);
                   Navigator.pop(context);
                 },
               ),

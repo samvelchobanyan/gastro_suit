@@ -338,8 +338,11 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - In code: `CartCheckoutController.placeOrder` (the cart sheet's controller) places
   the order with the chosen time and tip; when the order comes back awaiting payment,
   it pays it with the chosen card; then the cart is loaded again. The cards are
-  `paymentCardsProvider` (`domain/state/payment_cards_state.dart`); the card the order
-  is paid with is `checkoutCardProvider` next to the controller.
+  `paymentCardsProvider` (`domain/state/payment_cards_state.dart`); the card to pay
+  with is `paymentCardProvider` next to it: the one picked in the ways-to-pay sheet
+  (`features/payment/payment_method_sheet/`), otherwise the default, otherwise the
+  first. The pick is one for the whole app (the cart and the wallet's top-up show the
+  same card) and lasts until the app is restarted.
 - Not built: the bank's page for a new card (it needs a page shown inside the app that
   sees the return to `/orders/payment-callback`), adding and removing cards, spending
   the balance (`walletToSpend`, `POST /loyalty/calculate-redemption`).
@@ -376,5 +379,30 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   `deposit` and `certificate` wallets of `/loyalty/balance`.
 - The tier is the POS's name for it, a string on `LoyaltyCard`.
 - Placing an order reads the loyalty card again.
-- Not built: topping up (`POST /wallet/top-up`; limits in `/config` → `wallet.minTopUp`
-  / `maxTopUp`), the wallet's history, spending the balance on an order.
+- Not built: the wallet's history, spending the balance on an order. Topping up: §19.
+
+## 19. Topping up the wallet — built for a gateway without a page (2026-11-16)
+
+- `POST /wallet/top-up` with `amount` only; no `paymentProvider` is sent, the server
+  pays through its default gateway. Limits: `/config` → `wallet.minTopUp` / `maxTopUp`
+  (`ServerConfig.minTopUp` / `maxTopUp`); the button is off outside them.
+- Checked on the dev server (2026-11-16):
+  - with the default gateway there (`mock-instant`) the answer is `{topUpNumber,
+    success: true}` and the balance has grown at once;
+  - with a gateway that has a page (`mock`) the answer is `{topUpNumber,
+    paymentFormUrl}`, the balance stays, and `GET /wallet/history` keeps the top-up as
+    `pending`;
+  - an amount outside the limits is refused with `topup_amount_invalid` and a text;
+  - **a saved card cannot pay a top-up**: `POST /payments/cards/{bindingId}/pay` answers
+    `order_not_found` for the top-up's number and for the payment's id alike, and the
+    top-up request takes no card. With a real gateway the only way is the bank's page.
+- In code: `WalletRepository.topUp` answers whether the money is in. Done → the wallet is
+  read again and the success screen shown; not done (a page is needed) → a message that
+  paying this way is not available yet; a refusal → the server's text.
+- The sheet shows the card as the design draws it, and the card can be changed, but it
+  is not sent anywhere: the API has nowhere to take it.
+- The success screen shares its frame with the order's (`SuccessView`,
+  `features/shared_widgets/`).
+- A real gateway is the client's to provide; until then this is tried only against the
+  mock. To ask the backend: paying a top-up with a saved card; who closes a top-up left
+  `pending`.

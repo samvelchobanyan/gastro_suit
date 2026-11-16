@@ -321,6 +321,28 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get walletTopUpTitle => 'Top up wallet';
+
+  @override
+  String get walletTopUpAmountHint => 'Enter amount';
+
+  @override
+  String walletTopUpLimits(String min, String max) {
+    return 'From $min to $max';
+  }
+
+  @override
+  String get walletTopUpUnavailable => 'Paying this way is not available yet';
+
+  @override
+  String walletTopUpSuccess(String amount) {
+    return 'You have successfully topped up your wallet by $amount';
+  }
+
+  @override
+  String get continueAction => 'Continue';
+
+  @override
   String get productAnythingElse => 'Anything else?';
 
   @override

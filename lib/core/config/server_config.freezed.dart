@@ -21,7 +21,9 @@ mixin _$ServerConfig {
  String? get defaultBranchId;/// Whether the instance has a loyalty programme. Its blocks and
 /// requests are left out when it has none.
  bool get loyaltyEnabled;/// Whether the instance has a wallet.
- bool get walletEnabled;
+ bool get walletEnabled;/// The least and the most the wallet can be topped up by at once; null
+/// when the instance names no limit.
+ int? get minTopUp; int? get maxTopUp;
 /// Create a copy of ServerConfig
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -32,16 +34,16 @@ $ServerConfigCopyWith<ServerConfig> get copyWith => _$ServerConfigCopyWithImpl<S
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ServerConfig&&(identical(other.defaultLanguage, defaultLanguage) || other.defaultLanguage == defaultLanguage)&&(identical(other.defaultBranchId, defaultBranchId) || other.defaultBranchId == defaultBranchId)&&(identical(other.loyaltyEnabled, loyaltyEnabled) || other.loyaltyEnabled == loyaltyEnabled)&&(identical(other.walletEnabled, walletEnabled) || other.walletEnabled == walletEnabled));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ServerConfig&&(identical(other.defaultLanguage, defaultLanguage) || other.defaultLanguage == defaultLanguage)&&(identical(other.defaultBranchId, defaultBranchId) || other.defaultBranchId == defaultBranchId)&&(identical(other.loyaltyEnabled, loyaltyEnabled) || other.loyaltyEnabled == loyaltyEnabled)&&(identical(other.walletEnabled, walletEnabled) || other.walletEnabled == walletEnabled)&&(identical(other.minTopUp, minTopUp) || other.minTopUp == minTopUp)&&(identical(other.maxTopUp, maxTopUp) || other.maxTopUp == maxTopUp));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,defaultLanguage,defaultBranchId,loyaltyEnabled,walletEnabled);
+int get hashCode => Object.hash(runtimeType,defaultLanguage,defaultBranchId,loyaltyEnabled,walletEnabled,minTopUp,maxTopUp);
 
 @override
 String toString() {
-  return 'ServerConfig(defaultLanguage: $defaultLanguage, defaultBranchId: $defaultBranchId, loyaltyEnabled: $loyaltyEnabled, walletEnabled: $walletEnabled)';
+  return 'ServerConfig(defaultLanguage: $defaultLanguage, defaultBranchId: $defaultBranchId, loyaltyEnabled: $loyaltyEnabled, walletEnabled: $walletEnabled, minTopUp: $minTopUp, maxTopUp: $maxTopUp)';
 }
 
 
@@ -52,7 +54,7 @@ abstract mixin class $ServerConfigCopyWith<$Res>  {
   factory $ServerConfigCopyWith(ServerConfig value, $Res Function(ServerConfig) _then) = _$ServerConfigCopyWithImpl;
 @useResult
 $Res call({
- String defaultLanguage, String? defaultBranchId, bool loyaltyEnabled, bool walletEnabled
+ String defaultLanguage, String? defaultBranchId, bool loyaltyEnabled, bool walletEnabled, int? minTopUp, int? maxTopUp
 });
 
 
@@ -69,13 +71,15 @@ class _$ServerConfigCopyWithImpl<$Res>
 
 /// Create a copy of ServerConfig
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? defaultLanguage = null,Object? defaultBranchId = freezed,Object? loyaltyEnabled = null,Object? walletEnabled = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? defaultLanguage = null,Object? defaultBranchId = freezed,Object? loyaltyEnabled = null,Object? walletEnabled = null,Object? minTopUp = freezed,Object? maxTopUp = freezed,}) {
   return _then(_self.copyWith(
 defaultLanguage: null == defaultLanguage ? _self.defaultLanguage : defaultLanguage // ignore: cast_nullable_to_non_nullable
 as String,defaultBranchId: freezed == defaultBranchId ? _self.defaultBranchId : defaultBranchId // ignore: cast_nullable_to_non_nullable
 as String?,loyaltyEnabled: null == loyaltyEnabled ? _self.loyaltyEnabled : loyaltyEnabled // ignore: cast_nullable_to_non_nullable
 as bool,walletEnabled: null == walletEnabled ? _self.walletEnabled : walletEnabled // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,minTopUp: freezed == minTopUp ? _self.minTopUp : minTopUp // ignore: cast_nullable_to_non_nullable
+as int?,maxTopUp: freezed == maxTopUp ? _self.maxTopUp : maxTopUp // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 
@@ -160,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String defaultLanguage,  String? defaultBranchId,  bool loyaltyEnabled,  bool walletEnabled)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String defaultLanguage,  String? defaultBranchId,  bool loyaltyEnabled,  bool walletEnabled,  int? minTopUp,  int? maxTopUp)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ServerConfig() when $default != null:
-return $default(_that.defaultLanguage,_that.defaultBranchId,_that.loyaltyEnabled,_that.walletEnabled);case _:
+return $default(_that.defaultLanguage,_that.defaultBranchId,_that.loyaltyEnabled,_that.walletEnabled,_that.minTopUp,_that.maxTopUp);case _:
   return orElse();
 
 }
@@ -181,10 +185,10 @@ return $default(_that.defaultLanguage,_that.defaultBranchId,_that.loyaltyEnabled
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String defaultLanguage,  String? defaultBranchId,  bool loyaltyEnabled,  bool walletEnabled)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String defaultLanguage,  String? defaultBranchId,  bool loyaltyEnabled,  bool walletEnabled,  int? minTopUp,  int? maxTopUp)  $default,) {final _that = this;
 switch (_that) {
 case _ServerConfig():
-return $default(_that.defaultLanguage,_that.defaultBranchId,_that.loyaltyEnabled,_that.walletEnabled);case _:
+return $default(_that.defaultLanguage,_that.defaultBranchId,_that.loyaltyEnabled,_that.walletEnabled,_that.minTopUp,_that.maxTopUp);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +205,10 @@ return $default(_that.defaultLanguage,_that.defaultBranchId,_that.loyaltyEnabled
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String defaultLanguage,  String? defaultBranchId,  bool loyaltyEnabled,  bool walletEnabled)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String defaultLanguage,  String? defaultBranchId,  bool loyaltyEnabled,  bool walletEnabled,  int? minTopUp,  int? maxTopUp)?  $default,) {final _that = this;
 switch (_that) {
 case _ServerConfig() when $default != null:
-return $default(_that.defaultLanguage,_that.defaultBranchId,_that.loyaltyEnabled,_that.walletEnabled);case _:
+return $default(_that.defaultLanguage,_that.defaultBranchId,_that.loyaltyEnabled,_that.walletEnabled,_that.minTopUp,_that.maxTopUp);case _:
   return null;
 
 }
@@ -216,7 +220,7 @@ return $default(_that.defaultLanguage,_that.defaultBranchId,_that.loyaltyEnabled
 
 
 class _ServerConfig implements ServerConfig {
-  const _ServerConfig({required this.defaultLanguage, this.defaultBranchId, this.loyaltyEnabled = false, this.walletEnabled = false});
+  const _ServerConfig({required this.defaultLanguage, this.defaultBranchId, this.loyaltyEnabled = false, this.walletEnabled = false, this.minTopUp, this.maxTopUp});
   
 
 /// The language content falls back to when a text has no translation in
@@ -230,6 +234,10 @@ class _ServerConfig implements ServerConfig {
 @override@JsonKey() final  bool loyaltyEnabled;
 /// Whether the instance has a wallet.
 @override@JsonKey() final  bool walletEnabled;
+/// The least and the most the wallet can be topped up by at once; null
+/// when the instance names no limit.
+@override final  int? minTopUp;
+@override final  int? maxTopUp;
 
 /// Create a copy of ServerConfig
 /// with the given fields replaced by the non-null parameter values.
@@ -241,16 +249,16 @@ _$ServerConfigCopyWith<_ServerConfig> get copyWith => __$ServerConfigCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ServerConfig&&(identical(other.defaultLanguage, defaultLanguage) || other.defaultLanguage == defaultLanguage)&&(identical(other.defaultBranchId, defaultBranchId) || other.defaultBranchId == defaultBranchId)&&(identical(other.loyaltyEnabled, loyaltyEnabled) || other.loyaltyEnabled == loyaltyEnabled)&&(identical(other.walletEnabled, walletEnabled) || other.walletEnabled == walletEnabled));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ServerConfig&&(identical(other.defaultLanguage, defaultLanguage) || other.defaultLanguage == defaultLanguage)&&(identical(other.defaultBranchId, defaultBranchId) || other.defaultBranchId == defaultBranchId)&&(identical(other.loyaltyEnabled, loyaltyEnabled) || other.loyaltyEnabled == loyaltyEnabled)&&(identical(other.walletEnabled, walletEnabled) || other.walletEnabled == walletEnabled)&&(identical(other.minTopUp, minTopUp) || other.minTopUp == minTopUp)&&(identical(other.maxTopUp, maxTopUp) || other.maxTopUp == maxTopUp));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,defaultLanguage,defaultBranchId,loyaltyEnabled,walletEnabled);
+int get hashCode => Object.hash(runtimeType,defaultLanguage,defaultBranchId,loyaltyEnabled,walletEnabled,minTopUp,maxTopUp);
 
 @override
 String toString() {
-  return 'ServerConfig(defaultLanguage: $defaultLanguage, defaultBranchId: $defaultBranchId, loyaltyEnabled: $loyaltyEnabled, walletEnabled: $walletEnabled)';
+  return 'ServerConfig(defaultLanguage: $defaultLanguage, defaultBranchId: $defaultBranchId, loyaltyEnabled: $loyaltyEnabled, walletEnabled: $walletEnabled, minTopUp: $minTopUp, maxTopUp: $maxTopUp)';
 }
 
 
@@ -261,7 +269,7 @@ abstract mixin class _$ServerConfigCopyWith<$Res> implements $ServerConfigCopyWi
   factory _$ServerConfigCopyWith(_ServerConfig value, $Res Function(_ServerConfig) _then) = __$ServerConfigCopyWithImpl;
 @override @useResult
 $Res call({
- String defaultLanguage, String? defaultBranchId, bool loyaltyEnabled, bool walletEnabled
+ String defaultLanguage, String? defaultBranchId, bool loyaltyEnabled, bool walletEnabled, int? minTopUp, int? maxTopUp
 });
 
 
@@ -278,13 +286,15 @@ class __$ServerConfigCopyWithImpl<$Res>
 
 /// Create a copy of ServerConfig
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? defaultLanguage = null,Object? defaultBranchId = freezed,Object? loyaltyEnabled = null,Object? walletEnabled = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? defaultLanguage = null,Object? defaultBranchId = freezed,Object? loyaltyEnabled = null,Object? walletEnabled = null,Object? minTopUp = freezed,Object? maxTopUp = freezed,}) {
   return _then(_ServerConfig(
 defaultLanguage: null == defaultLanguage ? _self.defaultLanguage : defaultLanguage // ignore: cast_nullable_to_non_nullable
 as String,defaultBranchId: freezed == defaultBranchId ? _self.defaultBranchId : defaultBranchId // ignore: cast_nullable_to_non_nullable
 as String?,loyaltyEnabled: null == loyaltyEnabled ? _self.loyaltyEnabled : loyaltyEnabled // ignore: cast_nullable_to_non_nullable
 as bool,walletEnabled: null == walletEnabled ? _self.walletEnabled : walletEnabled // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,minTopUp: freezed == minTopUp ? _self.minTopUp : minTopUp // ignore: cast_nullable_to_non_nullable
+as int?,maxTopUp: freezed == maxTopUp ? _self.maxTopUp : maxTopUp // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 

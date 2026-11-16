@@ -79,4 +79,16 @@ void main() {
     expect(bare.loyaltyEnabled, isFalse);
     expect(bare.walletEnabled, isFalse);
   });
+
+  test('the instance says how much a top-up can be', () {
+    final config = ServerConfigDto.fromJson({
+      'wallet': {'minTopUp': 500, 'maxTopUp': 500000},
+    }).toDomain();
+    expect(config.minTopUp, 500);
+    expect(config.maxTopUp, 500000);
+
+    final bare = ServerConfigDto.fromJson({}).toDomain();
+    expect(bare.minTopUp, isNull);
+    expect(bare.maxTopUp, isNull);
+  });
 }

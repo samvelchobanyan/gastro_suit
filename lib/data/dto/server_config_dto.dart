@@ -7,7 +7,12 @@ part 'server_config_dto.g.dart';
 /// `GET /config` (`ConfigResponse`). Only the fields the app reads.
 @JsonSerializable(createToJson: false)
 class ServerConfigDto {
-  const ServerConfigDto({this.defaultBranchId, this.languages, this.modules});
+  const ServerConfigDto({
+    this.defaultBranchId,
+    this.languages,
+    this.modules,
+    this.wallet,
+  });
 
   factory ServerConfigDto.fromJson(Map<String, dynamic> json) =>
       _$ServerConfigDtoFromJson(json);
@@ -15,6 +20,7 @@ class ServerConfigDto {
   final String? defaultBranchId;
   final ConfigLanguagesDto? languages;
   final ConfigModulesDto? modules;
+  final ConfigWalletDto? wallet;
 
   /// English when the instance names no default language: the app's own
   /// fallback, as the UI does.
@@ -24,7 +30,21 @@ class ServerConfigDto {
     // A module the instance does not name is off.
     loyaltyEnabled: modules?.loyalty ?? false,
     walletEnabled: modules?.wallet ?? false,
+    minTopUp: wallet?.minTopUp?.round(),
+    maxTopUp: wallet?.maxTopUp?.round(),
   );
+}
+
+/// `wallet`: the limits of a top-up.
+@JsonSerializable(createToJson: false)
+class ConfigWalletDto {
+  const ConfigWalletDto({this.minTopUp, this.maxTopUp});
+
+  factory ConfigWalletDto.fromJson(Map<String, dynamic> json) =>
+      _$ConfigWalletDtoFromJson(json);
+
+  final num? minTopUp;
+  final num? maxTopUp;
 }
 
 /// `modules`: the parts of the product the instance has switched on.

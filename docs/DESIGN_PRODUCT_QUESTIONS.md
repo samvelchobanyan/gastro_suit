@@ -242,5 +242,8 @@ wallet's balance. Drawn in the design and left out, or changed, for want of data
 - **The card's code where the cashier scans it** is drawn light on dark. Built dark on a
   light plate: not every scanner reads a code with its colours swapped. The small code
   on Home's card is light on dark as drawn. To confirm with the designer.
-- **Topping up** is the next stage: its buttons are shown and take no taps.
+- **Topping up** is built as drawn, with two additions: the limits of the amount under
+  its field ("From ֏500 to ֏500,000"), and a message when the payment needs the bank's
+  page. The card row is shown, but a top-up cannot be paid with a saved card through
+  the API yet (`IMPLEMENTATION_NOTES.md` §19).
 - **A guest** sees neither block; the design does not draw Home for a guest.
