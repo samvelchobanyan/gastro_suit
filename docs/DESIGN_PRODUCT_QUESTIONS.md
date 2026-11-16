@@ -73,6 +73,16 @@ screen is not needed; to confirm with the designer.
 The success screen after placing an order has a "Track" action, but there is no screen
 for an order and its status (the PRD has "order & status").
 
+Built (2026-11-16): Home's "Order status" block, as drawn, with its four steps. Left
+open by the design, to discuss with the designer:
+- The API has more statuses than the four steps. An order that awaits payment, whose
+  payment failed, or that was cancelled has no block; a cancelled order's block just
+  disappears, though the user has paid and is refunded.
+- Several orders on their way: one card each, newest first (the design draws one).
+- The number is the till's short one (`posNumber`), shown as soon as it exists; before
+  that the place is empty.
+- The block cannot be tapped: there is no screen of an order to open.
+
 ### 9. Viewing an order with several products
 History shows one product per row. There is no way to open an order and see all its
 products, the pickup branch and time, and the amounts.
@@ -178,7 +188,7 @@ the product owner answer:
   sheet's place as a screen of its own (the design draws it inside the sheet). A
   refused order leaves the cart as it was, with the reason over the button.
 - "Track order" on the success screen closes it and opens the Home tab, as in the
-  design, where the order's status is shown. That status block is the next stage (§8).
+  design, where the order's status is shown (§8).
 - An order left unpaid (a declined card) stays on the server as it is; the next order
   is a new one.
 - An empty cart (and a guest's): "Your basket is empty" under the order title, with

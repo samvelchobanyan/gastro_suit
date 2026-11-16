@@ -245,6 +245,31 @@ class AppLocalizationsRu extends AppLocalizations {
   String get orderTrack => 'Отследить заказ';
 
   @override
+  String get orderStatusTitle => 'Статус заказа';
+
+  @override
+  String orderStatusPickup(String time) {
+    return 'Самовывоз · $time';
+  }
+
+  @override
+  String orderStatusNumber(String number) {
+    return '№ $number';
+  }
+
+  @override
+  String get orderStepPlaced => 'Оформлен';
+
+  @override
+  String get orderStepAccepted => 'Принят';
+
+  @override
+  String get orderStepPreparing => 'Готовится';
+
+  @override
+  String get orderStepReady => 'Готов';
+
+  @override
   String get productAnythingElse => 'Что-нибудь ещё?';
 
   @override

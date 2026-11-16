@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gastro_suit/core/auth/auth_status.dart';
 import 'package:gastro_suit/core/di/repositories.dart';
 import 'package:gastro_suit/core/locale/content_language.dart';
 import 'package:gastro_suit/core/network/app_exception.dart';
@@ -8,6 +9,7 @@ import 'package:gastro_suit/domain/entities/cart.dart';
 import 'package:gastro_suit/domain/entities/order.dart';
 import 'package:gastro_suit/domain/entities/payment_card.dart';
 import 'package:gastro_suit/domain/state/active_branch_state.dart';
+import 'package:gastro_suit/domain/state/active_orders_state.dart';
 import 'package:gastro_suit/domain/state/cart_state.dart';
 import 'package:gastro_suit/domain/state/payment_cards_state.dart';
 import 'package:gastro_suit/domain/state/server_config_state.dart';
@@ -57,6 +59,7 @@ void main() {
     final container = ProviderContainer(
       overrides: [
         orderRepositoryProvider.overrideWithValue(orders),
+        authStatusProvider.overrideWithValue(AuthStatus.signedIn),
         paymentRepositoryProvider.overrideWithValue(payments),
         paymentCardsProvider.overrideWith((ref) async => cards),
         cartProvider.overrideWith(() => fakeCart),
@@ -119,6 +122,19 @@ void main() {
       // The cart is loaded again: the order has emptied it.
       await container.read(cartProvider.future);
       expect(cart.loads, 2);
+    });
+
+    test('the orders on their way are read again', () async {
+      final (container, orders, _, _) = await setUp();
+      // Home is under the cart sheet, showing them.
+      container.listen(activeOrdersProvider, (_, _) {});
+      await container.read(activeOrdersProvider.future);
+      expect(orders.recentReads, 1);
+
+      await container.read(cartCheckoutProvider.notifier).placeOrder();
+      await container.read(activeOrdersProvider.future);
+
+      expect(orders.recentReads, 2);
     });
 
     test('pays an order left to be paid with the chosen card', () async {

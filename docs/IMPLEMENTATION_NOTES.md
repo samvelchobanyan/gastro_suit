@@ -257,10 +257,14 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 
 ## 13. Order mapping (`OrderResponse` → `Order`) — agreed
 
-- Status: `payment_pending` → awaiting payment; `paid`, `placed`, `accepted` → accepted;
-  `preparing` → preparing; `ready` → ready; `completed` → collected; `cancelled` →
-  cancelled; `payment_failed` → payment failed; anything else → accepted (the Swagger
-  says to show an unknown status as in progress).
+- Status: `payment_pending` → awaiting payment; `paid`, `placed` → placed; `accepted` →
+  accepted; `preparing` → preparing; `ready` → ready; `completed` → collected;
+  `cancelled` → cancelled; `payment_failed` → payment failed; anything else → placed (the
+  Swagger says to show an unknown status as in progress; placed is the first step of
+  that). Placed and accepted are apart since 2026-11-16: Home's order status draws them
+  as two steps. The backend's own table of statuses has no `paid`; it is kept beside
+  `placed`. `cancelled` is also what an order becomes when the same cart is checked out
+  again.
 - Total = `totalToCharge` + `walletSpent` − `walletReturned` (= `itemsTotal` −
   `discount` + `tipAmount`). `walletReturned` is balance released back when the till
   closed the order without taking the balance payment (backend
@@ -270,13 +274,13 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   size (group id starting with `size:`) and add-ons; `itemId` may be null.
 - Not mapped: `paymentStatus`, `paymentProvider` (payment flow, not the order), guest
   contact, `itemsTotal` / `walletSpent` / `totalToCharge` separately,
-  `updatedAt`. Pending a screen: `posNumber` (number called at the till), `scheduledAt`
-  (pickup time).
+  `updatedAt`. `posNumber` (number called at the till) is `Order.number`, `scheduledAt`
+  the pickup time.
 
 - `gatewayOrderId` is not part of `Order` either, but placing an order answers with it
   next to the order while the order awaits payment (`PlacedOrder.paymentReference`):
   paying with a saved card takes it.
-- Built so far (§16): the id, the status, the branch name and the time. The lines and
+- Built so far (§16, §17): the id, the status, the number, the branch name and the time. The lines and
   the amounts are mapped with the screens that show them.
 
 ## 14. Voucher mapping (`GET /loyalty/entitlements` → `Voucher`) — agreed
@@ -338,7 +342,22 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   is paid with is `checkoutCardProvider` next to the controller.
 - Not built: the bank's page for a new card (it needs a page shown inside the app that
   sees the return to `/orders/payment-callback`), adding and removing cards, spending
-  the balance (`walletToSpend`, `POST /loyalty/calculate-redemption`), the order's
-  status on Home.
+  the balance (`walletToSpend`, `POST /loyalty/calculate-redemption`).
 - With `mock-instant` the step that pays with a card never runs on the dev server; it
   is covered by tests only.
+
+## 17. Orders on their way — Home's order status (2026-11-16)
+
+- There is no request for open orders. `OrderRepository.getRecentOrders` reads the first
+  page of the history (`GET /orders?limit=5`, newest first); `activeOrdersProvider`
+  (`domain/state/active_orders_state.dart`) keeps the ones at one of the four steps:
+  placed, accepted, preparing, ready. Empty for a guest, without a request.
+- While the list is not empty it is read again every 30 seconds; a read that fails
+  keeps the list and the following reads. With nothing on its way there are no reads
+  until an order is placed (the checkout reads it again) or Home is pulled to refresh.
+- Home's `OrderStatusBlock` reads the provider itself and takes no room without orders,
+  while loading and on a failure.
+- The dev server moves an order on by itself (placed → preparing in seconds, completed
+  in about 12 minutes), so the block can be watched there.
+- To ask the backend: a request for the open orders alone, or their statuses in one
+  call — the history page carries every order whole, lines included.

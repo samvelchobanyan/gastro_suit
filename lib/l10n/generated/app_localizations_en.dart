@@ -245,6 +245,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get orderTrack => 'Track order';
 
   @override
+  String get orderStatusTitle => 'Order status';
+
+  @override
+  String orderStatusPickup(String time) {
+    return 'Pickup · $time';
+  }
+
+  @override
+  String orderStatusNumber(String number) {
+    return 'No. $number';
+  }
+
+  @override
+  String get orderStepPlaced => 'Placed';
+
+  @override
+  String get orderStepAccepted => 'Accepted';
+
+  @override
+  String get orderStepPreparing => 'In process';
+
+  @override
+  String get orderStepReady => 'Ready';
+
+  @override
   String get productAnythingElse => 'Anything else?';
 
   @override

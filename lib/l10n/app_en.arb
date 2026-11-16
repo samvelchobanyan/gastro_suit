@@ -350,6 +350,46 @@
   "@orderTrack": {
     "description": "Success screen after placing an order: the button that leads to the order's status"
   },
+  "orderStatusTitle": "Order status",
+  "@orderStatusTitle": {
+    "description": "Home, the block of an order on its way: its title"
+  },
+  "orderStatusPickup": "Pickup · {time}",
+  "@orderStatusPickup": {
+    "description": "Home, the block of an order on its way: how and when it is collected, e.g. Pickup · ASAP, Pickup · 18:30",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "ASAP"
+      }
+    }
+  },
+  "orderStatusNumber": "No. {number}",
+  "@orderStatusNumber": {
+    "description": "Home, the block of an order on its way: the number the order is called by at the counter",
+    "placeholders": {
+      "number": {
+        "type": "String",
+        "example": "13631"
+      }
+    }
+  },
+  "orderStepPlaced": "Placed",
+  "@orderStepPlaced": {
+    "description": "Order status, step 1 of 4: the order is paid and sent to the restaurant. Short, one word if possible"
+  },
+  "orderStepAccepted": "Accepted",
+  "@orderStepAccepted": {
+    "description": "Order status, step 2 of 4: the restaurant took the order. Short, one word if possible"
+  },
+  "orderStepPreparing": "In process",
+  "@orderStepPreparing": {
+    "description": "Order status, step 3 of 4: the order is being made. Short"
+  },
+  "orderStepReady": "Ready",
+  "@orderStepReady": {
+    "description": "Order status, step 4 of 4: the order waits at the counter. Short, one word if possible"
+  },
   "productAnythingElse": "Anything else?",
   "@productAnythingElse": {
     "description": "Product sheet: the title of the rail of products suggested with this one"

@@ -5,6 +5,11 @@ part 'order.freezed.dart';
 /// Where an order is, as the user sees it.
 enum OrderStatus {
   awaitingPayment,
+
+  /// Paid and sent to the restaurant.
+  placed,
+
+  /// The restaurant took it.
   accepted,
   preparing,
   ready,
@@ -20,6 +25,10 @@ abstract class Order with _$Order {
   const factory Order({
     required String id,
     required OrderStatus status,
+
+    /// The short number the order is called by at the counter; null until
+    /// the restaurant's till has given it one.
+    String? number,
 
     /// The branch to collect from, in the app's language.
     required String branchName,

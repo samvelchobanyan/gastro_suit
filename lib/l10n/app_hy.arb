@@ -71,6 +71,13 @@
   "orderSuccessBranch": "Ստացման վայր",
   "orderSuccessTime": "Ստացման ժամ",
   "orderTrack": "Հետևել պատվերին",
+  "orderStatusTitle": "Պատվերի կարգավիճակ",
+  "orderStatusPickup": "Ստացում · {time}",
+  "orderStatusNumber": "№ {number}",
+  "orderStepPlaced": "Ձևակերպված",
+  "orderStepAccepted": "Ընդունված",
+  "orderStepPreparing": "Պատրաստվում է",
+  "orderStepReady": "Պատրաստ է",
   "productAnythingElse": "Ուրիշ բա՞ն",
   "orderWithTotal": "Պատվիրել · {total}"
 }

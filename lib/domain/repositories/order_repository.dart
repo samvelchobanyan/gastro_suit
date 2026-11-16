@@ -15,4 +15,8 @@ abstract interface class OrderRepository {
     required int tip,
     required ContentLanguage language,
   });
+
+  /// The user's latest orders, newest first: enough of them to hold every
+  /// order still on its way.
+  Future<List<Order>> getRecentOrders(ContentLanguage language);
 }

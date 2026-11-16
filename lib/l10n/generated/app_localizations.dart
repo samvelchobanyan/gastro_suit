@@ -526,6 +526,48 @@ abstract class AppLocalizations {
   /// **'Track order'**
   String get orderTrack;
 
+  /// Home, the block of an order on its way: its title
+  ///
+  /// In en, this message translates to:
+  /// **'Order status'**
+  String get orderStatusTitle;
+
+  /// Home, the block of an order on its way: how and when it is collected, e.g. Pickup · ASAP, Pickup · 18:30
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup · {time}'**
+  String orderStatusPickup(String time);
+
+  /// Home, the block of an order on its way: the number the order is called by at the counter
+  ///
+  /// In en, this message translates to:
+  /// **'No. {number}'**
+  String orderStatusNumber(String number);
+
+  /// Order status, step 1 of 4: the order is paid and sent to the restaurant. Short, one word if possible
+  ///
+  /// In en, this message translates to:
+  /// **'Placed'**
+  String get orderStepPlaced;
+
+  /// Order status, step 2 of 4: the restaurant took the order. Short, one word if possible
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted'**
+  String get orderStepAccepted;
+
+  /// Order status, step 3 of 4: the order is being made. Short
+  ///
+  /// In en, this message translates to:
+  /// **'In process'**
+  String get orderStepPreparing;
+
+  /// Order status, step 4 of 4: the order waits at the counter. Short, one word if possible
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get orderStepReady;
+
   /// Product sheet: the title of the rail of products suggested with this one
   ///
   /// In en, this message translates to:

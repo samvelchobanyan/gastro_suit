@@ -23,6 +23,7 @@ void main() {
         },
         'totalToCharge': 1500,
         'gatewayOrderId': 'mock-payment-004ce87d',
+        'posNumber': 'GP-2129',
         'items': <Object>[],
       };
 
@@ -32,7 +33,8 @@ void main() {
     }).toDomain(language);
 
     expect(placed.order.id, 'c55e7956');
-    expect(placed.order.status, OrderStatus.accepted);
+    expect(placed.order.status, OrderStatus.placed);
+    expect(placed.order.number, 'GP-2129');
     expect(placed.order.branchName, 'Северный проспект');
     expect(placed.order.scheduledAt, isNull);
     // Paid already: nothing to pay it by.
@@ -59,23 +61,23 @@ void main() {
     expect(time.toUtc(), DateTime.utc(2026, 11, 16, 14, 30));
   });
 
-  test('statuses are told apart; an unknown one is an order in progress', () {
+  test('statuses are told apart; an unknown one is an order just placed', () {
     OrderStatus of(String? status) => OrderDto.fromJson({
       'id': 'o',
       'status': status,
     }).toDomain(language).status;
 
     expect(of('payment_pending'), OrderStatus.awaitingPayment);
-    expect(of('paid'), OrderStatus.accepted);
-    expect(of('placed'), OrderStatus.accepted);
+    expect(of('paid'), OrderStatus.placed);
+    expect(of('placed'), OrderStatus.placed);
     expect(of('accepted'), OrderStatus.accepted);
     expect(of('preparing'), OrderStatus.preparing);
     expect(of('ready'), OrderStatus.ready);
     expect(of('completed'), OrderStatus.collected);
     expect(of('cancelled'), OrderStatus.cancelled);
     expect(of('payment_failed'), OrderStatus.paymentFailed);
-    expect(of('something_new'), OrderStatus.accepted);
-    expect(of(null), OrderStatus.accepted);
+    expect(of('something_new'), OrderStatus.placed);
+    expect(of(null), OrderStatus.placed);
   });
 
   test('a saved card is known by its last digits', () {

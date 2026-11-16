@@ -14,7 +14,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Order {
 
- String get id; OrderStatus get status;/// The branch to collect from, in the app's language.
+ String get id; OrderStatus get status;/// The short number the order is called by at the counter; null until
+/// the restaurant's till has given it one.
+ String? get number;/// The branch to collect from, in the app's language.
  String get branchName;/// When it is wanted for; null for as soon as possible.
  DateTime? get scheduledAt;
 /// Create a copy of Order
@@ -27,16 +29,16 @@ $OrderCopyWith<Order> get copyWith => _$OrderCopyWithImpl<Order>(this as Order, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Order&&(identical(other.id, id) || other.id == id)&&(identical(other.status, status) || other.status == status)&&(identical(other.branchName, branchName) || other.branchName == branchName)&&(identical(other.scheduledAt, scheduledAt) || other.scheduledAt == scheduledAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Order&&(identical(other.id, id) || other.id == id)&&(identical(other.status, status) || other.status == status)&&(identical(other.number, number) || other.number == number)&&(identical(other.branchName, branchName) || other.branchName == branchName)&&(identical(other.scheduledAt, scheduledAt) || other.scheduledAt == scheduledAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,status,branchName,scheduledAt);
+int get hashCode => Object.hash(runtimeType,id,status,number,branchName,scheduledAt);
 
 @override
 String toString() {
-  return 'Order(id: $id, status: $status, branchName: $branchName, scheduledAt: $scheduledAt)';
+  return 'Order(id: $id, status: $status, number: $number, branchName: $branchName, scheduledAt: $scheduledAt)';
 }
 
 
@@ -47,7 +49,7 @@ abstract mixin class $OrderCopyWith<$Res>  {
   factory $OrderCopyWith(Order value, $Res Function(Order) _then) = _$OrderCopyWithImpl;
 @useResult
 $Res call({
- String id, OrderStatus status, String branchName, DateTime? scheduledAt
+ String id, OrderStatus status, String? number, String branchName, DateTime? scheduledAt
 });
 
 
@@ -64,11 +66,12 @@ class _$OrderCopyWithImpl<$Res>
 
 /// Create a copy of Order
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? status = null,Object? branchName = null,Object? scheduledAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? status = null,Object? number = freezed,Object? branchName = null,Object? scheduledAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as OrderStatus,branchName: null == branchName ? _self.branchName : branchName // ignore: cast_nullable_to_non_nullable
+as OrderStatus,number: freezed == number ? _self.number : number // ignore: cast_nullable_to_non_nullable
+as String?,branchName: null == branchName ? _self.branchName : branchName // ignore: cast_nullable_to_non_nullable
 as String,scheduledAt: freezed == scheduledAt ? _self.scheduledAt : scheduledAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
@@ -155,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  OrderStatus status,  String branchName,  DateTime? scheduledAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  OrderStatus status,  String? number,  String branchName,  DateTime? scheduledAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Order() when $default != null:
-return $default(_that.id,_that.status,_that.branchName,_that.scheduledAt);case _:
+return $default(_that.id,_that.status,_that.number,_that.branchName,_that.scheduledAt);case _:
   return orElse();
 
 }
@@ -176,10 +179,10 @@ return $default(_that.id,_that.status,_that.branchName,_that.scheduledAt);case _
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  OrderStatus status,  String branchName,  DateTime? scheduledAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  OrderStatus status,  String? number,  String branchName,  DateTime? scheduledAt)  $default,) {final _that = this;
 switch (_that) {
 case _Order():
-return $default(_that.id,_that.status,_that.branchName,_that.scheduledAt);case _:
+return $default(_that.id,_that.status,_that.number,_that.branchName,_that.scheduledAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +199,10 @@ return $default(_that.id,_that.status,_that.branchName,_that.scheduledAt);case _
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  OrderStatus status,  String branchName,  DateTime? scheduledAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  OrderStatus status,  String? number,  String branchName,  DateTime? scheduledAt)?  $default,) {final _that = this;
 switch (_that) {
 case _Order() when $default != null:
-return $default(_that.id,_that.status,_that.branchName,_that.scheduledAt);case _:
+return $default(_that.id,_that.status,_that.number,_that.branchName,_that.scheduledAt);case _:
   return null;
 
 }
@@ -211,11 +214,14 @@ return $default(_that.id,_that.status,_that.branchName,_that.scheduledAt);case _
 
 
 class _Order implements Order {
-  const _Order({required this.id, required this.status, required this.branchName, this.scheduledAt});
+  const _Order({required this.id, required this.status, this.number, required this.branchName, this.scheduledAt});
   
 
 @override final  String id;
 @override final  OrderStatus status;
+/// The short number the order is called by at the counter; null until
+/// the restaurant's till has given it one.
+@override final  String? number;
 /// The branch to collect from, in the app's language.
 @override final  String branchName;
 /// When it is wanted for; null for as soon as possible.
@@ -231,16 +237,16 @@ _$OrderCopyWith<_Order> get copyWith => __$OrderCopyWithImpl<_Order>(this, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Order&&(identical(other.id, id) || other.id == id)&&(identical(other.status, status) || other.status == status)&&(identical(other.branchName, branchName) || other.branchName == branchName)&&(identical(other.scheduledAt, scheduledAt) || other.scheduledAt == scheduledAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Order&&(identical(other.id, id) || other.id == id)&&(identical(other.status, status) || other.status == status)&&(identical(other.number, number) || other.number == number)&&(identical(other.branchName, branchName) || other.branchName == branchName)&&(identical(other.scheduledAt, scheduledAt) || other.scheduledAt == scheduledAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,status,branchName,scheduledAt);
+int get hashCode => Object.hash(runtimeType,id,status,number,branchName,scheduledAt);
 
 @override
 String toString() {
-  return 'Order(id: $id, status: $status, branchName: $branchName, scheduledAt: $scheduledAt)';
+  return 'Order(id: $id, status: $status, number: $number, branchName: $branchName, scheduledAt: $scheduledAt)';
 }
 
 
@@ -251,7 +257,7 @@ abstract mixin class _$OrderCopyWith<$Res> implements $OrderCopyWith<$Res> {
   factory _$OrderCopyWith(_Order value, $Res Function(_Order) _then) = __$OrderCopyWithImpl;
 @override @useResult
 $Res call({
- String id, OrderStatus status, String branchName, DateTime? scheduledAt
+ String id, OrderStatus status, String? number, String branchName, DateTime? scheduledAt
 });
 
 
@@ -268,11 +274,12 @@ class __$OrderCopyWithImpl<$Res>
 
 /// Create a copy of Order
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? status = null,Object? branchName = null,Object? scheduledAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? status = null,Object? number = freezed,Object? branchName = null,Object? scheduledAt = freezed,}) {
   return _then(_Order(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as OrderStatus,branchName: null == branchName ? _self.branchName : branchName // ignore: cast_nullable_to_non_nullable
+as OrderStatus,number: freezed == number ? _self.number : number // ignore: cast_nullable_to_non_nullable
+as String?,branchName: null == branchName ? _self.branchName : branchName // ignore: cast_nullable_to_non_nullable
 as String,scheduledAt: freezed == scheduledAt ? _self.scheduledAt : scheduledAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));

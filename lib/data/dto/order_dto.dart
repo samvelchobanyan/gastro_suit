@@ -49,6 +49,7 @@ class OrderDto {
     this.scheduledAt,
     this.location,
     this.gatewayOrderId,
+    this.posNumber,
   });
 
   factory OrderDto.fromJson(Map<String, dynamic> json) =>
@@ -64,9 +65,13 @@ class OrderDto {
   /// What paying the order with a saved card takes.
   final String? gatewayOrderId;
 
+  /// The number the order is called by at the counter.
+  final String? posNumber;
+
   Order toDomain(ContentLanguage language) => Order(
     id: id,
     status: _status(status),
+    number: posNumber,
     branchName: localized(
       location?.name,
       language,
@@ -75,15 +80,16 @@ class OrderDto {
     scheduledAt: scheduledAt?.toLocal(),
   );
 
-  /// An unknown status is shown as an order in progress.
+  /// An unknown status is shown as an order just placed.
   static OrderStatus _status(String? status) => switch (status) {
     'payment_pending' => OrderStatus.awaitingPayment,
+    'accepted' => OrderStatus.accepted,
     'preparing' => OrderStatus.preparing,
     'ready' => OrderStatus.ready,
     'completed' => OrderStatus.collected,
     'cancelled' => OrderStatus.cancelled,
     'payment_failed' => OrderStatus.paymentFailed,
-    _ => OrderStatus.accepted,
+    _ => OrderStatus.placed,
   };
 }
 

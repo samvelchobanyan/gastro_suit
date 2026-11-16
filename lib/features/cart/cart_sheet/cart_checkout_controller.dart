@@ -6,6 +6,7 @@ import '../../../core/network/app_exception.dart';
 import '../../../domain/entities/order.dart';
 import '../../../domain/entities/payment_card.dart';
 import '../../../domain/state/active_branch_state.dart';
+import '../../../domain/state/active_orders_state.dart';
 import '../../../domain/state/cart_state.dart';
 import '../../../domain/state/payment_cards_state.dart';
 import '../../../domain/state/server_config_state.dart';
@@ -120,6 +121,7 @@ class CartCheckoutController extends Notifier<CartCheckout> {
           );
     }
     ref.invalidate(cartProvider);
+    ref.invalidate(activeOrdersProvider);
     return order;
   }
 }

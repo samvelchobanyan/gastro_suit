@@ -87,6 +87,9 @@ abstract final class DSSizes {
   /// The picture on a success screen (handoff `PurchaseSuccess`).
   static const double successImage = 110;
 
+  /// The bar over a step of a progress row (Home's order status).
+  static const double stepBarHeight = 4;
+
   /// How much a glass surface blurs what is behind it (`--glass-blur`).
   static const double glassBlur = 16;
 

@@ -141,7 +141,8 @@ with real content (see §7).
   `branchMapHeight` 320 (`MapBottomSheet`);
   `menuCategoryImage` 56 and `menuCategoryItemWidth` 64 (`MenuTabsVertical`);
   `productRailCardWidth` 128 (`ProductVerticalCard`); `badge` 18 (`Badge`);
-  `successImage` 110 (`PurchaseSuccess`).
+  `successImage` 110 (`PurchaseSuccess`); `stepBarHeight` 4 (the bar over a step of
+  Home's order status).
 - `DSElevation`: `card`, `raised`, `overlay`, `sheet` — lists of `BoxShadow`.
 - `DSOpacity`: `disabled` 0.35 — a control that cannot be used now.
 

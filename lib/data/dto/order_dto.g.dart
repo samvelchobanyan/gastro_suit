@@ -28,6 +28,7 @@ OrderDto _$OrderDtoFromJson(Map<String, dynamic> json) => OrderDto(
       ? null
       : OrderLocationDto.fromJson(json['location'] as Map<String, dynamic>),
   gatewayOrderId: json['gatewayOrderId'] as String?,
+  posNumber: json['posNumber'] as String?,
 );
 
 OrderLocationDto _$OrderLocationDtoFromJson(Map<String, dynamic> json) =>

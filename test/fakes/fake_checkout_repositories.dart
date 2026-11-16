@@ -16,6 +16,22 @@ class FakeOrderRepository implements OrderRepository {
   /// Thrown by the next orders when set.
   Object? error;
 
+  /// What [getRecentOrders] answers with; changed to move an order on.
+  var recent = <Order>[];
+
+  /// How many times the recent orders were read.
+  var recentReads = 0;
+
+  /// Thrown by the next reads of the recent orders when set.
+  Object? recentError;
+
+  @override
+  Future<List<Order>> getRecentOrders(ContentLanguage language) async {
+    recentReads++;
+    if (recentError case final error?) throw error;
+    return recent;
+  }
+
   @override
   Future<PlacedOrder> placeOrder({
     required String branchId,

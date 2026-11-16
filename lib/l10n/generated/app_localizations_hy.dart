@@ -245,6 +245,31 @@ class AppLocalizationsHy extends AppLocalizations {
   String get orderTrack => 'Հետևել պատվերին';
 
   @override
+  String get orderStatusTitle => 'Պատվերի կարգավիճակ';
+
+  @override
+  String orderStatusPickup(String time) {
+    return 'Ստացում · $time';
+  }
+
+  @override
+  String orderStatusNumber(String number) {
+    return '№ $number';
+  }
+
+  @override
+  String get orderStepPlaced => 'Ձևակերպված';
+
+  @override
+  String get orderStepAccepted => 'Ընդունված';
+
+  @override
+  String get orderStepPreparing => 'Պատրաստվում է';
+
+  @override
+  String get orderStepReady => 'Պատրաստ է';
+
+  @override
   String get productAnythingElse => 'Ուրիշ բա՞ն';
 
   @override

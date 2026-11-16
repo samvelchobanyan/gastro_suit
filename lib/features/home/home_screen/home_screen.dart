@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../design_system/ds_extensions.dart';
+import '../../../domain/state/active_orders_state.dart';
 import '../../../domain/state/branches_state.dart';
 import 'banners_controller.dart';
 import 'stories_controller.dart';
 import 'widgets/banners_block.dart';
 import 'widgets/home_header.dart';
 import 'widgets/nearest_branches_block.dart';
+import 'widgets/order_status_block.dart';
 import 'widgets/stories_block.dart';
 
 /// The Home tab: one vertical scroll of blocks, top to bottom — header,
-/// stories, banners, nearest branches (loyalty, wallet, vouchers and the
+/// stories, the status of orders on their way, banners, nearest branches (loyalty, wallet, vouchers and the
 /// buy-again / favourites rails later).
 ///
 /// Each block loads, fails and refreshes on its own; this screen only places
@@ -26,6 +28,7 @@ class HomeScreen extends ConsumerWidget {
       await Future.wait<Object>([
         ref.refresh(storiesControllerProvider.future),
         ref.refresh(bannersControllerProvider.future),
+        ref.refresh(activeOrdersProvider.future),
         // Also reads the position again.
         ref.refresh(branchesControllerProvider.future),
       ]);
@@ -48,6 +51,7 @@ class HomeScreen extends ConsumerWidget {
             slivers: [
               SliverToBoxAdapter(child: HomeHeader()),
               SliverToBoxAdapter(child: StoriesBlock()),
+              SliverToBoxAdapter(child: OrderStatusBlock()),
               SliverToBoxAdapter(child: BannersBlock()),
               SliverToBoxAdapter(child: NearestBranchesBlock()),
             ],

@@ -71,6 +71,13 @@
   "orderSuccessBranch": "Где забрать",
   "orderSuccessTime": "Время получения",
   "orderTrack": "Отследить заказ",
+  "orderStatusTitle": "Статус заказа",
+  "orderStatusPickup": "Самовывоз · {time}",
+  "orderStatusNumber": "№ {number}",
+  "orderStepPlaced": "Оформлен",
+  "orderStepAccepted": "Принят",
+  "orderStepPreparing": "Готовится",
+  "orderStepReady": "Готов",
   "productAnythingElse": "Что-нибудь ещё?",
   "orderWithTotal": "Заказать · {total}"
 }
