@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../design_system/components/layout/ds_section_header.dart';
 import '../../../../design_system/ds_extensions.dart';
+import '../../../../domain/state/cart_state.dart';
 import '../../../../domain/state/menu_state.dart';
 import '../../../../l10n/generated/app_localizations.dart';
 import '../../../menu/product_sheet/product_sheet.dart';
@@ -40,12 +41,14 @@ class FeaturedProductsRail extends ConsumerWidget {
           products: featured,
           onTap: (product) =>
               showProduct(context, branchId: branchId, productId: product.id),
+          quantities: ref.watch(cartQuantitiesProvider(branchId)),
           onAdd: (product) => quickAddProduct(
             context,
             ref,
             branchId: branchId,
             product: product,
           ),
+          onRemove: (product) => quickRemoveProduct(context, ref, product),
         ),
         const SizedBox(height: DSSpacing.lg),
       ],

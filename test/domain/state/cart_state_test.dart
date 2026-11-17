@@ -342,4 +342,69 @@ void main() {
     expect(container.read(cartProvider).value?.isEmpty, isTrue);
     expect(container.read(cartProvider).value?.branchId, 'b1');
   });
+
+  test('taking one piece of a product takes it from its last line', () async {
+    final (container, _) = setUp();
+    await container.read(cartProvider.future);
+    final controller = container.read(cartProvider.notifier);
+    const muffin = ProductChoice(
+      productId: 'muffin',
+      productName: 'Muffin',
+      options: [],
+    );
+    final large = latte.copyWith(
+      size: const ChosenSize(id: 'large', name: 'Large'),
+    );
+    await controller.add(branchId: 'b1', choice: latte, quantity: 2);
+    await controller.add(branchId: 'b1', choice: muffin);
+    await controller.add(branchId: 'b1', choice: large, quantity: 2);
+    Map<String, int> quantities() =>
+        container.read(cartQuantitiesProvider('b1'));
+    List<(ProductChoice, int)> lines() => [
+      for (final line in container.read(cartProvider).value!.lines)
+        (line.choice, line.quantity),
+    ];
+    expect(quantities(), {'latte': 4, 'muffin': 1});
+    // The cart is at b1: the menu of another branch counts nothing.
+    expect(container.read(cartQuantitiesProvider('b2')), isEmpty);
+
+    await controller.removeOne('latte');
+    expect(lines(), [(latte, 2), (muffin, 1), (large, 1)]);
+
+    // Its only piece: the line goes.
+    await controller.removeOne('latte');
+    expect(lines(), [(latte, 2), (muffin, 1)]);
+
+    await controller.removeOne('latte');
+    expect(lines(), [(latte, 1), (muffin, 1)]);
+    expect(quantities(), {'latte': 1, 'muffin': 1});
+
+    // Not in the cart: nothing happens.
+    await controller.removeOne('tea');
+    expect(lines(), [(latte, 1), (muffin, 1)]);
+  });
+
+  test('a change is on its way until the server has answered, refused '
+      'or not', () async {
+    final (container, repository) = setUp();
+    await container.read(cartProvider.future);
+    final controller = container.read(cartProvider.notifier);
+    expect(controller.isChanging, isFalse);
+
+    final adding = controller.add(branchId: 'b1', choice: latte);
+    expect(controller.isChanging, isTrue);
+    await adding;
+    expect(controller.isChanging, isFalse);
+
+    final taking = controller.removeOne('latte');
+    expect(controller.isChanging, isTrue);
+    await taking;
+    expect(controller.isChanging, isFalse);
+
+    repository.error = const AppException(AppExceptionKind.server);
+    final refused = controller.add(branchId: 'b1', choice: latte);
+    expect(controller.isChanging, isTrue);
+    await expectLater(refused, throwsA(isA<AppException>()));
+    expect(controller.isChanging, isFalse);
+  });
 }

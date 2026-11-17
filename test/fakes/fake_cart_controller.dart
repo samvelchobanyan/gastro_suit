@@ -11,6 +11,12 @@ class FakeCartController extends CartController {
 
   final Cart? initial;
 
+  /// Set to stand for a change that is on its way to the server.
+  var changing = false;
+
+  @override
+  bool get isChanging => changing;
+
   /// Every add: branch, choice, quantity.
   final added = <(String, ProductChoice, int)>[];
 

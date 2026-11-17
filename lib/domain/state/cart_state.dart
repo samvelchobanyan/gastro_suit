@@ -18,7 +18,25 @@ import 'server_config_state.dart';
 /// Every change goes to the server and puts the cart it answers with in
 /// place of the one held. A change that fails throws its `AppException`
 /// and leaves the cart as it was.
+///
+/// While a change is on its way ([isChanging]) the cart held is not yet
+/// the one that change leaves: a quantity counted from it would be counted
+/// from the old one. The cards and the cart sheet take no taps meanwhile.
 class CartController extends AsyncNotifier<Cart?> {
+  var _changes = 0;
+
+  /// Whether a change of the cart is waiting for the server's answer.
+  bool get isChanging => _changes > 0;
+
+  Future<void> _changing(Future<void> Function() change) async {
+    _changes++;
+    try {
+      await change();
+    } finally {
+      _changes--;
+    }
+  }
+
   @override
   Future<Cart?> build() async {
     // Every watch before the first await.
@@ -42,7 +60,7 @@ class CartController extends AsyncNotifier<Cart?> {
     required String branchId,
     required ProductChoice choice,
     int quantity = 1,
-  }) async {
+  }) => _changing(() async {
     final cart = await ref
         .read(cartRepositoryProvider)
         .addItem(
@@ -56,7 +74,7 @@ class CartController extends AsyncNotifier<Cart?> {
     if (active?.id != branchId) {
       ref.read(branchPickProvider.notifier).pick(branchId);
     }
-  }
+  });
 
   /// Makes [branchId] the active branch and takes the cart along: its
   /// products go to that branch, each at the price there. One the branch
@@ -85,7 +103,7 @@ class CartController extends AsyncNotifier<Cart?> {
   }
 
   /// Sets the quantity of the line [lineId]; 0 removes it.
-  Future<void> setQuantity(String lineId, int quantity) async {
+  Future<void> setQuantity(String lineId, int quantity) => _changing(() async {
     state = AsyncData(
       await ref
           .read(cartRepositoryProvider)
@@ -95,7 +113,7 @@ class CartController extends AsyncNotifier<Cart?> {
             language: await ref.read(contentLanguageProvider.future),
           ),
     );
-  }
+  });
 
   /// Puts [choice] and [quantity] in place of what the line [lineId]
   /// holds. When another line already holds that choice, the two become
@@ -104,7 +122,7 @@ class CartController extends AsyncNotifier<Cart?> {
     String lineId, {
     required ProductChoice choice,
     required int quantity,
-  }) async {
+  }) => _changing(() async {
     state = AsyncData(
       await ref
           .read(cartRepositoryProvider)
@@ -115,9 +133,27 @@ class CartController extends AsyncNotifier<Cart?> {
             language: await ref.read(contentLanguageProvider.future),
           ),
     );
+  });
+
+  /// Takes one piece of [productId] out of the cart: from the last of its
+  /// lines, which goes when that was its only piece. Does nothing when the
+  /// cart holds none.
+  ///
+  /// The server keeps a line that was added or changed last at the end of
+  /// the list, so the last line is the one the user touched last.
+  Future<void> removeOne(String productId) async {
+    final line = state.value?.lines
+        .where((line) => line.choice.productId == productId)
+        .lastOrNull;
+    if (line == null) return;
+    if (line.quantity > 1) {
+      await setQuantity(line.id, line.quantity - 1);
+    } else {
+      await removeLine(line.id);
+    }
   }
 
-  Future<void> removeLine(String lineId) async {
+  Future<void> removeLine(String lineId) => _changing(() async {
     state = AsyncData(
       await ref
           .read(cartRepositoryProvider)
@@ -126,7 +162,7 @@ class CartController extends AsyncNotifier<Cart?> {
             language: await ref.read(contentLanguageProvider.future),
           ),
     );
-  }
+  });
 
   /// Empties the cart. Does nothing when there is none.
   Future<void> clear() async {
@@ -146,3 +182,23 @@ class CartController extends AsyncNotifier<Cart?> {
 final cartProvider = AsyncNotifierProvider<CartController, Cart?>(
   CartController.new,
 );
+
+/// How many pieces of each product the cart holds, by the product's id:
+/// its lines together. For the cards of the menu of [branchId]; empty when
+/// the cart is at another branch.
+final cartQuantitiesProvider = Provider.family<Map<String, int>, String>((
+  ref,
+  branchId,
+) {
+  final cart = ref.watch(cartProvider).value;
+  if (cart == null || cart.branchId != branchId) return const {};
+  final quantities = <String, int>{};
+  for (final line in cart.lines) {
+    quantities.update(
+      line.choice.productId,
+      (sum) => sum + line.quantity,
+      ifAbsent: () => line.quantity,
+    );
+  }
+  return quantities;
+});

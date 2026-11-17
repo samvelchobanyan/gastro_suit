@@ -3,11 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gastro_suit/core/auth/auth_status.dart';
 import 'package:gastro_suit/design_system/components/inputs/ds_chip_tabs.dart';
+import 'package:gastro_suit/design_system/components/inputs/ds_stepper.dart';
 import 'package:gastro_suit/design_system/theme/app_theme.dart';
 import 'package:gastro_suit/design_system/theme/ds_colors.dart';
+import 'package:gastro_suit/domain/entities/cart.dart';
 import 'package:gastro_suit/domain/entities/menu.dart';
 import 'package:gastro_suit/domain/entities/menu_category.dart';
 import 'package:gastro_suit/domain/entities/product.dart';
+import 'package:gastro_suit/domain/entities/product_choice.dart';
 import 'package:gastro_suit/domain/state/cart_state.dart';
 import 'package:gastro_suit/domain/state/menu_state.dart';
 import 'package:gastro_suit/features/menu/menu_block/menu_block.dart';
@@ -65,8 +68,9 @@ void main() {
   Future<FakeCartController> pumpBlock(
     WidgetTester tester, {
     Menu? shown,
+    Cart? cart,
   }) async {
-    final fakeCart = FakeCartController();
+    final fakeCart = FakeCartController(cart);
     tester.view.physicalSize = const Size(360, 640);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
@@ -193,10 +197,14 @@ void main() {
     expect(selectedChip(tester), 'iced');
   });
 
-  testWidgets('the plus adds the product as it is and stays a plus', (
-    tester,
-  ) async {
+  /// The number in the one stepper shown.
+  String stepperValue(WidgetTester tester) =>
+      '${tester.widget<DSStepper>(find.byType(DSStepper)).value}';
+
+  testWidgets('a product without choices: the plus adds it and becomes a '
+      'stepper that adds and takes a piece', (tester) async {
     final cart = await pumpBlock(tester);
+    expect(find.byType(DSStepper), findsNothing);
 
     await tester.tap(find.bySemanticsLabel('Add to cart').first);
     await tester.pumpAndSettle();
@@ -206,54 +214,174 @@ void main() {
     expect(choice.productId, 'sweets-1');
     expect(quantity, 1);
     expect(find.byType(ProductSheet), findsNothing);
-    // One plus per card, as before.
+    // The other card keeps its plus.
+    expect(find.bySemanticsLabel('Add to cart'), findsOneWidget);
+    expect(stepperValue(tester), '1');
+
+    await tester.tap(find.bySemanticsLabel('Increase quantity'));
+    await tester.pumpAndSettle();
+    expect(cart.added, hasLength(2));
+    expect(find.byType(ProductSheet), findsNothing);
+    expect(stepperValue(tester), '2');
+
+    await tester.tap(find.bySemanticsLabel('Decrease quantity'));
+    await tester.pumpAndSettle();
+    expect(stepperValue(tester), '1');
+
+    await tester.tap(find.bySemanticsLabel('Decrease quantity'));
+    await tester.pumpAndSettle();
+    expect(find.byType(DSStepper), findsNothing);
     expect(find.bySemanticsLabel('Add to cart'), findsNWidgets(2));
   });
 
-  testWidgets('the plus opens a product that needs a choice first', (
-    tester,
-  ) async {
-    final cart = await pumpBlock(
-      tester,
-      shown: const Menu(
-        branchId: 'b1',
-        categories: [MenuCategory(id: 'coffee', name: 'Coffee')],
-        products: [
-          Product(
-            id: 'raf',
-            categoryId: 'coffee',
-            name: 'Raf',
-            price: 1650,
-            isAvailable: true,
-            isFeatured: false,
-            sizes: [],
-            optionGroups: [
-              ProductOptionGroup(
-                id: 'milk',
-                name: 'Milk',
-                minSelected: 1,
-                maxSelected: 1,
-                options: [
-                  ProductOption(
-                    id: 'oat',
-                    name: 'Oat milk',
-                    price: 0,
-                    isAvailable: true,
-                    isDefault: false,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
+  group('a product with choices', () {
+    // Everything can be left as it is: the size and the milk have defaults.
+    const latte = Product(
+      id: 'latte',
+      categoryId: 'coffee',
+      name: 'Latte',
+      price: 1200,
+      isAvailable: true,
+      isFeatured: false,
+      sizes: [
+        ProductSize(
+          id: 'small',
+          name: 'Small',
+          price: 1200,
+          isAvailable: true,
+          isDefault: true,
+        ),
+        ProductSize(
+          id: 'large',
+          name: 'Large',
+          price: 1500,
+          isAvailable: true,
+          isDefault: false,
+        ),
+      ],
+      optionGroups: [],
+    );
+    const coffee = Menu(
+      branchId: 'b1',
+      categories: [MenuCategory(id: 'coffee', name: 'Coffee')],
+      products: [latte],
     );
 
-    await tester.tap(find.bySemanticsLabel('Add to cart'));
-    await tester.pumpAndSettle();
+    CartLine line(String id, String productId, String sizeId, int quantity) =>
+        CartLine(
+          id: id,
+          choice: ProductChoice(
+            productId: productId,
+            productName: productId,
+            size: ChosenSize(id: sizeId, name: sizeId),
+            options: const [],
+          ),
+          quantity: quantity,
+          unitPrice: 1000,
+          total: 1000 * quantity,
+          isAvailable: true,
+        );
 
-    expect(cart.added, isEmpty);
-    expect(find.byType(ProductSheet), findsOneWidget);
+    /// Two lattes small, another product, then one latte large.
+    Cart lattes({String branchId = 'b1'}) => Cart(
+      id: 'cart',
+      branchId: branchId,
+      total: 5000,
+      lines: [
+        line('small', 'latte', 'small', 2),
+        line('other', 'raf', 'small', 4),
+        line('large', 'latte', 'large', 1),
+      ],
+    );
+
+    testWidgets('the plus opens it to choose, though it has defaults', (
+      tester,
+    ) async {
+      final cart = await pumpBlock(tester, shown: coffee);
+
+      await tester.tap(find.bySemanticsLabel('Add to cart'));
+      await tester.pumpAndSettle();
+
+      expect(cart.added, isEmpty);
+      expect(find.byType(ProductSheet), findsOneWidget);
+    });
+
+    testWidgets('the stepper counts its lines together, and its plus opens '
+        'it', (tester) async {
+      final cart = await pumpBlock(tester, shown: coffee, cart: lattes());
+      expect(stepperValue(tester), '3');
+
+      await tester.tap(find.bySemanticsLabel('Increase quantity'));
+      await tester.pumpAndSettle();
+
+      expect(cart.added, isEmpty);
+      expect(find.byType(ProductSheet), findsOneWidget);
+    });
+
+    testWidgets('the minus takes a piece from the last of its lines', (
+      tester,
+    ) async {
+      final cart = await pumpBlock(tester, shown: coffee, cart: lattes());
+
+      // The large one was its only piece: the line goes.
+      await tester.tap(find.bySemanticsLabel('Decrease quantity'));
+      await tester.pumpAndSettle();
+      expect(cart.removed, ['large']);
+      expect(cart.quantities, isEmpty);
+      expect(stepperValue(tester), '2');
+
+      // Then the small ones, a piece at a time.
+      await tester.tap(find.bySemanticsLabel('Decrease quantity'));
+      await tester.pumpAndSettle();
+      expect(cart.quantities, [('small', 1)]);
+      expect(stepperValue(tester), '1');
+
+      await tester.tap(find.bySemanticsLabel('Decrease quantity'));
+      await tester.pumpAndSettle();
+      expect(cart.removed, ['large', 'small']);
+      expect(find.byType(DSStepper), findsNothing);
+      // The other product's line was never touched.
+      expect(cart.state.value!.lines.single.id, 'other');
+    });
+
+    testWidgets('takes no taps while the cart is being changed', (
+      tester,
+    ) async {
+      final cart = await pumpBlock(tester, shown: coffee, cart: lattes());
+      cart.changing = true;
+
+      await tester.tap(find.bySemanticsLabel('Decrease quantity'));
+      await tester.pumpAndSettle();
+      expect(cart.removed, isEmpty);
+      expect(stepperValue(tester), '3');
+
+      cart.changing = false;
+      await tester.tap(find.bySemanticsLabel('Decrease quantity'));
+      await tester.pumpAndSettle();
+      expect(cart.removed, ['large']);
+    });
+
+    testWidgets('a cart at another branch is not counted', (tester) async {
+      await pumpBlock(
+        tester,
+        shown: coffee,
+        cart: lattes(branchId: 'b2'),
+      );
+
+      expect(find.byType(DSStepper), findsNothing);
+      expect(find.bySemanticsLabel('Add to cart'), findsOneWidget);
+    });
+
+    testWidgets('one the branch has stopped shows neither', (tester) async {
+      await pumpBlock(
+        tester,
+        shown: coffee.copyWith(products: [latte.copyWith(isAvailable: false)]),
+        cart: lattes(),
+      );
+
+      expect(find.byType(DSStepper), findsNothing);
+      expect(find.bySemanticsLabel('Add to cart'), findsNothing);
+    });
   });
 
   testWidgets('a tap on a product opens it', (tester) async {

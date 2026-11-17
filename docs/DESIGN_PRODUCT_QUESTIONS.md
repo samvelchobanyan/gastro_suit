@@ -11,20 +11,29 @@ one.
 
 ---
 
-### 1. Quick "+" on a product that needs a choice — decided
-Decided (2026-11-12): the card's "+" adds the default choice (default size, pre-selected
-options) without opening the product. When a required group cannot be filled by defaults
-(none is marked, or the marked one has run out), "+" opens the product screen instead.
-Tapping the card itself always opens the product screen.
+### 1. "+" on a product with choices — decided
+Decided with the designers (2026-11-17): on a product with choices (sizes or add-ons,
+required or not) the card's "+" opens the product screen, and the user chooses there. On
+a product without choices "+" adds one piece. The same holds for the plus of the card's
+stepper (§2). Tapping the card itself always opens the product screen.
+Replaces the decision of 2026-11-12 ("+" added the default choice without opening the
+product).
 
 ### 2. The card's stepper with several lines of one product — decided
-Decided (2026-11-13): the card shows no stepper. The "+" stays a "+" after adding; what
-the cart holds is seen in the cart, and quantities are changed in the product sheet
-before adding and in the cart. The cart may hold several lines of one product (a small
-and a large latte), so a stepper on the card had no single line to count or to take
-from.
-Left for the designer: a count next to the "+" (the product's total across its lines,
-display only) as feedback on the card itself.
+Decided with the designers (2026-11-17): once the cart holds a product, its card shows a
+stepper in place of the "+".
+- The number is the product's pieces across all its lines (a small latte ×2 and a large
+  one ×1 show 3). It is shown only; it cannot be typed.
+- Plus: as the card's "+" (§1) — adds a piece of a product without choices, opens the
+  product screen of one with choices.
+- Minus: takes one piece from the last of the product's lines in the cart; the line goes
+  when that was its only piece. "Last" is the line added or changed last, so after the
+  quantity of an older line is changed in the cart, the minus takes from that one.
+- A product the branch has stopped shows neither the "+" nor the stepper, even while
+  the cart holds it; it is removed in the cart.
+- The number changes when the server has answered. A tap made before that is not
+  taken.
+Replaces the decision of 2026-11-13 (no stepper on the card).
 
 ### 3. Unavailable cart lines
 A line becomes unavailable (stop-list, an option ran out, another branch). An order is

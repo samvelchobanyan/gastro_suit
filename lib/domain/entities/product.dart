@@ -32,6 +32,10 @@ abstract class Product with _$Product {
 
   const Product._();
 
+  /// Whether ordering it takes a choice: it has sizes or add-ons, required
+  /// or not. The cart may then hold several lines of it.
+  bool get hasChoices => sizes.isNotEmpty || optionGroups.isNotEmpty;
+
   /// The size chosen until the user picks another: the default one, or the
   /// first the branch still has when the default has run out. Null without
   /// [sizes] or when every size has run out.

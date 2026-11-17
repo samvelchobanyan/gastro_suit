@@ -14,14 +14,20 @@ class ProductCardsRail extends StatelessWidget {
     super.key,
     required this.products,
     required this.onTap,
+    required this.quantities,
     required this.onAdd,
+    required this.onRemove,
   });
 
   final List<Product> products;
   final ValueChanged<Product> onTap;
 
-  /// The plus on a card's photo.
+  /// How many pieces of a product the cart holds, by the product's id.
+  final Map<String, int> quantities;
+
+  /// The plus and the minus on a card's photo.
   final ValueChanged<Product> onAdd;
+  final ValueChanged<Product> onRemove;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +46,9 @@ class ProductCardsRail extends StatelessWidget {
           child: ProductCard(
             product: products[i],
             onTap: () => onTap(products[i]),
+            quantity: quantities[products[i].id] ?? 0,
             onAdd: () => onAdd(products[i]),
+            onRemove: () => onRemove(products[i]),
           ),
         ),
       ),

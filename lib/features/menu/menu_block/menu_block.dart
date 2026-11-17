@@ -9,6 +9,7 @@ import '../../../design_system/ds_extensions.dart';
 import '../../../domain/entities/menu.dart';
 import '../../../domain/entities/menu_category.dart';
 import '../../../domain/entities/product.dart';
+import '../../../domain/state/cart_state.dart';
 import '../../../domain/state/menu_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../shared_widgets/load_error_row.dart';
@@ -301,6 +302,7 @@ class _ProductGrid extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textScaler = MediaQuery.textScalerOf(context);
+    final inCart = ref.watch(cartQuantitiesProvider(branchId));
     return SliverPadding(
       padding: const EdgeInsets.fromLTRB(
         DSLayout.margin,
@@ -328,12 +330,14 @@ class _ProductGrid extends ConsumerWidget {
                 branchId: branchId,
                 productId: products[i].id,
               ),
+              quantity: inCart[products[i].id] ?? 0,
               onAdd: () => quickAddProduct(
                 context,
                 ref,
                 branchId: branchId,
                 product: products[i],
               ),
+              onRemove: () => quickRemoveProduct(context, ref, products[i]),
             ),
           );
         },

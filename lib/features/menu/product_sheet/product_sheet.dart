@@ -44,23 +44,29 @@ Future<void> showProduct(
   ),
 );
 
-/// The plus on a product's card: adds the product to the cart as its sheet
-/// would open it (the default size, the pre-selected options, one piece).
-/// When that cannot be added as it is (a required group has nothing
-/// chosen), the sheet is opened for the user to choose.
+/// The plus on a product's card, alone or in its stepper. A product
+/// without choices gets one more piece in the cart. One with choices (sizes
+/// or add-ons) is opened in its sheet for the user to choose: the cart may
+/// hold several lines of it, and a plus cannot tell which one is meant.
 ///
-/// A failed add is said in a snack bar: the card has no place for it.
+/// A tap while another change of the cart is on its way is not taken, as
+/// in the cart sheet. A failed add is said in a snack bar: the card has no
+/// place for it.
 Future<void> quickAddProduct(
   BuildContext context,
   WidgetRef ref, {
   required String branchId,
   required Product product,
 }) async {
-  final provider = productSelectionProvider((product: product, editing: null));
-  if (!ref.read(provider).isComplete) {
+  if (product.hasChoices) {
     return showProduct(context, branchId: branchId, productId: product.id);
   }
-  final choice = ref.read(provider.notifier).choice;
+  if (ref.read(cartProvider.notifier).isChanging) return;
+  final choice = ref
+      .read(
+        productSelectionProvider((product: product, editing: null)).notifier,
+      )
+      .choice;
   if (!await ensureSignedIn(context, ref)) return;
   if (!context.mounted) return;
   if (!await confirmReplaceCart(context, ref, branchId: branchId)) return;
@@ -68,6 +74,29 @@ Future<void> quickAddProduct(
     await ref
         .read(cartProvider.notifier)
         .add(branchId: branchId, choice: choice);
+  } on AppException catch (error) {
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(errorText(context, error))));
+  }
+}
+
+/// The minus in a product card's stepper: one piece less of the product in
+/// the cart, taken from the last of its lines.
+///
+/// A tap while another change of the cart is on its way is not taken: the
+/// piece would be counted from the cart as it was before that change. A
+/// failed change is said in a snack bar, as a failed add is.
+Future<void> quickRemoveProduct(
+  BuildContext context,
+  WidgetRef ref,
+  Product product,
+) async {
+  final cart = ref.read(cartProvider.notifier);
+  if (cart.isChanging) return;
+  try {
+    await cart.removeOne(product.id);
   } on AppException catch (error) {
     if (!context.mounted) return;
     ScaffoldMessenger.of(

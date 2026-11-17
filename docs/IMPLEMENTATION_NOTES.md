@@ -406,3 +406,21 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - A real gateway is the client's to provide; until then this is tried only against the
   mock. To ask the backend: paying a top-up with a saved card; who closes a top-up left
   `pending`.
+
+## 20. The card's stepper — the minus relies on the order of the cart's lines (2026-11-17)
+
+- The rules are in `DESIGN_PRODUCT_QUESTIONS.md` §1–2. In code: `Product.hasChoices`,
+  `CartController.removeOne`, `cartQuantitiesProvider`, `quickAddProduct` /
+  `quickRemoveProduct`, `ProductCartControl` on both cards.
+- A cart line has no time of adding and no position. Checked on the dev server
+  (2026-11-17): `GET /cart` lists a new line last, and a line whose quantity was changed
+  moves to the end too; adding a product without choices again grows its one line. The
+  minus takes from the product's last line in that list.
+- This order is not described in the API. To ask the backend: either promise it, or give
+  each line the time it was added.
+- While a change of the cart waits for the server's answer
+  (`CartController.isChanging`), the cards take no taps, as the cart sheet's lines do
+  not (`_changing` there): a second tap would be counted from the cart as it was
+  before the first came back. The tap is dropped without a sign. Agreed as the simple
+  way for now; the other way is a number that changes at once with the changes sent in
+  turn.

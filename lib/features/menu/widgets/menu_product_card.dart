@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../design_system/components/buttons/ds_icon_button.dart';
 import '../../../design_system/ds_extensions.dart';
 import '../../../domain/entities/product.dart';
-import '../../../l10n/generated/app_localizations.dart';
 import '../../../core/utils/price_format.dart';
 import '../../shared_widgets/product_card.dart';
 
@@ -18,16 +16,22 @@ class MenuProductCard extends StatelessWidget {
     super.key,
     required this.product,
     this.onTap,
+    this.quantity = 0,
     this.onAdd,
+    this.onRemove,
   });
 
   final Product product;
   final VoidCallback? onTap;
 
-  /// With a handler the photo carries a plus that adds the product to the
-  /// cart. The plus stays a plus: what the cart holds is seen in the cart.
-  /// A product the branch has stopped never shows it.
+  /// How many pieces of the product the cart holds.
+  final int quantity;
+
+  /// With a handler the photo carries the way to the cart
+  /// (`ProductCartControl`). A product the branch has stopped never shows
+  /// it.
   final VoidCallback? onAdd;
+  final VoidCallback? onRemove;
 
   /// The height of a card [width] wide: its square photo and two lines of
   /// text with their padding, at the user's text size.
@@ -37,7 +41,6 @@ class MenuProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final l10n = AppLocalizations.of(context);
     final onAdd = product.isAvailable ? this.onAdd : null;
 
     final card = Column(
@@ -50,12 +53,11 @@ class MenuProductCard extends StatelessWidget {
               PositionedDirectional(
                 end: DSSpacing.sm,
                 bottom: DSSpacing.sm,
-                child: DSIconButton(
-                  icon: PhosphorIcons.plus(),
-                  semanticLabel: l10n.addToCart,
-                  variant: DSIconButtonVariant.filled,
-                  size: DSIconButtonSize.xs,
-                  onPressed: onAdd,
+                child: ProductCartControl(
+                  quantity: quantity,
+                  plusSize: DSIconButtonSize.xs,
+                  onAdd: onAdd,
+                  onRemove: onRemove,
                 ),
               ),
           ],
