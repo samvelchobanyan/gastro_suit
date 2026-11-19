@@ -10,10 +10,19 @@ class AuthRepositoryImpl implements AuthRepository {
   final TokenStorage _tokens;
 
   @override
-  Future<void> login({required String login, required String password}) async {
+  Future<void> requestCode(String phone) async {
+    await _api.post('/auth/request-otp', data: {'phone': phone}, public: true);
+  }
+
+  @override
+  Future<void> signInWithCode({
+    required String phone,
+    required String code,
+    required String restaurantId,
+  }) async {
     final json = await _api.post(
-      '/auth/login',
-      data: {'login': login, 'password': password},
+      '/auth/verify-otp',
+      data: {'phone': phone, 'code': code, 'restaurantId': restaurantId},
       public: true,
     );
     final tokens = tokenPairFromJson(json);

@@ -1,4 +1,5 @@
 import '../../core/locale/content_language.dart';
+import '../entities/buy_again.dart';
 import '../entities/order.dart';
 
 /// The signed-in user's orders. Throws only `AppException`.
@@ -19,4 +20,17 @@ abstract interface class OrderRepository {
   /// The user's latest orders, newest first: enough of them to hold every
   /// order still on its way.
   Future<List<Order>> getRecentOrders(ContentLanguage language);
+
+  /// One page of all the user's orders, newest first; pages count from 1.
+  Future<OrderPage> getOrders({
+    required int page,
+    required ContentLanguage language,
+  });
+
+  /// One order, as it stands now.
+  Future<Order> getOrder(String id, ContentLanguage language);
+
+  /// What the user ordered before, newest first: each product as it was
+  /// chosen, once per branch it was ordered from.
+  Future<List<BuyAgainItem>> getBuyAgain(ContentLanguage language);
 }

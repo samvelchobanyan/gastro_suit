@@ -31,7 +31,7 @@ class CartBar extends ConsumerWidget {
         (textScaler.scale(label.fontSize!) * label.height!).ceilToDouble() +
         DSSpacing.xs +
         DSSizes.inputHeightCompact +
-        DSSpacing.base;
+        DSSpacing.md;
   }
 
   @override
@@ -46,7 +46,7 @@ class CartBar extends ConsumerWidget {
         DSSpacing.base,
         0,
         DSSpacing.base,
-        DSSpacing.base,
+        DSSpacing.md,
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(DSRadius.md),

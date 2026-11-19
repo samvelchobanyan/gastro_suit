@@ -1,7 +1,9 @@
 import '../../core/network/api_client.dart';
 import '../../core/network/app_exception.dart';
 import '../../domain/entities/wallet.dart';
+import '../../domain/entities/wallet_movement.dart';
 import '../../domain/repositories/wallet_repository.dart';
+import '../dto/json_list.dart';
 import '../dto/wallet_dto.dart';
 
 class WalletRepositoryImpl implements WalletRepository {
@@ -39,5 +41,20 @@ class WalletRepositoryImpl implements WalletRepository {
       ),
       _ => false,
     };
+  }
+
+  @override
+  Future<List<WalletMovement>> getMovements({
+    required String restaurantId,
+  }) async {
+    final json = await _api.get(
+      '/wallet/history',
+      query: {'restaurantId': restaurantId},
+    );
+    final movements = [
+      for (final item in jsonObjectList(json))
+        ?WalletMovementDto.fromJson(item).toDomain(),
+    ];
+    return movements..sort((a, b) => b.at.compareTo(a.at));
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../design_system/components/inputs/ds_select_tile.dart';
 import '../../../../design_system/ds_extensions.dart';
 import '../../../../domain/entities/product.dart';
 import '../../../../core/utils/price_format.dart';
@@ -55,20 +56,15 @@ class _SizeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final tile = Container(
+    return DSSelectTile(
+      selected: selected,
+      onTap: onTap,
       padding: const EdgeInsets.symmetric(
         horizontal: DSSpacing.md,
         vertical: DSSpacing.sm,
       ),
-      decoration: BoxDecoration(
-        color: selected ? colors.brandSubtle : colors.bgMain,
-        borderRadius: BorderRadius.circular(DSRadius.md),
-        border: Border.all(
-          color: selected ? colors.brandPrimary : colors.borderDefault,
-          width: DSSizes.borderWidthDefault,
-        ),
-      ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             size.name,
@@ -89,20 +85,6 @@ class _SizeTile extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-
-    return Semantics(
-      button: true,
-      selected: selected,
-      enabled: onTap != null,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: Opacity(
-          opacity: onTap != null ? 1 : DSOpacity.disabled,
-          child: tile,
-        ),
       ),
     );
   }

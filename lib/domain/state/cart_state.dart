@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/auth/auth_status.dart';
 import '../../core/di/repositories.dart';
+import '../entities/buy_again.dart';
 import '../entities/cart.dart';
 import '../entities/product_choice.dart';
 import 'active_branch_state.dart';
@@ -73,6 +74,24 @@ class CartController extends AsyncNotifier<Cart?> {
     final active = await ref.read(activeBranchProvider.future);
     if (active?.id != branchId) {
       ref.read(branchPickProvider.notifier).pick(branchId);
+    }
+  });
+
+  /// Puts one piece of [item] in the cart as it was ordered, at the branch
+  /// it was ordered from, which becomes the active one. As with [add], a
+  /// cart of another branch is replaced, and whoever calls this asks the
+  /// user first.
+  Future<void> addAgain(BuyAgainItem item) => _changing(() async {
+    final cart = await ref
+        .read(cartRepositoryProvider)
+        .addAgain(
+          item.id,
+          language: await ref.read(contentLanguageProvider.future),
+        );
+    state = AsyncData(cart);
+    final active = await ref.read(activeBranchProvider.future);
+    if (active?.id != cart.branchId) {
+      ref.read(branchPickProvider.notifier).pick(cart.branchId);
     }
   });
 

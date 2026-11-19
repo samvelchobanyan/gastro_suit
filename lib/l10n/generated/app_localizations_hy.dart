@@ -42,16 +42,40 @@ class AppLocalizationsHy extends AppLocalizations {
   String get loginTitle => 'Մուտք';
 
   @override
-  String get loginFieldLogin => 'Էլ. փոստ կամ հեռախոս';
+  String get loginPhoneHint =>
+      'Մուտքագրեք հեռախոսահամարը, և մենք կուղարկենք հաստատման կոդ։';
 
   @override
-  String get loginFieldPassword => 'Գաղտնաբառ';
+  String get loginClearPhone => 'Մաքրել համարը';
+
+  @override
+  String get loginSendCode => 'Ուղարկել կոդը';
+
+  @override
+  String get loginCodeTitle => 'Մուտքագրեք կոդը';
+
+  @override
+  String loginCodeHint(int count, String phone) {
+    return 'Մուտքագրեք $count նիշանոց կոդը, որն ուղարկվել է $phone համարին։';
+  }
+
+  @override
+  String get loginCodeField => 'Հաստատման կոդ';
+
+  @override
+  String get loginResend => 'Ուղարկել կրկին';
+
+  @override
+  String get loginResent => 'Ուղարկված է';
+
+  @override
+  String get loginChangeNumber => 'Փոխել համարը';
+
+  @override
+  String get loginVerify => 'Հաստատել';
 
   @override
   String get signIn => 'Մուտք գործել';
-
-  @override
-  String get signOut => 'Դուրս գալ';
 
   @override
   String get errorNoConnection => 'Ինտերնետ կապ չկա';
@@ -350,4 +374,203 @@ class AppLocalizationsHy extends AppLocalizations {
   String orderWithTotal(String total) {
     return 'Պատվիրել · $total';
   }
+
+  @override
+  String get profileBankCards => 'Բանկային քարտեր';
+
+  @override
+  String get profileHistory => 'Պատմություն';
+
+  @override
+  String get profileHistorySubtitle => 'Ձեր պատվերները և գործարքները';
+
+  @override
+  String get profileFavorites => 'Նախընտրած ապրանքներ';
+
+  @override
+  String profileFavoritesCount(int count) {
+    return '$count ապրանք';
+  }
+
+  @override
+  String get profilePush => 'Push ծանուցումներ';
+
+  @override
+  String get profileLanguage => 'Լեզու';
+
+  @override
+  String get profileDangerZone => 'Վտանգավոր գոտի';
+
+  @override
+  String get profileLogout => 'Դուրս գալ';
+
+  @override
+  String get profileDeleteAccount => 'Ջնջել հաշիվը';
+
+  @override
+  String get profileDeleteTitle => 'Ջնջե՞լ հաշիվը';
+
+  @override
+  String get profileDeleteMessage =>
+      'Ձեր հաշիվը և դրա բոլոր տվյալները կջնջվեն։ Այս գործողությունը հնարավոր չէ հետարկել։';
+
+  @override
+  String get profileDeleteConfirm => 'Ջնջել';
+
+  @override
+  String get profileTerms => 'Օգտագործման պայմաններ';
+
+  @override
+  String get profileAboutDeveloper => 'Մշակողի մասին';
+
+  @override
+  String get profileEdit => 'Խմբագրել պրոֆիլը';
+
+  @override
+  String get inviteTitle => 'Հրավիրիր ընկերոջը';
+
+  @override
+  String get inviteDescription => 'և ստացիր հավատարմության միավորներ';
+
+  @override
+  String get inviteAction => 'Հրավիրել';
+
+  @override
+  String get historyTabOrders => 'Պատվերներ';
+
+  @override
+  String get historyTabTransactions => 'Գործարքներ';
+
+  @override
+  String get historyOrdersEmpty => 'Պատվերներ դեռ չկան';
+
+  @override
+  String get historyTransactionsEmpty => 'Գործարքներ դեռ չկան';
+
+  @override
+  String historyOrderNumber(String number) {
+    return 'Պատվեր №$number';
+  }
+
+  @override
+  String get transactionTopUp => 'Դրամապանակի համալրում';
+
+  @override
+  String get transactionSpend => 'Վճարում դրամապանակից';
+
+  @override
+  String get orderDetailsTitle => 'Պատվերի մանրամասներ';
+
+  @override
+  String get orderStatusCompleted => 'Կատարված է';
+
+  @override
+  String get orderStatusCancelled => 'Չեղարկված է';
+
+  @override
+  String get orderStatusAwaitingPayment => 'Սպասում է վճարման';
+
+  @override
+  String get orderStatusPaymentFailed => 'Վճարումը չի կատարվել';
+
+  @override
+  String get orderDetailsDate => 'Պատվերի ամսաթիվ';
+
+  @override
+  String get orderDetailsFulfilment => 'Ստացման եղանակ';
+
+  @override
+  String get orderDetailsPickup => 'Ինքնուրույն վերցնել';
+
+  @override
+  String get orderDetailsPaymentMethod => 'Վճարման եղանակ';
+
+  @override
+  String get orderDetailsOnlinePayment => 'Առցանց վճարում';
+
+  @override
+  String get orderDetailsPaymentStatus => 'Վճարման կարգավիճակ';
+
+  @override
+  String get orderDetailsPaid => 'Վճարված է';
+
+  @override
+  String get orderDetailsComment => 'Մեկնաբանություն պատվերին';
+
+  @override
+  String get orderDetailsYourOrder => 'Ձեր պատվերը';
+
+  @override
+  String get orderDetailsSubtotal => 'Պատվերի գումար';
+
+  @override
+  String get orderDetailsDiscount => 'Զեղչ';
+
+  @override
+  String get orderDetailsTotal => 'Ընդամենը';
+
+  @override
+  String get favoriteAdd => 'Ավելացնել նախընտրածներին';
+
+  @override
+  String get favoriteRemove => 'Հեռացնել նախընտրածներից';
+
+  @override
+  String get buyAgain => 'Կրկին գնել';
+
+  @override
+  String get favorites => 'Նախընտրածներ';
+
+  @override
+  String get favoritesEmpty => 'Նախընտրած ապրանքներ դեռ չկան';
+
+  @override
+  String get favoritesNoneAtBranch =>
+      'Այս մասնաճյուղում ձեր նախընտրած ապրանքներից չկան';
+
+  @override
+  String get save => 'Պահպանել';
+
+  @override
+  String get profileChangePhoto => 'Փոխել լուսանկարը';
+
+  @override
+  String get profilePhotoFromGallery => 'Ընտրել պատկերասրահից';
+
+  @override
+  String get profilePhotoFromCamera => 'Լուսանկարել';
+
+  @override
+  String get profilePhotoUnavailable =>
+      'Չհաջողվեց ստանալ լուսանկարը։ Ստուգեք, որ հավելվածին թույլատրված է օգտագործել տեսախցիկը և լուսանկարները։';
+
+  @override
+  String get profileFirstName => 'Անուն';
+
+  @override
+  String get profileLastName => 'Ազգանուն';
+
+  @override
+  String get profileBirthday => 'Ծննդյան օր';
+
+  @override
+  String get profileBirthdayDay => 'Օր';
+
+  @override
+  String get profileBirthdayMonth => 'Ամիս';
+
+  @override
+  String get profileBirthdayYear => 'Տարի';
+
+  @override
+  String get profileCity => 'Քաղաք';
+
+  @override
+  String get profileGender => 'Սեռ';
+
+  @override
+  String get profileGenderMale => 'Արական';
+
+  @override
+  String get profileGenderFemale => 'Իգական';
 }

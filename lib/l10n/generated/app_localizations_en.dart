@@ -39,19 +39,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifications => 'Notifications';
 
   @override
-  String get loginTitle => 'Sign in';
+  String get loginTitle => 'Log in';
 
   @override
-  String get loginFieldLogin => 'Email or phone';
+  String get loginPhoneHint =>
+      'Enter your phone number and we\'ll send you a verification code.';
 
   @override
-  String get loginFieldPassword => 'Password';
+  String get loginClearPhone => 'Clear phone number';
+
+  @override
+  String get loginSendCode => 'Send code';
+
+  @override
+  String get loginCodeTitle => 'Enter code';
+
+  @override
+  String loginCodeHint(int count, String phone) {
+    return 'Enter the $count digit code sent to $phone.';
+  }
+
+  @override
+  String get loginCodeField => 'Verification code';
+
+  @override
+  String get loginResend => 'Resend code';
+
+  @override
+  String get loginResent => 'Sent';
+
+  @override
+  String get loginChangeNumber => 'Change number';
+
+  @override
+  String get loginVerify => 'Verify';
 
   @override
   String get signIn => 'Sign in';
-
-  @override
-  String get signOut => 'Sign out';
 
   @override
   String get errorNoConnection => 'No internet connection';
@@ -349,4 +373,209 @@ class AppLocalizationsEn extends AppLocalizations {
   String orderWithTotal(String total) {
     return 'Order · $total';
   }
+
+  @override
+  String get profileBankCards => 'Bank cards';
+
+  @override
+  String get profileHistory => 'History';
+
+  @override
+  String get profileHistorySubtitle => 'Your orders and transactions';
+
+  @override
+  String get profileFavorites => 'Favorite products';
+
+  @override
+  String profileFavoritesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count products',
+      one: '1 product',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profilePush => 'Push notifications';
+
+  @override
+  String get profileLanguage => 'Language';
+
+  @override
+  String get profileDangerZone => 'Danger zone';
+
+  @override
+  String get profileLogout => 'Logout';
+
+  @override
+  String get profileDeleteAccount => 'Delete account';
+
+  @override
+  String get profileDeleteTitle => 'Delete account?';
+
+  @override
+  String get profileDeleteMessage =>
+      'Your account and everything in it will be deleted. This cannot be undone.';
+
+  @override
+  String get profileDeleteConfirm => 'Delete';
+
+  @override
+  String get profileTerms => 'Terms & conditions';
+
+  @override
+  String get profileAboutDeveloper => 'About developer';
+
+  @override
+  String get profileEdit => 'Edit profile';
+
+  @override
+  String get inviteTitle => 'Invite a friend';
+
+  @override
+  String get inviteDescription => 'and get loyalty points';
+
+  @override
+  String get inviteAction => 'Invite';
+
+  @override
+  String get historyTabOrders => 'Orders';
+
+  @override
+  String get historyTabTransactions => 'Transactions';
+
+  @override
+  String get historyOrdersEmpty => 'No orders yet';
+
+  @override
+  String get historyTransactionsEmpty => 'No transactions yet';
+
+  @override
+  String historyOrderNumber(String number) {
+    return 'Order #$number';
+  }
+
+  @override
+  String get transactionTopUp => 'Wallet top up';
+
+  @override
+  String get transactionSpend => 'Wallet payment';
+
+  @override
+  String get orderDetailsTitle => 'Order details';
+
+  @override
+  String get orderStatusCompleted => 'Completed';
+
+  @override
+  String get orderStatusCancelled => 'Cancelled';
+
+  @override
+  String get orderStatusAwaitingPayment => 'Awaiting payment';
+
+  @override
+  String get orderStatusPaymentFailed => 'Payment failed';
+
+  @override
+  String get orderDetailsDate => 'Order date';
+
+  @override
+  String get orderDetailsFulfilment => 'Fulfilment type';
+
+  @override
+  String get orderDetailsPickup => 'Pickup';
+
+  @override
+  String get orderDetailsPaymentMethod => 'Payment method';
+
+  @override
+  String get orderDetailsOnlinePayment => 'Online payment';
+
+  @override
+  String get orderDetailsPaymentStatus => 'Payment status';
+
+  @override
+  String get orderDetailsPaid => 'Paid';
+
+  @override
+  String get orderDetailsComment => 'Order comment';
+
+  @override
+  String get orderDetailsYourOrder => 'Your order';
+
+  @override
+  String get orderDetailsSubtotal => 'Order subtotal';
+
+  @override
+  String get orderDetailsDiscount => 'Discount';
+
+  @override
+  String get orderDetailsTotal => 'Total';
+
+  @override
+  String get favoriteAdd => 'Add to favorites';
+
+  @override
+  String get favoriteRemove => 'Remove from favorites';
+
+  @override
+  String get buyAgain => 'Buy again';
+
+  @override
+  String get favorites => 'Favorites';
+
+  @override
+  String get favoritesEmpty => 'No favorite products yet';
+
+  @override
+  String get favoritesNoneAtBranch =>
+      'None of your favorite products is sold at this branch';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get profileChangePhoto => 'Change photo';
+
+  @override
+  String get profilePhotoFromGallery => 'Choose from gallery';
+
+  @override
+  String get profilePhotoFromCamera => 'Take a photo';
+
+  @override
+  String get profilePhotoUnavailable =>
+      'The photo could not be taken. Check that the app may use the camera and the photos.';
+
+  @override
+  String get profileFirstName => 'First name';
+
+  @override
+  String get profileLastName => 'Last name';
+
+  @override
+  String get profileBirthday => 'Birthday';
+
+  @override
+  String get profileBirthdayDay => 'Day';
+
+  @override
+  String get profileBirthdayMonth => 'Month';
+
+  @override
+  String get profileBirthdayYear => 'Year';
+
+  @override
+  String get profileCity => 'City';
+
+  @override
+  String get profileGender => 'Gender';
+
+  @override
+  String get profileGenderMale => 'Male';
+
+  @override
+  String get profileGenderFemale => 'Female';
 }

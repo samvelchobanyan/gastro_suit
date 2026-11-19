@@ -5,10 +5,17 @@ abstract final class AppRoutes {
   static const gifts = '/gifts';
   static const profile = '/profile';
 
-  static const login = '/login';
-
   /// One branch's screen; open it with [branchOf].
   static const branch = '/branch/:id';
 
   static String branchOf(String branchId) => '/branch/$branchId';
+
+  static const editProfile = '/profile/edit';
+  static const history = '/history';
+  static const favorites = '/favorites';
+
+  /// One order in full; open it with [orderOf].
+  static const orderDetails = '/orders/:id';
+
+  static String orderOf(String orderId) => '/orders/$orderId';
 }

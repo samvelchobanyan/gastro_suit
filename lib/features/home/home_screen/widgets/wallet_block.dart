@@ -2,26 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../../../core/auth/auth_status.dart';
 import '../../../../core/utils/price_format.dart';
 import '../../../../design_system/components/buttons/ds_button.dart';
 import '../../../../design_system/ds_extensions.dart';
+import '../../../../domain/state/server_config_state.dart';
 import '../../../../domain/state/wallet_state.dart';
 import '../../../../l10n/generated/app_localizations.dart';
+import '../../../auth/login_sheet/login_sheet.dart';
 import '../../../wallet/wallet_balance_sheet/wallet_balance_sheet.dart';
 import '../../../wallet/wallet_top_up_sheet/wallet_top_up_sheet.dart';
 
 /// Home's wallet (handoff `Wallet`): the balance and the way to top it up.
 /// Opens what the balance is made of.
 ///
-/// Takes no room for a guest, without a wallet, while it loads, or when it
-/// fails to load.
+/// A guest sees it empty, with a balance of zero, and is asked to sign in
+/// on tapping it or its button.
+///
+/// Takes no room without a wallet, and for a signed-in user while it loads
+/// or when it fails to load.
 class WalletBlock extends ConsumerWidget {
   const WalletBlock({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final guest = ref.watch(authStatusProvider) != AuthStatus.signedIn;
     final wallet = ref.watch(walletProvider).value;
-    if (wallet == null) return const SizedBox.shrink();
+    if (guest) {
+      final config = ref.watch(serverConfigProvider).value;
+      if (config == null || !config.walletEnabled) {
+        return const SizedBox.shrink();
+      }
+    } else if (wallet == null) {
+      return const SizedBox.shrink();
+    }
 
     final colors = context.colors;
     final l10n = AppLocalizations.of(context);
@@ -35,7 +49,8 @@ class WalletBlock extends ConsumerWidget {
       ),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: () => showWalletBalance(context),
+        onTap: () =>
+            guest ? showLoginSheet(context) : showWalletBalance(context),
         child: Container(
           padding: const EdgeInsets.all(DSSpacing.base),
           decoration: BoxDecoration(
@@ -69,7 +84,7 @@ class WalletBlock extends ConsumerWidget {
                       ),
                     ),
                     Text(
-                      formatPrice(context, wallet.total),
+                      formatPrice(context, wallet?.total ?? 0),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: DSTypography.h1.copyWith(
@@ -85,7 +100,8 @@ class WalletBlock extends ConsumerWidget {
                 icon: PhosphorIcons.plus(),
                 size: DSButtonSize.xs,
                 pill: true,
-                onPressed: () => showWalletTopUp(context),
+                onPressed: () =>
+                    guest ? showLoginSheet(context) : showWalletTopUp(context),
               ),
             ],
           ),

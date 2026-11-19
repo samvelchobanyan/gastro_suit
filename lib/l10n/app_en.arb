@@ -40,25 +40,57 @@
   "@notifications": {
     "description": "Accessibility label of the notifications bell"
   },
-  "loginTitle": "Sign in",
+  "loginTitle": "Log in",
   "@loginTitle": {
-    "description": "Login screen: title"
+    "description": "Sign-in sheet: title of the phone step"
   },
-  "loginFieldLogin": "Email or phone",
-  "@loginFieldLogin": {
-    "description": "Login screen: login field label"
+  "loginPhoneHint": "Enter your phone number and we'll send you a verification code.",
+  "@loginPhoneHint": {
+    "description": "Sign-in sheet: text under the title of the phone step"
   },
-  "loginFieldPassword": "Password",
-  "@loginFieldPassword": {
-    "description": "Login screen: password field label"
+  "loginClearPhone": "Clear phone number",
+  "@loginClearPhone": {
+    "description": "Sign-in sheet: the cross in the phone field, for screen readers"
+  },
+  "loginSendCode": "Send code",
+  "@loginSendCode": {
+    "description": "Sign-in sheet: button of the phone step"
+  },
+  "loginCodeTitle": "Enter code",
+  "@loginCodeTitle": {
+    "description": "Sign-in sheet: title of the code step"
+  },
+  "loginCodeHint": "Enter the {count} digit code sent to {phone}.",
+  "@loginCodeHint": {
+    "description": "Sign-in sheet: text under the title of the code step",
+    "placeholders": {
+      "count": {"type": "int"},
+      "phone": {"type": "String"}
+    }
+  },
+  "loginCodeField": "Verification code",
+  "@loginCodeField": {
+    "description": "Sign-in sheet: the code field, for screen readers"
+  },
+  "loginResend": "Resend code",
+  "@loginResend": {
+    "description": "Sign-in sheet: sends the code again"
+  },
+  "loginResent": "Sent",
+  "@loginResent": {
+    "description": "Sign-in sheet: stands in place of 'Resend code' right after the code was sent again"
+  },
+  "loginChangeNumber": "Change number",
+  "@loginChangeNumber": {
+    "description": "Sign-in sheet: goes back to the phone step"
+  },
+  "loginVerify": "Verify",
+  "@loginVerify": {
+    "description": "Sign-in sheet: button of the code step"
   },
   "signIn": "Sign in",
   "@signIn": {
-    "description": "Button that signs in (login screen, profile)"
-  },
-  "signOut": "Sign out",
-  "@signOut": {
-    "description": "Profile: sign-out button"
+    "description": "Button that opens the sign-in sheet (profile)"
   },
   "errorNoConnection": "No internet connection",
   "@errorNoConnection": {
@@ -521,5 +553,271 @@
         "example": "֏1,450"
       }
     }
+  },
+  "profileBankCards": "Bank cards",
+  "@profileBankCards": {
+    "description": "Profile: the row that leads to the saved cards"
+  },
+  "profileHistory": "History",
+  "@profileHistory": {
+    "description": "Profile: the row that leads to past orders and payments"
+  },
+  "profileHistorySubtitle": "Your orders and transactions",
+  "@profileHistorySubtitle": {
+    "description": "Profile: the line under History"
+  },
+  "profileFavorites": "Favorite products",
+  "@profileFavorites": {
+    "description": "Profile: the row that leads to the favourite products"
+  },
+  "profileFavoritesCount": "{count, plural, =1{1 product} other{{count} products}}",
+  "@profileFavoritesCount": {
+    "description": "Profile: how many favourite products the user has",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "profilePush": "Push notifications",
+  "@profilePush": {
+    "description": "Profile: the row with the switch of push notifications"
+  },
+  "profileLanguage": "Language",
+  "@profileLanguage": {
+    "description": "Profile: the title over the choice of the app's language"
+  },
+  "profileDangerZone": "Danger zone",
+  "@profileDangerZone": {
+    "description": "Profile: the title over signing out and deleting the account"
+  },
+  "profileLogout": "Logout",
+  "@profileLogout": {
+    "description": "Profile: the row that signs the user out"
+  },
+  "profileDeleteAccount": "Delete account",
+  "@profileDeleteAccount": {
+    "description": "Profile: the row that deletes the account"
+  },
+  "profileDeleteTitle": "Delete account?",
+  "@profileDeleteTitle": {
+    "description": "Delete account dialog: title"
+  },
+  "profileDeleteMessage": "Your account and everything in it will be deleted. This cannot be undone.",
+  "@profileDeleteMessage": {
+    "description": "Delete account dialog: message"
+  },
+  "profileDeleteConfirm": "Delete",
+  "@profileDeleteConfirm": {
+    "description": "Delete account dialog: the button that deletes"
+  },
+  "profileTerms": "Terms & conditions",
+  "@profileTerms": {
+    "description": "Profile: link at the bottom"
+  },
+  "profileAboutDeveloper": "About developer",
+  "@profileAboutDeveloper": {
+    "description": "Profile: link at the bottom"
+  },
+  "profileEdit": "Edit profile",
+  "@profileEdit": {
+    "description": "Profile: the pencil button on the user card, for screen readers; the title of the screen it opens"
+  },
+  "inviteTitle": "Invite a friend",
+  "@inviteTitle": {
+    "description": "Profile: the title of the invite card"
+  },
+  "inviteDescription": "and get loyalty points",
+  "@inviteDescription": {
+    "description": "Profile: the line under the title of the invite card"
+  },
+  "inviteAction": "Invite",
+  "@inviteAction": {
+    "description": "Profile: the button of the invite card"
+  },
+  "historyTabOrders": "Orders",
+  "@historyTabOrders": {
+    "description": "History: the tab with the orders"
+  },
+  "historyTabTransactions": "Transactions",
+  "@historyTabTransactions": {
+    "description": "History: the tab with the money that moved"
+  },
+  "historyOrdersEmpty": "No orders yet",
+  "@historyOrdersEmpty": {
+    "description": "History: shown when the user has no orders"
+  },
+  "historyTransactionsEmpty": "No transactions yet",
+  "@historyTransactionsEmpty": {
+    "description": "History: shown when no money has moved"
+  },
+  "historyOrderNumber": "Order #{number}",
+  "@historyOrderNumber": {
+    "description": "History: an order's number on its row",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionTopUp": "Wallet top up",
+  "@transactionTopUp": {
+    "description": "History: money that came into the wallet"
+  },
+  "transactionSpend": "Wallet payment",
+  "@transactionSpend": {
+    "description": "History: money the wallet paid towards an order"
+  },
+  "orderDetailsTitle": "Order details",
+  "@orderDetailsTitle": {
+    "description": "Order details: the screen's title"
+  },
+  "orderStatusCompleted": "Completed",
+  "@orderStatusCompleted": {
+    "description": "Order details: the status of an order that was handed over"
+  },
+  "orderStatusCancelled": "Cancelled",
+  "@orderStatusCancelled": {
+    "description": "Order details: the status of a cancelled order"
+  },
+  "orderStatusAwaitingPayment": "Awaiting payment",
+  "@orderStatusAwaitingPayment": {
+    "description": "Order details: the status of an order not paid for yet"
+  },
+  "orderStatusPaymentFailed": "Payment failed",
+  "@orderStatusPaymentFailed": {
+    "description": "Order details: the status of an order whose payment failed"
+  },
+  "orderDetailsDate": "Order date",
+  "@orderDetailsDate": {
+    "description": "Order details: when the order was placed"
+  },
+  "orderDetailsFulfilment": "Fulfilment type",
+  "@orderDetailsFulfilment": {
+    "description": "Order details: how the order is received"
+  },
+  "orderDetailsPickup": "Pickup",
+  "@orderDetailsPickup": {
+    "description": "Order details: the order is collected at the branch"
+  },
+  "orderDetailsPaymentMethod": "Payment method",
+  "@orderDetailsPaymentMethod": {
+    "description": "Order details: how the order was paid"
+  },
+  "orderDetailsOnlinePayment": "Online payment",
+  "@orderDetailsOnlinePayment": {
+    "description": "Order details: the order was paid in the app"
+  },
+  "orderDetailsPaymentStatus": "Payment status",
+  "@orderDetailsPaymentStatus": {
+    "description": "Order details: whether the order is paid"
+  },
+  "orderDetailsPaid": "Paid",
+  "@orderDetailsPaid": {
+    "description": "Order details: the order is paid"
+  },
+  "orderDetailsComment": "Order comment",
+  "@orderDetailsComment": {
+    "description": "Order details: what the user wrote to the kitchen"
+  },
+  "orderDetailsYourOrder": "Your order",
+  "@orderDetailsYourOrder": {
+    "description": "Order details: the title over the products"
+  },
+  "orderDetailsSubtotal": "Order subtotal",
+  "@orderDetailsSubtotal": {
+    "description": "Order details: the products together"
+  },
+  "orderDetailsDiscount": "Discount",
+  "@orderDetailsDiscount": {
+    "description": "Order details: what was taken off"
+  },
+  "orderDetailsTotal": "Total",
+  "@orderDetailsTotal": {
+    "description": "Order details: what the order cost"
+  },
+  "favoriteAdd": "Add to favorites",
+  "@favoriteAdd": {
+    "description": "The heart on a product that is not a favourite, for screen readers"
+  },
+  "favoriteRemove": "Remove from favorites",
+  "@favoriteRemove": {
+    "description": "The heart on a favourite product, for screen readers"
+  },
+  "buyAgain": "Buy again",
+  "@buyAgain": {
+    "description": "Home: the tab over the rail of what the user ordered before"
+  },
+  "favorites": "Favorites",
+  "@favorites": {
+    "description": "Home: the tab over the rail of favourite products"
+  },
+  "favoritesEmpty": "No favorite products yet",
+  "@favoritesEmpty": {
+    "description": "Favorite products: shown when the user has none"
+  },
+  "favoritesNoneAtBranch": "None of your favorite products is sold at this branch",
+  "@favoritesNoneAtBranch": {
+    "description": "Favorite products: shown when the active branch sells none of them"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "A button that saves what was entered"
+  },
+  "profileChangePhoto": "Change photo",
+  "@profileChangePhoto": {
+    "description": "Edit profile: under the photo, and the title of the sheet that asks where to take one from"
+  },
+  "profilePhotoFromGallery": "Choose from gallery",
+  "@profilePhotoFromGallery": {
+    "description": "Edit profile: take the photo from the phone's gallery"
+  },
+  "profilePhotoFromCamera": "Take a photo",
+  "@profilePhotoFromCamera": {
+    "description": "Edit profile: take the photo with the camera"
+  },
+  "profilePhotoUnavailable": "The photo could not be taken. Check that the app may use the camera and the photos.",
+  "@profilePhotoUnavailable": {
+    "description": "Edit profile: the camera or the gallery could not be opened"
+  },
+  "profileFirstName": "First name",
+  "@profileFirstName": {
+    "description": "Edit profile: label of a field"
+  },
+  "profileLastName": "Last name",
+  "@profileLastName": {
+    "description": "Edit profile: label of a field"
+  },
+  "profileBirthday": "Birthday",
+  "@profileBirthday": {
+    "description": "Edit profile: label over the day, month and year lists"
+  },
+  "profileBirthdayDay": "Day",
+  "@profileBirthdayDay": {
+    "description": "Edit profile: shown in the day list while no day is chosen"
+  },
+  "profileBirthdayMonth": "Month",
+  "@profileBirthdayMonth": {
+    "description": "Edit profile: shown in the month list while no month is chosen"
+  },
+  "profileBirthdayYear": "Year",
+  "@profileBirthdayYear": {
+    "description": "Edit profile: shown in the year list while no year is chosen"
+  },
+  "profileCity": "City",
+  "@profileCity": {
+    "description": "Edit profile: label of the city list"
+  },
+  "profileGender": "Gender",
+  "@profileGender": {
+    "description": "Edit profile: label over the two choices"
+  },
+  "profileGenderMale": "Male",
+  "@profileGenderMale": {
+    "description": "Edit profile: a gender"
+  },
+  "profileGenderFemale": "Female",
+  "@profileGenderFemale": {
+    "description": "Edit profile: a gender"
   }
 }

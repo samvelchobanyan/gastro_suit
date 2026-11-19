@@ -160,35 +160,77 @@ abstract class AppLocalizations {
   /// **'Notifications'**
   String get notifications;
 
-  /// Login screen: title
+  /// Sign-in sheet: title of the phone step
   ///
   /// In en, this message translates to:
-  /// **'Sign in'**
+  /// **'Log in'**
   String get loginTitle;
 
-  /// Login screen: login field label
+  /// Sign-in sheet: text under the title of the phone step
   ///
   /// In en, this message translates to:
-  /// **'Email or phone'**
-  String get loginFieldLogin;
+  /// **'Enter your phone number and we\'ll send you a verification code.'**
+  String get loginPhoneHint;
 
-  /// Login screen: password field label
+  /// Sign-in sheet: the cross in the phone field, for screen readers
   ///
   /// In en, this message translates to:
-  /// **'Password'**
-  String get loginFieldPassword;
+  /// **'Clear phone number'**
+  String get loginClearPhone;
 
-  /// Button that signs in (login screen, profile)
+  /// Sign-in sheet: button of the phone step
+  ///
+  /// In en, this message translates to:
+  /// **'Send code'**
+  String get loginSendCode;
+
+  /// Sign-in sheet: title of the code step
+  ///
+  /// In en, this message translates to:
+  /// **'Enter code'**
+  String get loginCodeTitle;
+
+  /// Sign-in sheet: text under the title of the code step
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the {count} digit code sent to {phone}.'**
+  String loginCodeHint(int count, String phone);
+
+  /// Sign-in sheet: the code field, for screen readers
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code'**
+  String get loginCodeField;
+
+  /// Sign-in sheet: sends the code again
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code'**
+  String get loginResend;
+
+  /// Sign-in sheet: stands in place of 'Resend code' right after the code was sent again
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get loginResent;
+
+  /// Sign-in sheet: goes back to the phone step
+  ///
+  /// In en, this message translates to:
+  /// **'Change number'**
+  String get loginChangeNumber;
+
+  /// Sign-in sheet: button of the code step
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get loginVerify;
+
+  /// Button that opens the sign-in sheet (profile)
   ///
   /// In en, this message translates to:
   /// **'Sign in'**
   String get signIn;
-
-  /// Profile: sign-out button
-  ///
-  /// In en, this message translates to:
-  /// **'Sign out'**
-  String get signOut;
 
   /// Error shown when the device is offline
   ///
@@ -705,6 +747,390 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Order · {total}'**
   String orderWithTotal(String total);
+
+  /// Profile: the row that leads to the saved cards
+  ///
+  /// In en, this message translates to:
+  /// **'Bank cards'**
+  String get profileBankCards;
+
+  /// Profile: the row that leads to past orders and payments
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get profileHistory;
+
+  /// Profile: the line under History
+  ///
+  /// In en, this message translates to:
+  /// **'Your orders and transactions'**
+  String get profileHistorySubtitle;
+
+  /// Profile: the row that leads to the favourite products
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite products'**
+  String get profileFavorites;
+
+  /// Profile: how many favourite products the user has
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 product} other{{count} products}}'**
+  String profileFavoritesCount(int count);
+
+  /// Profile: the row with the switch of push notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Push notifications'**
+  String get profilePush;
+
+  /// Profile: the title over the choice of the app's language
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get profileLanguage;
+
+  /// Profile: the title over signing out and deleting the account
+  ///
+  /// In en, this message translates to:
+  /// **'Danger zone'**
+  String get profileDangerZone;
+
+  /// Profile: the row that signs the user out
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get profileLogout;
+
+  /// Profile: the row that deletes the account
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get profileDeleteAccount;
+
+  /// Delete account dialog: title
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account?'**
+  String get profileDeleteTitle;
+
+  /// Delete account dialog: message
+  ///
+  /// In en, this message translates to:
+  /// **'Your account and everything in it will be deleted. This cannot be undone.'**
+  String get profileDeleteMessage;
+
+  /// Delete account dialog: the button that deletes
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get profileDeleteConfirm;
+
+  /// Profile: link at the bottom
+  ///
+  /// In en, this message translates to:
+  /// **'Terms & conditions'**
+  String get profileTerms;
+
+  /// Profile: link at the bottom
+  ///
+  /// In en, this message translates to:
+  /// **'About developer'**
+  String get profileAboutDeveloper;
+
+  /// Profile: the pencil button on the user card, for screen readers; the title of the screen it opens
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get profileEdit;
+
+  /// Profile: the title of the invite card
+  ///
+  /// In en, this message translates to:
+  /// **'Invite a friend'**
+  String get inviteTitle;
+
+  /// Profile: the line under the title of the invite card
+  ///
+  /// In en, this message translates to:
+  /// **'and get loyalty points'**
+  String get inviteDescription;
+
+  /// Profile: the button of the invite card
+  ///
+  /// In en, this message translates to:
+  /// **'Invite'**
+  String get inviteAction;
+
+  /// History: the tab with the orders
+  ///
+  /// In en, this message translates to:
+  /// **'Orders'**
+  String get historyTabOrders;
+
+  /// History: the tab with the money that moved
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
+  String get historyTabTransactions;
+
+  /// History: shown when the user has no orders
+  ///
+  /// In en, this message translates to:
+  /// **'No orders yet'**
+  String get historyOrdersEmpty;
+
+  /// History: shown when no money has moved
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions yet'**
+  String get historyTransactionsEmpty;
+
+  /// History: an order's number on its row
+  ///
+  /// In en, this message translates to:
+  /// **'Order #{number}'**
+  String historyOrderNumber(String number);
+
+  /// History: money that came into the wallet
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet top up'**
+  String get transactionTopUp;
+
+  /// History: money the wallet paid towards an order
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet payment'**
+  String get transactionSpend;
+
+  /// Order details: the screen's title
+  ///
+  /// In en, this message translates to:
+  /// **'Order details'**
+  String get orderDetailsTitle;
+
+  /// Order details: the status of an order that was handed over
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get orderStatusCompleted;
+
+  /// Order details: the status of a cancelled order
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get orderStatusCancelled;
+
+  /// Order details: the status of an order not paid for yet
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting payment'**
+  String get orderStatusAwaitingPayment;
+
+  /// Order details: the status of an order whose payment failed
+  ///
+  /// In en, this message translates to:
+  /// **'Payment failed'**
+  String get orderStatusPaymentFailed;
+
+  /// Order details: when the order was placed
+  ///
+  /// In en, this message translates to:
+  /// **'Order date'**
+  String get orderDetailsDate;
+
+  /// Order details: how the order is received
+  ///
+  /// In en, this message translates to:
+  /// **'Fulfilment type'**
+  String get orderDetailsFulfilment;
+
+  /// Order details: the order is collected at the branch
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup'**
+  String get orderDetailsPickup;
+
+  /// Order details: how the order was paid
+  ///
+  /// In en, this message translates to:
+  /// **'Payment method'**
+  String get orderDetailsPaymentMethod;
+
+  /// Order details: the order was paid in the app
+  ///
+  /// In en, this message translates to:
+  /// **'Online payment'**
+  String get orderDetailsOnlinePayment;
+
+  /// Order details: whether the order is paid
+  ///
+  /// In en, this message translates to:
+  /// **'Payment status'**
+  String get orderDetailsPaymentStatus;
+
+  /// Order details: the order is paid
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get orderDetailsPaid;
+
+  /// Order details: what the user wrote to the kitchen
+  ///
+  /// In en, this message translates to:
+  /// **'Order comment'**
+  String get orderDetailsComment;
+
+  /// Order details: the title over the products
+  ///
+  /// In en, this message translates to:
+  /// **'Your order'**
+  String get orderDetailsYourOrder;
+
+  /// Order details: the products together
+  ///
+  /// In en, this message translates to:
+  /// **'Order subtotal'**
+  String get orderDetailsSubtotal;
+
+  /// Order details: what was taken off
+  ///
+  /// In en, this message translates to:
+  /// **'Discount'**
+  String get orderDetailsDiscount;
+
+  /// Order details: what the order cost
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get orderDetailsTotal;
+
+  /// The heart on a product that is not a favourite, for screen readers
+  ///
+  /// In en, this message translates to:
+  /// **'Add to favorites'**
+  String get favoriteAdd;
+
+  /// The heart on a favourite product, for screen readers
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from favorites'**
+  String get favoriteRemove;
+
+  /// Home: the tab over the rail of what the user ordered before
+  ///
+  /// In en, this message translates to:
+  /// **'Buy again'**
+  String get buyAgain;
+
+  /// Home: the tab over the rail of favourite products
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get favorites;
+
+  /// Favorite products: shown when the user has none
+  ///
+  /// In en, this message translates to:
+  /// **'No favorite products yet'**
+  String get favoritesEmpty;
+
+  /// Favorite products: shown when the active branch sells none of them
+  ///
+  /// In en, this message translates to:
+  /// **'None of your favorite products is sold at this branch'**
+  String get favoritesNoneAtBranch;
+
+  /// A button that saves what was entered
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// Edit profile: under the photo, and the title of the sheet that asks where to take one from
+  ///
+  /// In en, this message translates to:
+  /// **'Change photo'**
+  String get profileChangePhoto;
+
+  /// Edit profile: take the photo from the phone's gallery
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from gallery'**
+  String get profilePhotoFromGallery;
+
+  /// Edit profile: take the photo with the camera
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo'**
+  String get profilePhotoFromCamera;
+
+  /// Edit profile: the camera or the gallery could not be opened
+  ///
+  /// In en, this message translates to:
+  /// **'The photo could not be taken. Check that the app may use the camera and the photos.'**
+  String get profilePhotoUnavailable;
+
+  /// Edit profile: label of a field
+  ///
+  /// In en, this message translates to:
+  /// **'First name'**
+  String get profileFirstName;
+
+  /// Edit profile: label of a field
+  ///
+  /// In en, this message translates to:
+  /// **'Last name'**
+  String get profileLastName;
+
+  /// Edit profile: label over the day, month and year lists
+  ///
+  /// In en, this message translates to:
+  /// **'Birthday'**
+  String get profileBirthday;
+
+  /// Edit profile: shown in the day list while no day is chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get profileBirthdayDay;
+
+  /// Edit profile: shown in the month list while no month is chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get profileBirthdayMonth;
+
+  /// Edit profile: shown in the year list while no year is chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get profileBirthdayYear;
+
+  /// Edit profile: label of the city list
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get profileCity;
+
+  /// Edit profile: label over the two choices
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get profileGender;
+
+  /// Edit profile: a gender
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get profileGenderMale;
+
+  /// Edit profile: a gender
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get profileGenderFemale;
 }
 
 class _AppLocalizationsDelegate

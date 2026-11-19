@@ -2,5 +2,7 @@
   "API_BASE_URL": "http://37.157.212.21:3000/api/v1",
   "RESTAURANT_ID": "1f8af30b-d3b9-4885-879a-dc2f0c2a0ad2",
   "MAP_TILE_URL": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-  "MAP_ATTRIBUTION": "© OpenStreetMap"
+  "MAP_ATTRIBUTION": "© OpenStreetMap",
+  "PHONE_COUNTRY_CODE": "+374",
+  "PHONE_NUMBER_LENGTH": "8"
 }

@@ -6,6 +6,7 @@ import '../../../core/network/app_exception.dart';
 import '../../../domain/entities/order.dart';
 import '../../../domain/state/active_branch_state.dart';
 import '../../../domain/state/active_orders_state.dart';
+import '../../../domain/state/buy_again_state.dart';
 import '../../../domain/state/cart_state.dart';
 import '../../../domain/state/loyalty_card_state.dart';
 import '../../../domain/state/payment_cards_state.dart';
@@ -106,6 +107,7 @@ class CartCheckoutController extends Notifier<CartCheckout> {
     }
     ref.invalidate(cartProvider);
     ref.invalidate(activeOrdersProvider);
+    ref.invalidate(buyAgainProvider);
     // An order earns points.
     ref.invalidate(loyaltyCardProvider);
     return order;

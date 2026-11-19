@@ -103,11 +103,13 @@ class _BranchListBlockState extends ConsumerState<BranchListBlock> {
               ),
             ),
           SliverPadding(
-            padding: const EdgeInsets.fromLTRB(
+            // The bottom also clears what floats over the list's end: the
+            // navigation, or the system's inset.
+            padding: EdgeInsets.fromLTRB(
               DSLayout.margin,
               0,
               DSLayout.margin,
-              DSSpacing.base,
+              DSSpacing.base + MediaQuery.paddingOf(context).bottom,
             ),
             sliver: SliverList.separated(
               itemCount: shown.length,

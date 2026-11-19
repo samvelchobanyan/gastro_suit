@@ -90,11 +90,12 @@ open by the design, to discuss with the designer:
 - Several orders on their way: one card each, newest first (the design draws one).
 - The number is the till's short one (`posNumber`), shown as soon as it exists; before
   that the place is empty.
-- The block cannot be tapped: there is no screen of an order to open.
+- ~~The block cannot be tapped~~ — since 2026-11-17 a card opens the order's details
+  (§23). The design does not draw the tap.
 
-### 9. Viewing an order with several products
-History shows one product per row. There is no way to open an order and see all its
-products, the pickup branch and time, and the amounts.
+### 9. Viewing an order with several products — answered by the design
+The newer design has "Order details", opened from a row of the history, and a "+3" on
+the photo of an order with more products. Built 2026-11-17 (§23).
 
 ### 10. Branch open but not taking orders
 The PRD asks to show the guest a branch's ordering availability (active / ordering off /
@@ -131,6 +132,8 @@ The PRD (5.5 Wallet) lets gift-card and promo value in the wallet expire. Decide
 sessions: wallet money never expires; only loyalty points can expire.
 
 ### 16. "Push notifications" switch on the profile
+Until decided (2026-11-17): the switch is on the profile and moves, but turns nothing
+on or off and is not remembered.
 Whether it is the consent to marketing pushes (the PRD has per-channel marketing
 consents; the API has push, SMS and email consents) or turning all notifications on the
 device on and off.
@@ -139,9 +142,9 @@ device on and off.
 Decided (2026-11-09): the app can be used without signing in. Menu and branches are
 public in the API; cart, loyalty, wallet and orders need an account, and sign-in is asked
 for when the guest reaches them.
-Still open: how the sign-in and registration screens look, and where exactly the guest is
-asked to sign in. Until there is a design: a temporary sign-in screen opened from the
-Profile tab.
+Sign-in is the sheet of §26 (2026-11-19): by phone and a code, opened from the Profile
+tab and wherever an action needs an account. There is no separate registration: a number
+without an account gets one on its first sign-in.
 
 ### 18. Feedback sheet: states the design does not draw
 The design shows only the empty form (stars, text, "Send"). Built by default until the
@@ -181,7 +184,7 @@ Built by default until the designer and the product owner answer:
 - Not built, waiting for an answer:
   - "Nutrition facts": the API's nutrition is free-form and empty for every product on
     the dev server; the info button is not shown until its shape is fixed.
-- The heart (favourites) comes with that feature.
+- ~~The heart (favourites) comes with that feature~~ — built 2026-11-17 (§24).
 
 ### 20. Cart sheet: what the design leaves open
 The design's "Basket" is the cart and the checkout in one sheet: the branch, the time,
@@ -255,4 +258,144 @@ wallet's balance. Drawn in the design and left out, or changed, for want of data
   its field ("From ֏500 to ֏500,000"), and a message when the payment needs the bank's
   page. The card row is shown, but a top-up cannot be paid with a saved card through
   the API yet (`IMPLEMENTATION_NOTES.md` §19).
-- **A guest** sees neither block; the design does not draw Home for a guest.
+- **A guest** sees both blocks empty (decided 2026-11-19): a balance of zero, no
+  points, no tier and no code on the card. A tap on either, or on "Top up", opens the
+  sign-in sheet; after signing in the user is back on Home, and what they tapped is
+  not opened for them. The design does not draw Home for a guest.
+
+### 22. Profile: what is shown and what is not (2026-11-17)
+Decided with the product owner for the first step of the Profile tab:
+- **A guest** sees a reduced profile: the way to sign in, the language and the links.
+  The design does not draw it.
+- **The status block** ("Bronze", `UserStatus`) is not shown. It is a paid status
+  bought for a number of months, apart from the loyalty tier; the backend turns it on
+  per client, and the API has nothing for it yet.
+- **"Invite a friend"** is shown with its button; the button does nothing until the
+  invite screen is built. It too is to be turned on per client from the backend.
+- **"Geolocation"** is not shown: a switch in the app adds nothing to the system's
+  permission.
+- **"Bank cards"** is shown and leads nowhere until its screen is built. The pencil
+  on the user card opens "Edit profile" (§25). "History" (§23) and "Favorite products" (§24) open theirs.
+- **"Delete account"** works: it asks in the app's usual two-button dialog, then
+  deletes and signs out. The design draws no confirmation; to be replaced when it does.
+- **"Terms & conditions", "About developer"** are placed and lead nowhere: whether
+  they open a page in the app or a site is not decided.
+- **The language** is kept on the phone only and is not sent to the user's profile on
+  the server. Each language is named in itself ("Հայերեն", "Русский", "English"); the
+  design names them in the app's language. To confirm with the designer.
+- **A user without a name** is shown by the phone or the email they sign in with; a
+  user without a phone shows the email under the name.
+
+Not in the design system's colour roles, taken from the nearest role; to confirm with
+the designer:
+- the avatar's fill behind the initials (`accent-100`) is the brand-tinted surface
+  (`accent-50`), and the initials are 14 px, not 15;
+- the phone on the dark user card (`gray-500`) is the quiet text on dark used on the
+  wallet card.
+
+### 23. History and order details (2026-11-17)
+Built: "History" with its two tabs, opened from the profile, and "Order details",
+opened from a row of the history and from Home's order status. To confirm with the
+product owners and the designer:
+- **Which orders the history lists.** All of them except the ones that were never
+  paid for (awaiting payment, payment failed). A cancelled order is listed.
+- **A cancelled order looks like any other in the list**: the design's row has no
+  status. Its details say "Cancelled".
+- **"Guests" and "Received"** in the details are left out: the API has neither the
+  number of guests nor the time the order was handed over. Whether a pickup order
+  needs them at all.
+- **"Transactions"** lists only what moved through the wallet (top-ups, and payments
+  from it): the API lists nothing else. Card payments, voucher purchases and loyalty
+  points are added when the backend gives them. A top-up that was not paid for, or
+  failed, is not listed.
+- **"Repeat order"** is not built: the second step, after the backend is asked how.
+- **The photos** are the ones the products have in the branch's menu now; a product
+  that left the menu shows the placeholder.
+- **"Payment method"** always says "Online payment": the app pays no other way.
+  **"Payment status"** is shown only as "Paid"; what a cancelled order should say
+  (refunded?) is open.
+- **A discount and a tip** get their own rows between the subtotal and the total when
+  the order has them; the design draws the subtotal and the total only.
+- **States the design does not draw**: loading, a failed load, an empty list ("No
+  orders yet", "No transactions yet"), the next page on its way.
+- **The order's number** is the till's short one, as on Home; before the till gives
+  one the row and the details show none.
+
+### 24. Favourite products (2026-11-17)
+Built: the heart on the product sheet's photo, and "Favorite products" opened from the
+profile. Decided with the product owner:
+- **The favourites are one set for the account**; the screen shows them as the active
+  branch sells them, as the menu does. A favourite the active branch does not sell is
+  not listed; it is listed again at a branch that sells it. The count on the profile
+  counts them all, so it may be more than the list shows.
+- **A favourite the branch has stopped is listed as any other, not dimmed.** In the
+  menu the branch is named on the screen, so a dimmed product explains itself; in the
+  list of favourites a dimmed product would read as something wrong with the list.
+  The product sheet it opens says that it cannot be ordered now.
+- **A guest who taps the heart is sent to sign in**, and the product becomes a
+  favourite on coming back signed in — as with rating a branch.
+- **The heart changes at once**, before the server answers; a refused change goes
+  back and is said.
+- **Home's "Favourites" rail** is not built: it comes with "Buy again".
+
+States the design does not draw: loading, a failed load, no favourites yet, none of
+them sold at this branch.
+
+### 25. Edit profile (2026-11-18)
+Built as drawn: the photo, first and last name, the birthday as three lists, the
+city, the gender, "Save". The phone and the email are not on the screen, and the
+server does not let them be changed.
+- **The city** is chosen from the cities the organisation's branches stand in (the
+  list the branch picker uses). The design's list of cities has no stated source.
+- **"Save"** is active once something is changed and the birthday is chosen in full
+  or not at all; it goes back to the profile. A refused save is said over the button.
+- **The photo is saved the moment it is chosen**, apart from "Save". A tap on it asks
+  where to take the picture from: the gallery or the camera.
+
+Open, for the designers:
+- **Removing the photo.** The server can; the design draws no way to. Not built.
+- **The sheet that asks "gallery or camera"** is not drawn; it is built from the
+  list rows of the profile.
+- **Taking a value back.** A birthday, a city or a gender once chosen can be changed
+  but not cleared: the lists and the radio buttons have no "none".
+
+### 26. Sign-in sheet (2026-11-19)
+
+Built from `LoginSheet`: the phone number, then the code from the SMS. Sign-in by
+password is gone from the app in this version.
+
+- **Six cells, not four.** The page draws four; the server's code has six digits
+  (decided 2026-11-19). Six cells of 48 with their gaps fill the 360 frame exactly; on
+  a narrower screen they shrink together.
+- **"Logout" opening the sheet is the prototype's shortcut.** In the app "Log out" signs
+  out; the sheet is opened by "Sign in" on the guest's profile and by any action that
+  needs an account.
+- **A refusal is not drawn.** A refused number or code is said in one line under the
+  field, and the code's cells are outlined as wrong until the user types again.
+  For designers: how a wrong code, too many attempts and no connection should look.
+- **The button while a request is on its way** shows the spinner alone, as every button
+  of the app does; the page draws the spinner with the word "Checking".
+- **The number is shown as typed** in the code step's text (`+374 77123456`), not
+  grouped as on the page (`+374 77 123 456`): the grouping differs by country.
+- **"Resend code" has no wait drawn.** It can be tapped again once "Sent" goes back,
+  after three seconds; the server is what limits the requests. For designers: whether
+  a countdown is wanted.
+- **The scrim is not blurred**, unlike on the page: it is the scrim every sheet of the
+  app has.
+
+### 27. Floating navigation (2026-11-19)
+
+Built from `NavFloatingIcons` as the four tab pages draw it (glass, light).
+
+- **The loyalty card's item is not a tab.** It opens the card over the tab shown. A
+  guest is asked to sign in instead; an instance without a loyalty programme has the
+  four tabs only (decided 2026-11-19).
+- **A tab is shown at once.** The prototype waits 400 ms before leaving a page so that
+  its animation is seen; in the app the plate travels while the tab is already there.
+- **The icons not chosen are the text colour** (`textPrimary`), not the page's
+  `gray-800`: the theme has no colour of that value, and one shade is not worth one.
+- **The glass is the shared one** (`--glass-bg` 80% white, `--glass-blur` 26 since this
+  export): the Order tab's cart bar changed with it.
+- **No cart counter on the navigation**: the pages draw none.
+- The dark variant of the component is not built: no page uses it.
+

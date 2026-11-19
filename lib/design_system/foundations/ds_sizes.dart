@@ -109,7 +109,23 @@ abstract final class DSSizes {
   static const double darkSheetBlur = 24;
 
   /// How much a glass surface blurs what is behind it (`--glass-blur`).
-  static const double glassBlur = 16;
+  static const double glassBlur = 26;
+
+  // Profile (handoff `Avatar`, `AdvancedListItem`, `Invite`)
+  /// A person's picture, size `md`.
+  static const double avatarMd = 40;
+
+  /// A person's picture, size `xl`.
+  static const double avatarXl = 72;
+
+  /// The square behind a list row's icon.
+  static const double listItemIcon = 40;
+
+  /// The picture on the "invite a friend" card.
+  static const double inviteImage = 48;
+
+  /// The picture at the top of the sign-in sheet.
+  static const double loginArt = 110;
 
   // Dialog (handoff `Dialog`)
   static const double dialogMaxWidth = 320;

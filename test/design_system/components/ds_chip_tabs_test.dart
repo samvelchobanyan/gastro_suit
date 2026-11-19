@@ -100,4 +100,35 @@ void main() {
     expect(rowOffset(tester), greaterThan(0));
     expect(chip(tester, 8).right, lessThanOrEqualTo(screenWidth - margin));
   });
+
+  testWidgets('only the small size draws the icons of the chips', (
+    tester,
+  ) async {
+    Future<void> pump(DSChipTabsSize size) => tester.pumpWidget(
+      MaterialApp(
+        theme: buildAppTheme(lightColors),
+        home: Scaffold(
+          body: DSChipTabs<int>(
+            size: size,
+            options: const [
+              DSChipTab(value: 1, label: 'Liked', icon: Icons.favorite),
+            ],
+            value: 1,
+            onChanged: (_) {},
+          ),
+        ),
+      ),
+    );
+
+    await pump(DSChipTabsSize.small);
+    final icon = tester.widget<Icon>(find.byIcon(Icons.favorite));
+    final text = tester.widget<Text>(find.text('Liked'));
+    // The icon takes the text's colour.
+    expect(icon.color, lightColors.textAccent);
+    expect(text.style?.color, lightColors.textAccent);
+
+    await pump(DSChipTabsSize.xs);
+    expect(find.byIcon(Icons.favorite), findsNothing);
+    expect(find.text('Liked'), findsOneWidget);
+  });
 }

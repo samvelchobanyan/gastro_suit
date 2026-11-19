@@ -15,3 +15,14 @@ WalletDto _$WalletDtoFromJson(Map<String, dynamic> json) => WalletDto(
       ? null
       : DateTime.parse(json['expiryDate'] as String),
 );
+
+WalletMovementDto _$WalletMovementDtoFromJson(Map<String, dynamic> json) =>
+    WalletMovementDto(
+      id: json['id'] as String,
+      type: json['type'] as String?,
+      status: json['status'] as String?,
+      amount: json['amount'] as num?,
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
+    );

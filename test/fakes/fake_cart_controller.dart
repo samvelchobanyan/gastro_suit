@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gastro_suit/domain/entities/buy_again.dart';
 import 'package:gastro_suit/domain/entities/cart.dart';
 import 'package:gastro_suit/domain/entities/product_choice.dart';
 import 'package:gastro_suit/domain/state/active_branch_state.dart';
@@ -77,6 +78,43 @@ class FakeCartController extends CartController {
         ],
       ),
     );
+  }
+
+  /// Every buy-again item added.
+  final addedAgain = <BuyAgainItem>[];
+
+  @override
+  Future<void> addAgain(BuyAgainItem item) async {
+    if (addError case final error?) throw error;
+    addedAgain.add(item);
+    // As the server does: a cart of another branch is replaced.
+    final current = state.value;
+    final kept = current != null && current.branchId == item.branchId
+        ? current.lines
+        : const <CartLine>[];
+    state = AsyncData(
+      Cart(
+        id: 'cart',
+        branchId: item.branchId,
+        total: 0,
+        lines: [
+          ...kept,
+          CartLine(
+            id: 'again-${addedAgain.length}',
+            choice: ProductChoice(
+              productId: item.id,
+              productName: item.name,
+              options: const [],
+            ),
+            quantity: 1,
+            unitPrice: 0,
+            total: 0,
+            isAvailable: true,
+          ),
+        ],
+      ),
+    );
+    ref.read(branchPickProvider.notifier).pick(item.branchId);
   }
 
   /// Every change of a line's quantity: line, quantity.

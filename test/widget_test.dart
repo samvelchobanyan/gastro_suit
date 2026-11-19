@@ -25,7 +25,7 @@ void main() {
     expect(find.byType(DSBottomNavigation), findsOneWidget);
     expect(find.byType(HomeScreen), findsOneWidget);
 
-    await tester.tap(find.text('Order'));
+    await tester.tap(find.bySemanticsLabel('Order'));
     await tester.pumpAndSettle();
 
     expect(find.byType(OrderScreen), findsOneWidget);

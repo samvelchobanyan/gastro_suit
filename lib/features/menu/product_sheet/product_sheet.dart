@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../core/network/app_exception.dart';
 import '../../../design_system/components/overlays/ds_tall_sheet.dart';
@@ -8,11 +7,13 @@ import '../../../design_system/ds_extensions.dart';
 import '../../../domain/entities/cart.dart';
 import '../../../domain/entities/product.dart';
 import '../../../domain/state/cart_state.dart';
+import '../../../domain/state/favorites_state.dart';
 import '../../../domain/state/menu_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
-import '../../auth/login_screen/login_screen.dart';
+import '../../auth/login_sheet/login_sheet.dart';
 import '../../cart/replace_cart_dialog/replace_cart_dialog.dart';
 import '../../../core/utils/error_text.dart';
+import '../../../core/utils/portion_format.dart';
 import '../../../core/utils/price_format.dart';
 import 'product_selection_controller.dart';
 import 'widgets/product_add_bar.dart';
@@ -255,9 +256,27 @@ class _ProductContentState extends ConsumerState<_ProductContent> {
     }
   }
 
+  /// Makes the product a favourite, or takes it out. Favourites need an
+  /// account: a guest is sent to sign in first, and the product becomes a
+  /// favourite on coming back signed in. A refused change is said where a
+  /// refused add is.
+  Future<void> _toggleFavorite() async {
+    setState(() => _error = null);
+    if (!await ensureSignedIn(context, ref)) return;
+    try {
+      await ref.read(favoritesProvider.notifier).toggle(widget.product.id);
+    } on AppException catch (error) {
+      if (!mounted) return;
+      setState(() => _error = errorText(context, error));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final favorite =
+        ref.watch(favoritesProvider).value?.contains(widget.product.id) ??
+        false;
     final product = widget.product;
     final scrollController = widget.scrollController;
     final editing = widget.editing;
@@ -282,7 +301,11 @@ class _ProductContentState extends ConsumerState<_ProductContent> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                ProductSheetPhoto(url: product.imageUrl),
+                ProductSheetPhoto(
+                  url: product.imageUrl,
+                  favorite: favorite,
+                  onFavorite: _toggleFavorite,
+                ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(
                     DSSpacing.base,
@@ -318,7 +341,7 @@ class _ProductContentState extends ConsumerState<_ProductContent> {
                             ),
                             const SizedBox(width: DSSpacing.xs),
                             Text(
-                              _portionText(context, portion),
+                              formatPortion(context, portion),
                               style: DSTypography.bodySm.copyWith(
                                 color: colors.textTertiary,
                               ),
@@ -408,17 +431,4 @@ class _ProductContentState extends ConsumerState<_ProductContent> {
       ],
     );
   }
-}
-
-/// A portion as shown next to the price: "300 ml".
-String _portionText(BuildContext context, Portion portion) {
-  final l10n = AppLocalizations.of(context);
-  final locale = Localizations.localeOf(context).toLanguageTag();
-  final amount = NumberFormat.decimalPattern(locale).format(portion.amount);
-  return switch (portion.unit) {
-    PortionUnit.gram => l10n.portionGrams(amount),
-    PortionUnit.kilogram => l10n.portionKilograms(amount),
-    PortionUnit.milliliter => l10n.portionMilliliters(amount),
-    PortionUnit.liter => l10n.portionLiters(amount),
-  };
 }

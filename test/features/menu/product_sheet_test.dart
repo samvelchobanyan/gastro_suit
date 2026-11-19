@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gastro_suit/core/auth/auth_status.dart';
-import 'package:gastro_suit/core/navigation/app_routes.dart';
+import 'package:gastro_suit/core/di/repositories.dart';
+import 'package:gastro_suit/core/config/app_config.dart';
 import 'package:gastro_suit/core/network/app_exception.dart';
 import 'package:gastro_suit/design_system/components/buttons/ds_button.dart';
 import 'package:gastro_suit/design_system/components/inputs/ds_checkbox.dart';
@@ -16,6 +17,7 @@ import 'package:gastro_suit/domain/entities/menu_category.dart';
 import 'package:gastro_suit/domain/entities/product.dart';
 import 'package:gastro_suit/domain/state/cart_state.dart';
 import 'package:gastro_suit/domain/state/menu_state.dart';
+import 'package:gastro_suit/features/auth/login_sheet/login_sheet.dart';
 import 'package:gastro_suit/features/menu/product_sheet/product_sheet.dart';
 import 'package:gastro_suit/features/menu/product_sheet/widgets/product_sheet_photo.dart';
 import 'package:gastro_suit/features/shared_widgets/product_card.dart';
@@ -23,6 +25,7 @@ import 'package:gastro_suit/l10n/generated/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../fakes/fake_cart_controller.dart';
+import '../../fakes/fake_favorites_repository.dart';
 
 class _FakeMenuController extends BranchMenuController {
   _FakeMenuController(this.menu) : super('b1');
@@ -62,6 +65,7 @@ void main() {
     AuthStatus auth = AuthStatus.signedIn,
     Cart? cart,
     List<Product> recommended = const [],
+    FakeFavoritesRepository? favorites,
   }) async {
     tester.view.physicalSize = const Size(360, 800);
     tester.view.devicePixelRatio = 1;
@@ -95,10 +99,6 @@ void main() {
             ),
           ),
         ),
-        GoRoute(
-          path: AppRoutes.login,
-          builder: (_, _) => const Scaffold(body: Text('sign-in page')),
-        ),
       ],
     );
     addTearDown(router.dispose);
@@ -110,6 +110,19 @@ void main() {
             (ref, key) async => key.productId == 'p1' ? recommended : const [],
           ),
           authStatusProvider.overrideWithValue(auth),
+          appConfigProvider.overrideWithValue(
+            const AppConfig(
+              apiBaseUrl: 'http://test',
+              restaurantId: 'r1',
+              mapTileUrl: '',
+              mapAttribution: '',
+              phoneCountryCode: '+374',
+              phoneNumberLength: 8,
+            ),
+          ),
+          favoritesRepositoryProvider.overrideWithValue(
+            favorites ?? FakeFavoritesRepository(),
+          ),
           cartProvider.overrideWith(() => fakeCart),
         ],
         child: MaterialApp.router(
@@ -523,15 +536,17 @@ void main() {
     await tester.tap(find.byType(DSButton));
     await tester.pumpAndSettle();
 
-    // The sign-in page is on top: it takes the taps, the sheet does not.
-    expect(find.text('sign-in page').hitTestable(), findsOneWidget);
-    expect(find.byType(DSButton).hitTestable(), findsNothing);
+    // The sign-in sheet is on top: it takes the taps, the product does not.
+    expect(find.byType(LoginSheet).hitTestable(), findsOneWidget);
+    expect(find.textContaining('Add ·').hitTestable(), findsNothing);
 
-    // Back without signing in: nothing is added, the sheet is still there.
-    tester.state<NavigatorState>(find.byType(Navigator).first).pop();
+    // Closed without signing in: nothing is added, the product is still
+    // there.
+    Navigator.pop(tester.element(find.byType(LoginSheet)));
     await tester.pumpAndSettle();
+    expect(find.byType(LoginSheet), findsNothing);
     expect(cart.added, isEmpty);
-    expect(find.byType(DSButton).hitTestable(), findsOneWidget);
+    expect(find.byType(ProductSheet), findsOneWidget);
   });
 
   testWidgets('a drag down over the photo closes the sheet', (tester) async {
@@ -586,6 +601,66 @@ void main() {
     expect(tester.getRect(find.byType(ProductSheet)).top, 56);
     expect(tester.getRect(find.byType(ProductSheetPhoto)).top, lessThan(56));
     expect(tester.getRect(find.byType(DSButton)), bar);
+  });
+
+  group('the heart', () {
+    testWidgets('makes the product a favourite and takes it out again', (
+      tester,
+    ) async {
+      final favorites = FakeFavoritesRepository();
+      await openSheet(tester, [product()], favorites: favorites);
+
+      await tester.tap(find.bySemanticsLabel('Add to favorites'));
+      await tester.pumpAndSettle();
+      expect(favorites.ids, {'p1'});
+      expect(find.bySemanticsLabel('Remove from favorites'), findsOneWidget);
+
+      await tester.tap(find.bySemanticsLabel('Remove from favorites'));
+      await tester.pumpAndSettle();
+      expect(favorites.ids, isEmpty);
+      expect(find.bySemanticsLabel('Add to favorites'), findsOneWidget);
+    });
+
+    testWidgets('is filled for a product that is a favourite already', (
+      tester,
+    ) async {
+      await openSheet(tester, [
+        product(),
+      ], favorites: FakeFavoritesRepository({'p1'}));
+
+      expect(find.bySemanticsLabel('Remove from favorites'), findsOneWidget);
+    });
+
+    testWidgets('a refused change goes back and is said', (tester) async {
+      final favorites = FakeFavoritesRepository()
+        ..error = const AppException(
+          AppExceptionKind.server,
+          message: 'Not now',
+        );
+      await openSheet(tester, [product()], favorites: favorites);
+
+      await tester.tap(find.bySemanticsLabel('Add to favorites'));
+      await tester.pumpAndSettle();
+
+      expect(find.bySemanticsLabel('Add to favorites'), findsOneWidget);
+      expect(find.text('Not now'), findsOneWidget);
+    });
+
+    testWidgets('sends a guest to sign in', (tester) async {
+      final favorites = FakeFavoritesRepository();
+      await openSheet(
+        tester,
+        [product()],
+        auth: AuthStatus.signedOut,
+        favorites: favorites,
+      );
+
+      await tester.tap(find.bySemanticsLabel('Add to favorites'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(LoginSheet).hitTestable(), findsOneWidget);
+      expect(favorites.ids, isEmpty);
+    });
   });
 
   testWidgets('a product the branch no longer offers shows the error', (

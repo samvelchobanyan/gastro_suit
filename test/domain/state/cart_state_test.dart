@@ -5,6 +5,7 @@ import 'package:gastro_suit/core/di/repositories.dart';
 import 'package:gastro_suit/core/locale/content_language.dart';
 import 'package:gastro_suit/core/network/app_exception.dart';
 import 'package:gastro_suit/domain/entities/branch.dart';
+import 'package:gastro_suit/domain/entities/buy_again.dart';
 import 'package:gastro_suit/domain/entities/cart.dart';
 import 'package:gastro_suit/domain/entities/product_choice.dart';
 import 'package:gastro_suit/domain/repositories/cart_repository.dart';
@@ -59,6 +60,37 @@ class _FakeRepository implements CartRepository {
         quantity: quantity,
         unitPrice: 1000,
         total: 1000 * quantity,
+        isAvailable: true,
+      ),
+    ]);
+  }
+
+  /// The branch the server keeps for each buy-again item.
+  final againBranches = <String, String>{};
+
+  @override
+  Future<Cart> addAgain(
+    String buyAgainId, {
+    required ContentLanguage language,
+  }) async {
+    if (error case final error?) throw error;
+    final branchId = againBranches[buyAgainId]!;
+    final cart = stored;
+    final kept = cart != null && cart.branchId == branchId
+        ? cart.lines
+        : const <CartLine>[];
+    return stored = _with(branchId, [
+      ...kept,
+      CartLine(
+        id: 'line-${kept.length + 1}',
+        choice: ProductChoice(
+          productId: buyAgainId,
+          productName: buyAgainId,
+          options: const [],
+        ),
+        quantity: 1,
+        unitPrice: 1000,
+        total: 1000,
         isAvailable: true,
       ),
     ]);
@@ -208,6 +240,32 @@ void main() {
     expect(cart?.branchId, 'b2');
     expect(cart?.itemCount, 1);
     expect(repository.asked.last, 'b2');
+  });
+
+  test('buying again adds at the item’s branch and makes it active', () async {
+    final (container, repository) = setUp();
+    repository.againBranches['a1'] = 'b2';
+    await container
+        .read(cartProvider.notifier)
+        .add(branchId: 'b1', choice: latte);
+
+    await container
+        .read(cartProvider.notifier)
+        .addAgain(
+          const BuyAgainItem(
+            id: 'a1',
+            name: 'Raf',
+            branchId: 'b2',
+            branchName: 'b2',
+            isAvailable: true,
+          ),
+        );
+
+    // The cart of the other branch is replaced, as the server does.
+    final cart = container.read(cartProvider).value!;
+    expect(cart.branchId, 'b2');
+    expect(cart.lines.single.choice.productId, 'a1');
+    expect(container.read(branchPickProvider), 'b2');
   });
 
   test('moving takes the cart to the new active branch', () async {

@@ -42,16 +42,40 @@ class AppLocalizationsRu extends AppLocalizations {
   String get loginTitle => 'Вход';
 
   @override
-  String get loginFieldLogin => 'Email или телефон';
+  String get loginPhoneHint =>
+      'Введите номер телефона — мы отправим код подтверждения.';
 
   @override
-  String get loginFieldPassword => 'Пароль';
+  String get loginClearPhone => 'Очистить номер';
+
+  @override
+  String get loginSendCode => 'Отправить код';
+
+  @override
+  String get loginCodeTitle => 'Введите код';
+
+  @override
+  String loginCodeHint(int count, String phone) {
+    return 'Введите код из $count цифр, отправленный на $phone.';
+  }
+
+  @override
+  String get loginCodeField => 'Код подтверждения';
+
+  @override
+  String get loginResend => 'Отправить ещё раз';
+
+  @override
+  String get loginResent => 'Отправлено';
+
+  @override
+  String get loginChangeNumber => 'Изменить номер';
+
+  @override
+  String get loginVerify => 'Подтвердить';
 
   @override
   String get signIn => 'Войти';
-
-  @override
-  String get signOut => 'Выйти';
 
   @override
   String get errorNoConnection => 'Нет подключения к интернету';
@@ -349,4 +373,211 @@ class AppLocalizationsRu extends AppLocalizations {
   String orderWithTotal(String total) {
     return 'Заказать · $total';
   }
+
+  @override
+  String get profileBankCards => 'Банковские карты';
+
+  @override
+  String get profileHistory => 'История';
+
+  @override
+  String get profileHistorySubtitle => 'Ваши заказы и операции';
+
+  @override
+  String get profileFavorites => 'Избранные товары';
+
+  @override
+  String profileFavoritesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count товара',
+      many: '$count товаров',
+      few: '$count товара',
+      one: '$count товар',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profilePush => 'Push-уведомления';
+
+  @override
+  String get profileLanguage => 'Язык';
+
+  @override
+  String get profileDangerZone => 'Опасная зона';
+
+  @override
+  String get profileLogout => 'Выйти';
+
+  @override
+  String get profileDeleteAccount => 'Удалить аккаунт';
+
+  @override
+  String get profileDeleteTitle => 'Удалить аккаунт?';
+
+  @override
+  String get profileDeleteMessage =>
+      'Аккаунт и все его данные будут удалены. Это действие нельзя отменить.';
+
+  @override
+  String get profileDeleteConfirm => 'Удалить';
+
+  @override
+  String get profileTerms => 'Условия использования';
+
+  @override
+  String get profileAboutDeveloper => 'О разработчике';
+
+  @override
+  String get profileEdit => 'Редактировать профиль';
+
+  @override
+  String get inviteTitle => 'Пригласи друга';
+
+  @override
+  String get inviteDescription => 'и получи баллы лояльности';
+
+  @override
+  String get inviteAction => 'Пригласить';
+
+  @override
+  String get historyTabOrders => 'Заказы';
+
+  @override
+  String get historyTabTransactions => 'Операции';
+
+  @override
+  String get historyOrdersEmpty => 'Заказов пока нет';
+
+  @override
+  String get historyTransactionsEmpty => 'Операций пока нет';
+
+  @override
+  String historyOrderNumber(String number) {
+    return 'Заказ №$number';
+  }
+
+  @override
+  String get transactionTopUp => 'Пополнение кошелька';
+
+  @override
+  String get transactionSpend => 'Оплата из кошелька';
+
+  @override
+  String get orderDetailsTitle => 'Детали заказа';
+
+  @override
+  String get orderStatusCompleted => 'Выполнен';
+
+  @override
+  String get orderStatusCancelled => 'Отменён';
+
+  @override
+  String get orderStatusAwaitingPayment => 'Ожидает оплаты';
+
+  @override
+  String get orderStatusPaymentFailed => 'Оплата не прошла';
+
+  @override
+  String get orderDetailsDate => 'Дата заказа';
+
+  @override
+  String get orderDetailsFulfilment => 'Способ получения';
+
+  @override
+  String get orderDetailsPickup => 'Самовывоз';
+
+  @override
+  String get orderDetailsPaymentMethod => 'Способ оплаты';
+
+  @override
+  String get orderDetailsOnlinePayment => 'Онлайн-оплата';
+
+  @override
+  String get orderDetailsPaymentStatus => 'Статус оплаты';
+
+  @override
+  String get orderDetailsPaid => 'Оплачен';
+
+  @override
+  String get orderDetailsComment => 'Комментарий к заказу';
+
+  @override
+  String get orderDetailsYourOrder => 'Ваш заказ';
+
+  @override
+  String get orderDetailsSubtotal => 'Сумма заказа';
+
+  @override
+  String get orderDetailsDiscount => 'Скидка';
+
+  @override
+  String get orderDetailsTotal => 'Итого';
+
+  @override
+  String get favoriteAdd => 'Добавить в избранное';
+
+  @override
+  String get favoriteRemove => 'Убрать из избранного';
+
+  @override
+  String get buyAgain => 'Купить снова';
+
+  @override
+  String get favorites => 'Избранное';
+
+  @override
+  String get favoritesEmpty => 'Избранных товаров пока нет';
+
+  @override
+  String get favoritesNoneAtBranch =>
+      'В этом филиале нет ваших избранных товаров';
+
+  @override
+  String get save => 'Сохранить';
+
+  @override
+  String get profileChangePhoto => 'Изменить фото';
+
+  @override
+  String get profilePhotoFromGallery => 'Выбрать из галереи';
+
+  @override
+  String get profilePhotoFromCamera => 'Сделать снимок';
+
+  @override
+  String get profilePhotoUnavailable =>
+      'Не удалось получить фото. Проверьте, что приложению разрешён доступ к камере и фото.';
+
+  @override
+  String get profileFirstName => 'Имя';
+
+  @override
+  String get profileLastName => 'Фамилия';
+
+  @override
+  String get profileBirthday => 'День рождения';
+
+  @override
+  String get profileBirthdayDay => 'День';
+
+  @override
+  String get profileBirthdayMonth => 'Месяц';
+
+  @override
+  String get profileBirthdayYear => 'Год';
+
+  @override
+  String get profileCity => 'Город';
+
+  @override
+  String get profileGender => 'Пол';
+
+  @override
+  String get profileGenderMale => 'Мужской';
+
+  @override
+  String get profileGenderFemale => 'Женский';
 }

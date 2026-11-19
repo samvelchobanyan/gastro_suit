@@ -42,6 +42,11 @@ abstract interface class CartRepository {
 
   Future<Cart> removeLine(String lineId, {required ContentLanguage language});
 
+  /// Adds one piece of the buy-again item [buyAgainId], as it was ordered,
+  /// to the cart of the branch it was ordered from. A cart of another
+  /// branch is replaced, as by [addItem].
+  Future<Cart> addAgain(String buyAgainId, {required ContentLanguage language});
+
   /// Moves the cart to [branchId]: it keeps its lines, each priced there.
   /// A line that branch cannot make stays, marked unavailable.
   Future<Cart> moveTo({

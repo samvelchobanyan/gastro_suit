@@ -41,3 +41,34 @@ class DSBadge extends StatelessWidget {
     );
   }
 }
+
+/// A short text on a small dark capsule, laid over a picture (handoff
+/// `BadgeCounter`): how many more there are ("+3").
+class DSBadgeCounter extends StatelessWidget {
+  const DSBadgeCounter({super.key, required this.label});
+
+  final String label;
+
+  static const _height = DSSizes.iconXs + DSSpacing.xxs;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Container(
+      constraints: const BoxConstraints(minWidth: _height, minHeight: _height),
+      padding: const EdgeInsets.symmetric(horizontal: DSSpacing.xs),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: colors.bgInverse,
+        borderRadius: BorderRadius.circular(DSRadius.full),
+      ),
+      child: Text(
+        label,
+        style: DSTypography.bodyXs.copyWith(
+          color: colors.textInverse,
+          fontFeatures: const [FontFeature.tabularFigures()],
+        ),
+      ),
+    );
+  }
+}

@@ -12,6 +12,7 @@ import 'package:gastro_suit/domain/entities/loyalty_card.dart';
 import 'package:gastro_suit/domain/entities/payment_card.dart';
 import 'package:gastro_suit/domain/entities/wallet.dart';
 import 'package:gastro_suit/domain/state/payment_cards_state.dart';
+import 'package:gastro_suit/features/auth/login_sheet/login_sheet.dart';
 import 'package:gastro_suit/features/home/home_screen/widgets/loyalty_card_block.dart';
 import 'package:gastro_suit/features/home/home_screen/widgets/wallet_block.dart';
 import 'package:gastro_suit/features/loyalty/loyalty_card_sheet/loyalty_card_sheet.dart';
@@ -64,6 +65,8 @@ void main() {
               restaurantId: 'r1',
               mapTileUrl: '',
               mapAttribution: '',
+              phoneCountryCode: '+374',
+              phoneNumberLength: 8,
             ),
           ),
           authStatusProvider.overrideWithValue(auth),
@@ -359,19 +362,68 @@ void main() {
     });
   });
 
-  group('neither is shown, and nothing is read', () {
-    testWidgets('for a guest', (tester) async {
+  group('a guest', () {
+    testWidgets('sees both empty, and nothing is read', (tester) async {
       final (loyalty, wallets) = await pumpBlocks(
         tester,
         auth: AuthStatus.signedOut,
       );
 
-      expect(find.text('Loyalty points'), findsNothing);
-      expect(find.text('Wallet balance'), findsNothing);
+      expect(find.text('Loyalty points'), findsOneWidget);
+      expect(find.text('0'), findsOneWidget);
+      expect(find.byType(QrImageView), findsNothing);
+      expect(find.text('Wallet balance'), findsOneWidget);
+      expect(find.text('֏0'), findsOneWidget);
       expect(loyalty.reads, 0);
       expect(wallets.reads, 0);
     });
 
+    testWidgets('is asked to sign in by the loyalty card', (tester) async {
+      await pumpBlocks(tester, auth: AuthStatus.signedOut);
+
+      await tester.tap(find.byType(LoyaltyCardBlock));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(LoginSheet), findsOneWidget);
+      expect(find.byType(LoyaltyCardSheet), findsNothing);
+    });
+
+    testWidgets('is asked to sign in by the wallet', (tester) async {
+      await pumpBlocks(tester, auth: AuthStatus.signedOut);
+
+      await tester.tap(find.text('Wallet balance'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(LoginSheet), findsOneWidget);
+      expect(find.byType(WalletBalanceSheet), findsNothing);
+    });
+
+    testWidgets('is asked to sign in by "Top up"', (tester) async {
+      await pumpBlocks(tester, auth: AuthStatus.signedOut);
+
+      await tester.tap(find.widgetWithText(DSButton, 'Top up'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(LoginSheet), findsOneWidget);
+      expect(find.byType(WalletTopUpSheet), findsNothing);
+    });
+
+    testWidgets('sees neither when the instance has the modules off', (
+      tester,
+    ) async {
+      await pumpBlocks(
+        tester,
+        auth: AuthStatus.signedOut,
+        loyaltyOn: false,
+        walletOn: false,
+      );
+
+      expect(find.text('Loyalty points'), findsNothing);
+      expect(find.text('Wallet balance'), findsNothing);
+    });
+  });
+
+  group('neither is shown, and nothing is read', () {
     testWidgets('when the instance has the module off', (tester) async {
       final (loyalty, wallets) = await pumpBlocks(
         tester,

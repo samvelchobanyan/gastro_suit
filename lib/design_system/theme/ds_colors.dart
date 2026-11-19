@@ -56,6 +56,8 @@ class DSColors extends ThemeExtension<DSColors> {
     required this.handleOnDark,
     required this.glassBg,
     required this.glassBorder,
+    required this.glassBgDark,
+    required this.textInverseMuted,
     required this.scrimHero,
   });
 
@@ -152,6 +154,11 @@ class DSColors extends ThemeExtension<DSColors> {
   final Color glassBg;
   final Color glassBorder;
 
+  /// A dark frosted-glass sheet over content (the sign-in sheet), and the
+  /// quieter text on it; its main text is [textInverse].
+  final Color glassBgDark;
+  final Color textInverseMuted;
+
   /// Bottom-up scrim over hero photos.
   final LinearGradient scrimHero;
 
@@ -202,6 +209,8 @@ class DSColors extends ThemeExtension<DSColors> {
     Color? handleOnDark,
     Color? glassBg,
     Color? glassBorder,
+    Color? glassBgDark,
+    Color? textInverseMuted,
     LinearGradient? scrimHero,
   }) {
     return DSColors(
@@ -250,6 +259,8 @@ class DSColors extends ThemeExtension<DSColors> {
       handleOnDark: handleOnDark ?? this.handleOnDark,
       glassBg: glassBg ?? this.glassBg,
       glassBorder: glassBorder ?? this.glassBorder,
+      glassBgDark: glassBgDark ?? this.glassBgDark,
+      textInverseMuted: textInverseMuted ?? this.textInverseMuted,
       scrimHero: scrimHero ?? this.scrimHero,
     );
   }
@@ -327,6 +338,12 @@ class DSColors extends ThemeExtension<DSColors> {
       handleOnDark: Color.lerp(handleOnDark, other.handleOnDark, t)!,
       glassBg: Color.lerp(glassBg, other.glassBg, t)!,
       glassBorder: Color.lerp(glassBorder, other.glassBorder, t)!,
+      glassBgDark: Color.lerp(glassBgDark, other.glassBgDark, t)!,
+      textInverseMuted: Color.lerp(
+        textInverseMuted,
+        other.textInverseMuted,
+        t,
+      )!,
       scrimHero: LinearGradient.lerp(scrimHero, other.scrimHero, t)!,
     );
   }
@@ -377,8 +394,10 @@ const lightColors = DSColors(
   overlayPressLight: DSPalette.alphaWhite12,
   overlayHoverDark: DSPalette.alphaBlack4,
   handleOnDark: DSPalette.alphaWhite40,
-  glassBg: DSPalette.alphaWhite64,
+  glassBg: DSPalette.alphaWhite80,
   glassBorder: DSPalette.alphaWhite24,
+  glassBgDark: DSPalette.alphaBlack78,
+  textInverseMuted: DSPalette.gray500,
   scrimHero: LinearGradient(
     begin: Alignment.bottomCenter,
     end: Alignment.topCenter,

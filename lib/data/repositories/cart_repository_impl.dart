@@ -77,6 +77,19 @@ class CartRepositoryImpl implements CartRepository {
   }
 
   @override
+  Future<Cart> addAgain(
+    String buyAgainId, {
+    required ContentLanguage language,
+  }) async {
+    // One piece; the server knows the branch and the chosen options.
+    final json = await _api.post(
+      '/orders/buy-again/$buyAgainId',
+      data: const <String, Object>{},
+    );
+    return _cart(json, language);
+  }
+
+  @override
   Future<Cart> moveTo({
     required String branchId,
     required ContentLanguage language,

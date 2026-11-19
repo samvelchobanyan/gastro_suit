@@ -3,8 +3,17 @@
 ///
 /// Throws only `AppException`.
 abstract interface class AuthRepository {
-  /// [login] is an email or a phone number.
-  Future<void> login({required String login, required String password});
+  /// Sends a sign-in code by SMS to [phone], a whole number with its
+  /// country code.
+  Future<void> requestCode(String phone);
+
+  /// Signs in with the [code] sent to [phone]. A number without an account
+  /// gets one, at the organisation [restaurantId].
+  Future<void> signInWithCode({
+    required String phone,
+    required String code,
+    required String restaurantId,
+  });
 
   /// Ends the session on this device. Signs out locally even when the server
   /// can't be reached.

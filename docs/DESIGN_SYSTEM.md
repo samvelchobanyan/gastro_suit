@@ -78,7 +78,7 @@ the hero scrim). A role set is an instance with values from the palette; there i
 
 Roles added for handoff components that use raw palette values: `skeletonBase` (gray 100)
 and `skeletonHighlight` (gray 200) for `Skeleton`; `handleOnDark` (white at 40%) for a
-sheet's handle lying over a photo (`ProductOverlay`). `glassBg` (white at 64%) and
+sheet's handle lying over a photo (`ProductOverlay`). `glassBg` (white at 80%) and
 `glassBorder` (white at 24%) are the handoff's `--glass-bg` and `--glass-border`: a
 frosted surface floating over content, blurred by `DSSizes.glassBlur`.
 
@@ -195,7 +195,7 @@ with real content (see §7).
 
 | Component | Handoff | What it is |
 |---|---|---|
-| `DSBottomNavigation` | `BottomNavigation` | Flat bar, hairline on top, 48 high; the active item is the brand colour with a filled icon |
+| `DSBottomNavigation` | `NavFloatingIcons` | A glass pill of icons floating over the content, 48 high; a plate slides under the active icon, which is filled and the brand colour. Labels are for screen readers only |
 | `DSSkeleton` | `Skeleton` | A loading shape (box or circle) with a sweeping band; blocks compose their own skeletons from it |
 | `DSNetworkImage` | — | A cached network picture; a recessed fill while loading, with an image icon on error or without an address |
 | `DSStatusPill` | `StatusPill` | A short state label on a tonal capsule (Open / Closed); tones `success`, `error` so far — the handoff's `warning` and `neutral` are added when used |

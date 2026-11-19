@@ -1,6 +1,7 @@
 import 'package:gastro_suit/core/config/server_config.dart';
 import 'package:gastro_suit/domain/entities/loyalty_card.dart';
 import 'package:gastro_suit/domain/entities/wallet.dart';
+import 'package:gastro_suit/domain/entities/wallet_movement.dart';
 import 'package:gastro_suit/domain/repositories/loyalty_repository.dart';
 import 'package:gastro_suit/domain/repositories/server_config_repository.dart';
 import 'package:gastro_suit/domain/repositories/wallet_repository.dart';
@@ -59,6 +60,17 @@ class FakeWalletRepository implements WalletRepository {
     reads++;
     if (error case final error?) throw error;
     return wallet;
+  }
+
+  /// What moved through the wallet; [getMovements] answers with it.
+  var movements = <WalletMovement>[];
+
+  @override
+  Future<List<WalletMovement>> getMovements({
+    required String restaurantId,
+  }) async {
+    if (error case final error?) throw error;
+    return movements;
   }
 
   /// Every amount the wallet was topped up by.

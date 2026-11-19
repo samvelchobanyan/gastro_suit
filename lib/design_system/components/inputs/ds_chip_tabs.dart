@@ -5,14 +5,27 @@ import '../../ds_extensions.dart';
 
 /// One chip of a [DSChipTabs]: the value it stands for and its text.
 class DSChipTab<T> {
-  const DSChipTab({required this.value, required this.label});
+  const DSChipTab({required this.value, required this.label, this.icon});
 
   final T value;
   final String label;
+
+  /// Drawn before the text in a [DSChipTabsSize.small] row only.
+  final IconData? icon;
 }
 
-/// A row of compact chips, one of them selected (handoff `TabBar`, size
-/// `xs`). Scrolls sideways when the chips do not fit.
+/// The handoff `TabBar`'s two compact sizes: the chips are the same, the
+/// text is not.
+enum DSChipTabsSize {
+  /// Small text, no icons.
+  xs,
+
+  /// Body text, with the chips' icons.
+  small,
+}
+
+/// A row of compact chips, one of them selected (handoff `TabBar`, sizes
+/// `xs` and `small`). Scrolls sideways when the chips do not fit.
 ///
 /// The selected chip is kept in view: when the selection changes to a chip
 /// that is off the row's edge, wholly or in part, the row scrolls just far
@@ -23,10 +36,12 @@ class DSChipTabs<T> extends StatefulWidget {
     required this.options,
     required this.value,
     required this.onChanged,
+    this.size = DSChipTabsSize.xs,
     this.padding = EdgeInsets.zero,
   });
 
   final List<DSChipTab<T>> options;
+  final DSChipTabsSize size;
 
   /// The selected option's value; none is selected when no option has it.
   final T? value;
@@ -121,6 +136,12 @@ class _DSChipTabsState<T> extends State<DSChipTabs<T>> {
             _Chip(
               key: options[i].value == widget.value ? _selectedKey : null,
               label: options[i].label,
+              icon: widget.size == DSChipTabsSize.small
+                  ? options[i].icon
+                  : null,
+              textStyle: widget.size == DSChipTabsSize.small
+                  ? DSTypography.bodySemibold
+                  : DSTypography.bodySmSemibold,
               selected: options[i].value == widget.value,
               onTap: () => widget.onChanged(options[i].value),
             ),
@@ -135,17 +156,27 @@ class _Chip extends StatelessWidget {
   const _Chip({
     super.key,
     required this.label,
+    required this.icon,
+    required this.textStyle,
     required this.selected,
     required this.onTap,
   });
 
   final String label;
+  final IconData? icon;
+  final TextStyle textStyle;
   final bool selected;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final color = selected ? colors.textAccent : colors.textTertiary;
+    final text = Text(
+      label,
+      maxLines: 1,
+      style: textStyle.copyWith(color: color),
+    );
     return Semantics(
       button: true,
       selected: selected,
@@ -166,13 +197,16 @@ class _Chip extends StatelessWidget {
                   )
                 : null,
           ),
-          child: Text(
-            label,
-            maxLines: 1,
-            style: DSTypography.bodySmSemibold.copyWith(
-              color: selected ? colors.textAccent : colors.textTertiary,
-            ),
-          ),
+          child: icon == null
+              ? text
+              : Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(icon, size: DSSizes.iconXs, color: color),
+                    const SizedBox(width: DSSpacing.xs),
+                    text,
+                  ],
+                ),
         ),
       ),
     );

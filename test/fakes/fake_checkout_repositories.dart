@@ -1,4 +1,5 @@
 import 'package:gastro_suit/core/locale/content_language.dart';
+import 'package:gastro_suit/domain/entities/buy_again.dart';
 import 'package:gastro_suit/domain/entities/order.dart';
 import 'package:gastro_suit/domain/entities/payment_card.dart';
 import 'package:gastro_suit/domain/repositories/order_repository.dart';
@@ -30,6 +31,49 @@ class FakeOrderRepository implements OrderRepository {
     recentReads++;
     if (recentError case final error?) throw error;
     return recent;
+  }
+
+  /// The pages of the history, in order; [getOrders] answers with them.
+  var pages = <List<Order>>[];
+
+  /// Every page of the history that was read.
+  final pagesRead = <int>[];
+
+  /// Thrown by the next reads of the history when set.
+  Object? pageError;
+
+  @override
+  Future<OrderPage> getOrders({
+    required int page,
+    required ContentLanguage language,
+  }) async {
+    if (pageError case final error?) throw error;
+    pagesRead.add(page);
+    return (
+      orders: page <= pages.length ? pages[page - 1] : const <Order>[],
+      hasMore: page < pages.length,
+    );
+  }
+
+  @override
+  Future<Order> getOrder(String id, ContentLanguage language) async {
+    if (pageError case final error?) throw error;
+    return [
+      ...pages.expand((page) => page),
+      ...recent,
+    ].firstWhere((order) => order.id == id);
+  }
+
+  /// What [getBuyAgain] answers with.
+  var buyAgain = <BuyAgainItem>[];
+
+  /// How many times the buy-again list was read.
+  var buyAgainReads = 0;
+
+  @override
+  Future<List<BuyAgainItem>> getBuyAgain(ContentLanguage language) async {
+    buyAgainReads++;
+    return buyAgain;
   }
 
   @override

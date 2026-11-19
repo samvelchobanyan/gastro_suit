@@ -1,4 +1,4 @@
-package com.example.gastro_suit
+package am.gastro.app
 
 import io.flutter.embedding.android.FlutterActivity
 

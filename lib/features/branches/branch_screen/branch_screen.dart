@@ -14,7 +14,7 @@ import '../../../domain/state/branches_state.dart';
 import '../../../domain/state/cart_state.dart';
 import '../../../domain/state/menu_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
-import '../../auth/login_screen/login_screen.dart';
+import '../../auth/login_sheet/login_sheet.dart';
 import '../../cart/cart_sheet/cart_sheet.dart';
 import '../../menu/menu_block/menu_block.dart';
 import '../../menu/menu_block/menu_block_skeleton.dart';

@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../domain/entities/wallet.dart';
+import '../../domain/entities/wallet_movement.dart';
 
 part 'wallet_dto.g.dart';
 
@@ -35,6 +36,45 @@ class WalletDto {
       expiring: expiring,
       // A date with nothing to expire says nothing.
       expiresAt: expiring > 0 ? expiryDate?.toLocal() : null,
+    );
+  }
+}
+
+/// `WalletMovementResponse`: one top-up or one spend.
+@JsonSerializable(createToJson: false)
+class WalletMovementDto {
+  const WalletMovementDto({
+    required this.id,
+    this.type,
+    this.status,
+    this.amount,
+    this.createdAt,
+  });
+
+  factory WalletMovementDto.fromJson(Map<String, dynamic> json) =>
+      _$WalletMovementDtoFromJson(json);
+
+  final String id;
+  final String? type;
+  final String? status;
+  final num? amount;
+  final DateTime? createdAt;
+
+  /// Null for a movement that did not happen (not paid for yet, failed) or
+  /// that cannot be read.
+  WalletMovement? toDomain() {
+    final kind = switch (type) {
+      'wallet_topup' => WalletMovementKind.topUp,
+      'wallet_spend' => WalletMovementKind.spend,
+      _ => null,
+    };
+    final at = createdAt;
+    if (kind == null || at == null || status != 'success') return null;
+    return WalletMovement(
+      id: id,
+      kind: kind,
+      amount: amount?.round().abs() ?? 0,
+      at: at.toLocal(),
     );
   }
 }

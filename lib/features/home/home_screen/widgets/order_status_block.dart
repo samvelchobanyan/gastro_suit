@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../../../core/navigation/app_routes.dart';
 import '../../../../design_system/ds_extensions.dart';
 import '../../../../domain/entities/order.dart';
 import '../../../../domain/state/active_orders_state.dart';
@@ -10,7 +12,7 @@ import '../../../../l10n/generated/app_localizations.dart';
 
 /// Home's status of the orders on their way, one card an order, newest
 /// first. Takes no room when there is none, while they load, or when they
-/// fail to load: Home works without it.
+/// fail to load: Home works without it. A card opens its order in full.
 class OrderStatusBlock extends ConsumerWidget {
   const OrderStatusBlock({super.key});
 
@@ -27,7 +29,14 @@ class OrderStatusBlock extends ConsumerWidget {
           for (final order in orders)
             Padding(
               padding: const EdgeInsets.only(bottom: DSSpacing.base),
-              child: _OrderCard(order: order),
+              child: Semantics(
+                button: true,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => context.push(AppRoutes.orderOf(order.id)),
+                  child: _OrderCard(order: order),
+                ),
+              ),
             ),
         ],
       ),

@@ -125,15 +125,25 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   `GET /menu/items/{id}/recommended`), drawn by `RecommendedProductsRail` with the same
   row of cards as the Order tab's featured rail (`ProductCardsRail`).
 
-## 6. Buy again — agreed
+## 6. Buy again — built (revised 2026-11-18)
 
-- `BuyAgainItem` lives in the Home feature (one consumer): `ProductChoice` + branch
-  (id, name) + last purchase date.
-- Built from order history: lines grouped by (choice, branch), most recent first. The
-  image comes from the menu by product id.
-- Tap: the active branch becomes the item's branch, then the choice is added to the cart.
-- Open (screen behaviour): unavailable product or option, duplicates in one branch,
-  which price to show.
+- A buy-again item is a product as it was chosen and a branch, nothing else: not
+  tied to an order. The same product with other options, or at another branch, is
+  another item. Not built from the order history any more.
+- `GET /orders/buy-again` lists the items (no branch named, 10 of them);
+  `POST /orders/buy-again/{againId}` puts one into the cart as it was ordered and
+  answers with the cart (both checked 2026-11-18). So `BuyAgainItem` holds no
+  `ProductChoice`: the options stay on the server; the app keeps the id, the name,
+  the picture, the branch and whether it can be made.
+- `CartController.addAgain` applies the cart the server answers with and makes its
+  branch the active one. The server replaces a cart of another branch without
+  asking, so the block asks first (`confirmReplaceCart`), as every add does.
+- The list is shared state (`buyAgainProvider`), read again after an order is placed
+  and after a refused add (the item may be gone or stopped).
+- An item with `available: false` is greyed and takes no tap. Not seen on the dev
+  server: the test account has none.
+- Repeating a whole order is another thing: `GET` and `POST /orders/{id}/repeat`
+  (checked 2026-11-18), for the history; not built.
 
 ## 7. Default and active branch — agreed (revised 2026-11-09)
 
@@ -280,8 +290,9 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - `gatewayOrderId` is not part of `Order` either, but placing an order answers with it
   next to the order while the order awaits payment (`PlacedOrder.paymentReference`):
   paying with a saved card takes it.
-- Built so far (§16, §17): the id, the status, the number, the branch name and the time. The lines and
-  the amounts are mapped with the screens that show them.
+- Built in full since the history (§22): the lines, the amounts, the branch's id and
+  address, the time it was placed, the comment. `paymentStatus` is read only as
+  "paid or not" (`captured`): its other values are not documented.
 
 ## 14. Voucher mapping (`GET /loyalty/entitlements` → `Voucher`) — agreed
 
@@ -312,6 +323,18 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
 - A list of loyalty tiers, if a screen needs it.
 - Paid membership (the design has membership levels and buying one for a number of
   months); the API has nothing for it.
+- A list of all the money that moved (card payments, voucher purchases, loyalty
+  points earned and spent) for the history's "Transactions"; today only
+  `GET /wallet/history` exists.
+- Repeating an order in one request; today the app would add its lines to the cart
+  one by one.
+- The time an order was handed over and the number of guests, if the order's details
+  are to show them; and the values `paymentStatus` can take.
+- What the profile's `city` is meant to hold. It takes any text; the app saves the
+  id of a city from `GET /branches/cities`, so that it does not depend on the
+  language (§24).
+- Module flags in `GET /config` for the paid status and for "invite a friend", as
+  `modules.loyalty` and `modules.wallet` are: both are to be turned on per client.
 - Expiry of loyalty points (the PRD shows expiry dates and "expiring soon"; the API has
   nothing for points).
 - Voucher validity date (the API has none).
@@ -372,7 +395,10 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   flag through its provider; nothing else checks modules yet.
 - `loyaltyCardProvider` and `walletProvider` (`domain/state/`) are none for a guest and
   with the module off, without a request; they wait for `/config` first. Home's blocks
-  take no room without a value: while loading, on a failure, for a guest.
+  take no room without a value for a signed-in user: while loading, on a failure.
+  For a guest each block draws itself empty when its module is on (2026-11-19): the
+  zero is the block's, the providers stay none, so nothing else takes a guest for a
+  user with an empty wallet.
 - Wallet mapping (`GET /wallet/balance`): `total`, `ownTopUp`, `giftCard` → gifts,
   `expiring` with `expiryDate` → what expires next (no date when nothing expires).
   `promo` is not read. On the dev server `ownTopUp` and `giftCard` equal the POS's
@@ -424,3 +450,144 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   before the first came back. The tap is dropped without a sign. Agreed as the simple
   way for now; the other way is a number that changes at once with the changes sent in
   turn.
+
+## 21. Profile and the app's language (2026-11-17)
+
+- `Profile` holds what the screen shows of `GET /profile`: name, surname, phone,
+  email, photo, the ids of the favourite products. `profileProvider` is shared state:
+  none for a guest, loaded again on sign-in and sign-out.
+- The count on "Favorite products" comes from the favourites (§23), not from the
+  profile: `favoriteItemIds` of `GET /profile` is not read, so that the set has one
+  owner.
+- Deleting the account is `DELETE /profile` with `{confirm: "DELETE"}`; the tokens
+  are dropped after the server takes it. The server answers "deletion requested":
+  whether the account is gone at once is not known. Not tried against the dev server,
+  as it cannot be undone.
+- The app's language is owned by `AppLanguageStorage` (`core/locale/`): the user's
+  choice on the phone, in memory for synchronous reads, loaded in `main` before
+  `runApp`. Without a choice it is the device's language if supported, otherwise
+  English. `appLanguageProvider` follows it; `MaterialApp.locale`, the
+  `Accept-Language` header and content mapping all read that one value, so a change
+  shows at once and reloads the server's content.
+- `appLanguageStorageProvider` does not throw when left without an override, unlike
+  `tokenStorageProvider`: a storage that was never loaded stands for "no choice
+  saved", which is a valid state and keeps tests free of an override they do not care
+  about. A deviation from the knowledge base's `async-init-provider-override`.
+- The tiles of the product's sizes and of the languages share one frame,
+  `DSSelectTile`.
+
+## 22. History and order details (2026-11-17)
+
+- Both screens live in `features/history/`: `history_screen` (the tabs are its
+  widgets, each with its own controller next to the screen) and
+  `order_details_screen`. Routes outside the shell: `/history`, `/orders/:id`.
+- The orders are screen state (`orderHistoryProvider`, auto-disposed): read a page of
+  20 at a time, the next one when the list is scrolled to its end. Orders never paid
+  for are dropped on the client (`Order.isInHistory`), so a page may add nothing; the
+  controller then reads on until the list grows or the pages end.
+- An order's details are read by id (`GET /orders/{id}`) on opening, so the status is
+  the current one whether the screen was opened from the history or from Home.
+- A line's photo is looked up in the menu of the order's branch
+  (`OrderProductImage`): one menu request per branch in the list, shared with every
+  other reader of that menu.
+- `WalletMovement` is what `GET /wallet/history` gives, kept only when
+  `status == success`; sorted newest first on the client, as the order of the answer
+  is not promised.
+
+## 23. Favourites (2026-11-17)
+
+- The favourites are a set of product ids, shared state (`favoritesProvider`): empty
+  for a guest, loaded with `GET /favorites` on sign-in. No entity and no DTO: the
+  server's answer is a list of ids.
+- A change is applied at once and sent (`POST` / `DELETE /favorites/{itemId}`); a
+  refused one puts that one product back and throws. Nothing is computed on the
+  server here, unlike the cart, so the instant change is safe. The set the server
+  answers with is not applied: another change may be on its way.
+- The screen resolves the ids against the active branch's menu, which the app
+  already holds (DOMAIN_SPEC §1.3). `GET /favorites/items` is not used: it would
+  bring products priced at other branches, which the screen does not show.
+- `formatPortion` moved from the product sheet to `core/utils/`: the favourites' row
+  shows the portion too. With sizes the row shows the smallest size's portion, next
+  to the smallest size's price.
+- `ListPlaceholder` (loading, failed, empty) moved from the history to
+  `features/shared_widgets/`: the favourites use it too.
+
+## 24. Editing the profile (2026-11-18)
+
+- `Profile` holds the birthday, the city and the gender too. `profileProvider` is a
+  controller now: `save` and `setPhoto` keep the profile the server answers with, so
+  every screen shows a change without reading the profile again.
+- The form is `EditProfileController` next to the screen: the draft, the draft it
+  was opened with, saving, the refusal. It reads the profile once, so a new photo
+  does not throw away what was entered. The birthday is three parts in the draft;
+  a day the chosen month does not have is dropped.
+- `PATCH /profile` is sent whole: an empty text or a null clears a value. The city
+  is sent as it is held, so a text saved elsewhere is not lost by saving the form.
+- The photo goes with `PUT /profile/photo` (`ApiClient.putImage`). The server
+  refuses an image that comes without its kind (`image_type_mismatch`, checked
+  2026-11-18), so the file is sent as the kind its name ends with.
+- The picture is taken with `image_picker`, made no larger than 1024 on a side: far
+  under the server's 5 MB, and a JPEG or a PNG. iOS asks for the camera and the
+  photos with the texts in `Info.plist`; Android needs no permission.
+
+## 25. Buy again and favourites on Home (2026-11-18)
+
+- `QuickOrderBlock`: two rails under two tabs, between the wallet and the banners.
+  A tab with nothing in it is not shown; with neither, the block is not shown. Buy
+  again comes first. The buy-again rail is §6.
+- Favourites are products without options: the rail shows the product, not a saved
+  choice. A tap puts one piece into the active branch's cart with the choices the
+  product starts with (default size, pre-selected options) and opens the cart. A
+  product whose required choice has no default opens its sheet instead. The cards
+  carry no plus.
+- This differs from the plus in the menu, which opens the sheet for any product
+  with choices (§3).
+- A favourite the active branch sells is read from its menu. The others come from
+  `GET /favorites/items` (`favoriteProductsProvider`) and are shown greyed, as a
+  stopped product, without a tap. The favourites screen still lists only what the
+  branch sells (§23).
+- Home now loads the active branch's menu while the user has favourites.
+- `DSChipTabs` has the handoff's `small` size: body text and an icon in the chip.
+
+## 26. Signing in by phone (2026-11-19)
+
+- `POST /auth/request-otp` sends the code, `POST /auth/verify-otp` trades it for the
+  token pair and makes the account when the number has none (`restaurantId` says at
+  which organisation). `AuthRepository` has these two and `logout`; signing in by
+  password is removed with the temporary screen and its route.
+- Not called against the dev server: the first request sends a real SMS. The requests'
+  shape is from the API description; the first real sign-in is on a device.
+- The steps are `LoginSheetController` next to the sheet (step, number, busy, resent,
+  refusal). The code's length is its constant (6). `ensureSignedIn` opens the sheet
+  and is still the one way an action asks for an account.
+- The country code and the number's length are the client's, not the sheet's:
+  `PHONE_COUNTRY_CODE` and `PHONE_NUMBER_LENGTH` in the build config (`AppConfig`).
+  A build config without them fails at startup and names what is missing.
+- `DSCodeField` is one field behind the cells, not a field per cell as the handoff's
+  `InputCode`: a code pasted or filled in from the SMS lands in all the cells, and
+  backspace needs no handling of its own.
+- `DSTextField` has the handoff's `lg` size (48), a leading icon, a fixed prefix and a
+  cross that empties it.
+- The theme has two colours for the dark glass sheet: `glassBgDark` and
+  `textInverseMuted`. The two lights behind the glass are drawn from the theme's
+  colours with the opacities the page gives them, kept in the sheet: they are that
+  page's own, not tokens.
+- The two pictures are in `assets/images/` (`login_phone.png`, `login_code.png`).
+
+## 27. Floating navigation (2026-11-19)
+
+- `DSBottomNavigation` is still the app's own widget in `Scaffold.bottomNavigationBar`;
+  `MainShell` now sets `extendBody`, so a tab is laid out under the navigation and
+  gets its height (the pill, the margin under it, the system inset) as
+  `MediaQuery.padding.bottom`.
+- Each tab leaves that room at the end of its scroll itself: Home, Profile, the Order
+  tab's products (with the cart bar lifted by it) and its branch list. Screens pushed
+  over the shell have no navigation and are unchanged. A new tab screen must do the
+  same, or its last content stays under the pill.
+- The items are not the tabs one to one: `MainShell` keeps, for each item, the tab it
+  shows or none. The loyalty card's item shows none; the shell opens the card or the
+  sign-in sheet. The navigation only reports the item tapped.
+- The plate's travel is `DSMotion.slower` with `DSMotion.emphasized` (both new, from
+  `motion.css`); its squash and the icon's pop are the component's own keyframes. With
+  the system's animations off nothing moves.
+

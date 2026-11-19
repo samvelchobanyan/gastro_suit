@@ -4,27 +4,41 @@ import 'package:intl/intl.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../../../../core/auth/auth_status.dart';
 import '../../../../design_system/ds_extensions.dart';
 import '../../../../domain/state/loyalty_card_state.dart';
+import '../../../../domain/state/server_config_state.dart';
 import '../../../../l10n/generated/app_localizations.dart';
+import '../../../auth/login_sheet/login_sheet.dart';
 import '../../../loyalty/loyalty_card_sheet/loyalty_card_sheet.dart';
 
 /// Home's loyalty card (handoff `LoyaltyPointsCard`): the points, the tier
 /// and the card's code. Opens the card for the cashier to scan.
 ///
-/// Takes no room for a guest, without a loyalty programme, while the card
-/// loads, or when it fails to load.
+/// A guest sees the card empty, with no points, tier or code, and is asked
+/// to sign in on tapping it.
+///
+/// Takes no room without a loyalty programme, and for a signed-in user
+/// while the card loads or when it fails to load.
 class LoyaltyCardBlock extends ConsumerWidget {
   const LoyaltyCardBlock({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final guest = ref.watch(authStatusProvider) != AuthStatus.signedIn;
     final card = ref.watch(loyaltyCardProvider).value;
-    if (card == null) return const SizedBox.shrink();
+    if (guest) {
+      final config = ref.watch(serverConfigProvider).value;
+      if (config == null || !config.loyaltyEnabled) {
+        return const SizedBox.shrink();
+      }
+    } else if (card == null) {
+      return const SizedBox.shrink();
+    }
 
     final colors = context.colors;
     final l10n = AppLocalizations.of(context);
-    final tier = card.tier;
+    final tier = card?.tier;
     final locale = Localizations.localeOf(context).toLanguageTag();
 
     return Padding(
@@ -36,10 +50,11 @@ class LoyaltyCardBlock extends ConsumerWidget {
       ),
       child: Semantics(
         button: true,
-        label: l10n.loyaltyShowCard,
+        label: guest ? l10n.signIn : l10n.loyaltyShowCard,
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTap: () => showLoyaltyCard(context),
+          onTap: () =>
+              guest ? showLoginSheet(context) : showLoyaltyCard(context),
           child: Container(
             constraints: const BoxConstraints(
               minHeight: DSSizes.loyaltyCardHeight,
@@ -75,7 +90,9 @@ class LoyaltyCardBlock extends ConsumerWidget {
                         ),
                       ),
                       Text(
-                        NumberFormat.decimalPattern(locale).format(card.points),
+                        NumberFormat.decimalPattern(
+                          locale,
+                        ).format(card?.points ?? 0),
                         style: DSTypography.h1.copyWith(
                           color: colors.textInverse,
                         ),
@@ -87,23 +104,25 @@ class LoyaltyCardBlock extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: DSSpacing.md),
-                ExcludeSemantics(
-                  child: QrImageView(
-                    data: card.number,
-                    size: DSSizes.loyaltyCardQr,
-                    padding: EdgeInsets.zero,
-                    backgroundColor: Colors.transparent,
-                    eyeStyle: QrEyeStyle(
-                      eyeShape: QrEyeShape.square,
-                      color: colors.textInverse,
-                    ),
-                    dataModuleStyle: QrDataModuleStyle(
-                      dataModuleShape: QrDataModuleShape.square,
-                      color: colors.textInverse,
+                if (card != null) ...[
+                  const SizedBox(width: DSSpacing.md),
+                  ExcludeSemantics(
+                    child: QrImageView(
+                      data: card.number,
+                      size: DSSizes.loyaltyCardQr,
+                      padding: EdgeInsets.zero,
+                      backgroundColor: Colors.transparent,
+                      eyeStyle: QrEyeStyle(
+                        eyeShape: QrEyeShape.square,
+                        color: colors.textInverse,
+                      ),
+                      dataModuleStyle: QrDataModuleStyle(
+                        dataModuleShape: QrDataModuleShape.square,
+                        color: colors.textInverse,
+                      ),
                     ),
                   ),
-                ),
+                ],
               ],
             ),
           ),

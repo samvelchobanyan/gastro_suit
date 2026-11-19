@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +18,9 @@ import 'l10n/generated/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Configuration comes from the native files (google-services.json,
+  // GoogleService-Info.plist), so each brand ships its own.
+  await Firebase.initializeApp();
 
   final config = AppConfig.fromEnvironment();
 
@@ -24,10 +28,13 @@ Future<void> main() async {
   await tokenStorage.init();
   await _dropSessionIfApiChanged(config, tokenStorage);
 
+  final languageStorage = AppLanguageStorage();
+  await languageStorage.init();
+
   final apiClient = ApiClient(
     baseUrl: config.apiBaseUrl,
     interceptors: [
-      LocaleInterceptor(appLanguageCode),
+      LocaleInterceptor(() => languageStorage.code),
       AuthInterceptor(
         tokenStorage: tokenStorage,
         sessionClient: Dio(
@@ -49,6 +56,7 @@ Future<void> main() async {
       overrides: [
         appConfigProvider.overrideWithValue(config),
         tokenStorageProvider.overrideWithValue(tokenStorage),
+        appLanguageStorageProvider.overrideWithValue(languageStorage),
         apiClientProvider.overrideWithValue(apiClient),
       ],
       child: const App(),
@@ -80,7 +88,9 @@ class App extends ConsumerWidget {
     return MaterialApp.router(
       theme: buildAppTheme(lightColors),
       routerConfig: ref.watch(routerProvider),
-      // The device language if supported, otherwise English (the first entry).
+      // The user's choice; until they choose, the device language if
+      // supported, otherwise English.
+      locale: Locale(ref.watch(appLanguageProvider)),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,

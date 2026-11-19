@@ -49,6 +49,9 @@ class ProductsTab extends ConsumerWidget {
       );
     }
 
+    // What floats over the tab's end: the navigation.
+    final bottomInset = MediaQuery.paddingOf(context).bottom;
+
     return Stack(
       children: [
         RefreshIndicator(
@@ -64,13 +67,21 @@ class ProductsTab extends ConsumerWidget {
               // Room for the last products to scroll clear of the bar.
               SliverToBoxAdapter(
                 child: SizedBox(
-                  height: CartBar.heightFor(MediaQuery.textScalerOf(context)),
+                  height:
+                      CartBar.heightFor(MediaQuery.textScalerOf(context)) +
+                      bottomInset,
                 ),
               ),
             ],
           ),
         ),
-        const Align(alignment: Alignment.bottomCenter, child: CartBar()),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: EdgeInsets.only(bottom: bottomInset),
+            child: const CartBar(),
+          ),
+        ),
       ],
     );
   }

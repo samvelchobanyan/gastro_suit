@@ -129,6 +129,8 @@ void main() {
               restaurantId: 'r1',
               mapTileUrl: 'http://tiles.test/{z}/{x}/{y}.png',
               mapAttribution: '© Test Maps',
+              phoneCountryCode: '+374',
+              phoneNumberLength: 8,
             ),
           ),
           branchesControllerProvider.overrideWith(

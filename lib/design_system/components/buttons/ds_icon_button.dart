@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../ds_extensions.dart';
 
-/// How an icon button is painted. The handoff's `ghost` is added when used.
+/// How an icon button is painted.
 enum DSIconButtonVariant {
+  /// No fill: an action that sits in a row of its own content (the heart of
+  /// a favourite).
+  ghost,
+
   /// The brand fill: the main action of its place (add to cart).
   filled,
 
@@ -11,9 +15,9 @@ enum DSIconButtonVariant {
   tonal,
 }
 
-/// Compact sizes; the handoff's others are added when used. Both are below
+/// Compact sizes; the handoff's others are added when used. All are below
 /// the 48 touch minimum, so leave room around them.
-enum DSIconButtonSize { xs, sm }
+enum DSIconButtonSize { xxs, xs, sm }
 
 /// The outline of an icon button.
 enum DSIconButtonShape {
@@ -35,6 +39,7 @@ class DSIconButton extends StatefulWidget {
     required this.variant,
     required this.size,
     this.shape = DSIconButtonShape.circle,
+    this.active = false,
   });
 
   final IconData icon;
@@ -45,6 +50,10 @@ class DSIconButton extends StatefulWidget {
   final DSIconButtonVariant variant;
   final DSIconButtonSize size;
   final DSIconButtonShape shape;
+
+  /// The button's state is on (a favourite): a `ghost` button draws its
+  /// icon in the brand colour. The caller gives the filled icon.
+  final bool active;
 
   @override
   State<DSIconButton> createState() => _DSIconButtonState();
@@ -59,10 +68,15 @@ class _DSIconButtonState extends State<DSIconButton> {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final (diameter, iconSize) = switch (widget.size) {
+      DSIconButtonSize.xxs => (DSSizes.buttonHeightXxs, DSSizes.iconXs),
       DSIconButtonSize.xs => (DSSizes.buttonHeightXs, DSSizes.iconXs),
       DSIconButtonSize.sm => (DSSizes.buttonHeightSm, DSSizes.iconSm),
     };
     final (background, foreground) = switch (widget.variant) {
+      DSIconButtonVariant.ghost => (
+        _pressed ? colors.overlayPressDark : null,
+        widget.active ? colors.brandPrimary : colors.textPrimary,
+      ),
       DSIconButtonVariant.filled => (
         _pressed ? colors.brandInteractive : colors.brandPrimary,
         colors.textOnBrand,

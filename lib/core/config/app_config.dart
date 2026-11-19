@@ -11,6 +11,8 @@ class AppConfig {
     required this.restaurantId,
     required this.mapTileUrl,
     required this.mapAttribution,
+    required this.phoneCountryCode,
+    required this.phoneNumberLength,
   });
 
   /// Reads the values the build was started with. Fails at startup, not on the
@@ -32,6 +34,16 @@ class AppConfig {
       mapAttribution: _require(
         'MAP_ATTRIBUTION',
         const String.fromEnvironment('MAP_ATTRIBUTION'),
+      ),
+      phoneCountryCode: _require(
+        'PHONE_COUNTRY_CODE',
+        const String.fromEnvironment('PHONE_COUNTRY_CODE'),
+      ),
+      phoneNumberLength: int.parse(
+        _require(
+          'PHONE_NUMBER_LENGTH',
+          const String.fromEnvironment('PHONE_NUMBER_LENGTH'),
+        ),
       ),
     );
   }
@@ -61,6 +73,13 @@ class AppConfig {
   /// The credit the tile provider's licence requires on the map, e.g.
   /// `© OpenStreetMap`. Changes together with [mapTileUrl].
   final String mapAttribution;
+
+  /// The country code of the phone numbers the client's guests sign in
+  /// with, e.g. `+374`. One country per build.
+  final String phoneCountryCode;
+
+  /// How many digits such a number has after [phoneCountryCode].
+  final int phoneNumberLength;
 }
 
 /// Built in `main` and injected through `ProviderScope.overrides`.

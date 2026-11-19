@@ -114,6 +114,35 @@ class ApiClient {
     ),
   );
 
+  /// Sends the image file at [filePath] as the form field [field].
+  ///
+  /// The file is sent as the kind of image its name says it is: the server
+  /// refuses an image that comes without its kind.
+  Future<dynamic> putImage(
+    String path, {
+    required String field,
+    required String filePath,
+  }) => _send(() async {
+    final name = filePath.split(RegExp(r'[/\\]')).last;
+    final subtype = switch (name.split('.').last.toLowerCase()) {
+      'png' => 'png',
+      'webp' => 'webp',
+      'gif' => 'gif',
+      _ => 'jpeg',
+    };
+    return _dio.put<dynamic>(
+      path,
+      data: FormData.fromMap({
+        field: await MultipartFile.fromFile(
+          filePath,
+          filename: name,
+          contentType: DioMediaType('image', subtype),
+        ),
+      }),
+      options: _options(false),
+    );
+  });
+
   Options _options(bool public) => Options(extra: {kPublicRequest: public});
 
   Future<dynamic> _send(Future<Response<dynamic>> Function() request) async {
