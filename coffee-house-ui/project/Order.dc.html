@@ -28,6 +28,7 @@
     body { margin: 0; min-height: 100vh; box-sizing: border-box; padding: var(--space-lg) 0; background: var(--gray-100); font-family: "Plus Jakarta Sans", system-ui, sans-serif; display: flex; align-items: center; justify-content: center; }
     *::-webkit-scrollbar { display: none; }
     * { scrollbar-width: none; }
+    nav[aria-label="Primary"] { background: var(--glass-bg) !important; border: 1px solid var(--glass-border); backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur)); }
   </style>
 </helmet>
 <div style="width: 360px; background: var(--color-bg-surface); overflow: hidden; height: 800px; display: flex; flex-direction: column; flex: 0 0 auto; position: relative;">
@@ -41,7 +42,7 @@
   </div>
 
   <!-- Scrollable content -->
-  <div ref="{{ scrollContainerRef }}" onScroll="{{ handleScroll }}" style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none;">
+  <div ref="{{ scrollContainerRef }}" onScroll="{{ handleScroll }}" style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding-bottom: calc(var(--bottomnav-height-labeled) + var(--space-base) + var(--space-md)); box-sizing: border-box;">
     <sc-if value="{{ showProducts }}" hint-placeholder-val="{{ true }}">
       <div style="padding: 0 var(--space-base) var(--space-base);">
         <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Featured products" hint-size="100%,28px"></x-import>
@@ -111,7 +112,7 @@
     </sc-if>
     <!-- Cart bar -->
     <sc-if value="{{ showProducts }}" hint-placeholder-val="{{ true }}">
-      <div style="position: sticky; bottom: 0; z-index: 3; background: transparent; padding: 0 var(--space-base) var(--space-base);">
+      <div style="position: sticky; bottom: 0; z-index: 3; background: transparent; padding: 0 var(--space-base);">
         <div style="display: flex; align-items: flex-end; gap: var(--space-sm); width: 100%; padding: var(--space-sm); border-radius: var(--radius-md); box-sizing: border-box; background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur));">
           <div style="flex: 1; min-width: 0; position: relative;">
             <x-import component-from-global-scope="GastroDesignSystem_472aed.Dropdown" label="Nearest location" value="loc-1" options="{{ cartLocationOptions }}" on-change="{{ noop }}" hint-size="100%,56px"></x-import>
@@ -130,11 +131,8 @@
   <dc-import name="BasketOverlay" visible="{{ basketVisible }}" on-close="{{ closeBasket }}" hint-size="360px,800px"></dc-import>
   <dc-import name="LocationBottomSheet" open="{{ cartLocationSheetOpen }}" on-close="{{ closeCartLocationSheet }}" on-select="{{ selectCartLocation }}" hint-size="360px,800px"></dc-import>
   <dc-import name="BranchSingleView" visible="{{ branchViewVisible }}" branch="{{ branchViewData }}" on-close="{{ closeBranchView }}" hint-size="360px,800px"></dc-import>
-
-  <!-- Bottom navigation -->
-  <div style="padding: var(--space-sm) var(--space-base) calc(var(--space-sm) + env(safe-area-inset-bottom, 0px)); background: var(--color-bg-surface); border-top: 1px solid var(--color-border-muted);">
-    <x-import component-from-global-scope="GastroDesignSystem_472aed.BottomNavigation" items="{{ navItems }}" active-key="{{ navActive }}" on-change="{{ setNav }}" hint-size="100%,56px"></x-import>
-  </div>
+  <x-import component="NavFloatingIcons" from="./NavFloatingIcons.jsx" theme="light" items="{{ navItems }}" active-key="{{ navActive }}" on-change="{{ setNav }}" hint-size="100%,0px"></x-import>
+  <dc-import name="LoyaltyCardSheet" open="{{ qrSheetOpen }}" on-close="{{ closeQrSheet }}" hint-size="100%,100%"></dc-import>
 
 </div>
 </x-dc>
@@ -316,13 +314,17 @@ class Component extends DCLogic {
       navItems: [
         { key: 'home', icon: 'house', label: 'Home' },
         { key: 'order', icon: 'coffee', label: 'Order' },
+        { key: 'qr', icon: 'qr-code', label: 'QR' },
         { key: 'gifts', icon: 'gift', label: 'Gifts' },
         { key: 'profile', icon: 'user', label: 'Profile' },
       ],
       navActive: this.state.nav,
+      qrSheetOpen: !!(this.state && this.state.qrSheetOpen),
+      closeQrSheet: () => this.setState({ qrSheetOpen: false }),
       setNav: (k) => {
+        if (k === 'qr') { this.setState({ qrSheetOpen: true }); return; }
         const routes = { home: 'Home.dc.html', order: 'Order.dc.html', gifts: 'Gifts.dc.html', profile: 'Profile.dc.html' };
-        if (routes[k] && k !== this.state.nav) { window.location.href = routes[k]; return; }
+        if (routes[k] && k !== this.state.nav) { this.setState({ nav: k }); setTimeout(() => { window.location.href = routes[k]; }, 400); return; }
         this.setState({ nav: k });
       },
     };

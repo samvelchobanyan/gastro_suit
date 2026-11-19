@@ -19,6 +19,9 @@
   --button-height-2xs: 24px;  /* icon-only, dense inline           */
 
   /* ---- Input / field heights ---- */
+  --input-height-sm:       40px;  /* Input / Dropdown size sm (default) */
+  --input-height-md:       44px;  /* Input / Dropdown size md */
+  --input-height-lg:       48px;  /* Input / Dropdown size lg */
   --input-height-floating: 56px;  /* floating-label style */
   --input-height-fixed:    48px;  /* fixed-label style    */
   --input-padding-x:       16px;  /* aligns to screen margin */

@@ -27,11 +27,12 @@
   <style>
     body { margin: 0; min-height: 100vh; box-sizing: border-box; padding: var(--space-lg) 0; background: var(--gray-100); font-family: "Plus Jakarta Sans", system-ui, sans-serif; display: flex; align-items: center; justify-content: center; }
     a { color: var(--color-text-primary); } a:hover { color: var(--color-text-secondary); }
+    nav[aria-label="Primary"] { background: var(--glass-bg) !important; border: 1px solid var(--glass-border); backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur)); }
   </style>
 </helmet>
 <div data-screen-label="Profile" style="width: 360px; height: 800px; background: var(--color-bg-surface); overflow: hidden; display: flex; flex-direction: column; flex: 0 0 auto; position: relative;">
   <x-import component-from-global-scope="GastroDesignSystem_472aed.ScreenHeader" title="Profile" hint-size="100%,56px"></x-import>
-  <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none;">
+  <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding-bottom: calc(var(--bottomnav-height-labeled) + var(--space-base) * 2); box-sizing: border-box;">
     <div style="padding: 0 var(--space-base);">
       <x-import component-from-global-scope="GastroDesignSystem_472aed.UserProfile" name="Aram" surname="Shahinyan" avatar-url="uploads/OGLfuz%20400x400.jpg" phone="+374 91 234 567" on-edit="{{ goEdit }}" hint-size="100%,80px"></x-import>
       <div style="padding-top: var(--space-base);">
@@ -66,7 +67,7 @@
         <x-import component-from-global-scope="GastroDesignSystem_472aed.SectionHeader" title="Danger zone" hint-size="100%,28px"></x-import>
       </div>
       <div style="margin-bottom: var(--space-base); display: flex; flex-direction: column; background: var(--color-bg-main); border: 1px solid var(--color-border-muted); border-radius: var(--radius-md); overflow: hidden;">
-        <x-import component-from-global-scope="GastroDesignSystem_472aed.AdvancedListItem" title="Logout" leading-icon="sign-out" chevron="{{ true }}" hint-size="100%,56px"></x-import>
+        <x-import component-from-global-scope="GastroDesignSystem_472aed.AdvancedListItem" title="Logout" leading-icon="sign-out" chevron="{{ true }}" on-click="{{ openLogin }}" hint-size="100%,56px"></x-import>
         <x-import component-from-global-scope="GastroDesignSystem_472aed.Divider" inset="{{ 56 }}" hint-size="100%,1px"></x-import>
         <x-import component-from-global-scope="GastroDesignSystem_472aed.AdvancedListItem" title="Delete account" leading-icon="trash" chevron="{{ true }}" hint-size="100%,56px"></x-import>
       </div>
@@ -76,9 +77,9 @@
       </div>
     </div>
   </div>
-  <div style="padding: var(--space-sm) var(--space-base) calc(var(--space-sm) + env(safe-area-inset-bottom, 0px)); background: var(--color-bg-surface); border-top: 1px solid var(--color-border-muted);">
-    <x-import component-from-global-scope="GastroDesignSystem_472aed.BottomNavigation" items="{{ navItems }}" active-key="profile" on-change="{{ setNav }}" hint-size="100%,56px"></x-import>
-  </div>
+  <x-import component="NavFloatingIcons" from="./NavFloatingIcons.jsx" theme="light" items="{{ navItems }}" active-key="{{ navActiveKey }}" on-change="{{ setNav }}" hint-size="100%,0px"></x-import>
+  <dc-import name="LoyaltyCardSheet" open="{{ qrSheetOpen }}" on-close="{{ closeQrSheet }}" hint-size="100%,100%"></dc-import>
+  <dc-import name="LoginSheet" open="{{ loginOpen }}" on-close="{{ closeLogin }}" hint-size="100%,100%"></dc-import>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:800}}">
@@ -91,6 +92,10 @@ class Component extends DCLogic {
     const push = st.push ?? true;
     const geo = st.geo ?? false;
     return {
+      navActiveKey: (this.state && this.state.navActive) || 'profile',
+      loginOpen: !!st.loginOpen,
+      openLogin: () => this.setState({ loginOpen: true }),
+      closeLogin: () => this.setState({ loginOpen: false }),
       goInvite: () => { window.location.href = 'InviteFriend.dc.html'; },
       goMembership: () => { window.location.href = 'MembershipListing.dc.html'; },
       goEdit: () => { window.location.href = 'EditProfile.dc.html'; },
@@ -109,12 +114,16 @@ class Component extends DCLogic {
       navItems: [
         { key: 'home', icon: 'house', label: 'Home' },
         { key: 'order', icon: 'coffee', label: 'Order' },
+        { key: 'qr', icon: 'qr-code', label: 'QR' },
         { key: 'gifts', icon: 'gift', label: 'Gifts' },
         { key: 'profile', icon: 'user', label: 'Profile' },
       ],
+      qrSheetOpen: !!(this.state && this.state.qrSheetOpen),
+      closeQrSheet: () => this.setState({ qrSheetOpen: false }),
       setNav: (k) => {
+        if (k === 'qr') { this.setState({ qrSheetOpen: true }); return; }
         const routes = { home: 'Home.dc.html', order: 'Order.dc.html', gifts: 'Gifts.dc.html' };
-        if (routes[k]) window.location.href = routes[k];
+        if (routes[k] && k !== 'profile') { this.setState({ navActive: k }); setTimeout(() => { window.location.href = routes[k]; }, 400); }
       },
     };
   }

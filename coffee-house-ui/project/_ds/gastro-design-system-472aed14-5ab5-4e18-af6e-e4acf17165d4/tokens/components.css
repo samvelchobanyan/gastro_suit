@@ -75,7 +75,7 @@
   --fab-icon:       var(--color-text-on-brand);
 
   /* ---- Glass (frosted / blurred overlay treatment) ---- */
-  --glass-bg:       var(--alpha-white-64);
+  --glass-bg:       var(--alpha-white-80);
   --glass-border:   var(--alpha-white-24);
-  --glass-blur:     16px;
+  --glass-blur:     26px;
 }

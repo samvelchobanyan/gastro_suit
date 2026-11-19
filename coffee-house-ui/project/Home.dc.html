@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
   <style>
     body { margin: 0; min-height: 100vh; box-sizing: border-box; padding: var(--space-lg) 0; background: var(--gray-100); font-family: "Plus Jakarta Sans", system-ui, sans-serif; display: flex; align-items: center; justify-content: center; }
+    nav[aria-label="Primary"] { background: var(--glass-bg) !important; border: 1px solid var(--glass-border); backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur)); }
   </style>
 </helmet>
 <div style="width: 360px; background: var(--color-bg-surface); overflow: hidden; height: 800px; display: flex; flex-direction: column; flex: 0 0 auto; position: relative;">
@@ -34,7 +35,7 @@
 
 
   <!-- Scrollable content -->
-  <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none;">
+  <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding-bottom: calc(var(--bottomnav-height-labeled) + var(--space-base) * 2); box-sizing: border-box;">
 
   <!-- Greeting header -->
   <div style="position: relative;">
@@ -146,10 +147,7 @@
 
   </div><!-- /scrollable content -->
 
-  <!-- Bottom navigation -->
-  <div style="padding: var(--space-sm) var(--space-base) calc(var(--space-sm) + env(safe-area-inset-bottom, 0px)); background: var(--color-bg-surface); border-top: 1px solid var(--color-border-muted);">
-    <x-import component-from-global-scope="GastroDesignSystem_472aed.BottomNavigation" items="{{ navItems }}" active-key="{{ navActive }}" on-change="{{ setNav }}" hint-size="100%,56px"></x-import>
-  </div>
+  <x-import component="NavFloatingIcons" from="./NavFloatingIcons.jsx" theme="light" items="{{ navItems }}" active-key="{{ navActive }}" on-change="{{ setNav }}" hint-size="100%,0px"></x-import>
   <dc-import name="WalletTopupBottomSheet" open="{{ topupOpen }}" on-close="{{ closeTopup }}" on-top-up="{{ doTopup }}" on-open-payment="{{ openPaymentSheet }}" hint-size="100%,100%"></dc-import>
   <dc-import name="PaymentBottomSheet" open="{{ paymentSheetOpen }}" on-close="{{ closePaymentSheet }}" on-select="{{ closePaymentSheet }}" hint-size="100%,100%"></dc-import>
   <dc-import name="WalletTopupSuccess" visible="{{ topupDone }}" amount="{{ topupAmount }}" on-continue="{{ finishTopup }}" hint-size="360px,800px"></dc-import>
@@ -224,13 +222,15 @@ class Component extends DCLogic {
       navItems: [
         { key: 'home', icon: 'house', label: 'Home' },
         { key: 'order', icon: 'coffee', label: 'Order' },
+        { key: 'qr', icon: 'qr-code', label: 'QR' },
         { key: 'gifts', icon: 'gift', label: 'Gifts' },
         { key: 'profile', icon: 'user', label: 'Profile' },
       ],
       navActive: this.state.nav,
       setNav: (k) => {
+        if (k === 'qr') { this.setState({ loyaltyOpen: true }); return; }
         const routes = { home: 'Home.dc.html', order: 'Order.dc.html', gifts: 'Gifts.dc.html', profile: 'Profile.dc.html' };
-        if (routes[k] && k !== this.state.nav) { window.location.href = routes[k]; return; }
+        if (routes[k] && k !== this.state.nav) { this.setState({ nav: k }); setTimeout(() => { window.location.href = routes[k]; }, 400); return; }
         this.setState({ nav: k });
       },
       tabValue: this.state.tab,
