@@ -56,6 +56,7 @@ OrderLocationDto _$OrderLocationDtoFromJson(Map<String, dynamic> json) =>
 OrderLineDto _$OrderLineDtoFromJson(Map<String, dynamic> json) => OrderLineDto(
   itemId: json['itemId'] as String?,
   name: json['name'] as String?,
+  imageUrl: json['imageUrl'] as String?,
   quantity: (json['quantity'] as num?)?.toInt(),
   unitPrice: (json['unitPrice'] as num?)?.toInt(),
   total: (json['total'] as num?)?.toInt(),

@@ -9,12 +9,10 @@ import 'package:gastro_suit/data/dto/order_dto.dart';
 import 'package:gastro_suit/data/dto/wallet_dto.dart';
 import 'package:gastro_suit/design_system/theme/app_theme.dart';
 import 'package:gastro_suit/design_system/theme/ds_colors.dart';
-import 'package:gastro_suit/domain/entities/menu.dart';
 import 'package:gastro_suit/domain/entities/order.dart';
 import 'package:gastro_suit/domain/entities/product_choice.dart';
 import 'package:gastro_suit/domain/entities/wallet.dart';
 import 'package:gastro_suit/domain/entities/wallet_movement.dart';
-import 'package:gastro_suit/domain/state/menu_state.dart';
 import 'package:gastro_suit/domain/state/server_config_state.dart';
 import 'package:gastro_suit/features/history/history_screen/history_screen.dart';
 import 'package:gastro_suit/features/history/history_screen/order_history_controller.dart';
@@ -24,15 +22,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../fakes/fake_checkout_repositories.dart';
 import '../../fakes/fake_loyalty_repositories.dart';
-
-/// A menu that never loads: the photos stay placeholders.
-class _NoMenu extends BranchMenuController {
-  _NoMenu(super.branchId);
-
-  @override
-  Future<Menu> build() async =>
-      Menu(branchId: branchId, categories: const [], products: const []);
-}
 
 void main() {
   const language = ContentLanguage(current: 'en');
@@ -203,6 +192,7 @@ void main() {
             'id': 'l1',
             'itemId': 'p1',
             'name': 'Latte',
+            'imageUrl': 'http://test/uploads/latte.webp',
             'quantity': 2,
             'unitPrice': 1650,
             'modifierPrice': 150,
@@ -216,6 +206,7 @@ void main() {
             'id': 'l2',
             'itemId': null,
             'name': 'Gone',
+            'imageUrl': '',
             'quantity': 1,
             'unitPrice': 0,
             'modifierPrice': 0,
@@ -240,6 +231,8 @@ void main() {
       expect(mapped.isInHistory, isTrue);
 
       final latte = mapped.lines.first;
+      expect(latte.imageUrl, 'http://test/uploads/latte.webp');
+      expect(mapped.lines.last.imageUrl, isNull);
       expect(latte.choice.productId, 'p1');
       expect(latte.choice.size!.name, 'Large');
       expect(latte.choice.options.single.name, 'Syrup');
@@ -312,7 +305,6 @@ void main() {
           orderRepositoryProvider.overrideWithValue(server),
           walletRepositoryProvider.overrideWithValue(wallets),
           contentLanguageProvider.overrideWith((ref) async => language),
-          menuProvider('b1').overrideWith(() => _NoMenu('b1')),
         ],
         child: MaterialApp.router(
           theme: buildAppTheme(lightColors),

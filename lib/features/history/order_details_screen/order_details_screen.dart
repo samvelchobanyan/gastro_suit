@@ -256,10 +256,7 @@ class _OrderDetails extends StatelessWidget {
         ],
         const SizedBox(height: DSSpacing.lg),
         DSSectionHeader(title: l10n.orderDetailsYourOrder),
-        for (final line in order.lines) ...[
-          gap,
-          _LineTile(branchId: order.branchId, line: line),
-        ],
+        for (final line in order.lines) ...[gap, _LineTile(line: line)],
         gap,
         CustomPaint(
           size: const Size.fromHeight(DSSizes.borderWidthDefault),
@@ -335,9 +332,8 @@ class _AmountRow extends StatelessWidget {
 /// its name, what was chosen for it with the quantity, and what the line
 /// cost.
 class _LineTile extends StatelessWidget {
-  const _LineTile({required this.branchId, required this.line});
+  const _LineTile({required this.line});
 
-  final String branchId;
   final OrderLine line;
 
   @override
@@ -355,7 +351,7 @@ class _LineTile extends StatelessWidget {
 
     return Row(
       children: [
-        OrderProductImage(branchId: branchId, productId: choice.productId),
+        OrderProductImage(url: line.imageUrl),
         const SizedBox(width: DSSpacing.md),
         Expanded(
           child: Column(

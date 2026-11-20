@@ -141,10 +141,7 @@ class _OrderTile extends StatelessWidget {
           children: [
             Stack(
               children: [
-                OrderProductImage(
-                  branchId: order.branchId,
-                  productId: first?.choice.productId ?? '',
-                ),
+                OrderProductImage(url: first?.imageUrl),
                 if (others > 0)
                   PositionedDirectional(
                     end: DSSpacing.xs,

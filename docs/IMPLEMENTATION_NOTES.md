@@ -487,9 +487,10 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   controller then reads on until the list grows or the pages end.
 - An order's details are read by id (`GET /orders/{id}`) on opening, so the status is
   the current one whether the screen was opened from the history or from Home.
-- A line's photo is looked up in the menu of the order's branch
-  (`OrderProductImage`): one menu request per branch in the list, shared with every
-  other reader of that menu.
+- A line's photo is the `imageUrl` of the order's line (2026-11-20): the menu's today,
+  or the one the product had when ordered if it has since left the menu. The history
+  reads no menu. Until then the photo was looked up in the menu of the order's branch,
+  which loaded a whole menu per branch in the list.
 - `WalletMovement` is what `GET /wallet/history` gives, kept only when
   `status == success`; sorted newest first on the client, as the order of the answer
   is not promised.
@@ -572,6 +573,12 @@ Each item is marked **agreed** or **proposed** (to be discussed during developme
   `textInverseMuted`. The two lights behind the glass are drawn from the theme's
   colours with the opacities the page gives them, kept in the sheet: they are that
   page's own, not tokens.
+  **To check on a device (2026-11-20):** the sheet blurs what is behind it (24) and
+  each of the two lights (80), and is drawn again on every digit typed and every
+  blink of the cursor. Try it on a weak Android phone while typing the code. If it
+  stutters, draw the lights as radial gradients, with no blur; a `RepaintBoundary`
+  around them is not expected to help, as the blur is applied over what it keeps.
+  If it does not, leave it.
 - The two pictures are in `assets/images/` (`login_phone.png`, `login_code.png`).
 
 ## 27. Floating navigation (2026-11-19)

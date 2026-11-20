@@ -1,34 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../design_system/components/image/ds_network_image.dart';
 import '../../../design_system/ds_extensions.dart';
-import '../../../domain/state/menu_state.dart';
 
-/// The photo of a product of a past order.
-///
-/// An order keeps no photos, so the photo is the one the product has in the
-/// branch's menu now; a product that left the menu, or a menu that did not
-/// load, shows the placeholder.
-class OrderProductImage extends ConsumerWidget {
-  const OrderProductImage({
-    super.key,
-    required this.branchId,
-    required this.productId,
-  });
+/// The photo of a product of a past order, as the order's line gives it;
+/// the placeholder for a line without one.
+class OrderProductImage extends StatelessWidget {
+  const OrderProductImage({super.key, required this.url});
 
-  final String branchId;
-  final String productId;
+  final String? url;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final menu = branchId.isEmpty || productId.isEmpty
-        ? null
-        : ref.watch(menuProvider(branchId)).value;
+  Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(DSRadius.md),
       child: DSNetworkImage(
-        url: menu?.product(productId)?.imageUrl,
+        url: url,
         width: DSSizes.cartLineImage,
         height: DSSizes.cartLineImage,
       ),

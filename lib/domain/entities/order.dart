@@ -82,6 +82,10 @@ abstract class OrderLine with _$OrderLine {
     /// The product's id is empty when it has since left the menu; its name
     /// is the one it was ordered under.
     required ProductChoice choice,
+
+    /// The product's photo: the menu's today, or the one it had when
+    /// ordered if it has since left the menu. Null for none.
+    String? imageUrl,
     required int quantity,
 
     /// The price of one, add-ons included.

@@ -348,7 +348,9 @@ mixin _$OrderLine {
 
 /// The product's id is empty when it has since left the menu; its name
 /// is the one it was ordered under.
- ProductChoice get choice; int get quantity;/// The price of one, add-ons included.
+ ProductChoice get choice;/// The product's photo: the menu's today, or the one it had when
+/// ordered if it has since left the menu. Null for none.
+ String? get imageUrl; int get quantity;/// The price of one, add-ons included.
  int get unitPrice; int get total;
 /// Create a copy of OrderLine
 /// with the given fields replaced by the non-null parameter values.
@@ -360,16 +362,16 @@ $OrderLineCopyWith<OrderLine> get copyWith => _$OrderLineCopyWithImpl<OrderLine>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OrderLine&&(identical(other.choice, choice) || other.choice == choice)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.unitPrice, unitPrice) || other.unitPrice == unitPrice)&&(identical(other.total, total) || other.total == total));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OrderLine&&(identical(other.choice, choice) || other.choice == choice)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.unitPrice, unitPrice) || other.unitPrice == unitPrice)&&(identical(other.total, total) || other.total == total));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,choice,quantity,unitPrice,total);
+int get hashCode => Object.hash(runtimeType,choice,imageUrl,quantity,unitPrice,total);
 
 @override
 String toString() {
-  return 'OrderLine(choice: $choice, quantity: $quantity, unitPrice: $unitPrice, total: $total)';
+  return 'OrderLine(choice: $choice, imageUrl: $imageUrl, quantity: $quantity, unitPrice: $unitPrice, total: $total)';
 }
 
 
@@ -380,7 +382,7 @@ abstract mixin class $OrderLineCopyWith<$Res>  {
   factory $OrderLineCopyWith(OrderLine value, $Res Function(OrderLine) _then) = _$OrderLineCopyWithImpl;
 @useResult
 $Res call({
- ProductChoice choice, int quantity, int unitPrice, int total
+ ProductChoice choice, String? imageUrl, int quantity, int unitPrice, int total
 });
 
 
@@ -397,10 +399,11 @@ class _$OrderLineCopyWithImpl<$Res>
 
 /// Create a copy of OrderLine
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? choice = null,Object? quantity = null,Object? unitPrice = null,Object? total = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? choice = null,Object? imageUrl = freezed,Object? quantity = null,Object? unitPrice = null,Object? total = null,}) {
   return _then(_self.copyWith(
 choice: null == choice ? _self.choice : choice // ignore: cast_nullable_to_non_nullable
-as ProductChoice,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
+as ProductChoice,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String?,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
 as int,unitPrice: null == unitPrice ? _self.unitPrice : unitPrice // ignore: cast_nullable_to_non_nullable
 as int,total: null == total ? _self.total : total // ignore: cast_nullable_to_non_nullable
 as int,
@@ -497,10 +500,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ProductChoice choice,  int quantity,  int unitPrice,  int total)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ProductChoice choice,  String? imageUrl,  int quantity,  int unitPrice,  int total)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _OrderLine() when $default != null:
-return $default(_that.choice,_that.quantity,_that.unitPrice,_that.total);case _:
+return $default(_that.choice,_that.imageUrl,_that.quantity,_that.unitPrice,_that.total);case _:
   return orElse();
 
 }
@@ -518,10 +521,10 @@ return $default(_that.choice,_that.quantity,_that.unitPrice,_that.total);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ProductChoice choice,  int quantity,  int unitPrice,  int total)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ProductChoice choice,  String? imageUrl,  int quantity,  int unitPrice,  int total)  $default,) {final _that = this;
 switch (_that) {
 case _OrderLine():
-return $default(_that.choice,_that.quantity,_that.unitPrice,_that.total);case _:
+return $default(_that.choice,_that.imageUrl,_that.quantity,_that.unitPrice,_that.total);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -538,10 +541,10 @@ return $default(_that.choice,_that.quantity,_that.unitPrice,_that.total);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ProductChoice choice,  int quantity,  int unitPrice,  int total)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ProductChoice choice,  String? imageUrl,  int quantity,  int unitPrice,  int total)?  $default,) {final _that = this;
 switch (_that) {
 case _OrderLine() when $default != null:
-return $default(_that.choice,_that.quantity,_that.unitPrice,_that.total);case _:
+return $default(_that.choice,_that.imageUrl,_that.quantity,_that.unitPrice,_that.total);case _:
   return null;
 
 }
@@ -553,12 +556,15 @@ return $default(_that.choice,_that.quantity,_that.unitPrice,_that.total);case _:
 
 
 class _OrderLine implements OrderLine {
-  const _OrderLine({required this.choice, required this.quantity, required this.unitPrice, required this.total});
+  const _OrderLine({required this.choice, this.imageUrl, required this.quantity, required this.unitPrice, required this.total});
   
 
 /// The product's id is empty when it has since left the menu; its name
 /// is the one it was ordered under.
 @override final  ProductChoice choice;
+/// The product's photo: the menu's today, or the one it had when
+/// ordered if it has since left the menu. Null for none.
+@override final  String? imageUrl;
 @override final  int quantity;
 /// The price of one, add-ons included.
 @override final  int unitPrice;
@@ -574,16 +580,16 @@ _$OrderLineCopyWith<_OrderLine> get copyWith => __$OrderLineCopyWithImpl<_OrderL
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OrderLine&&(identical(other.choice, choice) || other.choice == choice)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.unitPrice, unitPrice) || other.unitPrice == unitPrice)&&(identical(other.total, total) || other.total == total));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OrderLine&&(identical(other.choice, choice) || other.choice == choice)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.unitPrice, unitPrice) || other.unitPrice == unitPrice)&&(identical(other.total, total) || other.total == total));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,choice,quantity,unitPrice,total);
+int get hashCode => Object.hash(runtimeType,choice,imageUrl,quantity,unitPrice,total);
 
 @override
 String toString() {
-  return 'OrderLine(choice: $choice, quantity: $quantity, unitPrice: $unitPrice, total: $total)';
+  return 'OrderLine(choice: $choice, imageUrl: $imageUrl, quantity: $quantity, unitPrice: $unitPrice, total: $total)';
 }
 
 
@@ -594,7 +600,7 @@ abstract mixin class _$OrderLineCopyWith<$Res> implements $OrderLineCopyWith<$Re
   factory _$OrderLineCopyWith(_OrderLine value, $Res Function(_OrderLine) _then) = __$OrderLineCopyWithImpl;
 @override @useResult
 $Res call({
- ProductChoice choice, int quantity, int unitPrice, int total
+ ProductChoice choice, String? imageUrl, int quantity, int unitPrice, int total
 });
 
 
@@ -611,10 +617,11 @@ class __$OrderLineCopyWithImpl<$Res>
 
 /// Create a copy of OrderLine
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? choice = null,Object? quantity = null,Object? unitPrice = null,Object? total = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? choice = null,Object? imageUrl = freezed,Object? quantity = null,Object? unitPrice = null,Object? total = null,}) {
   return _then(_OrderLine(
 choice: null == choice ? _self.choice : choice // ignore: cast_nullable_to_non_nullable
-as ProductChoice,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
+as ProductChoice,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String?,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
 as int,unitPrice: null == unitPrice ? _self.unitPrice : unitPrice // ignore: cast_nullable_to_non_nullable
 as int,total: null == total ? _self.total : total // ignore: cast_nullable_to_non_nullable
 as int,

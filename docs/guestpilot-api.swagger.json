@@ -2211,6 +2211,261 @@
         ]
       }
     },
+    "/api/v1/orders/buy-again/{againId}": {
+      "post": {
+        "operationId": "OrdersController_buyAgainAdd",
+        "parameters": [
+          {
+            "name": "againId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyAgainDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The basket, as `POST /cart/items` answers it",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid_id; item_unavailable, option_unavailable and the other refusals of an add; cart_too_large; validation_failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "buy_again_not_found — not the guest’s, or the dish has left the menu; item_not_found — not sold at that branch any more; location_not_found — that branch is not served",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Any other refusal: a `code` to act on and a `message` to show",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Add a Buy again entry to the basket, as it was ordered",
+        "tags": [
+          "Orders"
+        ]
+      }
+    },
+    "/api/v1/orders/{id}/repeat": {
+      "get": {
+        "operationId": "OrdersController_previewRepeat",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "branchId",
+            "required": false,
+            "in": "query",
+            "description": "The location to price it at. The order’s own when omitted.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RepeatOrderPreviewResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid_id — branchId is not an id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "order_not_found, or location_not_found — that location is not served",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Any other refusal: a `code` to act on and a `message` to show",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "A past order as a basket at a location would hold it — nothing is written",
+        "tags": [
+          "Orders"
+        ]
+      },
+      "post": {
+        "operationId": "OrdersController_repeat",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepeatOrderDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The new basket, as `GET /cart` answers it",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "order_nothing_to_repeat — every dish has left the menu, and the basket is left as it was; cart_too_large; validation_failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "order_not_found, or location_not_found — that location is not served",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Any other refusal: a `code` to act on and a `message` to show",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Make a past order the guest’s basket, replacing the one they have",
+        "tags": [
+          "Orders"
+        ]
+      }
+    },
     "/api/v1/orders/{id}": {
       "get": {
         "operationId": "OrdersController_get",
@@ -2340,6 +2595,72 @@
         "summary": "Get order status only",
         "tags": [
           "Orders"
+        ]
+      }
+    },
+    "/api/v1/transactions": {
+      "get": {
+        "operationId": "TransactionsController_list",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "From 1; 1 when not given",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Lines per page, 1 to 50; 20 when not given",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionHistoryResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Any other refusal: a `code` to act on and a `message` to show",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefusalResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Every way value moved for the guest, newest first, a page at a time",
+        "tags": [
+          "Transactions"
         ]
       }
     },
@@ -6982,6 +7303,68 @@
           "address"
         ]
       },
+      "PaymentCardResponse": {
+        "type": "object",
+        "properties": {
+          "maskedPan": {
+            "type": "string",
+            "example": "411111******4556",
+            "description": "As the gateway masked it — never more of the number."
+          },
+          "last4": {
+            "type": "string",
+            "nullable": true,
+            "description": "Its last four digits — *•••• 4556*.",
+            "example": "4556"
+          },
+          "brand": {
+            "type": "string",
+            "nullable": true,
+            "description": "The scheme as the gateway names it: `VISA`, `MASTERCARD`, `ARCA`…; null when not said.",
+            "example": "VISA"
+          }
+        },
+        "required": [
+          "maskedPan",
+          "last4",
+          "brand"
+        ]
+      },
+      "LoyaltyEarnedResponse": {
+        "type": "object",
+        "properties": {
+          "walletId": {
+            "type": "string",
+            "description": "The wallet credited."
+          },
+          "name": {
+            "type": "string",
+            "description": "The programme’s name as the POS reports it; may be empty."
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "bonus",
+              "deposit",
+              "certificate",
+              "products"
+            ],
+            "nullable": true,
+            "description": "`bonus`: points — show *+175 pts*. `deposit`: money (cashback) — show *+֏99*. Null: not known."
+          },
+          "amount": {
+            "type": "number",
+            "example": 175,
+            "description": "In the wallet’s own unit: points for `bonus`, money for `deposit`."
+          }
+        },
+        "required": [
+          "walletId",
+          "name",
+          "kind",
+          "amount"
+        ]
+      },
       "OrderLineResponse": {
         "type": "object",
         "properties": {
@@ -6998,6 +7381,11 @@
           "name": {
             "type": "string",
             "description": "The dish’s name as it was when ordered, in the language the order was placed in."
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "The dish’s picture: the menu’s today, else the one it had when ordered (a dish since gone). Null for none."
           },
           "quantity": {
             "type": "integer"
@@ -7029,6 +7417,7 @@
           "id",
           "itemId",
           "name",
+          "imageUrl",
           "quantity",
           "unitPrice",
           "modifierPrice",
@@ -7135,6 +7524,16 @@
             "nullable": true,
             "description": "The gateway it is paid through."
           },
+          "paymentCard": {
+            "nullable": true,
+            "description": "The card that paid, when the gateway said. Null: not paid by card, or not known.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PaymentCardResponse"
+              }
+            ]
+          },
           "gatewayOrderId": {
             "type": "string",
             "nullable": true,
@@ -7144,6 +7543,20 @@
             "type": "string",
             "nullable": true,
             "description": "The number the till calls out."
+          },
+          "loyaltyEarned": {
+            "nullable": true,
+            "description": "What the till credited for this order, one per wallet. Null: not known — not yet read (about half an hour after the till closes it), or the till did not know the guest. `[]`: it earned nothing.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LoyaltyEarnedResponse"
+            }
+          },
+          "loyaltyEarnedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "When the till credited it; null while `loyaltyEarned` is null."
           },
           "createdAt": {
             "type": "string",
@@ -7184,8 +7597,11 @@
           "totalToCharge",
           "tipAmount",
           "paymentProvider",
+          "paymentCard",
           "gatewayOrderId",
           "posNumber",
+          "loyaltyEarned",
+          "loyaltyEarnedAt",
           "createdAt",
           "updatedAt",
           "items"
@@ -7395,6 +7811,11 @@
       "BuyAgainResponse": {
         "type": "object",
         "properties": {
+          "againId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "What `POST /orders/buy-again/{againId}` takes to add this entry to the basket, as it was ordered. Read nothing into it."
+          },
           "item": {
             "description": "The dish as the menu answers it at `branch` today.",
             "allOf": [
@@ -7434,6 +7855,7 @@
           }
         },
         "required": [
+          "againId",
           "item",
           "branch",
           "options",
@@ -7441,6 +7863,156 @@
           "available",
           "lastOrderedAt"
         ]
+      },
+      "BuyAgainDto": {
+        "type": "object",
+        "properties": {
+          "quantity": {
+            "type": "number",
+            "description": "How many to add, 1 or more; 1 when not given"
+          }
+        }
+      },
+      "RepeatOrderLineResponse": {
+        "type": "object",
+        "properties": {
+          "itemId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "description": "The dish. Null when it has left the menu — such a line is never put in the basket."
+          },
+          "name": {
+            "type": "string",
+            "description": "The dish’s name as it was ordered, in the language the order was placed in."
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "The dish’s picture: the menu’s today, else the one it had when ordered. Null for none."
+          },
+          "item": {
+            "nullable": true,
+            "description": "The dish today; null when it has left the menu.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ItemSummaryResponse"
+              }
+            ]
+          },
+          "quantity": {
+            "type": "integer",
+            "example": 2
+          },
+          "unitPrice": {
+            "type": "integer",
+            "example": 1450,
+            "description": "One unit with its options: today’s price there, else (`available: false`) what it was ordered at. A whole number of the currency."
+          },
+          "modifierPrice": {
+            "type": "integer",
+            "example": 1450,
+            "description": "The options’ part of `unitPrice` — already included. A whole number of the currency."
+          },
+          "total": {
+            "type": "integer",
+            "example": 1450,
+            "description": "`unitPrice × quantity`. A whole number of the currency."
+          },
+          "modifiersJson": {
+            "nullable": true,
+            "description": "What was chosen. Null when nothing was.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SelectedModifierResponse"
+            }
+          },
+          "available": {
+            "type": "boolean",
+            "description": "Whether it can be ordered at this location now. `false`: it still goes into the basket (unless `itemId` is null) and checkout refuses it until it is removed or the basket moves where it is sold."
+          },
+          "unavailableReason": {
+            "type": "string",
+            "nullable": true,
+            "description": "Why not — the codes a basket line carries (`CartLineResponse.unavailableReason`). `null` when `available`."
+          }
+        },
+        "required": [
+          "itemId",
+          "name",
+          "imageUrl",
+          "item",
+          "quantity",
+          "unitPrice",
+          "modifierPrice",
+          "total",
+          "modifiersJson",
+          "available",
+          "unavailableReason"
+        ]
+      },
+      "RepeatOrderPreviewResponse": {
+        "type": "object",
+        "properties": {
+          "orderId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "locationId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The location asked about — the order’s own when none was named."
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RepeatOrderLineResponse"
+            }
+          },
+          "availableCount": {
+            "type": "integer",
+            "description": "How many lines can be ordered here now."
+          },
+          "unavailableCount": {
+            "type": "integer",
+            "description": "How many cannot — they come along marked, or (`itemId` null) not at all."
+          },
+          "total": {
+            "type": "integer",
+            "example": 1450,
+            "description": "What the basket would hold: every line it would carry, as each is figured here. A whole number of the currency."
+          },
+          "orderableTotal": {
+            "type": "integer",
+            "example": 1450,
+            "description": "The lines that can be ordered here now — what checkout would price, once the others are removed. A whole number of the currency."
+          },
+          "replacesBasket": {
+            "type": "boolean",
+            "description": "The guest has a basket with something in it now. Repeating replaces it — ask first."
+          }
+        },
+        "required": [
+          "orderId",
+          "locationId",
+          "items",
+          "availableCount",
+          "unavailableCount",
+          "total",
+          "orderableTotal",
+          "replacesBasket"
+        ]
+      },
+      "RepeatOrderDto": {
+        "type": "object",
+        "properties": {
+          "branchId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The location to make the basket at. The order’s own when not given."
+          }
+        }
       },
       "OrderStatusResponse": {
         "type": "object",
@@ -7463,6 +8035,241 @@
           "status",
           "paymentStatus",
           "fulfillmentType"
+        ]
+      },
+      "TransactionGiftResponse": {
+        "type": "object",
+        "properties": {
+          "walletName": {
+            "type": "string",
+            "example": "Iced Americano"
+          },
+          "walletKind": {
+            "type": "string",
+            "enum": [
+              "money",
+              "items"
+            ]
+          },
+          "quantity": {
+            "type": "integer",
+            "example": 2,
+            "description": "*2× Iced Americano*; for money, the amount again."
+          },
+          "recipientName": {
+            "type": "string",
+            "nullable": true,
+            "description": "Whom it was sent to."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "claiming",
+              "accepted",
+              "declined",
+              "expired"
+            ]
+          }
+        },
+        "required": [
+          "walletName",
+          "walletKind",
+          "quantity",
+          "recipientName",
+          "status"
+        ]
+      },
+      "TransactionWalletResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "The programme’s name as the POS reports it; may be empty."
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "bonus",
+              "deposit",
+              "certificate",
+              "products"
+            ],
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "kind"
+        ]
+      },
+      "TransactionEntryResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Stable across pages."
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "wallet_topup",
+              "wallet_spend",
+              "card_payment",
+              "gift_purchase",
+              "loyalty_earned",
+              "wallet_adjustment"
+            ],
+            "description": "*Wallet top up*, a balance spent (on an app order, or at the counter), *Card payment*, *Voucher purchase*, *Loyalty points*, and `wallet_adjustment` — anything else the POS moved: a credit by the merchant, a top-up at the till. Show an unknown kind as a plain line, by `direction` and `amount`."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "success",
+              "failed",
+              "refunded"
+            ],
+            "description": "`refunded`: the money went back — a refunded order, a gift declined or expired."
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "in",
+              "out"
+            ],
+            "description": "The sign: `in` +, `out` −."
+          },
+          "amount": {
+            "type": "number",
+            "example": 2250,
+            "description": "Always positive, in `unit`."
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "money",
+              "points",
+              "items"
+            ],
+            "description": "`money`: a whole number of the currency (*֏2,250*). `points`: *+175 pts*. `items`: a count."
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": false,
+            "description": "When it happened."
+          },
+          "orderId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "description": "The order — `GET /orders/{id}`."
+          },
+          "orderNumber": {
+            "type": "string",
+            "nullable": true,
+            "description": "The order’s number."
+          },
+          "posNumber": {
+            "type": "string",
+            "nullable": true,
+            "description": "A line from the POS for no order of ours — a sale at the counter: the till’s number for it. Null otherwise.",
+            "example": "21"
+          },
+          "reference": {
+            "type": "string",
+            "nullable": true,
+            "description": "A top-up’s or a gift’s own number."
+          },
+          "card": {
+            "nullable": true,
+            "description": "`card_payment`: the card, when known.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PaymentCardResponse"
+              }
+            ]
+          },
+          "gift": {
+            "nullable": true,
+            "description": "`gift_purchase` only.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionGiftResponse"
+              }
+            ]
+          },
+          "wallet": {
+            "nullable": true,
+            "description": "A line from the POS — `loyalty_earned`, a spend at the counter, `wallet_adjustment`: the wallet it moved.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionWalletResponse"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "status",
+          "direction",
+          "amount",
+          "unit",
+          "at",
+          "orderId",
+          "orderNumber",
+          "posNumber",
+          "reference",
+          "card",
+          "gift",
+          "wallet"
+        ]
+      },
+      "TransactionHistoryResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionEntryResponse"
+            }
+          },
+          "page": {
+            "type": "number",
+            "example": 1,
+            "description": "This page, from 1"
+          },
+          "limit": {
+            "type": "number",
+            "example": 20,
+            "description": "Lines per page — as asked, from 1 to 50; 20 when not asked"
+          },
+          "total": {
+            "type": "number",
+            "example": 42,
+            "description": "All of this guest’s lines"
+          },
+          "totalPages": {
+            "type": "number",
+            "example": 3,
+            "description": "Pages in all — at least 1, even with none"
+          }
+        },
+        "required": [
+          "items",
+          "page",
+          "limit",
+          "total",
+          "totalPages"
         ]
       },
       "GuestCategoryResponse": {
@@ -9339,6 +10146,10 @@
         "type": "object",
         "properties": {}
       },
+      "WebRepeatOrderDto": {
+        "type": "object",
+        "properties": {}
+      },
       "WebWalletTopUpDto": {
         "type": "object",
         "properties": {}
@@ -9519,6 +10330,8 @@
               "scheduled_time_passed",
               "scheduled_too_far_ahead",
               "order_not_found",
+              "order_nothing_to_repeat",
+              "buy_again_not_found",
               "order_reference_missing",
               "order_not_awaiting_payment",
               "order_not_payable_by_card",

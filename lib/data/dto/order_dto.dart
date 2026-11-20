@@ -166,6 +166,7 @@ class OrderLineDto {
   const OrderLineDto({
     this.itemId,
     this.name,
+    this.imageUrl,
     this.quantity,
     this.unitPrice,
     this.total,
@@ -178,6 +179,7 @@ class OrderLineDto {
   /// Null when the dish has since left the menu.
   final String? itemId;
   final String? name;
+  final String? imageUrl;
   final int? quantity;
   final int? unitPrice;
   final int? total;
@@ -193,7 +195,9 @@ class OrderLineDto {
     bool isSize(SelectedModifierDto m) =>
         m.groupId?.startsWith(_sizeGroupPrefix) ?? false;
     final size = chosen.where(isSize).firstOrNull;
+    final imageUrl = this.imageUrl;
     return OrderLine(
+      imageUrl: imageUrl == null || imageUrl.isEmpty ? null : imageUrl,
       choice: ProductChoice(
         productId: itemId ?? '',
         productName: name ?? '',
